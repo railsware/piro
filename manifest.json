@@ -2,20 +2,20 @@
   "name": "Pivotal Rocket",
   "version": "0.1.0",
   "default_locale": "en",
-  "description": "Pivotal Rocket is your rocket for Pivotal Tracker",
+  "description": "__MSG_app_description__",
   "background_page": "background.html",
   "options_page": "options.html",
   "browser_action": {
     "default_title": "Pivotal Rocket",
-    "default_icon": "icon.png",
+    "default_icon": "images/icon.png",
     "popup": "popup.html?popup"
   },
   "icons": { 
-    "16": "img/icon19.png",
-    "19": "img/icon19.png",
-    "32": "img/icon32.png",
-    "48": "img/icon48.png",
-    "128": "img/icon128.png"
+    "16": "images/icon19.png",
+    "19": "images/icon19.png",
+    "32": "images/icon32.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
   },
   "permissions": [
     "tabs",
