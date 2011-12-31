@@ -1,1 +1,1 @@
-((function(){window.PivotalApiLib=function(){function a(){console.log("init")}return a}()})).call(this)
+((function(){window.PivotalApiLib=function(){function a(){console.log("init")}return a}(),window.PivotalAuthLib=function(){function a(a,b){$.ajax({url:"https://www.pivotaltracker.com/services/v4/me",crossDomain:!0,dataType:"xml",username:a,password:b,success:function(a,b,c){return console.debug(a),console.debug($.xml2json(a))},error:function(a,b,c){return console.debug(a),console.debug(b),console.debug(c)}})}return a}()})).call(this)
