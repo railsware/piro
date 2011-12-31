@@ -1,5 +1,6 @@
 window.PivotalRocketStorage = 
-  accounts: [],
+  accounts: null,
+  
   set: (key, json) ->
     window.localStorage.setItem(key, JSON.stringify(json))
     json
