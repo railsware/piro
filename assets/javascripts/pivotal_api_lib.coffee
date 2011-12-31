@@ -14,10 +14,29 @@ class window.PivotalAuthLib
       username: username
       password: password
       success: (data, textStatus, jqXHR) ->
-        console.debug data
-        console.debug $.xml2json(data)
+        account = $.xml2json(data)
+        console.debug account
+        if account.token? && account.token.guid?
+          accounts = PivotalRocketStorage.get_accounts()
+          is_pushed = false
+          new_accounts = for one_account in accounts
+            if one_account.token? && one_account.token.guid?
+              if one_account.token.guid == account.token.guid
+                is_pushed = true
+                account
+              else
+                one_account
+                
+          if is_pushed is false
+            new_accounts.push(account)
+          
+          console.debug new_accounts
+          PivotalRocketStorage.set_accounts(new_accounts)
       error: (jqXHR, textStatus, errorThrown) ->
         console.debug jqXHR
         console.debug textStatus
         console.debug errorThrown
         
+
+$ ->
+  data = new PivotalAuthLib "leopard", "monkeydev"
