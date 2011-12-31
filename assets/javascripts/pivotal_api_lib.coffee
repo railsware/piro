@@ -1,6 +1,9 @@
 class window.PivotalApiLib
-  constructor: ->
-    console.log "init"
+  constructor: (@account) ->
+  
+  first_sync: ->
+    
+    
  
  
  
@@ -15,12 +18,12 @@ class window.PivotalAuthLib
       password: password
       success: (data, textStatus, jqXHR) ->
         account = $.xml2json(data)
-        if account.token? && account.token.guid?
+        if account.email?
           accounts = PivotalRocketStorage.get_accounts()
           is_pushed = false
           new_accounts = for one_account in accounts
-            if one_account.token? && one_account.token.guid?
-              if one_account.token.guid == account.token.guid
+            if one_account.email?
+              if one_account.email == account.email
                 is_pushed = true
                 account
               else
@@ -30,6 +33,8 @@ class window.PivotalAuthLib
             new_accounts.push(account)
           
           PivotalRocketStorage.set_accounts(new_accounts)
+          pivotal_api_obj = new PivotalApiLib account
+          pivotal_api_obj.first_sync
       error: (jqXHR, textStatus, errorThrown) ->
         console.debug jqXHR
         console.debug textStatus
