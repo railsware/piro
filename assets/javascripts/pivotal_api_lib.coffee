@@ -15,7 +15,6 @@ class window.PivotalAuthLib
       password: password
       success: (data, textStatus, jqXHR) ->
         account = $.xml2json(data)
-        console.debug account
         if account.token? && account.token.guid?
           accounts = PivotalRocketStorage.get_accounts()
           is_pushed = false
@@ -30,7 +29,6 @@ class window.PivotalAuthLib
           if is_pushed is false
             new_accounts.push(account)
           
-          console.debug new_accounts
           PivotalRocketStorage.set_accounts(new_accounts)
       error: (jqXHR, textStatus, errorThrown) ->
         console.debug jqXHR
