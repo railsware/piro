@@ -35,6 +35,3 @@ class window.PivotalAuthLib
         console.debug textStatus
         console.debug errorThrown
         
-
-$ ->
-  data = new PivotalAuthLib "leopard", "monkeydev"
