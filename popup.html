@@ -23,10 +23,17 @@
   </div>
   
   <!-- templates -->
-  <script id="story_cell" type="text/template">
+  <script id="project_cell" type="text/x-mustache-template">
     <li>
-      {{name}} {{story_type}}
+      {{name}}
     </li>
+    <ul>
+      {{#stories}}
+      <li>
+        {{name}} | {{story_type}} | {{current_state}}
+      </li>
+      {{/stories}}
+    </ul>
   </script>
   
   <!-- vendors scripts -->

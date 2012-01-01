@@ -18,14 +18,14 @@ root.PivotalRocketBackground =
       if PivotalRocketStorage.get_accounts().length > 0
         
         stories_list = []
-        template = popup.$('#story_cell').html()
+        template = popup.$('#project_cell').html()
         compiledTemplate = Hogan.compile(template)
         stored_projects = PivotalRocketStorage.get_projects(PivotalRocketBackground.account)
         for project in stored_projects
           stored_stories = PivotalRocketStorage.get_stories(project)
           if stored_stories?
-            for story in stored_stories
-              stories_list.push(compiledTemplate.render(story))
+            project.stories = stored_stories
+            stories_list.push(compiledTemplate.render(project))
         popup.$('#storyList').html(stories_list.join(""))
         
         popup.$('#loginPage').hide()
