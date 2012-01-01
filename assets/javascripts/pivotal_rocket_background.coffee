@@ -3,6 +3,8 @@ root = global ? window
 root.PivotalRocketBackground =
   account: null
   pivotal_api_lib: null
+  # popup
+  popup: null
   
   init: ->
     if PivotalRocketStorage.get_accounts().length > 0
@@ -13,12 +15,12 @@ root.PivotalRocketBackground =
     chrome.extension.getViews({type:"popup"})[0]
   
   init_popup: ->
-    popup = PivotalRocketBackground.load_popup_view()
-    if popup?
+    PivotalRocketBackground.popup = PivotalRocketBackground.load_popup_view() if !PivotalRocketBackground.popup?
+    if PivotalRocketBackground.popup?
       if PivotalRocketStorage.get_accounts().length > 0
         
         stories_list = []
-        template = popup.$('#project_cell').html()
+        template = PivotalRocketBackground.popup.$('#project_cell').html()
         compiledTemplate = Hogan.compile(template)
         stored_projects = PivotalRocketStorage.get_projects(PivotalRocketBackground.account)
         for project in stored_projects
@@ -26,18 +28,18 @@ root.PivotalRocketBackground =
           if stored_stories?
             project.stories = stored_stories
             stories_list.push(compiledTemplate.render(project))
-        popup.$('#storyList').html(stories_list.join(""))
+        PivotalRocketBackground.popup.$('#storyList').html(stories_list.join(""))
         
-        popup.$('#loginPage').hide()
-        popup.$('#mainPage').show()
+        PivotalRocketBackground.popup.$('#loginPage').hide()
+        PivotalRocketBackground.popup.$('#mainPage').show()
       else
-        popup.$('#mainPage').hide()
-        popup.$('#loginPage').show()
+        PivotalRocketBackground.popup.$('#mainPage').hide()
+        PivotalRocketBackground.popup.$('#loginPage').show()
         
       # login  
-      popup.$('#login_button').click (event) =>
-        username = popup.$('#login_username').val()
-        password = popup.$('#login_password').val()
+      PivotalRocketBackground.popup.$('#login_button').click (event) =>
+        username = PivotalRocketBackground.popup.$('#login_username').val()
+        password = PivotalRocketBackground.popup.$('#login_password').val()
         if username? && password?
           pivotal_auth_lib = new PivotalAuthLib
             username: username
