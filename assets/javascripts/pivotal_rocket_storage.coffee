@@ -1,4 +1,6 @@
-window.PivotalRocketStorage = 
+root = global ? window
+
+root.PivotalRocketStorage = 
   accounts: null,
   
   set: (key, json) ->

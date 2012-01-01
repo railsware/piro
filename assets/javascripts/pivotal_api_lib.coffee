@@ -1,4 +1,6 @@
-class window.PivotalApiLib
+root = global ? window
+
+class root.PivotalApiLib
   constructor: (@account) ->
     # constructor
     $.ajaxSetup
@@ -50,7 +52,7 @@ class window.PivotalApiLib
  
  
 # pivotal auth lib   
-class window.PivotalAuthLib
+class root.PivotalAuthLib
   constructor: (username, password) ->
     $.ajaxSetup
       timeout: 30000
