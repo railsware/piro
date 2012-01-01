@@ -18,3 +18,9 @@ window.PivotalRocketStorage =
   set_accounts: (accounts) ->
     PivotalRocketStorage.set("accounts", accounts)
     PivotalRocketStorage.accounts = accounts
+    
+  set_projects: (account, projects) ->
+    PivotalRocketStorage.set("projects_" + account.id, projects)
+    
+  get_projects: (account) ->
+    PivotalRocketStorage.get("projects_" + account.id)
