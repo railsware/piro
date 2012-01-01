@@ -26,3 +26,12 @@ root.PivotalRocketStorage =
     
   get_projects: (account) ->
     PivotalRocketStorage.get("projects_" + account.id)
+    
+  set_stories: (project, stories) ->
+    PivotalRocketStorage.set("stories_" + project.id, stories)
+    
+  set_stories_by_project_id: (project_id, stories) ->
+    PivotalRocketStorage.set("stories_" + project_id, stories)
+
+  get_stories: (project) ->
+    PivotalRocketStorage.get("stories_" + project.id)
