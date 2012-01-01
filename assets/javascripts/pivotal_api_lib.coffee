@@ -4,7 +4,7 @@ class root.PivotalApiLib
   constructor: (@account) ->
     # constructor
     $.ajaxSetup
-      timeout: 30000
+      timeout: 60000
       crossDomain: true
       dataType: 'xml'
       headers:
@@ -16,10 +16,12 @@ class root.PivotalApiLib
     $.ajax
       url: "https://www.pivotaltracker.com/services/v4/projects"
       success: (data, textStatus, jqXHR) =>
-        projects = $.xml2json(data)
-        PivotalRocketStorage.set_projects(@account, projects.project)
-        tmp_data = for project in projects.project
-          this.get_stories_for_project(project)
+        allprojects = XML2JSON.parse(data, true)
+        if allprojects.projects? && allprojects.projects.project?
+          allprojects.projects.project = [allprojects.projects.project] if allprojects.projects.project.constructor != Array
+          PivotalRocketStorage.set_projects(@account, allprojects.projects.project)
+          tmp_data = for project in allprojects.projects.project
+            this.get_stories_for_project(project)
       error: (jqXHR, textStatus, errorThrown) =>
         console.debug jqXHR
         console.debug textStatus
@@ -29,15 +31,18 @@ class root.PivotalApiLib
     $.ajax
       url: "http://www.pivotaltracker.com/services/v4/projects/" + project.id + "/stories?filter=" + encodeURIComponent("owner:" + @account.initials)
       success: (data, textStatus, jqXHR) =>
-        stories = $.xml2json(data)
-        console.debug stories
+        allstories = XML2JSON.parse(data, true)
+        if allstories.stories? && allstories.stories.story?
+          allstories.stories.story = [allstories.stories.story] if allstories.stories.story.constructor != Array
+          console.debug allstories.stories.story
         
       
   update_account: =>
     $.ajax
       url: "https://www.pivotaltracker.com/services/v4/me"
       success: (data, textStatus, jqXHR) =>
-        account = $.xml2json(data)
+        account = XML2JSON.parse(data, true)
+        account = account.person if account.person?
         if account.email?
           accounts = PivotalRocketStorage.get_accounts()
           new_accounts = for one_account in accounts
@@ -55,7 +60,7 @@ class root.PivotalApiLib
 class root.PivotalAuthLib
   constructor: (username, password) ->
     $.ajaxSetup
-      timeout: 30000
+      timeout: 60000
       crossDomain: true
       dataType: 'xml'
       headers: {}
@@ -65,7 +70,8 @@ class root.PivotalAuthLib
       username: username
       password: password
       success: (data, textStatus, jqXHR) ->
-        account = $.xml2json(data)
+        account = XML2JSON.parse(data, true)
+        account = account.person if account.person?
         if account.email?
           accounts = PivotalRocketStorage.get_accounts()
           is_pushed = false
