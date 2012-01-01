@@ -16,10 +16,18 @@
     </div>
     
     <div id="mainPage" class="block">
-      Hello
+      <ul id="storyList">
+      </ul>
     </div>
     
   </div>
+  
+  <!-- templates -->
+  <script id="story_cell" type="text/template">
+    <li>
+      {{name}} {{story_type}}
+    </li>
+  </script>
   
   <!-- vendors scripts -->
   <script src="javascripts/vendors/jquery-1.7.1.min.js" type="text/javascript"></script>
