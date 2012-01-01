@@ -1,7 +1,7 @@
 root = global ? window
 
 root.PivotalRocketStorage = 
-  accounts: null,
+  accounts: null
   
   set: (key, json) ->
     window.localStorage.setItem(key, JSON.stringify(json))

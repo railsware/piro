@@ -1,0 +1,26 @@
+html, body {
+  font-family: Helvetica, Arial, sans-serif;
+  font-style: normal;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  color: black;
+  font-size: 10pt;
+  overflow: hidden;
+}
+
+a {
+  color: #665;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.content {
+  margin: 0px 4px 0px 4px;
+  min-width: 440px;
+}
