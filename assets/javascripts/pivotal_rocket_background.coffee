@@ -22,7 +22,7 @@ root.PivotalRocketBackground =
   init_popup: ->
     PivotalRocketBackground.popup = PivotalRocketBackground.load_popup_view() if !PivotalRocketBackground.popup?
     if PivotalRocketBackground.popup?
-      PivotalRocketBackground.init_spinner(PivotalRocketBackground.is_loading)
+      PivotalRocketBackground.init_spinner()
       PivotalRocketBackground.init_bindings()
       if PivotalRocketStorage.get_accounts().length > 0
         PivotalRocketBackground.init_list_stories()
@@ -42,11 +42,9 @@ root.PivotalRocketBackground =
     
     # update link        
     PivotalRocketBackground.popup.$('#updateStories').click (event) =>
-      PivotalRocketBackground.is_loading = true
-      PivotalRocketBackground.init_spinner(PivotalRocketBackground.is_loading)
       PivotalRocketBackground.initial_sync()
   
-  init_spinner: (loading = false) ->
+  init_spinner: ->
     if PivotalRocketBackground.popup?
       template = PivotalRocketBackground.popup.$('#spinner_template').html()
       if template.length > 0
@@ -54,7 +52,7 @@ root.PivotalRocketBackground =
         hash_data = {
           update_msg: chrome.i18n.getMessage("update_stories_link")
         }
-        if loading
+        if PivotalRocketBackground.is_loading
           hash_data.is_loading = {
             loading_msg: chrome.i18n.getMessage("loading_msg")
           }
@@ -135,6 +133,9 @@ root.PivotalRocketBackground =
         PivotalRocketBackground.popup.$('#iceboxRequesterStoriesList').html(no_stories_msg)
       
   initial_sync: ->
+    PivotalRocketBackground.is_loading = true
+    PivotalRocketBackground.init_spinner()
+    
     PivotalRocketBackground.pivotal_api_lib = new PivotalApiLib(PivotalRocketBackground.account)
     PivotalRocketBackground.pivotal_api_lib.get_projects
       success: (data, textStatus, jqXHR) ->
@@ -151,7 +152,7 @@ root.PivotalRocketBackground =
               PivotalRocketBackground.tmp_counter -= 1
               if PivotalRocketBackground.tmp_counter <= 0
                 PivotalRocketBackground.is_loading = false
-                PivotalRocketBackground.init_spinner(PivotalRocketBackground.is_loading)
+                PivotalRocketBackground.init_spinner()
             success: (data, textStatus, jqXHR) ->
               stories = []
               allstories = XML2JSON.parse(data, true)
@@ -167,7 +168,7 @@ root.PivotalRocketBackground =
               PivotalRocketBackground.tmp_counter -= 1
               if PivotalRocketBackground.tmp_counter <= 0
                 PivotalRocketBackground.is_loading = false
-                PivotalRocketBackground.init_spinner(PivotalRocketBackground.is_loading)
+                PivotalRocketBackground.init_spinner()
             success: (data, textStatus, jqXHR) ->
               stories = []
               allstories = XML2JSON.parse(data, true)
