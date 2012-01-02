@@ -17,11 +17,17 @@
     
     <div id="mainPage" class="block">
       <div id="storiesTabs">
+        <!-- tabs -->
       	<ul>
       		<li><a id="currentTabLabel" href="#currentTab">Current</a></li>
       		<li><a id="doneTabLabel" href="#doneTab">Done</a></li>
       		<li><a id="iceboxTabLabel" href="#iceboxTab">IceBox</a></li>
       	</ul>
+      	<!-- panel -->
+      	<div>
+      	 <div id="loaderSpinner"></div>
+      	</div>
+      	<!-- tabs content -->
       	<div id="currentTab" class="tabs_content">
       	  <ul id="currentStoriesList">
       	  </ul>
@@ -34,6 +40,7 @@
       		<ul id="iceboxStoriesList">
       	  </ul>
       	</div>
+      	
       </div>
       
     </div>
@@ -41,17 +48,26 @@
   </div>
   
   <!-- templates -->
+  <script id="spinner_template" type="text/x-mustache-template">
+    {{#is_loading}}
+      <img src="images/small_spinner.gif" alt="{{message}}" title="{{message}}" />
+    {{/is_loading}}
+    {{^is_loading}}
+      <a id="updateStories" href="#">
+        <img src="images/small_spinner.gif" alt="update" title="update" />
+      </a>
+    {{/is_loading}}
+  </script>
+  
   <script id="project_cell" type="text/x-mustache-template">
-    <li>
+    <li class="project_{{id}}">
       {{name}}
+      <ul>
+        {{#stories}}
+          <li class="story_{{id}}">{{name}} | {{story_type}} | {{current_state}}</li>
+        {{/stories}}
+      </ul>
     </li>
-    <ul>
-      {{#stories}}
-      <li>
-        {{name}} | {{story_type}} | {{current_state}}
-      </li>
-      {{/stories}}
-    </ul>
   </script>
   
   <!-- vendors scripts -->

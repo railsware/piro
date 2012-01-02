@@ -17,6 +17,8 @@ root.PivotalRocketBackground =
   init_popup: ->
     PivotalRocketBackground.popup = PivotalRocketBackground.load_popup_view() if !PivotalRocketBackground.popup?
     if PivotalRocketBackground.popup?
+      PivotalRocketBackground.init_spinner()
+      PivotalRocketBackground.init_bindings()
       if PivotalRocketStorage.get_accounts().length > 0
         PivotalRocketBackground.init_list_stories()
         PivotalRocketBackground.popup.$('#loginPage').hide()
@@ -24,23 +26,32 @@ root.PivotalRocketBackground =
       else
         PivotalRocketBackground.popup.$('#mainPage').hide()
         PivotalRocketBackground.popup.$('#loginPage').show()
-        
-      # login  
-      PivotalRocketBackground.popup.$('#login_button').click (event) =>
-        username = PivotalRocketBackground.popup.$('#login_username').val()
-        password = PivotalRocketBackground.popup.$('#login_password').val()
-        if username? && password?
-          pivotal_auth_lib = new PivotalAuthLib
-            username: username
-            password: password
-            success: (data, textStatus, jqXHR) ->
-              account = XML2JSON.parse(data, true)
-              account = account.person if account.person?
-              PivotalRocketBackground.account = PivotalRocketBackground.save_account(account)
-              PivotalRocketBackground.initial_sync()
-              
-            error: (jqXHR, textStatus, errorThrown) ->
-              # error
+  
+  init_bindings: ->
+    PivotalRocketBackground.popup.$('#storiesTabs').tabs()
+    # login  
+    PivotalRocketBackground.popup.$('#login_button').click (event) =>
+      username = PivotalRocketBackground.popup.$('#login_username').val()
+      password = PivotalRocketBackground.popup.$('#login_password').val()
+      if username? && password?
+        pivotal_auth_lib = new PivotalAuthLib
+          username: username
+          password: password
+          success: (data, textStatus, jqXHR) ->
+            account = XML2JSON.parse(data, true)
+            account = account.person if account.person?
+            PivotalRocketBackground.account = PivotalRocketBackground.save_account(account)
+            PivotalRocketBackground.initial_sync()
+            
+          error: (jqXHR, textStatus, errorThrown) ->
+            # error
+  
+  init_spinner: ->
+    template = PivotalRocketBackground.popup.$('#spinner_template').html()
+    if template.length > 0
+      compiledTemplate = Hogan.compile(template)
+      hash_data = {}
+      PivotalRocketBackground.popup.$('#loaderSpinner').html(compiledTemplate.render(hash_data))
   
   init_list_stories: ->
     template = PivotalRocketBackground.popup.$('#project_cell').html()
@@ -82,8 +93,6 @@ root.PivotalRocketBackground =
         PivotalRocketBackground.popup.$('#iceboxStoriesList').html(stories_list.icebox.join(""))
       else
         PivotalRocketBackground.popup.$('#iceboxStoriesList').html(no_stories_msg)
-      
-    PivotalRocketBackground.popup.$('#storiesTabs').tabs()
   
   initial_sync: ->
     PivotalRocketBackground.pivotal_api_lib = new PivotalApiLib(PivotalRocketBackground.account)
