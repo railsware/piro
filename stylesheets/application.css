@@ -8,7 +8,6 @@ body {
   padding: 0px;
   color: black;
   font-size: 10pt;
-  overflow: hidden;
 }
 
 a {
@@ -23,6 +22,11 @@ a:hover {
 .content {
   margin: 0px 4px 0px 4px;
   min-width: 440px;
+}
+
+.tabs_content {
+  overflow: all;
+  height: 300px;
 }
 
 .ui-tabs .ui-tabs-hide {
