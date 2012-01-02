@@ -46,26 +46,31 @@ root.PivotalRocketBackground =
     template = PivotalRocketBackground.popup.$('#project_cell').html()
     if template.length > 0
       compiledTemplate = Hogan.compile(template)
-      current_stories_list = []
-      done_stories_list = []
-      icebox_stories_list = []
+      stories_list = {current: [], done: [], icebox: []}
+      stories_count = {current: 0, done: 0, icebox: 0}
       stored_projects = PivotalRocketStorage.get_projects(PivotalRocketBackground.account)
       for project in stored_projects
         stored_stories = PivotalRocketStorage.get_status_stories(project)
         if stored_stories?
           if stored_stories.current? && stored_stories.current.length > 0
             project.stories = stored_stories.current
-            current_stories_list.push(compiledTemplate.render(project))
+            stories_count.current += stored_stories.current.length
+            stories_list.current.push(compiledTemplate.render(project))
           if stored_stories.done? && stored_stories.done.length > 0
             project.stories = stored_stories.done
-            done_stories_list.push(compiledTemplate.render(project))
+            stories_count.done += stored_stories.done.length
+            stories_list.done.push(compiledTemplate.render(project))
           if stored_stories.icebox? && stored_stories.icebox.length > 0
             project.stories = stored_stories.icebox
-            icebox_stories_list.push(compiledTemplate.render(project))
+            stories_count.icebox += stored_stories.icebox.length
+            stories_list.icebox.push(compiledTemplate.render(project))
       
-      PivotalRocketBackground.popup.$('#currentStoriesList').html(current_stories_list.join(""))
-      PivotalRocketBackground.popup.$('#doneStoriesList').html(done_stories_list.join(""))
-      PivotalRocketBackground.popup.$('#iceboxStoriesList').html(icebox_stories_list.join(""))
+      PivotalRocketBackground.popup.$('#currentTabLabel').text(chrome.i18n.getMessage("current_stories_tab") + " (" + stories_count.current.toString() + ")")
+      PivotalRocketBackground.popup.$('#currentStoriesList').html(stories_list.current.join(""))
+      PivotalRocketBackground.popup.$('#doneTabLabel').text(chrome.i18n.getMessage("done_stories_tab") + " (" + stories_count.done.toString() + ")")
+      PivotalRocketBackground.popup.$('#doneStoriesList').html(stories_list.done.join(""))
+      PivotalRocketBackground.popup.$('#iceboxTabLabel').text(chrome.i18n.getMessage("icebox_stories_tab") + " (" + stories_count.icebox.toString() + ")")
+      PivotalRocketBackground.popup.$('#iceboxStoriesList').html(stories_list.icebox.join(""))
       
     PivotalRocketBackground.popup.$('#storiesTabs').tabs()
   

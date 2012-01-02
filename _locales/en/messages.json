@@ -2,5 +2,17 @@
   "app_description": {
     "message": "Pivotal Rocket is your rocket for Pivotal Tracker",
     "description": "The string we defined description for app."
+  },
+  "current_stories_tab": {
+    "message": "Current",
+    "description": "The current stories tab label."
+  },
+  "done_stories_tab": {
+    "message": "Done",
+    "description": "The done stories tab label."
+  },
+  "icebox_stories_tab": {
+    "message": "Icebox",
+    "description": "The icebox stories tab label."
   }
 }
