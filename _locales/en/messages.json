@@ -14,5 +14,9 @@
   "icebox_stories_tab": {
     "message": "Icebox",
     "description": "The icebox stories tab label."
+  },
+  "no_stories_msg": {
+    "message": "No stories in this category",
+    "description": "The message for empty list of stories."
   }
 }

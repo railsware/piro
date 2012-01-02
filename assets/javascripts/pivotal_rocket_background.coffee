@@ -65,12 +65,23 @@ root.PivotalRocketBackground =
             stories_count.icebox += stored_stories.icebox.length
             stories_list.icebox.push(compiledTemplate.render(project))
       
-      PivotalRocketBackground.popup.$('#currentTabLabel').text(chrome.i18n.getMessage("current_stories_tab") + " (" + stories_count.current.toString() + ")")
-      PivotalRocketBackground.popup.$('#currentStoriesList').html(stories_list.current.join(""))
-      PivotalRocketBackground.popup.$('#doneTabLabel').text(chrome.i18n.getMessage("done_stories_tab") + " (" + stories_count.done.toString() + ")")
-      PivotalRocketBackground.popup.$('#doneStoriesList').html(stories_list.done.join(""))
-      PivotalRocketBackground.popup.$('#iceboxTabLabel').text(chrome.i18n.getMessage("icebox_stories_tab") + " (" + stories_count.icebox.toString() + ")")
-      PivotalRocketBackground.popup.$('#iceboxStoriesList').html(stories_list.icebox.join(""))
+      no_stories_msg = "<li class='empty'>#{chrome.i18n.getMessage("no_stories_msg")}</li>"
+      
+      PivotalRocketBackground.popup.$('#currentTabLabel').text("#{chrome.i18n.getMessage("current_stories_tab")} (#{stories_count.current.toString()})")
+      if stories_count.current > 0
+        PivotalRocketBackground.popup.$('#currentStoriesList').html(stories_list.current.join(""))
+      else
+        PivotalRocketBackground.popup.$('#currentStoriesList').html(no_stories_msg)
+      PivotalRocketBackground.popup.$('#doneTabLabel').text("#{chrome.i18n.getMessage("done_stories_tab")} (#{stories_count.done.toString()})")
+      if stories_count.done > 0
+        PivotalRocketBackground.popup.$('#doneStoriesList').html(stories_list.done.join(""))
+      else
+        PivotalRocketBackground.popup.$('#doneStoriesList').html(no_stories_msg)
+      PivotalRocketBackground.popup.$('#iceboxTabLabel').text("#{chrome.i18n.getMessage("icebox_stories_tab")} (#{stories_count.icebox.toString()})")
+      if stories_count.icebox > 0
+        PivotalRocketBackground.popup.$('#iceboxStoriesList').html(stories_list.icebox.join(""))
+      else
+        PivotalRocketBackground.popup.$('#iceboxStoriesList').html(no_stories_msg)
       
     PivotalRocketBackground.popup.$('#storiesTabs').tabs()
   
