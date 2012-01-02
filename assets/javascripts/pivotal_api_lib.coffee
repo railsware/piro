@@ -21,6 +21,7 @@ class root.PivotalApiLib
       url: "http://www.pivotaltracker.com/services/v4/projects/" + params.project.id + "/stories?filter=" + encodeURIComponent("owner:" + @account.initials)
       success: params.success
       error: params.error
+      complete: params.complete
       
   update_account: =>
     $.ajax

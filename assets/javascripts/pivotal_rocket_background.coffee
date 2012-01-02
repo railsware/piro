@@ -5,6 +5,11 @@ root.PivotalRocketBackground =
   pivotal_api_lib: null
   # popup
   popup: null
+  # notification
+  is_loading: false
+  
+  # tmp variables
+  tmp_counter: 0
   
   init: ->
     if PivotalRocketStorage.get_accounts().length > 0
@@ -17,7 +22,7 @@ root.PivotalRocketBackground =
   init_popup: ->
     PivotalRocketBackground.popup = PivotalRocketBackground.load_popup_view() if !PivotalRocketBackground.popup?
     if PivotalRocketBackground.popup?
-      PivotalRocketBackground.init_spinner()
+      PivotalRocketBackground.init_spinner(PivotalRocketBackground.is_loading)
       PivotalRocketBackground.init_bindings()
       if PivotalRocketStorage.get_accounts().length > 0
         PivotalRocketBackground.init_list_stories()
@@ -33,26 +38,26 @@ root.PivotalRocketBackground =
     PivotalRocketBackground.popup.$('#login_button').click (event) =>
       username = PivotalRocketBackground.popup.$('#login_username').val()
       password = PivotalRocketBackground.popup.$('#login_password').val()
-      if username? && password?
-        pivotal_auth_lib = new PivotalAuthLib
-          username: username
-          password: password
-          success: (data, textStatus, jqXHR) ->
-            account = XML2JSON.parse(data, true)
-            account = account.person if account.person?
-            PivotalRocketBackground.account = PivotalRocketBackground.save_account(account)
-            PivotalRocketBackground.initial_sync()
-            
-          error: (jqXHR, textStatus, errorThrown) ->
-            # error
+      PivotalRocketBackground.login_by_user(username, password)
+    
+    # update link        
+    PivotalRocketBackground.popup.$('#updateStories').click (event) =>
+      PivotalRocketBackground.is_loading = true
+      PivotalRocketBackground.init_spinner(PivotalRocketBackground.is_loading)
+      PivotalRocketBackground.initial_sync()
   
-  init_spinner: ->
+  init_spinner: (loading = false) ->
     template = PivotalRocketBackground.popup.$('#spinner_template').html()
     if template.length > 0
       compiledTemplate = Hogan.compile(template)
       hash_data = {
         update_msg: chrome.i18n.getMessage("update_stories_link")
       }
+      if loading
+        hash_data.is_loading = {
+          loading_msg: chrome.i18n.getMessage("loading_msg")
+        }
+      
       PivotalRocketBackground.popup.$('#loaderSpinner').html(compiledTemplate.render(hash_data))
   
   init_list_stories: ->
@@ -105,9 +110,15 @@ root.PivotalRocketBackground =
         projects = allprojects.projects.project if allprojects.projects? && allprojects.projects.project?
         projects = [projects] if projects.constructor != Array
         PivotalRocketStorage.set_projects(PivotalRocketBackground.account, projects)
+        PivotalRocketBackground.tmp_counter = projects.length
         for project in projects
           PivotalRocketBackground.pivotal_api_lib.get_stories_for_project
             project: project
+            complete: (jqXHR, textStatus) ->
+              PivotalRocketBackground.tmp_counter -= 1
+              if PivotalRocketBackground.tmp_counter <= 0
+                PivotalRocketBackground.is_loading = false
+                PivotalRocketBackground.init_spinner(PivotalRocketBackground.is_loading)
             success: (data, textStatus, jqXHR) ->
               stories = []
               allstories = XML2JSON.parse(data, true)
@@ -135,7 +146,20 @@ root.PivotalRocketBackground =
         new_accounts.push(account)
       PivotalRocketStorage.set_accounts(new_accounts)
       account
-
+  
+  login_by_user: (username, password) ->
+    if username? && password?
+      pivotal_auth_lib = new PivotalAuthLib
+        username: username
+        password: password
+        success: (data, textStatus, jqXHR) ->
+          account = XML2JSON.parse(data, true)
+          account = account.person if account.person?
+          PivotalRocketBackground.account = PivotalRocketBackground.save_account(account)
+          PivotalRocketBackground.initial_sync()
+          
+        error: (jqXHR, textStatus, errorThrown) ->
+          # error
 
 
 $ ->

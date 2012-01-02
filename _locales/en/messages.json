@@ -22,5 +22,9 @@
   "update_stories_link": {
     "message": "Update stories",
     "description": "The message for update stories link."
+  },
+  "loading_msg": {
+    "message": "Loading...",
+    "description": "The message for loading."
   }
 }
