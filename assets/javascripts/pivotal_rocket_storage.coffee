@@ -27,17 +27,20 @@ root.PivotalRocketStorage =
   get_projects: (account) ->
     PivotalRocketStorage.get("projects_" + account.id)
     
-  set_stories: (project, stories) ->
-    PivotalRocketStorage.set("stories_" + project.id, stories)
+  set_stories: (project, stories, requester = false) ->
+    key = if requester then ("stories_" + project.id) else ("requester_stories_" + project.id)
+    PivotalRocketStorage.set(key, stories)
     
-  set_stories_by_project_id: (project_id, stories) ->
-    PivotalRocketStorage.set("stories_" + project_id, stories)
+  set_stories_by_project_id: (project_id, stories, requester = false) ->
+    key = if requester then ("stories_" + project_id) else ("requester_stories_" + project_id)
+    PivotalRocketStorage.set(key, stories)
 
-  get_stories: (project) ->
-    PivotalRocketStorage.get("stories_" + project.id)
+  get_stories: (project, requester = false) ->
+    key = if requester then ("stories_" + project.id) else ("requester_stories_" + project.id)
+    PivotalRocketStorage.get(key)
     
-  get_status_stories: (project) ->
-    stories = PivotalRocketStorage.get_stories(project)
+  get_status_stories: (project, requester = false) ->
+    stories = PivotalRocketStorage.get_stories(project, requester)
     if stories?
       current_stories = []
       done_stories = []
