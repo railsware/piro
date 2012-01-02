@@ -50,7 +50,9 @@ root.PivotalRocketBackground =
     template = PivotalRocketBackground.popup.$('#spinner_template').html()
     if template.length > 0
       compiledTemplate = Hogan.compile(template)
-      hash_data = {}
+      hash_data = {
+        update_msg: chrome.i18n.getMessage("update_stories_link")
+      }
       PivotalRocketBackground.popup.$('#loaderSpinner').html(compiledTemplate.render(hash_data))
   
   init_list_stories: ->

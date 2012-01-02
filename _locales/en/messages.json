@@ -18,5 +18,9 @@
   "no_stories_msg": {
     "message": "No stories in this category",
     "description": "The message for empty list of stories."
+  },
+  "update_stories_link": {
+    "message": "Update stories",
+    "description": "The message for update stories link."
   }
 }

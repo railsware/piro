@@ -50,11 +50,11 @@
   <!-- templates -->
   <script id="spinner_template" type="text/x-mustache-template">
     {{#is_loading}}
-      <img src="images/small_spinner.gif" alt="{{message}}" title="{{message}}" />
+      <img src="images/small_spinner.gif" alt="{{loading_msg}}" title="{{loading_msg}}" />
     {{/is_loading}}
     {{^is_loading}}
       <a id="updateStories" href="#">
-        <img src="images/small_spinner.gif" alt="update" title="update" />
+        <img src="images/small_spinner.gif" alt="{{update_msg}}" title="{{update_msg}}" />
       </a>
     {{/is_loading}}
   </script>
