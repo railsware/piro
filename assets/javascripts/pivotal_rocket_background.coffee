@@ -18,18 +18,7 @@ root.PivotalRocketBackground =
     PivotalRocketBackground.popup = PivotalRocketBackground.load_popup_view() if !PivotalRocketBackground.popup?
     if PivotalRocketBackground.popup?
       if PivotalRocketStorage.get_accounts().length > 0
-        
-        stories_list = []
-        template = PivotalRocketBackground.popup.$('#project_cell').html()
-        compiledTemplate = Hogan.compile(template)
-        stored_projects = PivotalRocketStorage.get_projects(PivotalRocketBackground.account)
-        for project in stored_projects
-          stored_stories = PivotalRocketStorage.get_stories(project)
-          if stored_stories?
-            project.stories = stored_stories
-            stories_list.push(compiledTemplate.render(project))
-        PivotalRocketBackground.popup.$('#storyList').html(stories_list.join(""))
-        
+        PivotalRocketBackground.init_list_stories()
         PivotalRocketBackground.popup.$('#loginPage').hide()
         PivotalRocketBackground.popup.$('#mainPage').show()
       else
@@ -52,6 +41,33 @@ root.PivotalRocketBackground =
               
             error: (jqXHR, textStatus, errorThrown) ->
               # error
+  
+  init_list_stories: ->
+    template = PivotalRocketBackground.popup.$('#project_cell').html()
+    if template.length > 0
+      compiledTemplate = Hogan.compile(template)
+      current_stories_list = []
+      done_stories_list = []
+      icebox_stories_list = []
+      stored_projects = PivotalRocketStorage.get_projects(PivotalRocketBackground.account)
+      for project in stored_projects
+        stored_stories = PivotalRocketStorage.get_status_stories(project)
+        if stored_stories?
+          if stored_stories.current? && stored_stories.current.length > 0
+            project.stories = stored_stories.current
+            current_stories_list.push(compiledTemplate.render(project))
+          if stored_stories.done? && stored_stories.done.length > 0
+            project.stories = stored_stories.done
+            done_stories_list.push(compiledTemplate.render(project))
+          if stored_stories.icebox? && stored_stories.icebox.length > 0
+            project.stories = stored_stories.icebox
+            icebox_stories_list.push(compiledTemplate.render(project))
+      
+      PivotalRocketBackground.popup.$('#currentStoriesList').html(current_stories_list.join(""))
+      PivotalRocketBackground.popup.$('#doneStoriesList').html(done_stories_list.join(""))
+      PivotalRocketBackground.popup.$('#iceboxStoriesList').html(icebox_stories_list.join(""))
+      
+    PivotalRocketBackground.popup.$('#storiesTabs').tabs()
   
   initial_sync: ->
     PivotalRocketBackground.pivotal_api_lib = new PivotalApiLib(PivotalRocketBackground.account)

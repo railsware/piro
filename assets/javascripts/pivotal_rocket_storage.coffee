@@ -35,3 +35,21 @@ root.PivotalRocketStorage =
 
   get_stories: (project) ->
     PivotalRocketStorage.get("stories_" + project.id)
+    
+  get_status_stories: (project) ->
+    stories = PivotalRocketStorage.get_stories(project)
+    if stories?
+      current_stories = []
+      done_stories = []
+      icebox_stories = []
+      for story in stories
+        if "unscheduled" == story.current_state
+          icebox_stories.push(story)
+        else if "accepted" == story.current_state
+          done_stories.push(story)
+        else
+          current_stories.push(story)
+    
+      return {current: current_stories, done: done_stories, icebox: icebox_stories}
+    else
+      return null
