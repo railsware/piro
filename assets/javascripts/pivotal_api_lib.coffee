@@ -55,14 +55,13 @@ class root.PivotalApiLib
  
 # pivotal auth lib   
 class root.PivotalAuthLib
-  constructor: (params) ->
-    $.ajaxSetup
-      timeout: 60000
-      crossDomain: true
-      dataType: 'xml'
-      headers: {}
-      
+  constructor: (params) ->      
     $.ajax
+      cache: false
+      global: false
+      dataType: 'xml'
+      headers: 
+        "X-TrackerToken": null 
       url: "https://www.pivotaltracker.com/services/v4/me"
       username: params.username
       password: params.password

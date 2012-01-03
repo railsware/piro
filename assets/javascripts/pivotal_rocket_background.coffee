@@ -13,7 +13,8 @@ root.PivotalRocketBackground =
   
   init: ->
     if PivotalRocketStorage.get_accounts().length > 0
-      PivotalRocketBackground.account = PivotalRocketStorage.get_accounts()[0]
+      if !PivotalRocketBackground.account?
+        PivotalRocketBackground.account = PivotalRocketStorage.get_accounts()[0]
       PivotalRocketBackground.initial_sync()
   
   load_popup_view: ->
@@ -24,6 +25,7 @@ root.PivotalRocketBackground =
     if PivotalRocketBackground.popup?
       PivotalRocketBackground.init_spinner()
       PivotalRocketBackground.init_bindings()
+      PivotalRocketBackground.init_account_swither()
       if PivotalRocketStorage.get_accounts().length > 0
         PivotalRocketBackground.init_list_stories()
         PivotalRocketBackground.popup.$('#loginPage').hide()
@@ -58,6 +60,23 @@ root.PivotalRocketBackground =
           }
       
         PivotalRocketBackground.popup.$('#loaderSpinner').html(compiledTemplate.render(hash_data))
+  
+  init_account_swither: ->
+    if PivotalRocketBackground.popup?
+      selector_id = "accountSelector"
+      selector = $("<select id='#{selector_id}'></select>")
+      for account in PivotalRocketStorage.get_accounts()
+        selector.append("<option value='#{account.id}'>#{account.email}</option>")
+      PivotalRocketBackground.popup.$('#changeAccountBox').empty().html(selector)
+      PivotalRocketBackground.popup.$("##{selector_id}").val(PivotalRocketBackground.account.id).change (event) =>
+        account_id = $(event.target).val()
+        for account in PivotalRocketStorage.get_accounts()
+          if parseInt(account.id) == parseInt(account_id)
+            PivotalRocketBackground.account = account
+            PivotalRocketBackground.init_list_stories()
+            return true
+        return false
+      PivotalRocketBackground.popup.$("##{selector_id}").chosen()
   
   init_list_stories: ->
     if PivotalRocketBackground.popup?
@@ -160,7 +179,7 @@ root.PivotalRocketBackground =
               allstories = XML2JSON.parse(data, true)
               stories = allstories.stories.story if allstories.stories? && allstories.stories.story?
               stories = [stories] if stories.constructor != Array
-              if stories.length > 0
+              if stories? && stories.length > 0
                 PivotalRocketStorage.set_stories(project, stories)
               else
                 PivotalRocketStorage.delete_stories(project)
@@ -180,7 +199,7 @@ root.PivotalRocketBackground =
               allstories = XML2JSON.parse(data, true)
               stories = allstories.stories.story if allstories.stories? && allstories.stories.story?
               stories = [stories] if stories.constructor != Array
-              if stories.length > 0
+              if stories? && stories.length > 0
                 PivotalRocketStorage.set_stories(project, stories, true)
               else
                 PivotalRocketStorage.delete_stories(project, true)
