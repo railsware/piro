@@ -100,44 +100,38 @@ root.PivotalRocketBackground =
 
         no_stories_msg = "<li class='empty'>#{chrome.i18n.getMessage("no_stories_msg")}</li>"
         # owner
-        PivotalRocketBackground.popup.$('#currentTabLabel').text("#{chrome.i18n.getMessage("current_stories_tab")} (#{stories_count.current.toString()})")
-        PivotalRocketBackground.popup.$('#currentStoriesList').empty()
+        PivotalRocketBackground.popup.$('#currentTabLabel').empty().text("#{chrome.i18n.getMessage("current_stories_tab")} (#{stories_count.current.toString()})")
         if stories_count.current > 0
-          PivotalRocketBackground.popup.$('#currentStoriesList').html(stories_list.current.join(""))
+          PivotalRocketBackground.popup.$('#currentStoriesList').empty().html(stories_list.current.join(""))
         else
-          PivotalRocketBackground.popup.$('#currentStoriesList').html(no_stories_msg)
-        PivotalRocketBackground.popup.$('#doneTabLabel').text("#{chrome.i18n.getMessage("done_stories_tab")} (#{stories_count.done.toString()})")
-        PivotalRocketBackground.popup.$('#doneStoriesList').empty()
+          PivotalRocketBackground.popup.$('#currentStoriesList').empty().html(no_stories_msg)
+        PivotalRocketBackground.popup.$('#doneTabLabel').empty().text("#{chrome.i18n.getMessage("done_stories_tab")} (#{stories_count.done.toString()})")
         if stories_count.done > 0
-          PivotalRocketBackground.popup.$('#doneStoriesList').html(stories_list.done.join(""))
+          PivotalRocketBackground.popup.$('#doneStoriesList').empty().html(stories_list.done.join(""))
         else
-          PivotalRocketBackground.popup.$('#doneStoriesList').html(no_stories_msg)
-        PivotalRocketBackground.popup.$('#iceboxTabLabel').text("#{chrome.i18n.getMessage("icebox_stories_tab")} (#{stories_count.icebox.toString()})")
-        PivotalRocketBackground.popup.$('#iceboxStoriesList').empty()
+          PivotalRocketBackground.popup.$('#doneStoriesList').empty().html(no_stories_msg)
+        PivotalRocketBackground.popup.$('#iceboxTabLabel').empty().text("#{chrome.i18n.getMessage("icebox_stories_tab")} (#{stories_count.icebox.toString()})")
         if stories_count.icebox > 0
-          PivotalRocketBackground.popup.$('#iceboxStoriesList').html(stories_list.icebox.join(""))
+          PivotalRocketBackground.popup.$('#iceboxStoriesList').empty().html(stories_list.icebox.join(""))
         else
-          PivotalRocketBackground.popup.$('#iceboxStoriesList').html(no_stories_msg)
+          PivotalRocketBackground.popup.$('#iceboxStoriesList').empty().html(no_stories_msg)
 
         # requester
-        PivotalRocketBackground.popup.$('#currentRequesterTabLabel').text("#{chrome.i18n.getMessage("current_stories_tab")} (#{stories_count.rcurrent.toString()})")
-        PivotalRocketBackground.popup.$('#currentRequesterStoriesList').empty()
+        PivotalRocketBackground.popup.$('#currentRequesterTabLabel').empty().text("#{chrome.i18n.getMessage("current_stories_tab")} (#{stories_count.rcurrent.toString()})")
         if stories_count.rcurrent > 0
-          PivotalRocketBackground.popup.$('#currentRequesterStoriesList').html(stories_list.rcurrent.join(""))
+          PivotalRocketBackground.popup.$('#currentRequesterStoriesList').empty().html(stories_list.rcurrent.join(""))
         else
-          PivotalRocketBackground.popup.$('#currentRequesterStoriesList').html(no_stories_msg)
-        PivotalRocketBackground.popup.$('#doneRequesterTabLabel').text("#{chrome.i18n.getMessage("done_stories_tab")} (#{stories_count.rdone.toString()})")
-        PivotalRocketBackground.popup.$('#doneRequesterStoriesList').empty()
+          PivotalRocketBackground.popup.$('#currentRequesterStoriesList').empty().html(no_stories_msg)
+        PivotalRocketBackground.popup.$('#doneRequesterTabLabel').empty().text("#{chrome.i18n.getMessage("done_stories_tab")} (#{stories_count.rdone.toString()})")
         if stories_count.rdone > 0
-          PivotalRocketBackground.popup.$('#doneRequesterStoriesList').html(stories_list.rdone.join(""))
+          PivotalRocketBackground.popup.$('#doneRequesterStoriesList').empty().html(stories_list.rdone.join(""))
         else
-          PivotalRocketBackground.popup.$('#doneRequesterStoriesList').html(no_stories_msg)
-        PivotalRocketBackground.popup.$('#iceboxRequesterTabLabel').text("#{chrome.i18n.getMessage("icebox_stories_tab")} (#{stories_count.ricebox.toString()})")
-        PivotalRocketBackground.popup.$('#iceboxRequesterStoriesList').empty()
+          PivotalRocketBackground.popup.$('#doneRequesterStoriesList').empty().html(no_stories_msg)
+        PivotalRocketBackground.popup.$('#iceboxRequesterTabLabel').empty().text("#{chrome.i18n.getMessage("icebox_stories_tab")} (#{stories_count.ricebox.toString()})")
         if stories_count.ricebox > 0
-          PivotalRocketBackground.popup.$('#iceboxRequesterStoriesList').html(stories_list.ricebox.join(""))
+          PivotalRocketBackground.popup.$('#iceboxRequesterStoriesList').empty().html(stories_list.ricebox.join(""))
         else
-          PivotalRocketBackground.popup.$('#iceboxRequesterStoriesList').html(no_stories_msg)
+          PivotalRocketBackground.popup.$('#iceboxRequesterStoriesList').empty().html(no_stories_msg)
       
   initial_sync: ->
     PivotalRocketBackground.is_loading = true
