@@ -15,7 +15,7 @@ root.PivotalRocketBackground =
     if PivotalRocketStorage.get_accounts().length > 0
       if !PivotalRocketBackground.account?
         PivotalRocketBackground.account = PivotalRocketStorage.get_accounts()[0]
-      PivotalRocketBackground.initial_sync()
+      PivotalRocketBackground.initial_sync(PivotalRocketBackground.account)
   
   load_popup_view: ->
     chrome.extension.getViews({type:"popup"})[0]
@@ -25,7 +25,6 @@ root.PivotalRocketBackground =
     if PivotalRocketBackground.popup?
       PivotalRocketBackground.init_spinner()
       PivotalRocketBackground.init_bindings()
-      PivotalRocketBackground.init_account_swither()
       if PivotalRocketStorage.get_accounts().length > 0
         PivotalRocketBackground.init_list_stories()
         PivotalRocketBackground.popup.$('#loginPage').hide()
@@ -44,10 +43,10 @@ root.PivotalRocketBackground =
     
     # update link        
     PivotalRocketBackground.popup.$('#updateStories').click (event) =>
-      PivotalRocketBackground.initial_sync()
+      PivotalRocketBackground.initial_sync(PivotalRocketBackground.account)
   
   init_spinner: ->
-    if PivotalRocketBackground.popup?
+    if PivotalRocketBackground.popup? && PivotalRocketBackground.account?
       template = PivotalRocketBackground.popup.$('#spinner_template').html()
       if template.length > 0
         compiledTemplate = Hogan.compile(template)
@@ -60,23 +59,28 @@ root.PivotalRocketBackground =
           }
       
         PivotalRocketBackground.popup.$('#loaderSpinner').html(compiledTemplate.render(hash_data))
+      # init account switcher
+      PivotalRocketBackground.init_account_swither()
   
   init_account_swither: ->
     if PivotalRocketBackground.popup?
-      selector_id = "accountSelector"
-      selector = $("<select id='#{selector_id}'></select>")
-      for account in PivotalRocketStorage.get_accounts()
-        selector.append("<option value='#{account.id}'>#{account.email}</option>")
-      PivotalRocketBackground.popup.$('#changeAccountBox').empty().html(selector)
-      PivotalRocketBackground.popup.$("##{selector_id}").val(PivotalRocketBackground.account.id).change (event) =>
-        account_id = $(event.target).val()
+      if PivotalRocketBackground.is_loading
+        PivotalRocketBackground.popup.$('#changeAccountBox').empty().html(chrome.i18n.getMessage("loading_msg"))
+      else
+        selector_id = "accountSelector"
+        selector = $("<select id='#{selector_id}'></select>")
         for account in PivotalRocketStorage.get_accounts()
-          if parseInt(account.id) == parseInt(account_id)
-            PivotalRocketBackground.account = account
-            PivotalRocketBackground.init_list_stories()
-            return true
-        return false
-      PivotalRocketBackground.popup.$("##{selector_id}").chosen()
+          selector.append("<option value='#{account.id}'>#{account.email}</option>")
+        PivotalRocketBackground.popup.$('#changeAccountBox').empty().html(selector)
+        PivotalRocketBackground.popup.$("##{selector_id}").val(PivotalRocketBackground.account.id).change (event) =>
+          account_id = $(event.target).val()
+          for account in PivotalRocketStorage.get_accounts()
+            if parseInt(account.id) == parseInt(account_id)
+              PivotalRocketBackground.account = account
+              PivotalRocketBackground.init_list_stories()
+              return true
+          return false
+        PivotalRocketBackground.popup.$("##{selector_id}").chosen()
   
   init_list_stories: ->
     if PivotalRocketBackground.popup?
@@ -152,18 +156,18 @@ root.PivotalRocketBackground =
         else
           PivotalRocketBackground.popup.$('#iceboxRequesterStoriesList').empty().html(no_stories_msg)
       
-  initial_sync: ->
+  initial_sync: (pivotal_account) ->
     PivotalRocketBackground.is_loading = true
     PivotalRocketBackground.init_spinner()
     
-    PivotalRocketBackground.pivotal_api_lib = new PivotalApiLib(PivotalRocketBackground.account)
+    PivotalRocketBackground.pivotal_api_lib = new PivotalApiLib(pivotal_account)
     PivotalRocketBackground.pivotal_api_lib.get_projects
-      success: (data, textStatus, jqXHR) ->
+      success: (data, textStatus, jqXHR) =>
         allprojects = XML2JSON.parse(data, true)
         projects = []
         projects = allprojects.projects.project if allprojects.projects? && allprojects.projects.project?
         projects = [projects] if projects.constructor != Array
-        PivotalRocketStorage.set_projects(PivotalRocketBackground.account, projects)
+        PivotalRocketStorage.set_projects(pivotal_account, projects)
         PivotalRocketBackground.tmp_counter = projects.length * 2
         for project in projects
           PivotalRocketBackground.pivotal_api_lib.get_stories_for_project
@@ -234,7 +238,7 @@ root.PivotalRocketBackground =
           account = XML2JSON.parse(data, true)
           account = account.person if account.person?
           PivotalRocketBackground.account = PivotalRocketBackground.save_account(account)
-          PivotalRocketBackground.initial_sync()
+          PivotalRocketBackground.initial_sync(PivotalRocketBackground.account)
           
         error: (jqXHR, textStatus, errorThrown) ->
           # error
