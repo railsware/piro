@@ -19,14 +19,18 @@ class root.PivotalApiLib
   get_stories_for_project: (params) =>
     $.ajax
       url: "http://www.pivotaltracker.com/services/v4/projects/" + params.project.id + "/stories?filter=" + encodeURIComponent("owner:" + @account.initials)
-      success: params.success
+      success: (data, textStatus, jqXHR) ->
+        if params? && params.success?
+          params.success(data, textStatus, jqXHR, params.project)
       error: params.error
       complete: params.complete
       
   get_stories_for_project_requester: (params) =>
     $.ajax
       url: "http://www.pivotaltracker.com/services/v4/projects/" + params.project.id + "/stories?filter=" + encodeURIComponent("requester:" + @account.initials)
-      success: params.success
+      success: (data, textStatus, jqXHR) ->
+        if params? && params.success?
+          params.success(data, textStatus, jqXHR, params.project)
       error: params.error
       complete: params.complete
       

@@ -10,6 +10,8 @@ root.PivotalRocketStorage =
     str_data = window.localStorage.getItem(key)
     json_data = if str_data? then JSON.parse(str_data) else null
     json_data
+  delete_by_key: (key) ->
+    window.localStorage.removeItem(key)
     
   get_accounts: ->
     if !PivotalRocketStorage.accounts?
@@ -30,14 +32,14 @@ root.PivotalRocketStorage =
   set_stories: (project, stories, requester = false) ->
     key = if requester then ("stories_" + project.id) else ("requester_stories_" + project.id)
     PivotalRocketStorage.set(key, stories)
-    
-  set_stories_by_project_id: (project_id, stories, requester = false) ->
-    key = if requester then ("stories_" + project_id) else ("requester_stories_" + project_id)
-    PivotalRocketStorage.set(key, stories)
-
+  
   get_stories: (project, requester = false) ->
     key = if requester then ("stories_" + project.id) else ("requester_stories_" + project.id)
     PivotalRocketStorage.get(key)
+    
+  delete_stories: (project, requester = false) ->
+    key = if requester then ("stories_" + project.id) else ("requester_stories_" + project.id)
+    PivotalRocketStorage.delete_by_key(key)
     
   get_status_stories: (project, requester = false) ->
     stories = PivotalRocketStorage.get_stories(project, requester)
