@@ -1,0 +1,1 @@
+((function(){var a;a=typeof global!="undefined"&&global!==null?global:window,a.PivotalRocketOptions={background_page:chrome.extension.getBackgroundPage(),init:function(){return console.debug(PivotalRocketStorage.get_accounts())}},$(function(){return PivotalRocketOptions.init()})})).call(this)
