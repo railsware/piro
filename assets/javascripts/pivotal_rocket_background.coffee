@@ -103,37 +103,38 @@ root.PivotalRocketBackground =
         stories_list = {current: [], done: [], icebox: [], rcurrent: [], rdone: [], ricebox: []}
         stories_count = {current: 0, done: 0, icebox: 0, rcurrent: 0, rdone: 0, ricebox: 0}
         stored_projects = PivotalRocketStorage.get_projects(PivotalRocketBackground.account)
-        for project in stored_projects
-          stored_stories = PivotalRocketStorage.get_status_stories(project)
-          if stored_stories?
-            if stored_stories.current? && stored_stories.current.length > 0
-              project.stories = stored_stories.current
-              stories_count.current += stored_stories.current.length
-              stories_list.current.push(compiledTemplate.render(project))
-            if stored_stories.done? && stored_stories.done.length > 0
-              project.stories = stored_stories.done
-              stories_count.done += stored_stories.done.length
-              stories_list.done.push(compiledTemplate.render(project))
-            if stored_stories.icebox? && stored_stories.icebox.length > 0
-              project.stories = stored_stories.icebox
-              stories_count.icebox += stored_stories.icebox.length
-              stories_list.icebox.push(compiledTemplate.render(project))
+        if stored_projects?
+          for project in stored_projects
+            stored_stories = PivotalRocketStorage.get_status_stories(project)
+            if stored_stories?
+              if stored_stories.current? && stored_stories.current.length > 0
+                project.stories = stored_stories.current
+                stories_count.current += stored_stories.current.length
+                stories_list.current.push(compiledTemplate.render(project))
+              if stored_stories.done? && stored_stories.done.length > 0
+                project.stories = stored_stories.done
+                stories_count.done += stored_stories.done.length
+                stories_list.done.push(compiledTemplate.render(project))
+              if stored_stories.icebox? && stored_stories.icebox.length > 0
+                project.stories = stored_stories.icebox
+                stories_count.icebox += stored_stories.icebox.length
+                stories_list.icebox.push(compiledTemplate.render(project))
 
-          rstored_stories = PivotalRocketStorage.get_status_stories(project, true)
-          if rstored_stories?
-            project.is_requested_by_me = true
-            if rstored_stories.current? && rstored_stories.current.length > 0
-              project.stories = rstored_stories.current
-              stories_count.rcurrent += rstored_stories.current.length
-              stories_list.rcurrent.push(compiledTemplate.render(project))
-            if rstored_stories.done? && rstored_stories.done.length > 0
-              project.stories = rstored_stories.done
-              stories_count.rdone += rstored_stories.done.length
-              stories_list.rdone.push(compiledTemplate.render(project))
-            if rstored_stories.icebox? && rstored_stories.icebox.length > 0
-              project.stories = rstored_stories.icebox
-              stories_count.ricebox += rstored_stories.icebox.length
-              stories_list.ricebox.push(compiledTemplate.render(project))
+            rstored_stories = PivotalRocketStorage.get_status_stories(project, true)
+            if rstored_stories?
+              project.is_requested_by_me = true
+              if rstored_stories.current? && rstored_stories.current.length > 0
+                project.stories = rstored_stories.current
+                stories_count.rcurrent += rstored_stories.current.length
+                stories_list.rcurrent.push(compiledTemplate.render(project))
+              if rstored_stories.done? && rstored_stories.done.length > 0
+                project.stories = rstored_stories.done
+                stories_count.rdone += rstored_stories.done.length
+                stories_list.rdone.push(compiledTemplate.render(project))
+              if rstored_stories.icebox? && rstored_stories.icebox.length > 0
+                project.stories = rstored_stories.icebox
+                stories_count.ricebox += rstored_stories.icebox.length
+                stories_list.ricebox.push(compiledTemplate.render(project))
 
         no_stories_msg = "<li class='empty'>#{chrome.i18n.getMessage("no_stories_msg")}</li>"
         # owner
