@@ -56,7 +56,7 @@ root.PivotalRocketBackground =
         template = PivotalRocketBackground.popup.$('#story_info_template').html()
         if template.length > 0
           compiledTemplate = Hogan.compile(template)
-          PivotalRocketBackground.popup.$('#storyInfo').empty().html(compiledTemplate.render(story)).show("blind", { direction: "left" }, "normal")
+          PivotalRocketBackground.popup.$('#storyInfo').empty().html(compiledTemplate.render(story)).show("blind", { direction: "right" }, "normal")
   
   init_spinner: ->
     if PivotalRocketBackground.popup? && PivotalRocketBackground.account?
