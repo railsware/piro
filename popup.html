@@ -64,6 +64,8 @@
       
     </div>
     
+    <div id="storyInfo"></div>
+    
   </div>
   
   <!-- templates -->
@@ -81,12 +83,16 @@
   <script id="project_cell" type="text/x-mustache-template">
     <li class="project_{{id}}">
       {{name}}
-      <ul>
+      <ul data-project-id="{{id}}" {{#is_requested_by_me}}data-requested="true"{{/is_requested_by_me}}>
         {{#stories}}
-          <li class="story_{{id}}">{{name}} | {{story_type}} | {{current_state}}</li>
+          <li class="story_info story_{{id}}" data-story-id="{{id}}">{{name}} | {{story_type}} | {{current_state}}</li>
         {{/stories}}
       </ul>
     </li>
+  </script>
+  
+  <script id="story_info_template" type="text/x-mustache-template">
+    {{name}} | {{story_type}} | {{current_state}}
   </script>
   
   <!-- vendors scripts -->

@@ -44,6 +44,19 @@ root.PivotalRocketBackground =
     # update link        
     PivotalRocketBackground.popup.$('#updateStories').click (event) =>
       PivotalRocketBackground.initial_sync(PivotalRocketBackground.account)
+      
+    PivotalRocketBackground.popup.$("#mainPage").on "click", "li.story_info", (event) =>
+      element_object = $(event.target)
+      story_id = element_object.data("story-id")
+      project_id = element_object.parent('ul').data("project-id")
+      requester = element_object.parent('ul').data("requested")
+      requester = if requester? then true else false
+      story = PivotalRocketStorage.find_story(project_id, story_id, requester)
+      if story?
+        template = PivotalRocketBackground.popup.$('#story_info_template').html()
+        if template.length > 0
+          compiledTemplate = Hogan.compile(template)
+          PivotalRocketBackground.popup.$('#storyInfo').empty().html(compiledTemplate.render(story)).show("slide", { direction: "left" }, 500)
   
   init_spinner: ->
     if PivotalRocketBackground.popup? && PivotalRocketBackground.account?
@@ -58,7 +71,7 @@ root.PivotalRocketBackground =
             loading_msg: chrome.i18n.getMessage("loading_msg")
           }
       
-        PivotalRocketBackground.popup.$('#loaderSpinner').html(compiledTemplate.render(hash_data))
+        PivotalRocketBackground.popup.$('#loaderSpinner').empty().html(compiledTemplate.render(hash_data))
       # init account switcher
       PivotalRocketBackground.init_account_swither()
   
@@ -108,6 +121,7 @@ root.PivotalRocketBackground =
 
           rstored_stories = PivotalRocketStorage.get_status_stories(project, true)
           if rstored_stories?
+            project.is_requested_by_me = true
             if rstored_stories.current? && rstored_stories.current.length > 0
               project.stories = rstored_stories.current
               stories_count.rcurrent += rstored_stories.current.length

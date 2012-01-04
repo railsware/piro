@@ -58,3 +58,11 @@ root.PivotalRocketStorage =
       return {current: current_stories, done: done_stories, icebox: icebox_stories}
     else
       return null
+      
+  find_story: (project_id, story_id, requester = false) ->
+    key = if requester then ("stories_" + project_id) else ("requester_stories_" + project_id)
+    stories = PivotalRocketStorage.get(key)
+    if stories?
+      for story in stories
+        return story if parseInt(story.id) == parseInt(story_id)
+    return null
