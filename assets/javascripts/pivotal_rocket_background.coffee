@@ -45,7 +45,7 @@ root.PivotalRocketBackground =
       PivotalRocketBackground.initial_sync(PivotalRocketBackground.account)
     # change type list
     #PivotalRocketBackground.popup.$('#changeAccount').chosen()
-    PivotalRocketBackground.popup.$('#changeAccount').val(PivotalRocketBackground.account.id).change (event) =>
+    PivotalRocketBackground.popup.$('#changeAccount').change (event) =>
       PivotalRocketBackground.change_account()
     # change type list
     #PivotalRocketBackground.popup.$('#selecterStoriesType').chosen()
@@ -112,6 +112,7 @@ root.PivotalRocketBackground =
       PivotalRocketBackground.popup.$('#changeAccount').prop('disabled', PivotalRocketBackground.is_loading).empty()
       for account in PivotalRocketStorage.get_accounts()
         PivotalRocketBackground.popup.$('#changeAccount').append("<option value='#{account.id}'>#{account.email}</option>")
+      PivotalRocketBackground.popup.$('#changeAccount').val(PivotalRocketBackground.account.id)
   # show stories list
   init_list_stories: ->
     if PivotalRocketBackground.popup?
