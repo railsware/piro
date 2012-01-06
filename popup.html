@@ -8,15 +8,11 @@
 </head>
 <body>
   
-  <div class="content">
-    
-    <div id="loginPage" class="block">
-      <input id="login_username" type="text" plaseholder="Login" />
-      <input id="login_password" type="password" plaseholder="Password" />
-      <input id="login_button" type="button" value="Login" />
-    </div>
-    
-    <div id="mainPage" class="block">
+  <div class="container">
+    <!-- main story info -->
+    <div id="storyInfo"></div>
+    <!-- main screen -->
+    <div id="mainPage">
       <div id="storiesTabs">
         <!-- tabs -->
       	<ul>
@@ -46,7 +42,7 @@
       		<ul id="iceboxStoriesList">
       	  </ul>
       	</div>
-      	
+      	<!-- requester tabs content -->
       	<div id="currentRequesterTab" class="tabs_content">
       	  <ul id="currentRequesterStoriesList">
       	  </ul>
@@ -61,10 +57,14 @@
       	</div>
       	
       </div>
-      
     </div>
     
-    <div id="storyInfo"></div>
+    <!-- login -->
+    <div id="loginPage" class="four columns">
+      <input id="login_username" type="text" plaseholder="Login" />
+      <input id="login_password" type="password" plaseholder="Password" />
+      <input id="login_button" type="button" value="Login" />
+    </div>
     
   </div>
   

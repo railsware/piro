@@ -10,16 +10,16 @@ root.PivotalRocketBackground =
   
   # tmp variables
   tmp_counter: 0
-  
+  # init background page (chrome loaded)
   init: ->
     if PivotalRocketStorage.get_accounts().length > 0
       if !PivotalRocketBackground.account?
         PivotalRocketBackground.account = PivotalRocketStorage.get_accounts()[0]
       PivotalRocketBackground.initial_sync(PivotalRocketBackground.account)
-  
+  # load popup view
   load_popup_view: ->
     chrome.extension.getViews({type:"popup"})[0]
-  
+  # popup open
   init_popup: ->
     PivotalRocketBackground.popup = PivotalRocketBackground.load_popup_view() if !PivotalRocketBackground.popup?
     if PivotalRocketBackground.popup?
@@ -27,12 +27,12 @@ root.PivotalRocketBackground =
       PivotalRocketBackground.init_bindings()
       if PivotalRocketStorage.get_accounts().length > 0
         PivotalRocketBackground.init_list_stories()
-        PivotalRocketBackground.popup.$('#loginPage').hide()
+        PivotalRocketBackground.popup.$('#loginPage, #storyInfo').hide()
         PivotalRocketBackground.popup.$('#mainPage').show()
       else
-        PivotalRocketBackground.popup.$('#mainPage').hide()
+        PivotalRocketBackground.popup.$('#mainPage, #storyInfo').hide()
         PivotalRocketBackground.popup.$('#loginPage').show()
-  
+  # init popup bindings
   init_bindings: ->
     PivotalRocketBackground.popup.$('#storiesTabs').tabs()
     # login  
@@ -40,11 +40,10 @@ root.PivotalRocketBackground =
       username = PivotalRocketBackground.popup.$('#login_username').val()
       password = PivotalRocketBackground.popup.$('#login_password').val()
       PivotalRocketBackground.login_by_user(username, password)
-    
     # update link        
     PivotalRocketBackground.popup.$('#updateStories').click (event) =>
       PivotalRocketBackground.initial_sync(PivotalRocketBackground.account)
-      
+    # click on story  
     PivotalRocketBackground.popup.$("#mainPage").on "click", "li.story_info", (event) =>
       element_object = $(event.target)
       story_id = element_object.data("story-id")
@@ -56,8 +55,10 @@ root.PivotalRocketBackground =
         template = PivotalRocketBackground.popup.$('#story_info_template').html()
         if template.length > 0
           compiledTemplate = Hogan.compile(template)
-          PivotalRocketBackground.popup.$('#storyInfo').empty().html(compiledTemplate.render(story)).show("blind", { direction: "right" }, "normal")
-  
+          block_element = PivotalRocketBackground.popup.$('#storyInfo')
+          block_element.empty().html(compiledTemplate.render(story))
+          block_element.show("blind", { direction: "vertical" }, "normal")
+  # spinner for update stories
   init_spinner: ->
     if PivotalRocketBackground.popup? && PivotalRocketBackground.account?
       template = PivotalRocketBackground.popup.$('#spinner_template').html()
@@ -74,7 +75,7 @@ root.PivotalRocketBackground =
         PivotalRocketBackground.popup.$('#loaderSpinner').empty().html(compiledTemplate.render(hash_data))
       # init account switcher
       PivotalRocketBackground.init_account_swither()
-  
+  # account switch between accounts
   init_account_swither: ->
     if PivotalRocketBackground.popup?
       if PivotalRocketBackground.is_loading
@@ -94,7 +95,7 @@ root.PivotalRocketBackground =
               return true
           return false
         PivotalRocketBackground.popup.$("##{selector_id}").chosen()
-  
+  # show stories list
   init_list_stories: ->
     if PivotalRocketBackground.popup?
       template = PivotalRocketBackground.popup.$('#project_cell').html()
@@ -170,7 +171,7 @@ root.PivotalRocketBackground =
           PivotalRocketBackground.popup.$('#iceboxRequesterStoriesList').empty().html(stories_list.ricebox.join(""))
         else
           PivotalRocketBackground.popup.$('#iceboxRequesterStoriesList').empty().html(no_stories_msg)
-      
+  # sync all data by account    
   initial_sync: (pivotal_account) ->
     PivotalRocketBackground.is_loading = true
     PivotalRocketBackground.init_spinner()
@@ -227,7 +228,7 @@ root.PivotalRocketBackground =
             
       error: (jqXHR, textStatus, errorThrown) ->
         # error
-                
+  # save account after login              
   save_account: (account) ->
     if account.email?
       accounts = PivotalRocketStorage.get_accounts()
@@ -243,7 +244,7 @@ root.PivotalRocketBackground =
         new_accounts.push(account)
       PivotalRocketStorage.set_accounts(new_accounts)
       account
-  
+  # login
   login_by_user: (username, password) ->
     if username? && password?
       pivotal_auth_lib = new PivotalAuthLib
