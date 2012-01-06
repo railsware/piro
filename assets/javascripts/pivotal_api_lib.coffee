@@ -48,8 +48,19 @@ class root.PivotalApiLib
                 account
               else
                 one_account
-           PivotalRocketStorage.set_accounts(new_accounts)
+          PivotalRocketStorage.set_accounts(new_accounts)
+          
+  get_activities: (date = new Date()) =>
+    formated_date = this.formated_date(date)
+    console.debug "http://www.pivotaltracker.com/services/v4/activities?limit=100&occurred_since_date=" + encodeURIComponent(formated_date)
+    $.ajax
+      url: "http://www.pivotaltracker.com/services/v4/activities?limit=100&occurred_since_date=" + encodeURIComponent(formated_date)
+      success: (data, textStatus, jqXHR) =>
+        activities = XML2JSON.parse(data, true)
+        console.debug activities
     
+  formated_date: (date) =>
+    return "#{date.getFullYear()}/#{date.getMonth() + 1}/#{date.getDate()} #{date.getHours()}:#{date.getMinutes()}:00"
  
  
  
