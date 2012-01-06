@@ -29,6 +29,11 @@ a:hover {
   width: 400px;
 }
 
+.block {
+  height: 300px;
+  width: 400px;
+}
+
 /*
  * jQuery UI Tabs 1.8.16
  *

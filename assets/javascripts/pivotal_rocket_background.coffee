@@ -7,7 +7,8 @@ root.PivotalRocketBackground =
   popup: null
   # notification
   is_loading: false
-  
+  # tabs
+  stories_tabs: []
   # tmp variables
   tmp_counter: 0
   # init background page (chrome loaded)
@@ -30,11 +31,12 @@ root.PivotalRocketBackground =
         PivotalRocketBackground.popup.$('#loginPage, #storyInfo').hide()
         PivotalRocketBackground.popup.$('#mainPage').show()
       else
-        PivotalRocketBackground.popup.$('#mainPage, #storyInfo').hide()
+        PivotalRocketBackground.popup.$('#mainPage').hide()
         PivotalRocketBackground.popup.$('#loginPage').show()
   # init popup bindings
   init_bindings: ->
-    PivotalRocketBackground.popup.$('#storiesTabs').tabs()
+    PivotalRocketBackground.stories_tabs['owner'] = PivotalRocketBackground.popup.$('#ownerStories').tabs()
+    PivotalRocketBackground.stories_tabs['requester'] = PivotalRocketBackground.popup.$('#requesterStories').tabs()
     # login  
     PivotalRocketBackground.popup.$('#login_button').click (event) =>
       username = PivotalRocketBackground.popup.$('#login_username').val()
@@ -43,21 +45,42 @@ root.PivotalRocketBackground =
     # update link        
     PivotalRocketBackground.popup.$('#updateStories').click (event) =>
       PivotalRocketBackground.initial_sync(PivotalRocketBackground.account)
+    # change type list
+    PivotalRocketBackground.popup.$('#selecterStoriesType').chosen()
+    PivotalRocketBackground.change_view_type()
+    PivotalRocketBackground.popup.$('#selecterStoriesType').change (event) =>
+      PivotalRocketBackground.change_view_type()
     # click on story  
-    PivotalRocketBackground.popup.$("#mainPage").on "click", "li.story_info", (event) =>
+    PivotalRocketBackground.popup.$("#storiesTabs").on "click", "li.story_info", (event) =>
       element_object = $(event.target)
       story_id = element_object.data("story-id")
       project_id = element_object.parent('ul').data("project-id")
       requester = element_object.parent('ul').data("requested")
       requester = if requester? then true else false
       story = PivotalRocketStorage.find_story(project_id, story_id, requester)
-      if story?
-        template = PivotalRocketBackground.popup.$('#story_info_template').html()
-        if template.length > 0
-          compiledTemplate = Hogan.compile(template)
-          block_element = PivotalRocketBackground.popup.$('#storyInfo')
-          block_element.empty().html(compiledTemplate.render(story))
-          block_element.show("blind", { direction: "vertical" }, "normal")
+      PivotalRocketBackground.show_story_info(story)
+  # change view type
+  change_view_type: ->
+    if PivotalRocketBackground.popup? && PivotalRocketBackground.account?
+      PivotalRocketBackground.popup.$('#selecterStoriesType').attr('disabled', '')
+      selected_type = PivotalRocketBackground.popup.$('#selecterStoriesType').val()
+      PivotalRocketBackground.popup.$('#storiesTabs div.block').hide()
+      PivotalRocketBackground.popup.$("#storiesTabs ##{selected_type}Stories").show()
+      if PivotalRocketBackground.stories_tabs[selected_type]?
+        PivotalRocketBackground.stories_tabs[selected_type].tabs('select', 0)
+    else
+      PivotalRocketBackground.popup.$('#selecterStoriesType').attr('disabled', 'disabled')
+  # show story details
+  show_story_info: (story) ->
+    if story?
+      template = PivotalRocketBackground.popup.$('#story_info_template').html()
+      if template.length > 0
+        compiledTemplate = Hogan.compile(template)
+        block_element = PivotalRocketBackground.popup.$('#storyInfo')
+        block_element.empty().html(compiledTemplate.render(story))
+        
+        PivotalRocketBackground.popup.$('#infoPanel').hide()
+        block_element.show("blind", { direction: "vertical" }, "normal")
   # spinner for update stories
   init_spinner: ->
     if PivotalRocketBackground.popup? && PivotalRocketBackground.account?

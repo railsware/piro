@@ -8,64 +8,79 @@
 </head>
 <body>
   
-  <div class="container">
-    <!-- main story info -->
-    <div id="storyInfo"></div>
+  <div class="mainPage">
     <!-- main screen -->
-    <div id="mainPage">
+    <div id="leftPanel">
+      <!-- panel -->
+    	<div>
+    	 <div id="changeAccountBox"></div>
+    	 <div id="selecterStoriesBox">
+    	   <select id="selecterStoriesType">
+    	     <option value="owner" selected="selected">Owner</option>
+    	     <option value="requester">Requester</option>
+    	   </select>
+    	 </div>
+    	 <div id="loaderSpinner"></div>
+    	</div>
       <div id="storiesTabs">
-        <!-- tabs -->
-      	<ul>
-      		<li><a id="currentTabLabel" href="#currentTab">Current</a></li>
-      		<li><a id="doneTabLabel" href="#doneTab">Done</a></li>
-      		<li><a id="iceboxTabLabel" href="#iceboxTab">IceBox</a></li>
-      		
-      		<li><a id="currentRequesterTabLabel" href="#currentRequesterTab">Current</a></li>
-      		<li><a id="doneRequesterTabLabel" href="#doneRequesterTab">Done</a></li>
-      		<li><a id="iceboxRequesterTabLabel" href="#iceboxRequesterTab">IceBox</a></li>
-      	</ul>
-      	<!-- panel -->
-      	<div>
-      	 <div id="loaderSpinner"></div>
-      	 <div id="changeAccountBox"></div>
-      	</div>
-      	<!-- tabs content -->
-      	<div id="currentTab" class="tabs_content">
-      	  <ul id="currentStoriesList">
-      	  </ul>
-      	</div>
-      	<div id="doneTab" class="tabs_content">
-      		<ul id="doneStoriesList">
-      	  </ul>
-      	</div>
-      	<div id="iceboxTab" class="tabs_content">
-      		<ul id="iceboxStoriesList">
-      	  </ul>
+      	<div id="ownerStories" class="block">
+      	  <ul>
+        		<li class="owner tab"><a id="currentTabLabel" href="#currentTab">Current</a></li>
+        		<li class="owner tab"><a id="doneTabLabel" href="#doneTab">Done</a></li>
+        		<li class="owner tab"><a id="iceboxTabLabel" href="#iceboxTab">IceBox</a></li>
+        	</ul>
+      	  <!-- tabs content -->
+        	<div id="currentTab" class="tabs_content">
+        	  <ul id="currentStoriesList">
+        	  </ul>
+        	</div>
+        	<div id="doneTab" class="tabs_content">
+        		<ul id="doneStoriesList">
+        	  </ul>
+        	</div>
+        	<div id="iceboxTab" class="tabs_content">
+        		<ul id="iceboxStoriesList">
+        	  </ul>
+        	</div>
       	</div>
       	<!-- requester tabs content -->
-      	<div id="currentRequesterTab" class="tabs_content">
-      	  <ul id="currentRequesterStoriesList">
-      	  </ul>
+      	<div id="requesterStories" class="block">
+      	  <ul>
+        		<li class="requester tab"><a id="currentRequesterTabLabel" href="#currentRequesterTab">Current</a></li>
+        		<li class="requester tab"><a id="doneRequesterTabLabel" href="#doneRequesterTab">Done</a></li>
+        		<li class="requester tab"><a id="iceboxRequesterTabLabel" href="#iceboxRequesterTab">IceBox</a></li>
+        	</ul>
+        	<div id="currentRequesterTab" class="tabs_content">
+        	  <ul id="currentRequesterStoriesList">
+        	  </ul>
+        	</div>
+        	<div id="doneRequesterTab" class="tabs_content">
+        		<ul id="doneRequesterStoriesList">
+        	  </ul>
+        	</div>
+        	<div id="iceboxRequesterTab" class="tabs_content">
+        		<ul id="iceboxRequesterStoriesList">
+        	  </ul>
+        	</div>
       	</div>
-      	<div id="doneRequesterTab" class="tabs_content">
-      		<ul id="doneRequesterStoriesList">
-      	  </ul>
-      	</div>
-      	<div id="iceboxRequesterTab" class="tabs_content">
-      		<ul id="iceboxRequesterStoriesList">
-      	  </ul>
-      	</div>
-      	
       </div>
     </div>
     
+    <!-- main story info and notifications -->
+    <div id="rightPanel">
+      <div id="storyInfo"></div>
+      <div id="infoPanel"></div>
+    </div>
+    
+  </div>
+  
+  <div id="loginPage">
     <!-- login -->
-    <div id="loginPage" class="four columns">
+    <div>
       <input id="login_username" type="text" plaseholder="Login" />
       <input id="login_password" type="password" plaseholder="Password" />
       <input id="login_button" type="button" value="Login" />
     </div>
-    
   </div>
   
   <!-- templates -->
