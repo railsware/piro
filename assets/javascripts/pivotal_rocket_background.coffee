@@ -7,8 +7,6 @@ root.PivotalRocketBackground =
   popup: null
   # notification
   is_loading: false
-  # tabs
-  stories_tabs: []
   # tmp variables
   tmp_counter: 0
   # init background page (chrome loaded)
@@ -35,8 +33,8 @@ root.PivotalRocketBackground =
         PivotalRocketBackground.popup.$('#loginPage').show()
   # init popup bindings
   init_bindings: ->
-    PivotalRocketBackground.stories_tabs['owner'] = PivotalRocketBackground.popup.$('#ownerStories').tabs()
-    PivotalRocketBackground.stories_tabs['requester'] = PivotalRocketBackground.popup.$('#requesterStories').tabs()
+    PivotalRocketBackground.popup.$('#ownerStories').tabs()
+    PivotalRocketBackground.popup.$('#requesterStories').tabs()
     # login  
     PivotalRocketBackground.popup.$('#login_button').click (event) =>
       username = PivotalRocketBackground.popup.$('#login_username').val()
@@ -46,8 +44,11 @@ root.PivotalRocketBackground =
     PivotalRocketBackground.popup.$('#updateStories').click (event) =>
       PivotalRocketBackground.initial_sync(PivotalRocketBackground.account)
     # change type list
-    PivotalRocketBackground.popup.$('#selecterStoriesType').chosen()
-    PivotalRocketBackground.change_view_type()
+    #PivotalRocketBackground.popup.$('#changeAccount').chosen()
+    PivotalRocketBackground.popup.$('#changeAccount').val(PivotalRocketBackground.account.id).change (event) =>
+      PivotalRocketBackground.change_account()
+    # change type list
+    #PivotalRocketBackground.popup.$('#selecterStoriesType').chosen()
     PivotalRocketBackground.popup.$('#selecterStoriesType').change (event) =>
       PivotalRocketBackground.change_view_type()
     # click on story  
@@ -59,17 +60,23 @@ root.PivotalRocketBackground =
       requester = if requester? then true else false
       story = PivotalRocketStorage.find_story(project_id, story_id, requester)
       PivotalRocketBackground.show_story_info(story)
+  # change account
+  change_account: ->
+    account_id = PivotalRocketBackground.popup.$('#changeAccount').val()
+    for account in PivotalRocketStorage.get_accounts()
+      if parseInt(account.id) == parseInt(account_id)
+        PivotalRocketBackground.account = account
+        PivotalRocketBackground.init_list_stories()
+        return true
+    return false
   # change view type
   change_view_type: ->
     if PivotalRocketBackground.popup? && PivotalRocketBackground.account?
-      PivotalRocketBackground.popup.$('#selecterStoriesType').attr('disabled', '')
       selected_type = PivotalRocketBackground.popup.$('#selecterStoriesType').val()
       PivotalRocketBackground.popup.$('#storiesTabs div.block').hide()
-      PivotalRocketBackground.popup.$("#storiesTabs ##{selected_type}Stories").show()
-      if PivotalRocketBackground.stories_tabs[selected_type]?
-        PivotalRocketBackground.stories_tabs[selected_type].tabs('select', 0)
-    else
-      PivotalRocketBackground.popup.$('#selecterStoriesType').attr('disabled', 'disabled')
+      selector = PivotalRocketBackground.popup.$("#storiesTabs ##{selected_type}Stories")
+      selector.show()
+      
   # show story details
   show_story_info: (story) ->
     if story?
@@ -98,26 +105,13 @@ root.PivotalRocketBackground =
         PivotalRocketBackground.popup.$('#loaderSpinner').empty().html(compiledTemplate.render(hash_data))
       # init account switcher
       PivotalRocketBackground.init_account_swither()
+      PivotalRocketBackground.change_view_type()
   # account switch between accounts
   init_account_swither: ->
-    if PivotalRocketBackground.popup?
-      if PivotalRocketBackground.is_loading
-        PivotalRocketBackground.popup.$('#changeAccountBox').empty().html(chrome.i18n.getMessage("loading_msg"))
-      else
-        selector_id = "accountSelector"
-        selector = $("<select id='#{selector_id}'></select>")
-        for account in PivotalRocketStorage.get_accounts()
-          selector.append("<option value='#{account.id}'>#{account.email}</option>")
-        PivotalRocketBackground.popup.$('#changeAccountBox').empty().html(selector)
-        PivotalRocketBackground.popup.$("##{selector_id}").val(PivotalRocketBackground.account.id).change (event) =>
-          account_id = $(event.target).val()
-          for account in PivotalRocketStorage.get_accounts()
-            if parseInt(account.id) == parseInt(account_id)
-              PivotalRocketBackground.account = account
-              PivotalRocketBackground.init_list_stories()
-              return true
-          return false
-        PivotalRocketBackground.popup.$("##{selector_id}").chosen()
+    if PivotalRocketBackground.popup? && PivotalRocketBackground.account?
+      PivotalRocketBackground.popup.$('#changeAccount').prop('disabled', PivotalRocketBackground.is_loading).empty()
+      for account in PivotalRocketStorage.get_accounts()
+        PivotalRocketBackground.popup.$('#changeAccount').append("<option value='#{account.id}'>#{account.email}</option>")
   # show stories list
   init_list_stories: ->
     if PivotalRocketBackground.popup?
