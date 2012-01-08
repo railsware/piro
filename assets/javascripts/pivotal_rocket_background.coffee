@@ -115,7 +115,7 @@ root.PivotalRocketBackground =
         block_element.empty().html(compiledTemplate.render(story))
         
         PivotalRocketBackground.popup.$('#infoPanel').hide()
-        block_element.show("blind", { direction: "vertical" }, "normal")
+        block_element.show()
   # spinner for update stories
   init_spinner: ->
     if PivotalRocketBackground.popup? && PivotalRocketBackground.account?
