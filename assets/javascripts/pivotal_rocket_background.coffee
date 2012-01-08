@@ -80,6 +80,34 @@ root.PivotalRocketBackground =
   # show story details
   show_story_info: (story) ->
     if story?
+      console.debug story
+      # normalize notes
+      if story.notes?
+        if story.notes.note?
+          if story.notes.note.constructor != Array
+            story.notes = [story.notes.note]
+          else
+            story.notes = story.notes.note
+        else
+          story.notes = [story.notes] if story.notes.constructor != Array
+      # normalize tasks
+      if story.tasks?
+        if story.tasks.task?
+          if story.tasks.task.constructor != Array
+            story.tasks = [story.tasks.task]
+          else
+            story.tasks = story.tasks.task
+        else
+          story.tasks = [story.tasks] if story.tasks.constructor != Array
+      if story.tasks? && story.tasks.length > 0
+        story.tasks = for task in story.tasks
+          task.complete = if "true" == task.complete then true else false
+          task
+          
+      # normalize description
+      if story.description? && jQuery.isEmptyObject(story.description)
+        story.description = ""
+      # generate template
       template = PivotalRocketBackground.popup.$('#story_info_template').html()
       if template.length > 0
         compiledTemplate = Hogan.compile(template)

@@ -3,7 +3,6 @@
 <head>
   <title>Pivotal Rocket</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <link href="stylesheets/vendors/chosen.css" media="screen" rel="stylesheet" type="text/css" />
   <link href="stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -110,7 +109,24 @@
   </script>
   
   <script id="story_info_template" type="text/x-mustache-template">
-    {{name}} | {{story_type}} | {{current_state}}
+    <h2>{{name}}</h2>
+    <p>{{story_type}}</p>
+    <p>{{current_state}}</p>
+    <p>{{description}}</p>
+    <p>{{estimate}}</p>
+    <p>{{url}}</p>
+    <p>{{owned_by.person.name}}</p>
+    <p>{{requested_by.person.name}}</p>
+    <ul>
+      {{#notes}}
+        <li>{{author.person.name}} | {{text}}</li>
+      {{/notes}}
+    </ul>
+    <ul>
+      {{#tasks}}
+        <li>{{description}} | {{#complete}}Completed{{/complete}}{{^complete}}Uncompleted{{/complete}}</li>
+      {{/tasks}}
+    </ul>
   </script>
   
   <!-- vendors scripts -->
