@@ -78,3 +78,4 @@ class root.PivotalAuthLib
       password: params.password
       success: params.success
       error: params.error
+      beforeSend: params.beforeSend

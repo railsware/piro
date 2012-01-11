@@ -26,10 +26,10 @@ root.PivotalRocketBackground =
       PivotalRocketBackground.init_bindings()
       if PivotalRocketStorage.get_accounts().length > 0
         PivotalRocketBackground.init_list_stories()
-        PivotalRocketBackground.popup.$('#loginPage, #storyInfo').hide()
+        PivotalRocketBackground.popup.$('#loginPage, #storyInfo, #loadingPage').hide()
         PivotalRocketBackground.popup.$('#mainPage').show()
       else
-        PivotalRocketBackground.popup.$('#mainPage').hide()
+        PivotalRocketBackground.popup.$('#mainPage, #storyInfo, #loadingPage').hide()
         PivotalRocketBackground.popup.$('#loginPage').show()
   # init popup bindings
   init_bindings: ->
@@ -301,9 +301,16 @@ root.PivotalRocketBackground =
           account = account.person if account.person?
           PivotalRocketBackground.account = PivotalRocketBackground.save_account(account)
           PivotalRocketBackground.initial_sync(PivotalRocketBackground.account)
+          PivotalRocketBackground.init_popup()
           
         error: (jqXHR, textStatus, errorThrown) ->
-          # error
+          if PivotalRocketBackground.popup?
+            PivotalRocketBackground.popup.$('#loadingPage').hide()
+            PivotalRocketBackground.popup.$('#loginPage').show()
+        beforeSend: (jqXHR, settings) ->
+          if PivotalRocketBackground.popup?
+            PivotalRocketBackground.popup.$('#loginPage').hide()
+            PivotalRocketBackground.popup.$('#loadingPage').show()
 
 
 $ ->
