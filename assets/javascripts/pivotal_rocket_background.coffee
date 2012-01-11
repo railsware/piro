@@ -307,6 +307,7 @@ root.PivotalRocketBackground =
           
         error: (jqXHR, textStatus, errorThrown) ->
           if PivotalRocketBackground.popup?
+            PivotalRocketBackground.popup.$('#loginPage .error_msg').text(errorThrown)
             PivotalRocketBackground.popup.$('#loadingPage').hide()
             PivotalRocketBackground.popup.$('#loginPage').show()
         beforeSend: (jqXHR, settings) ->
