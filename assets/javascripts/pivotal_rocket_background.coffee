@@ -36,10 +36,10 @@ root.PivotalRocketBackground =
     PivotalRocketBackground.popup.$('#ownerStories').tabs()
     PivotalRocketBackground.popup.$('#requesterStories').tabs()
     # login  
-    PivotalRocketBackground.popup.$('#login_button').click (event) =>
-      username = PivotalRocketBackground.popup.$('#login_username').val()
-      password = PivotalRocketBackground.popup.$('#login_password').val()
-      PivotalRocketBackground.login_by_user(username, password)
+    PivotalRocketBackground.popup.$('#loginButton').click (event) =>
+      PivotalRocketBackground.login_by_user()
+    PivotalRocketBackground.popup.$('#loginUsername, #loginPassword').keydown (event) =>
+      PivotalRocketBackground.login_by_user() if 13 == event.keyCode
     # update link        
     PivotalRocketBackground.popup.$('#updateStories').click (event) =>
       PivotalRocketBackground.initial_sync(PivotalRocketBackground.account)
@@ -291,7 +291,9 @@ root.PivotalRocketBackground =
       PivotalRocketStorage.set_accounts(new_accounts)
       account
   # login
-  login_by_user: (username, password) ->
+  login_by_user: ->
+    username = PivotalRocketBackground.popup.$('#loginUsername').val()
+    password = PivotalRocketBackground.popup.$('#loginPassword').val()
     if username? && password?
       pivotal_auth_lib = new PivotalAuthLib
         username: username
