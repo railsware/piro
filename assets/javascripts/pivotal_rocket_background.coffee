@@ -18,6 +18,12 @@ root.PivotalRocketBackground =
   # load popup view
   load_popup_view: ->
     chrome.extension.getViews({type:"popup"})[0]
+  # chrome icon
+  init_icon_status: ->
+    if PivotalRocketBackground.is_loading
+      chrome.browserAction.setBadgeText({'text': '...'})
+    else
+      chrome.browserAction.setBadgeText({'text': ''})
   # popup open
   init_popup: ->
     PivotalRocketBackground.popup = PivotalRocketBackground.load_popup_view() if !PivotalRocketBackground.popup?
@@ -118,6 +124,7 @@ root.PivotalRocketBackground =
         block_element.show()
   # spinner for update stories
   init_spinner: ->
+    PivotalRocketBackground.init_icon_status()
     if PivotalRocketBackground.popup? && PivotalRocketBackground.account?
       template = PivotalRocketBackground.popup.$('#spinner_template').html()
       if template.length > 0
