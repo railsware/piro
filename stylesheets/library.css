@@ -1,0 +1,80 @@
+/* colors */
+.positive {
+    color: #238c00;
+}
+
+.negative {
+    color: #cc0000;
+}
+
+.neutral {
+    color: #666;
+}
+
+.pale {
+    color: #999;
+}
+
+.opaque {
+    color: #333;
+}
+
+.firm {
+    color: #0080BD;
+}
+
+/* links */
+a {
+	color: #135785;
+	text-decoration: none;
+}
+
+a:hover, a:active {
+	color: #333;
+}
+
+.inline {
+    display: inline;
+}
+
+.block {
+    display: block;
+}
+
+.txt-center {
+    text-align: center;
+}
+
+.txt-right {
+    text-align: right;
+}
+
+abbr {
+    cursor: help;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+.holder {
+    position: relative;
+}
+
+.wrap-text {
+    word-wrap: break-word;
+}
+
+.not-implemented {
+    opacity: 0.4;
+}
+
+
+/* login page */
+#loginPage {
+    width: 280px;
+}
+
+#loginPage input {
+    padding: 5px;
+}

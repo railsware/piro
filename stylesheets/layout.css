@@ -1,27 +1,8 @@
-html, body {
-  font-family: Helvetica, Arial, sans-serif;
-  font-style: normal;
-}
-
 body {
-  margin: 0px;
-  padding: 0px;
-  color: black;
-  font-size: 10pt;
+    font: 12px/1.4 arial, sans-serif;
+    background-color: #AEB6B9;
 }
 
-a {
-  color: #665;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-.container {
-  padding: 0 20px;
-}
 
 .tabs_content {
   overflow: auto;

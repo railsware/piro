@@ -3,7 +3,14 @@
 <head>
   <title>Pivotal Rocket</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <link href="stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="stylesheets/reset.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="stylesheets/grids.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="stylesheets/spaces.css" media="screen" rel="stylesheet" type="text/css" />  
+  <link href="stylesheets/group-headers.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="stylesheets/group-buttons.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="stylesheets/group-forms.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="stylesheets/layout.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="stylesheets/library.css" media="screen" rel="stylesheet" type="text/css" />
 </head>
 <body>
   
@@ -76,13 +83,23 @@
     
   </div>
   
-  <div id="loginPage">
+  <div id="loginPage" class="pal">
+    <div class="txt-center mbm">
+      <img src="images/logo.png" alt="Pivotal Rocket" />
+    </div> <!-- txt-center -->
+    
     <!-- login -->
     <div class="error_msg"></div>
+    <div class="pvs">
+      <input id="loginUsername" class="h2" type="text" placeholder="Email" />
+    </div> <!-- pvs -->
+    <div class="pvs">
+      <input id="loginPassword" class="h2" type="password" placeholder="Password" />
+    </div> <!-- pvs -->
     <div>
-      <input id="loginUsername" type="text" plaseholder="Login" />
-      <input id="loginPassword" type="password" plaseholder="Password" />
+    <div class="pvs txt-center">
       <input id="loginButton" type="button" value="Login" />
+    </div> <!-- pvs -->
     </div>
   </div>
   
