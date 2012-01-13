@@ -32,10 +32,10 @@ root.PivotalRocketBackground =
       PivotalRocketBackground.init_bindings()
       if PivotalRocketStorage.get_accounts().length > 0
         PivotalRocketBackground.init_list_stories()
-        PivotalRocketBackground.popup.$('#loginPage, #storyInfo, #loadingPage').hide()
+        PivotalRocketBackground.popup.$('#loginPage, #storyInfo').hide()
         PivotalRocketBackground.popup.$('#mainPage').show()
       else
-        PivotalRocketBackground.popup.$('#mainPage, #storyInfo, #loadingPage').hide()
+        PivotalRocketBackground.popup.$('#mainPage, #storyInfo').hide()
         PivotalRocketBackground.popup.$('#loginPage').show()
   # init popup bindings
   init_bindings: ->
@@ -314,13 +314,11 @@ root.PivotalRocketBackground =
           
         error: (jqXHR, textStatus, errorThrown) ->
           if PivotalRocketBackground.popup?
+            PivotalRocketBackground.popup.$('#loginPage').removeClass('locading')
             PivotalRocketBackground.popup.$('#loginPage .error_msg').text(errorThrown)
-            PivotalRocketBackground.popup.$('#loadingPage').hide()
-            PivotalRocketBackground.popup.$('#loginPage').show()
         beforeSend: (jqXHR, settings) ->
           if PivotalRocketBackground.popup?
-            PivotalRocketBackground.popup.$('#loginPage').hide()
-            PivotalRocketBackground.popup.$('#loadingPage').show()
+            PivotalRocketBackground.popup.$('#loginPage').addClass('locading')
 
 
 $ ->
