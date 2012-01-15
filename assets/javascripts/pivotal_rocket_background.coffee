@@ -146,7 +146,8 @@ root.PivotalRocketBackground =
     if PivotalRocketBackground.popup? && PivotalRocketBackground.account?
       PivotalRocketBackground.popup.$('#changeAccount').prop('disabled', PivotalRocketBackground.is_loading).empty()
       for account in PivotalRocketStorage.get_accounts()
-        PivotalRocketBackground.popup.$('#changeAccount').append("<option value='#{account.id}'>#{account.email}</option>")
+        account_title = if account.company_name then account.company_name else account.email
+        PivotalRocketBackground.popup.$('#changeAccount').append("<option value='#{account.id}'>#{account_title}</option>")
       PivotalRocketBackground.popup.$('#changeAccount').val(PivotalRocketBackground.account.id)
   # show stories list
   init_list_stories: ->
@@ -308,6 +309,8 @@ root.PivotalRocketBackground =
         success: (data, textStatus, jqXHR) ->
           account = XML2JSON.parse(data, true)
           account = account.person if account.person?
+          company_name = PivotalRocketBackground.popup.$('#loginCompanyName').val()
+          account.company_name = company_name if company_name.length > 0
           PivotalRocketBackground.account = PivotalRocketBackground.save_account(account)
           PivotalRocketBackground.initial_sync(PivotalRocketBackground.account)
           PivotalRocketBackground.init_popup()
