@@ -176,6 +176,7 @@ p {
     border-radius: 5px 0 0 0;
 }
 
+
 .ui-tabs .ui-tabs-nav { margin: 0; padding: 0; }
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected a { 
     text-shadow: 0 1px 0 rgba(0,0,0, 0.8);
