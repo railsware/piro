@@ -20,7 +20,7 @@
       <!-- panel -->
 
       <div id="storiesTabs">
-      	<div id="ownerStories">
+      	<div id="ownerStories" class="tabs_content_block">
       	  <ul class="nav outer">
         		<li class="owner tab size1of3"><a id="currentTabLabel" href="#currentTab">Current</a></li>
         		<li class="owner tab size1of3"><a id="doneTabLabel" href="#doneTab">Done</a></li>
@@ -31,12 +31,33 @@
         	  <ul id="currentStoriesList">
         	  </ul>
         	</div>
-        	<div id="doneTab" class="tabs_content">
+        	<div id="doneTab" class="tabs_content data-holder">
         		<ul id="doneStoriesList">
         	  </ul>
         	</div>
-        	<div id="iceboxTab" class="tabs_content">
+        	<div id="iceboxTab" class="tabs_content data-holder">
         		<ul id="iceboxStoriesList">
+        	  </ul>
+        	</div>
+      	</div>
+      	
+      	<!-- requester tabs content -->
+      	<div id="requesterStories" class="tabs_content_block">
+      	  <ul class="nav outer">
+        		<li class="requester tab size1of3"><a id="currentRequesterTabLabel" href="#currentRequesterTab">Current</a></li>
+        		<li class="requester tab size1of3"><a id="doneRequesterTabLabel" href="#doneRequesterTab">Done</a></li>
+        		<li class="requester tab size1of3"><a id="iceboxRequesterTabLabel" href="#iceboxRequesterTab">IceBox</a></li>
+        	</ul>
+        	<div id="currentRequesterTab" class="tabs_content data-holder">
+        	  <ul id="currentRequesterStoriesList">
+        	  </ul>
+        	</div>
+        	<div id="doneRequesterTab" class="tabs_content data-holder">
+        		<ul id="doneRequesterStoriesList">
+        	  </ul>
+        	</div>
+        	<div id="iceboxRequesterTab" class="tabs_content data-holder">
+        		<ul id="iceboxRequesterStoriesList">
         	  </ul>
         	</div>
       	</div>
@@ -59,26 +80,6 @@
           </div> <!-- outer -->          
         </div> <!-- footer -->      	
       	
-      	<!-- requester tabs content -->
-      	<div id="requesterStories">
-      	  <ul>
-        		<li class="requester tab"><a id="currentRequesterTabLabel" href="#currentRequesterTab">Current</a></li>
-        		<li class="requester tab"><a id="doneRequesterTabLabel" href="#doneRequesterTab">Done</a></li>
-        		<li class="requester tab"><a id="iceboxRequesterTabLabel" href="#iceboxRequesterTab">IceBox</a></li>
-        	</ul>
-        	<div id="currentRequesterTab" class="tabs_content">
-        	  <ul id="currentRequesterStoriesList">
-        	  </ul>
-        	</div>
-        	<div id="doneRequesterTab" class="tabs_content">
-        		<ul id="doneRequesterStoriesList">
-        	  </ul>
-        	</div>
-        	<div id="iceboxRequesterTab" class="tabs_content">
-        		<ul id="iceboxRequesterStoriesList">
-        	  </ul>
-        	</div>
-      	</div>
       </div>
     </div>
     

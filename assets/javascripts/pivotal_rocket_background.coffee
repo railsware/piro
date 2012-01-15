@@ -60,12 +60,7 @@ root.PivotalRocketBackground =
     # click on story  
     PivotalRocketBackground.popup.$("#storiesTabs").on "click", "li.story_info", (event) =>
       element_object = $(event.target)
-      story_id = element_object.data("story-id")
-      project_id = element_object.parent('ul').data("project-id")
-      requester = element_object.parent('ul').data("requested")
-      requester = if requester? then true else false
-      story = PivotalRocketStorage.find_story(project_id, story_id, requester)
-      PivotalRocketBackground.show_story_info(story)
+      PivotalRocketBackground.bind_story_cell(element_object)
   # change account
   change_account: ->
     account_id = PivotalRocketBackground.popup.$('#changeAccount').val()
@@ -79,10 +74,17 @@ root.PivotalRocketBackground =
   change_view_type: ->
     if PivotalRocketBackground.popup? && PivotalRocketBackground.account?
       selected_type = PivotalRocketBackground.popup.$('#selecterStoriesType').val()
-      PivotalRocketBackground.popup.$('#storiesTabs div.block').hide()
+      PivotalRocketBackground.popup.$('#storiesTabs div.tabs_content_block').hide()
       selector = PivotalRocketBackground.popup.$("#storiesTabs ##{selected_type}Stories")
       selector.show()
-      
+  # binding on story cell
+  bind_story_cell: (element_object) ->
+    story_id = element_object.data("story-id")
+    project_id = element_object.parent('ul').data("project-id")
+    requester = element_object.parent('ul').data("requested")
+    requester = if requester? then true else false
+    story = PivotalRocketStorage.find_story(project_id, story_id, requester)
+    PivotalRocketBackground.show_story_info(story)  
   # show story details
   show_story_info: (story) ->
     if story?
