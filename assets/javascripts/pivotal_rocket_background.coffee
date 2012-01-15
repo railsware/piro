@@ -80,11 +80,17 @@ root.PivotalRocketBackground =
   # binding on story cell
   bind_story_cell: (element_object) ->
     story_id = element_object.data("story-id")
+    if !story_id
+      element_object = element_object.parents('li.story_info')
+      story_id = element_object.data("story-id")
     project_id = element_object.parent('ul').data("project-id")
     requester = element_object.parent('ul').data("requested")
     requester = if requester? then true else false
     story = PivotalRocketStorage.find_story(project_id, story_id, requester)
-    PivotalRocketBackground.show_story_info(story)  
+    if PivotalRocketBackground.popup?
+      PivotalRocketBackground.popup.$('#storiesTabs').find('li.story_info').removeClass('active')
+      element_object.addClass('active')
+      PivotalRocketBackground.show_story_info(story)  
   # show story details
   show_story_info: (story) ->
     if story?
