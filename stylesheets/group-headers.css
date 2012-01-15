@@ -1,5 +1,5 @@
 h1, .h1 {font-size: 18px;}
-h2, .h2 {
+h2 {
     font-size: 13px; 
     font-weight: bold; 
     background-color: rgba(100,100,100, 0.2); 
@@ -18,5 +18,7 @@ h2, .h2 {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a7c7c7c', endColorstr='#a6bababa',GradientType=1 );
     
 }
+
+.h2 {font-size: 14px;}
 h3, .h3 {font-size: 12px;}
 h4, .h4 {font-size: 11px;}

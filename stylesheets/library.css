@@ -69,6 +69,15 @@ p {
     opacity: 0.4;
 }
 
+.status {
+    padding: 3px 5px;
+    font-size: 10px;
+    text-transform: uppercase;
+    border: 1px solid rgba(0,0,0, 0.3);
+    text-shadow: 0 1px 0 rgba(255,255,255, 0.7);
+    border-radius: 10px;
+}
+
 /* boxes */
 .current-box {
     background-color: #FFF8D7;
@@ -114,13 +123,20 @@ p {
     border-bottom: 1px solid rgba(0,0,0, 0.2);
 }
 
-.list li.active {
-    box-shadow: 0 0 15px rgba(0,0,0, 0.5) inset;
+.list li.current-box.active {
+    box-shadow: 0 0 3px rgba(0,0,0, 0.2) inset;
+    background-color: #e4dec3;
 }
 
 .empty {
     border-left: 1px solid rgba(0,0,0, 0.2);
     background: url(../images/empty.png) no-repeat center center;
+}
+
+.add-task {
+    position: relative;
+    top: 3px;
+    right: 5px;
 }
 
 /* tabs */

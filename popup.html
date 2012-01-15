@@ -17,8 +17,8 @@
   <div id="mainPage" class="outer page">
     <!-- main screen -->
     <div id="leftPanel" class="unit size1of2">
-      <!-- panel -->
-
+      <!-- panel -->      
+      
       <div id="storiesTabs">
       	<div id="ownerStories" class="tabs_content_block">
       	  <ul class="nav outer">
@@ -39,7 +39,7 @@
         		<ul id="iceboxStoriesList">
         	  </ul>
         	</div>
-      	</div>
+      	</div>	
       	
       	<!-- requester tabs content -->
       	<div id="requesterStories" class="tabs_content_block">
@@ -76,7 +76,6 @@
           	     <option value="requester">Requester</option>
           	   </select>
           	 </div>
-          	 <div id="loaderSpinner" class="unit-right mrs"></div>
           </div> <!-- outer -->          
         </div> <!-- footer -->      	
       	
@@ -85,7 +84,17 @@
     
     <!-- main story info and notifications -->
     <div id="rightPanel" class="unit size1of2">
-      <div class="story-header"></div>
+      <div class="story-header outer">
+        <div class="unit size4of5">
+          <div class="plm">            
+            <input type="search" placeholder="Search task" />
+          </div> <!-- plm -->          
+        </div> <!-- unit -->
+        <div class="unit-right size1of5 txt-right">
+          <span id="loaderSpinner" class="mrs"></span>
+          <a href="#" class="add-task"><img src="images/add.png" alt="Add Task" /></a>
+        </div> <!-- unit -->
+      </div>
       <div id="storyInfo" class="data-holder grey-box pam"></div>
       <div id="infoPanel" class="data-holder empty txt-center"></div>
     </div>
@@ -118,11 +127,11 @@
   <!-- templates -->
   <script id="spinner_template" type="text/x-mustache-template">
     {{#is_loading}}
-      <img src="images/small_spinner.gif" alt="{{loading_msg}}" title="{{loading_msg}}" />
+      <img src="images/spinner.gif" alt="{{loading_msg}}" title="{{loading_msg}}" />
     {{/is_loading}}
     {{^is_loading}}
       <a id="updateStories" href="#">
-        <img src="images/small_spinner.gif" alt="{{update_msg}}" title="{{update_msg}}" />
+        <img src="images/refresh.gif" alt="{{update_msg}}" title="{{update_msg}}" />
       </a>
     {{/is_loading}}
   </script>
@@ -136,7 +145,7 @@
             <div class="unit"><span class="{{story_type}}-icon"></span></div>
             <div class="unit size3of4">
               <div class="pls">
-                {{name}} {{current_state}}
+                {{name}} <span class="status">{{current_state}}</span>
               </div>              
             </div>              
           </li>
@@ -151,7 +160,7 @@
         <span class="{{story_type}}-icon"></span> {{story_type}} 
       </div>
       <div class="unit-right">
-        <p>{{current_state}}</p>
+        <span class="status">{{current_state}}</span>
       </div>
     </div>
     <h1>{{name}}</h1>

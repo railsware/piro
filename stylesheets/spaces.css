@@ -39,6 +39,7 @@ s,m,l,n = small(10px),medium(20px),large(40px),none(0px)
 
 .ptxs{padding-top: 5px;}
 .mlxs{margin-left: 5px;}
+.mtxs{margin-top: 5px;}
 .mrxs{margin-right: 5px;}
 .mbxs{margin-bottom: 5px;}
 .pvxs{padding-bottom: 5px; padding-top: 5px;}
