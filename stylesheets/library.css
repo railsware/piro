@@ -120,7 +120,7 @@ p {
 
 /* tabs */
 .nav {
-    height: 30px;
+    height: 29px;
     border-bottom: 1px solid #333;
     background: rgb(125,126,125);
     background: -moz-linear-gradient(top,  rgba(125,126,125,1) 0%, rgba(14,14,14,1) 100%);
@@ -135,7 +135,7 @@ p {
 
 .nav li a {
     display: block;
-    height: 30px;
+    height: 29px;
     line-height: 30px;
     text-align: center;
     color: #fff;
