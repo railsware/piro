@@ -39,8 +39,11 @@ root.PivotalRocketBackground =
         PivotalRocketBackground.popup.$('#loginPage').show()
   # init popup bindings
   init_bindings: ->
+    # tabs
     PivotalRocketBackground.popup.$('#ownerStories').tabs()
     PivotalRocketBackground.popup.$('#requesterStories').tabs()
+    # init scrollbars
+    PivotalRocketBackground.popup.$(".lionbars").lionbars()
     # login  
     PivotalRocketBackground.popup.$('#loginButton').click (event) =>
       PivotalRocketBackground.login_by_user()
@@ -130,6 +133,8 @@ root.PivotalRocketBackground =
         
         PivotalRocketBackground.popup.$('#infoPanel').hide()
         block_element.show()
+        
+      PivotalRocketBackground.popup.$(".lionbars").lionbars()
   # spinner for update stories
   init_spinner: ->
     PivotalRocketBackground.init_icon_status()
@@ -233,6 +238,8 @@ root.PivotalRocketBackground =
           PivotalRocketBackground.popup.$('#iceboxRequesterStoriesList').empty().html(stories_list.ricebox.join(""))
         else
           PivotalRocketBackground.popup.$('#iceboxRequesterStoriesList').empty().html(no_stories_msg)
+          
+        PivotalRocketBackground.popup.$(".lionbars").lionbars()
   # sync all data by account    
   initial_sync: (pivotal_account) ->
     PivotalRocketBackground.is_loading = true
