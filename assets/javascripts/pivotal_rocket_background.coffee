@@ -80,11 +80,17 @@ root.PivotalRocketBackground =
   # binding on story cell
   bind_story_cell: (element_object) ->
     story_id = element_object.data("story-id")
+    if !story_id
+      element_object = element_object.parents('li.story_info')
+      story_id = element_object.data("story-id")
     project_id = element_object.parent('ul').data("project-id")
     requester = element_object.parent('ul').data("requested")
     requester = if requester? then true else false
     story = PivotalRocketStorage.find_story(project_id, story_id, requester)
-    PivotalRocketBackground.show_story_info(story)  
+    if PivotalRocketBackground.popup?
+      PivotalRocketBackground.popup.$('#storiesTabs').find('li.story_info').removeClass('active')
+      element_object.addClass('active')
+      PivotalRocketBackground.show_story_info(story)  
   # show story details
   show_story_info: (story) ->
     if story?
@@ -193,7 +199,7 @@ root.PivotalRocketBackground =
                 stories_count.ricebox += rstored_stories.icebox.length
                 stories_list.ricebox.push(compiledTemplate.render(project))
 
-        no_stories_msg = "<li class='empty'>#{chrome.i18n.getMessage("no_stories_msg")}</li>"
+        no_stories_msg = "<li class='txt-center pal'>#{chrome.i18n.getMessage("no_stories_msg")}</li>"
         # owner
         PivotalRocketBackground.popup.$('#currentTabLabel').empty().text("#{chrome.i18n.getMessage("current_stories_tab")} (#{stories_count.current.toString()})")
         if stories_count.current > 0
