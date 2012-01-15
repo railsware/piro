@@ -199,7 +199,7 @@ root.PivotalRocketBackground =
                 stories_count.ricebox += rstored_stories.icebox.length
                 stories_list.ricebox.push(compiledTemplate.render(project))
 
-        no_stories_msg = "<li class='empty'>#{chrome.i18n.getMessage("no_stories_msg")}</li>"
+        no_stories_msg = "<li class='txt-center pal'>#{chrome.i18n.getMessage("no_stories_msg")}</li>"
         # owner
         PivotalRocketBackground.popup.$('#currentTabLabel').empty().text("#{chrome.i18n.getMessage("current_stories_tab")} (#{stories_count.current.toString()})")
         if stories_count.current > 0
