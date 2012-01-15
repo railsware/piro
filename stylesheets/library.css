@@ -30,7 +30,7 @@ a {
 }
 
 a:hover, a:active {
-	color: #333;
+	color: #c70000;
 }
 
 .inline {
@@ -67,6 +67,138 @@ p {
 
 .not-implemented {
     opacity: 0.4;
+}
+
+/* boxes */
+.current-box {
+    background-color: #FFF8D7;
+}
+
+.icebox-box {
+    background-color: #E4EFF7;
+}
+
+.done-box {
+    background-color: #DAEBCF;
+}
+
+.grey-box {
+    background-color: #f2f2f2;
+    border-left: 1px solid #aaa;
+    box-shadow: 0 1px 7px rgba(0,0,0, 0.2) inset;
+    background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(255,255,255,0.7) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,0.7)));
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.7) 100%);
+    background: -o-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.7) 100%);
+    background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.7) 100%);
+    background: linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.7) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#b3ffffff',GradientType=0 );
+    
+}
+
+.title {
+    height: 26px;
+    line-height: 26px;
+    padding: 0 10px;
+    font-size: 11px;
+    text-shadow: 0 1px 0 rgba(0,0,0, 0.5);
+    border-top: 1px solid rgba(255,255,255, 0.8);
+    border-bottom: 1px solid rgba(0,0,0, 0.4);
+    color: #fff;
+    background: rgb(181,186,191);
+    background: -moz-linear-gradient(top,  rgba(181,186,191,1) 0%, rgba(123,133,144,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(181,186,191,1)), color-stop(100%,rgba(123,133,144,1)));
+    background: -webkit-linear-gradient(top,  rgba(181,186,191,1) 0%,rgba(123,133,144,1) 100%);
+    background: linear-gradient(top,  rgba(181,186,191,1) 0%,rgba(123,133,144,1) 100%);
+}
+
+.list li {
+    border-top: 1px solid rgba(255,255,255, 0.8);
+    border-bottom: 1px solid rgba(0,0,0, 0.2);
+}
+
+/* tabs */
+.nav {
+    height: 30px;
+    border-bottom: 1px solid #333;
+}
+
+.nav li {
+    float: left;
+}
+
+.nav li a {
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+    font-size: 11px;
+    text-transform: uppercase;
+    border-left: 1px solid #222;
+    text-shadow: 0 -1px 0 rgba(0,0,0, 0.8);
+    background: rgb(125,126,125);
+    background: -moz-linear-gradient(top,  rgba(125,126,125,1) 0%, rgba(14,14,14,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(125,126,125,1)), color-stop(100%,rgba(14,14,14,1)));
+    background: -webkit-linear-gradient(top,  rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%);
+    background: linear-gradient(top,  rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%);
+}
+
+.nav li:first-child a {
+    border-radius: 5px 0 0 0;
+}
+
+.ui-tabs .ui-tabs-nav { margin: 0; padding: 0; }
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a { 
+    text-shadow: 0 1px 0 rgba(0,0,0, 0.8);
+    background: rgb(68,68,68);
+    background: -moz-linear-gradient(top,  rgba(68,68,68,1) 0%, rgba(125,126,125,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(68,68,68,1)), color-stop(100%,rgba(125,126,125,1)));
+    background: -webkit-linear-gradient(top,  rgba(68,68,68,1) 0%,rgba(125,126,125,1) 100%);
+    background: linear-gradient(top,  rgba(68,68,68,1) 0%,rgba(125,126,125,1) 100%);    
+}
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: text; }
+.ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
+.ui-tabs .ui-tabs-panel { display: block; border-width: 0; }
+.ui-tabs .ui-tabs-hide { display: none !important; }
+
+.story-header {
+    height: 30px;
+    border-radius: 0 5px 0 0;
+    background: rgb(125,126,125);
+    background: -moz-linear-gradient(top,  rgba(125,126,125,1) 0%, rgba(14,14,14,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(125,126,125,1)), color-stop(100%,rgba(14,14,14,1)));
+    background: -webkit-linear-gradient(top,  rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%);
+    background: linear-gradient(top,  rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%);
+}
+
+.feature-icon {
+    display: inline-block;
+    vertical-align: -2px;
+    margin-right: 2px;
+    width: 14px;
+    height: 14px;
+    background: url(../images/star.png) no-repeat 0 0;
+}
+
+.bug-icon {
+    display: inline-block;
+    vertical-align: -2px;
+    margin-right: 2px;
+    width: 14px;
+    height: 14px;
+    background: url(../images/bug.png) no-repeat 0 0;
+}
+
+/* tasks */
+.tasks li:first-child {
+    padding-top: 0;
+    border-top: 0;
+}
+
+.tasks li:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
 }
 
 

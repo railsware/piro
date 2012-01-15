@@ -14,32 +14,20 @@
 </head>
 <body>
   
-  <div id="mainPage">
+  <div id="mainPage" class="outer page">
     <!-- main screen -->
-    <div id="leftPanel">
+    <div id="leftPanel" class="unit size1of2">
       <!-- panel -->
-    	<div>
-    	 <div id="changeAccountBox">
-    	   <select id="changeAccount">
-    	   </select>
-    	 </div>
-    	 <div id="selecterStoriesBox">
-    	   <select id="selecterStoriesType">
-    	     <option value="owner" selected="selected">Owner</option>
-    	     <option value="requester">Requester</option>
-    	   </select>
-    	 </div>
-    	 <div id="loaderSpinner"></div>
-    	</div>
+
       <div id="storiesTabs">
-      	<div id="ownerStories" class="block">
-      	  <ul>
-        		<li class="owner tab"><a id="currentTabLabel" href="#currentTab">Current</a></li>
-        		<li class="owner tab"><a id="doneTabLabel" href="#doneTab">Done</a></li>
-        		<li class="owner tab"><a id="iceboxTabLabel" href="#iceboxTab">IceBox</a></li>
+      	<div id="ownerStories">
+      	  <ul class="nav outer">
+        		<li class="owner tab size1of3"><a id="currentTabLabel" href="#currentTab">Current</a></li>
+        		<li class="owner tab size1of3"><a id="doneTabLabel" href="#doneTab">Done</a></li>
+        		<li class="owner tab size1of3"><a id="iceboxTabLabel" href="#iceboxTab">IceBox</a></li>
         	</ul>
       	  <!-- tabs content -->
-        	<div id="currentTab" class="tabs_content">
+        	<div id="currentTab" class="tabs_content data-holder">
         	  <ul id="currentStoriesList">
         	  </ul>
         	</div>
@@ -52,8 +40,27 @@
         	  </ul>
         	</div>
       	</div>
+      
+        <div class="footer">
+          <div class="outer ptxs">
+            <div id="changeAccountBox" class="unit mls">
+              <label class="h4">Account:</label>
+          	   <select id="changeAccount">
+          	   </select>
+          	 </div>
+          	 <div id="selecterStoriesBox" class="unit mlm">
+          	   <label class="h4">Role:</label>
+          	   <select id="selecterStoriesType">
+          	     <option value="owner" selected="selected">Owner</option>
+          	     <option value="requester">Requester</option>
+          	   </select>
+          	 </div>
+          	 <div id="loaderSpinner" class="unit-right mrs"></div>
+          </div> <!-- outer -->          
+        </div> <!-- footer -->      	
+      	
       	<!-- requester tabs content -->
-      	<div id="requesterStories" class="block">
+      	<div id="requesterStories">
       	  <ul>
         		<li class="requester tab"><a id="currentRequesterTabLabel" href="#currentRequesterTab">Current</a></li>
         		<li class="requester tab"><a id="doneRequesterTabLabel" href="#doneRequesterTab">Done</a></li>
@@ -76,8 +83,9 @@
     </div>
     
     <!-- main story info and notifications -->
-    <div id="rightPanel">
-      <div id="storyInfo"></div>
+    <div id="rightPanel" class="unit size1of2">
+      <div class="story-header"></div>
+      <div id="storyInfo" class="data-holder grey-box pam"></div>
       <div id="infoPanel"></div>
     </div>
     
@@ -117,32 +125,50 @@
   
   <script id="project_cell" type="text/x-mustache-template">
     <li class="project_{{id}}">
-      {{name}}
-      <ul data-project-id="{{id}}" {{#is_requested_by_me}}data-requested="true"{{/is_requested_by_me}}>
+      <div class="title">{{name}}</div>
+      <ul data-project-id="{{id}}" {{#is_requested_by_me}}data-requested="true"{{/is_requested_by_me}} class="list">
         {{#stories}}
-          <li class="story_info story_{{id}}" data-story-id="{{id}}">{{name}} | {{story_type}} | {{current_state}}</li>
+          <li class="story_info story_{{id}} current-box pas outer" data-story-id="{{id}}">
+            <div class="unit"><span class="{{story_type}}-icon"></span></div>
+            <div class="unit size3of4">
+              <div class="pls">
+                {{name}} {{current_state}}
+              </div>              
+            </div>              
+          </li>
         {{/stories}}
       </ul>
     </li>
   </script>
   
   <script id="story_info_template" type="text/x-mustache-template">
-    <h2>{{name}}</h2>
-    <p>{{story_type}}</p>
-    <p>{{current_state}}</p>
-    <p>{{description}}</p>
-    <p>{{estimate}}</p>
-    <p>{{url}}</p>
-    <p>{{owned_by.person.name}}</p>
-    <p>{{requested_by.person.name}}</p>
-    <ul>
+    <div class="outer">
+      <div class="unit">
+        <span class="{{story_type}}-icon"></span> {{story_type}} 
+      </div>
+      <div class="unit-right">
+        <p>{{current_state}}</p>
+      </div>
+    </div>
+    <h1>{{name}}</h1>
+    <div class="mbm"><span class="pale">Requested by:</span> {{requested_by.person.name}}</div>    
+    <h2 class="mbxs">Description</h2>
+    <div class="phs">{{description}}</div>
+    <p class="phs"><a href="{{url}}">{{url}}</a></p>
+    <p class="phs">{{owned_by.person.name}} <span class="pale">estimated: </span>{{estimate}} points</p>    
+    <h2 class="mbxs">Comments</h2>
+    <ul class="mbm comments phs">
       {{#notes}}
-        <li>{{author.person.name}} | {{text}}</li>
+        <li class="mbs">
+          <strong class="h4">{{author.person.name}} </strong>
+          <div class="neutral h4">{{text}}</div>
+        </li>
       {{/notes}}
     </ul>
-    <ul>
+    <h2 class="mbxs">Tasks</h2>
+    <ul class="list tasks phs">
       {{#tasks}}
-        <li>{{description}} | {{#complete}}Completed{{/complete}}{{^complete}}Uncompleted{{/complete}}</li>
+        <li class="pvs">{{description}} | {{#complete}}Completed{{/complete}}{{^complete}}Uncompleted{{/complete}}</li>
       {{/tasks}}
     </ul>
   </script>
