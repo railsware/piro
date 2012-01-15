@@ -109,8 +109,13 @@ p {
 }
 
 .list li {
+    cursor: pointer;
     border-top: 1px solid rgba(255,255,255, 0.8);
     border-bottom: 1px solid rgba(0,0,0, 0.2);
+}
+
+.list li.active {
+    box-shadow: 0 0 15px rgba(0,0,0, 0.5) inset;
 }
 
 .empty {
@@ -163,6 +168,7 @@ p {
     background: -webkit-linear-gradient(top,  rgba(68,68,68,1) 0%,rgba(125,126,125,1) 100%);
     background: linear-gradient(top,  rgba(68,68,68,1) 0%,rgba(125,126,125,1) 100%);    
 }
+
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: text; }
 .ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
 .ui-tabs .ui-tabs-panel { display: block; border-width: 0; }
