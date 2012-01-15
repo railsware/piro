@@ -86,7 +86,7 @@
     <div id="rightPanel" class="unit size1of2">
       <div class="story-header"></div>
       <div id="storyInfo" class="data-holder grey-box pam"></div>
-      <div id="infoPanel"></div>
+      <div id="infoPanel" class="data-holder empty"></div>
     </div>
     
   </div>
@@ -163,8 +163,8 @@
     <ul class="mbm comments phs">
       {{#notes}}
         <li class="mbs">
-          <strong class="h4">{{author.person.name}} </strong>
-          <div class="neutral h4">{{text}}</div>
+          <strong>{{author.person.name}} </strong>
+          <div class="neutral">{{text}}</div>
         </li>
       {{/notes}}
     </ul>
