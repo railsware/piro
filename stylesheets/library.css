@@ -142,6 +142,7 @@ p {
 /* tabs */
 .nav {
     height: 29px;
+    border-radius: 5px 0 0 0;
     border-bottom: 1px solid #333;
     background: rgb(125,126,125);
     background: -moz-linear-gradient(top,  rgba(125,126,125,1) 0%, rgba(14,14,14,1) 100%);
@@ -233,6 +234,8 @@ p {
 /* login page */
 #loginPage {
     width: 280px;
+    background: #AEB6B9 url(../images/pattern.png) repeat-x 0 150%;
+    border-radius: 5px;
 }
 
 #loginPage input {
