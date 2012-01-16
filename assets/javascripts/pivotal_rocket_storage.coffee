@@ -66,3 +66,8 @@ root.PivotalRocketStorage =
       for story in stories
         return story if parseInt(story.id) == parseInt(story_id)
     return null
+
+  get_update_interval: ->
+    update_interval = PivotalRocketStorage.get('update_interval')
+    update_interval = 10 if !update_interval?
+    update_interval

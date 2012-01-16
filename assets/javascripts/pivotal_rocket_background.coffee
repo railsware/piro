@@ -9,12 +9,20 @@ root.PivotalRocketBackground =
   is_loading: false
   # tmp variables
   tmp_counter: 0
+  # updater timer
+  update_timer: null
   # init background page (chrome loaded)
   init: ->
     if PivotalRocketStorage.get_accounts().length > 0
       if !PivotalRocketBackground.account?
         PivotalRocketBackground.account = PivotalRocketStorage.get_accounts()[0]
-      PivotalRocketBackground.initial_sync(PivotalRocketBackground.account)
+      # autoupdate
+      PivotalRocketBackground.init_autoupdate()
+      PivotalRocketBackground.autoupdate()
+  # init autoupdate
+  init_autoupdate: ->
+    fcallback = -> PivotalRocketBackground.autoupdate()
+    PivotalRocketBackground.update_timer = setInterval fcallback, PivotalRocketStorage.get_update_interval() * 60000    
   # load popup view
   load_popup_view: ->
     chrome.extension.getViews({type:"popup"})[0]
@@ -49,7 +57,7 @@ root.PivotalRocketBackground =
       PivotalRocketBackground.login_by_user() if 13 == event.keyCode
     # update link        
     PivotalRocketBackground.popup.$('#updateStories').click (event) =>
-      PivotalRocketBackground.initial_sync(PivotalRocketBackground.account)
+      PivotalRocketBackground.autoupdate()
     # change type list
     #PivotalRocketBackground.popup.$('#changeAccount').chosen()
     PivotalRocketBackground.popup.$('#changeAccount').change (event) =>
@@ -235,7 +243,7 @@ root.PivotalRocketBackground =
         else
           PivotalRocketBackground.popup.$('#iceboxRequesterStoriesList').empty().html(no_stories_msg)
   # sync all data by account    
-  initial_sync: (pivotal_account) ->
+  initial_sync: (pivotal_account, callback_function = null) ->
     PivotalRocketBackground.is_loading = true
     PivotalRocketBackground.init_spinner()
     
@@ -257,6 +265,8 @@ root.PivotalRocketBackground =
                 PivotalRocketBackground.init_list_stories()
                 PivotalRocketBackground.is_loading = false
                 PivotalRocketBackground.init_spinner()
+                if callback_function?
+                  callback_function()
             success: (data, textStatus, jqXHR, project) ->
               stories = []
               allstories = XML2JSON.parse(data, true)
@@ -277,6 +287,8 @@ root.PivotalRocketBackground =
                 PivotalRocketBackground.init_list_stories()
                 PivotalRocketBackground.is_loading = false
                 PivotalRocketBackground.init_spinner()
+                if callback_function?
+                  callback_function()
             success: (data, textStatus, jqXHR, project) ->
               stories = []
               allstories = XML2JSON.parse(data, true)
@@ -331,6 +343,17 @@ root.PivotalRocketBackground =
         beforeSend: (jqXHR, settings) ->
           if PivotalRocketBackground.popup?
             PivotalRocketBackground.popup.$('#loginPage').addClass('locading')
+  # autoupdate for all data
+  autoupdate: ->
+    if !PivotalRocketBackground.is_loading && PivotalRocketStorage.get_accounts().length > 0
+      PivotalRocketBackground.autoupdate_by_account(0)
+  #update with callback
+  autoupdate_by_account: (iterator) ->
+    if PivotalRocketStorage.get_accounts().length > 0 && PivotalRocketStorage.get_accounts()[iterator]?
+      account = PivotalRocketStorage.get_accounts()[iterator]
+      iterator += 1
+      fcallback = -> PivotalRocketBackground.autoupdate_by_account(iterator)
+      PivotalRocketBackground.initial_sync(account, fcallback)
 
 
 $ ->
