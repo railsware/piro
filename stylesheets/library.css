@@ -118,7 +118,6 @@ p {
 }
 
 .list li {
-    cursor: pointer;
     border-top: 1px solid rgba(255,255,255, 0.8);
     border-bottom: 1px solid rgba(0,0,0, 0.2);
 }
@@ -126,6 +125,12 @@ p {
 .list li.current-box.active {
     box-shadow: 0 0 3px rgba(0,0,0, 0.2) inset;
     background-color: #e4dec3;
+}
+
+.list li.current-box,
+.list li.icebox-box,
+.list li.done-box {
+    cursor: pointer;
 }
 
 .empty {
@@ -221,12 +226,14 @@ p {
 }
 
 /* tasks */
-.tasks li:first-child {
+.tasks li:first-child,
+.comments li:first-child {
     padding-top: 0;
     border-top: 0;
 }
 
-.tasks li:last-child {
+.tasks li:last-child,
+.comments li:last-child {
     padding-bottom: 0;
     border-bottom: 0;
 }

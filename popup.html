@@ -165,20 +165,20 @@
     </div>
     <h1 class="mts">{{name}}</h1>
     <div class="mbm"><span class="pale">Requested by:</span> {{requested_by.person.name}}</div>    
-    <h2 class="mbxs">Description</h2>
+    <h2 class="mbs">Description</h2>
     <div class="phs">{{description}}</div>
     <p class="phs"><a href="{{url}}">{{url}}</a></p>
     <p class="phs">{{owned_by.person.name}} <span class="pale">estimated: </span>{{estimate}} points</p>    
-    <h2 class="mbxs">Comments</h2>
-    <ul class="mbm comments phs">
+    <h2 class="mbs mtm">Comments</h2>
+    <ul class="mbm list comments phs">
       {{#notes}}
-        <li class="mbs">
+        <li class="pvs">
           <strong>{{author.person.name}} </strong>
           <div class="neutral">{{text}}</div>
         </li>
       {{/notes}}
     </ul>
-    <h2 class="mbxs">Tasks</h2>
+    <h2 class="mbs mtm">Tasks</h2>
     <ul class="list tasks phs">
       {{#tasks}}
         <li class="pvs">{{description}} | {{#complete}}Completed{{/complete}}{{^complete}}Uncompleted{{/complete}}</li>
