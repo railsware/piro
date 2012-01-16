@@ -62,10 +62,6 @@ root.PivotalRocketBackground =
     PivotalRocketBackground.popup.$("#storiesTabs").on "click", "li.story_info", (event) =>
       element_object = $(event.target)
       PivotalRocketBackground.bind_story_cell(element_object)
-  # init "pretty" scroller
-  apply_prety_scroller: ->
-    if PivotalRocketBackground.popup?
-      PivotalRocketBackground.popup.$('.nanoscroller').nanoScroller()
   # change account
   change_account: ->
     account_id = PivotalRocketBackground.popup.$('#changeAccount').val()
@@ -135,8 +131,6 @@ root.PivotalRocketBackground =
         
         PivotalRocketBackground.popup.$('#infoPanel').hide()
         block_element.show()
-      #scroller
-      PivotalRocketBackground.apply_prety_scroller()
   # spinner for update stories
   init_spinner: ->
     PivotalRocketBackground.init_icon_status()
@@ -240,9 +234,6 @@ root.PivotalRocketBackground =
           PivotalRocketBackground.popup.$('#iceboxRequesterStoriesList').empty().html(stories_list.ricebox.join(""))
         else
           PivotalRocketBackground.popup.$('#iceboxRequesterStoriesList').empty().html(no_stories_msg)
-          
-        #scroller
-        PivotalRocketBackground.apply_prety_scroller()
   # sync all data by account    
   initial_sync: (pivotal_account) ->
     PivotalRocketBackground.is_loading = true
