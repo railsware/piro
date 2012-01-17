@@ -157,56 +157,13 @@
   <script id="story_info_template" type="text/x-mustache-template">
 
     Story ID: <span class="clippy-text">{{id}}</span>
-    <span>
-          <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
-                      width="110"
-                      height="14"
-                      id="clippy{{id}}" >
-              <param name="movie" value="images/clippy/clippy.swf"/>
-              <param name="allowScriptAccess" value="always" />
-              <param name="quality" value="high" />
-              <param name="scale" value="noscale" />
-              <param NAME="FlashVars" value="text={{id}}">
-              <param name="bgcolor" value="#000">
-              <embed src="images/clippy/clippy.swf"
-                     width="110"
-                     height="14"
-                     name="clippy"
-                     quality="high"
-                     allowScriptAccess="always"
-                     type="application/x-shockwave-flash"
-                     pluginspage="http://www.macromedia.com/go/getflashplayer"
-                     FlashVars="text={{id}}"
-                     bgcolor="#000"
-              />
-              </object>
-    </span>
-    
+    {{#clippy_id}}
+      {{> clippy}}
+    {{/clippy_id}}
     <a href="{{url}}" target="_blank">{{url}}</a>
-    <span>
-          <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
-                      width="110"
-                      height="14"
-                      id="clippy_url{{id}}" >
-              <param name="movie" value="images/clippy/clippy.swf"/>
-              <param name="allowScriptAccess" value="always" />
-              <param name="quality" value="high" />
-              <param name="scale" value="noscale" />
-              <param NAME="FlashVars" value="text={{url}}">
-              <param name="bgcolor" value="#000">
-              <embed src="images/clippy/clippy.swf"
-                     width="110"
-                     height="14"
-                     name="clippy"
-                     quality="high"
-                     allowScriptAccess="always"
-                     type="application/x-shockwave-flash"
-                     pluginspage="http://www.macromedia.com/go/getflashplayer"
-                     FlashVars="text={{url}}"
-                     bgcolor="#000"
-              />
-              </object>
-    </span>
+    {{#clippy_url}}
+      {{> clippy}}
+    {{/clippy_url}}
     
     <div class="outer">
       <div class="unit">
@@ -237,6 +194,33 @@
         <li class="pvs">{{description}} | {{#complete}}Completed{{/complete}}{{^complete}}Uncompleted{{/complete}}</li>
       {{/tasks}}
     </ul>
+  </script>
+  
+  <script id="clippy_template" class="partial" type="text/html">
+    <span>
+        <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
+                    width="110"
+                    height="14"
+                    id="clippy{{text}}" >
+            <param name="movie" value="images/clippy/clippy.swf"/>
+            <param name="allowScriptAccess" value="always" />
+            <param name="quality" value="high" />
+            <param name="scale" value="noscale" />
+            <param NAME="FlashVars" value="text={{text}}">
+            <param name="bgcolor" value="#000">
+            <embed src="images/clippy/clippy.swf"
+                   width="110"
+                   height="14"
+                   name="clippy"
+                   quality="high"
+                   allowScriptAccess="always"
+                   type="application/x-shockwave-flash"
+                   pluginspage="http://www.macromedia.com/go/getflashplayer"
+                   FlashVars="text={{text}}"
+                   bgcolor="#000"
+            />
+            </object>
+    </span>
   </script>
   
   <!-- vendors scripts -->

@@ -128,12 +128,16 @@ root.PivotalRocketBackground =
       # normalize description
       if story.description? && jQuery.isEmptyObject(story.description)
         story.description = ""
+      # add clippy helpers
+      story.clippy_id = {text: story.id}
+      story.clippy_url = {text: story.url}
+      clippy_template = PivotalRocketBackground.popup.$('#clippy_template').html()
       # generate template
       template = PivotalRocketBackground.popup.$('#story_info_template').html()
-      if template.length > 0
+      if clippy_template.length > 0 && template.length > 0
         compiledTemplate = Hogan.compile(template)
         block_element = PivotalRocketBackground.popup.$('#storyInfo')
-        block_element.empty().html(compiledTemplate.render(story))
+        block_element.empty().html(compiledTemplate.render(story, {clippy: Hogan.compile(clippy_template)}))
         
         PivotalRocketBackground.popup.$('#infoPanel').hide()
         block_element.show()
