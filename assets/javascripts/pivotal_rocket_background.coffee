@@ -53,17 +53,15 @@ root.PivotalRocketBackground =
     # login  
     PivotalRocketBackground.popup.$('#loginButton').click (event) =>
       PivotalRocketBackground.login_by_user()
-    PivotalRocketBackground.popup.$('#loginUsername, #loginPassword').keydown (event) =>
+    PivotalRocketBackground.popup.$('#loginUsername, #loginPassword, #loginCompanyName').keydown (event) =>
       PivotalRocketBackground.login_by_user() if 13 == event.keyCode
-    # update link        
-    PivotalRocketBackground.popup.$('#updateStories').click (event) =>
-      PivotalRocketBackground.autoupdate()
+    # update link
+    PivotalRocketBackground.popup.$('#mainPage').on "click", "a.update_stories", (event) =>
+      PivotalRocketBackground.autoupdate()      
     # change type list
-    #PivotalRocketBackground.popup.$('#changeAccount').chosen()
     PivotalRocketBackground.popup.$('#changeAccount').change (event) =>
       PivotalRocketBackground.change_account()
     # change type list
-    #PivotalRocketBackground.popup.$('#selecterStoriesType').chosen()
     PivotalRocketBackground.popup.$('#selecterStoriesType').change (event) =>
       PivotalRocketBackground.change_view_type()
     # click on story  
