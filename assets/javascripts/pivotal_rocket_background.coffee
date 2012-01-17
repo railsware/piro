@@ -101,7 +101,6 @@ root.PivotalRocketBackground =
   # show story details
   show_story_info: (story) ->
     if story?
-      console.debug story
       # normalize notes
       if story.notes?
         if story.notes.note?
