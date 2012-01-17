@@ -258,7 +258,7 @@ root.PivotalRocketBackground =
           PivotalRocketBackground.pivotal_api_lib.get_stories_for_project
             project: project
             complete: (jqXHR, textStatus) ->
-              PivotalRocketBackground.tmp_counter -= 1
+              PivotalRocketBackground.tmp_counter--
               if PivotalRocketBackground.tmp_counter <= 0
                 PivotalRocketBackground.init_list_stories()
                 PivotalRocketBackground.is_loading = false
@@ -280,7 +280,7 @@ root.PivotalRocketBackground =
           PivotalRocketBackground.pivotal_api_lib.get_stories_for_project_requester
             project: project
             complete: (jqXHR, textStatus) ->
-              PivotalRocketBackground.tmp_counter -= 1
+              PivotalRocketBackground.tmp_counter--
               if PivotalRocketBackground.tmp_counter <= 0
                 PivotalRocketBackground.init_list_stories()
                 PivotalRocketBackground.is_loading = false
