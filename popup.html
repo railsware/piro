@@ -136,7 +136,7 @@
     {{/is_loading}}
   </script>
   
-  <script id="project_cell" type="text/x-mustache-template">
+  <script id="project_cell_template" type="text/x-mustache-template">
     <li class="project_{{id}}">
       <div class="title">{{name}}</div>
       <ul data-project-id="{{id}}" {{#is_requested_by_me}}data-requested="true"{{/is_requested_by_me}} class="list">
@@ -156,14 +156,8 @@
   
   <script id="story_info_template" type="text/x-mustache-template">
 
-    Story ID: <span class="clippy-text">{{id}}</span>
-    {{#clippy_id}}
-      {{> clippy}}
-    {{/clippy_id}}
-    <a href="{{url}}" target="_blank">{{url}}</a>
-    {{#clippy_url}}
-      {{> clippy}}
-    {{/clippy_url}}
+    Story ID: <span class="clippy-text">{{id}}</span><div id="clippyStory{{id}}"></div>
+    <a href="{{url}}" target="_blank">{{url}}</a><div id="clippyUrl{{id}}"></div>
     
     <div class="outer">
       <div class="unit">
@@ -201,37 +195,11 @@
     </ul>
   </script>
   
-  <script id="clippy_template" class="partial" type="text/html">
-    <span>
-        <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
-                    width="110"
-                    height="14"
-                    id="clippy{{text}}" >
-            <param name="movie" value="images/clippy/clippy.swf"/>
-            <param name="allowScriptAccess" value="always" />
-            <param name="quality" value="high" />
-            <param name="scale" value="noscale" />
-            <param NAME="FlashVars" value="text={{text}}">
-            <param name="bgcolor" value="#000">
-            <embed src="images/clippy/clippy.swf"
-                   width="110"
-                   height="14"
-                   name="clippy"
-                   quality="high"
-                   allowScriptAccess="always"
-                   type="application/x-shockwave-flash"
-                   pluginspage="http://www.macromedia.com/go/getflashplayer"
-                   FlashVars="text={{text}}"
-                   bgcolor="#000"
-            />
-            </object>
-    </span>
-  </script>
-  
   <!-- vendors scripts -->
   <script src="javascripts/vendors/jquery-1.7.1.min.js" type="text/javascript"></script>
   <script src="javascripts/vendors/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
   <script src="javascripts/vendors/hogan-1.0.3.min.js" type="text/javascript"></script>
+  <script src="javascripts/vendors/swfobject/swfobject.js" type="text/javascript"></script>
   <!-- main scripts -->
   <script src="javascripts/xml2json.js" type="text/javascript"></script>
   <script src="javascripts/pivotal_rocket_storage.js" type="text/javascript"></script>

@@ -52,9 +52,8 @@ root.PivotalRocketBackground =
   init_templates: ->
     if PivotalRocketBackground.popup?
       PivotalRocketBackground.templates.spinner = Hogan.compile(PivotalRocketBackground.popup.$('#spinner_template').html())
-      PivotalRocketBackground.templates.project = Hogan.compile(PivotalRocketBackground.popup.$('#project_cell').html())
+      PivotalRocketBackground.templates.project = Hogan.compile(PivotalRocketBackground.popup.$('#project_cell_template').html())
       PivotalRocketBackground.templates.story = Hogan.compile(PivotalRocketBackground.popup.$('#story_info_template').html())
-      PivotalRocketBackground.templates.clippy = Hogan.compile(PivotalRocketBackground.popup.$('#clippy_template').html())
   # init popup bindings
   init_bindings: ->
     # tabs
@@ -142,14 +141,13 @@ root.PivotalRocketBackground =
       # normalize description
       if story.description? && jQuery.isEmptyObject(story.description)
         story.description = ""
-      # add clippy helpers
-      story.clippy_id = {text: story.id}
-      story.clippy_url = {text: story.url}
       # generate template
       block_element = PivotalRocketBackground.popup.$('#storyInfo')
-      block_element.empty().html(PivotalRocketBackground.templates.story.render(story, {clippy: PivotalRocketBackground.templates.clippy}))
+      block_element.empty().html(PivotalRocketBackground.templates.story.render(story))
       PivotalRocketBackground.popup.$('#infoPanel').hide()
       block_element.show()
+      # init clippy
+      chrome.extension.sendRequest {clippy_for_story: {id: story.id, url: story.url}}
   # spinner for update stories
   init_spinner: ->
     PivotalRocketBackground.init_icon_status()
