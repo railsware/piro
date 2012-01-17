@@ -15,6 +15,8 @@ root.PivotalRocketPopup =
         sendResponse({})
   # init clippy for story view
   init_clippy_for_story: (story_data) ->
+    width = 110
+    height = 15
     params = 
       allowScriptAccess: 'always'
       wmode: 'opaque'
@@ -25,11 +27,11 @@ root.PivotalRocketPopup =
       bgcolor: "#000"
       
     swfobject.embedSWF('images/clippy/clippy.swf', 
-    "clippyStory#{story_data.id}", 110, 15, '9.0.0', 
+    "clippyStory#{story_data.id}", width, height, '9.0.0', 
     'javascripts/vendors/swfobject/expressInstall.swf', 
     {text: story_data.id}, params, {})
     swfobject.embedSWF('images/clippy/clippy.swf', 
-    "clippyUrl#{story_data.id}", 110, 15, '9.0.0', 
+    "clippyUrl#{story_data.id}", width, height, '9.0.0', 
     'javascripts/vendors/swfobject/expressInstall.swf', 
     {text: story_data.url}, params, {})
     
