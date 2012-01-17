@@ -178,7 +178,7 @@
     <h2 class="mbs">Description</h2>
     <div class="phs">{{description}}</div>
     <p class="phs"><a href="{{url}}" target="_blank">{{url}}</a></p>
-    <p class="phs">{{owned_by.person.name}} <span class="pale">estimated: </span>{{estimate}} points</p>    
+    <p class="phs">{{owned_by.person.name}} <span class="pale">Estimate: </span>{{estimate_text}}</p>    
     <h2 class="mbs mtm">Comments</h2>
     <ul class="mbm list comments phs">
       {{#notes}}
@@ -191,7 +191,12 @@
     <h2 class="mbs mtm">Tasks</h2>
     <ul class="list tasks phs">
       {{#tasks}}
-        <li class="pvs">{{description}} | {{#complete}}Completed{{/complete}}{{^complete}}Uncompleted{{/complete}}</li>
+        <li class="pvs">
+          <label>
+            <input type="checkbox" {{#complete}}checked="checked"{{/complete}}  />
+            {{description}}
+          </label>
+        </li>
       {{/tasks}}
     </ul>
   </script>

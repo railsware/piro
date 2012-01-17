@@ -134,6 +134,11 @@ root.PivotalRocketBackground =
           task.complete = if "true" == task.complete then true else false
           task
           
+      if !story.estimate? || (story.estimate? && -1 == parseInt(story.estimate))
+        story.estimate_text = "Unestimated"
+      else
+        story.estimate_text = "#{story.estimate} points"
+          
       # normalize description
       if story.description? && jQuery.isEmptyObject(story.description)
         story.description = ""
