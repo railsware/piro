@@ -127,6 +127,16 @@ p {
     background-color: #e4dec3;
 }
 
+.list li.done-box.active {
+    box-shadow: 0 0 3px rgba(0,0,0, 0.2) inset;
+    background-color: #bfceb6;
+}
+
+.list li.icebox-box.active {
+    box-shadow: 0 0 3px rgba(0,0,0, 0.2) inset;
+    background-color: #cbd5dc;
+}
+
 .list li.current-box,
 .list li.icebox-box,
 .list li.done-box {
@@ -223,6 +233,15 @@ p {
     width: 14px;
     height: 14px;
     background: url(../images/bug.png) no-repeat 0 0;
+}
+
+.chore-icon {
+    display: inline-block;
+    vertical-align: -2px;
+    margin-right: 2px;
+    width: 14px;
+    height: 14px;
+    background: url(../images/chore.png) no-repeat 0 0;
 }
 
 /* tasks */
