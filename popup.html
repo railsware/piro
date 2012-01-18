@@ -141,7 +141,7 @@
       <div class="title">{{name}}</div>
       <ul data-project-id="{{id}}" {{#is_requested_by_me}}data-requested="true"{{/is_requested_by_me}} class="list">
         {{#stories}}
-          <li class="story_info story_{{id}} current-box pas outer" data-story-id="{{id}}">
+          <li class="story_info story_{{id}} {{box_class}}-box pas outer" data-story-id="{{id}}">
             <div class="unit"><span class="{{story_type}}-icon"></span></div>
             <div class="unit size3of4">
               <div class="pls">

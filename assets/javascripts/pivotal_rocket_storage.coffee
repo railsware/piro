@@ -49,10 +49,13 @@ root.PivotalRocketStorage =
       icebox_stories = []
       for story in stories
         if "unscheduled" == story.current_state
+          story.box_class = "icebox"
           icebox_stories.push(story)
         else if "accepted" == story.current_state
+          story.box_class = "done"
           done_stories.push(story)
         else
+          story.box_class = "current"
           current_stories.push(story)
     
       return {current: current_stories, done: done_stories, icebox: icebox_stories}
