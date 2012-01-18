@@ -168,7 +168,8 @@
         </div>
       </div>
       <div class="unit size1of3 txt-right">
-        <p><span class="status">{{current_state}}</span></p>
+        <div class="mbxs h4"><!-- {{owned_by.person.name}} --> <span class="pale">Estimate: </span>{{estimate_text}}</div>
+        <div><span class="status">{{current_state}}</span></div>        
       </div>
     </div>
             
@@ -180,8 +181,6 @@
     
     <h2 class="mbs">Description</h2>
     <div class="phs">{{description}}</div>
-    <p class="phs"><a href="{{url}}" target="_blank">{{url}}</a></p>
-    <p class="phs">{{owned_by.person.name}} <span class="pale">Estimate: </span>{{estimate_text}}</p>    
     <h2 class="mbs mtm">Comments</h2>
     <ul class="mbm list comments phs">
       {{#notes}}
