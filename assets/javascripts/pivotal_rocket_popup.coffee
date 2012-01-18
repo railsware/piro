@@ -22,8 +22,8 @@ root.PivotalRocketPopup =
       wmode: 'opaque'
       scale: 'noscale'
       quality: 'high'
-      width: 110
-      height: 15
+      width: width
+      height: height
       bgcolor: "#000"
       
     swfobject.embedSWF('images/clippy/clippy.swf', 
