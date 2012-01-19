@@ -6,14 +6,50 @@
 </head>
 <body>
   
+  <div id="loginSpinner">Loading...</div>
+  
   <div id="mainPage">
     <ul id="accountList"></ul>
+    <div id="accountBox">
+      <div class="view">
+        <a href="#" id="addAccount">Add account</a>
+      </div>
+      <div class="add">
+        <span id="pivotalAddError"></span>
+        <input type="text" id="pivotalEmail" />
+        <input type="password" id="pivotalPassword" />
+        <input type="company_name" id="pivotalCompanyName" />
+        <a href="#" id="confirmAddAccount">Add</a>
+        <a href="#" id="cancelAddAccount">Cancel</a>
+      </div>
+    </div>
   </div>
   
   <!-- templates -->
   <script id="account_template" type="text/x-mustache-template">
-    <li>
-      {{email}}
+    <li class="account" data-account-id="{{id}}">
+      <div class="view">
+        {{email}} - 
+        <span class="company_name_text">
+          {{#company_name}}
+            {{company_name}}
+          {{/company_name}}
+          {{^company_name}}
+            Not set
+          {{/company_name}}
+        </span>
+        <a href="#" class="edit_account">Edit</a>
+        <a href="#" class="delete_account">Delete</a>
+      </div>
+      <div class="edit">
+        <input type="text" class="company_name" value="{{company_name}}" />
+        <a href="#" class="confirm_edit_account">Update</a>
+        <a href="#" class="cancel_edit_account">Cancel</a>
+      </div>
+      <div class="delete">
+        <a href="#" class="confirm_delete_account">Confirm delete account</a>
+        <a href="#" class="cancel_delete_account">Cancel</a>
+      </div>
     </li>
   </script>
   

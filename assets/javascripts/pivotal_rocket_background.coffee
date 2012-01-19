@@ -172,7 +172,7 @@ root.PivotalRocketBackground =
       PivotalRocketBackground.popup.$('#changeAccount').val(PivotalRocketBackground.account.id)
   # show stories list
   init_list_stories: ->
-    if PivotalRocketBackground.popup?
+    if PivotalRocketBackground.popup? && PivotalRocketBackground.account?
       stories_list = {current: [], done: [], icebox: [], rcurrent: [], rdone: [], ricebox: []}
       stories_count = {current: 0, done: 0, icebox: 0, rcurrent: 0, rdone: 0, ricebox: 0}
       stored_projects = PivotalRocketStorage.get_projects(PivotalRocketBackground.account)
@@ -307,19 +307,7 @@ root.PivotalRocketBackground =
   # save account after login              
   save_account: (account) ->
     if account.email?
-      accounts = PivotalRocketStorage.get_accounts()
-      is_pushed = false
-      new_accounts = for one_account in accounts
-        if one_account.email?
-          if one_account.email == account.email
-            is_pushed = true
-            account
-          else
-            one_account
-      if is_pushed is false
-        new_accounts.push(account)
-      PivotalRocketStorage.set_accounts(new_accounts)
-      account
+      PivotalRocketStorage.save_account(account)
   # login
   login_by_user: ->
     username = PivotalRocketBackground.popup.$('#loginUsername').val()

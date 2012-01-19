@@ -1,7 +1,6 @@
 root = global ? window
 
 root.PivotalRocketStorage = 
-  accounts: null
   
   set: (key, json) ->
     window.localStorage.setItem(key, JSON.stringify(json))
@@ -14,20 +13,52 @@ root.PivotalRocketStorage =
     window.localStorage.removeItem(key)
     
   get_accounts: ->
-    if !PivotalRocketStorage.accounts?
-      PivotalRocketStorage.accounts = PivotalRocketStorage.get("accounts")
-      PivotalRocketStorage.accounts ||= []
-    PivotalRocketStorage.accounts
+    PivotalRocketStorage.get("accounts") || []
+    
+  find_account: (account_id) ->
+    for account in PivotalRocketStorage.get_accounts()
+      return account if parseInt(account.id) == parseInt(account_id)
+    return null
+    
+  save_account: (account) ->
+    is_pushed = false
+    new_accounts = for one_account in PivotalRocketStorage.get_accounts()
+      if one_account.email?
+        if one_account.email == account.email
+          is_pushed = true
+          account
+        else
+          one_account
+    if is_pushed is false
+      new_accounts.push(account)
+    PivotalRocketStorage.set_accounts(new_accounts)
+    account
     
   set_accounts: (accounts) ->
     PivotalRocketStorage.set("accounts", accounts)
-    PivotalRocketStorage.accounts = accounts
+    
+  delete_account: (account_id) ->
+    del_account = PivotalRocketStorage.find_account(account_id)
+    projects = PivotalRocketStorage.get_projects(del_account)
+    if projects?
+      for project in projects
+        PivotalRocketStorage.delete_stories(project)
+        PivotalRocketStorage.delete_stories(project, true)
+    PivotalRocketStorage.delete_project(del_account)
+    new_accounts = []
+    for account in PivotalRocketStorage.get_accounts()
+      if account.id?
+        new_accounts.push(account) if parseInt(account.id) != parseInt(del_account.id)
+    PivotalRocketStorage.set_accounts(new_accounts)
     
   set_projects: (account, projects) ->
     PivotalRocketStorage.set("projects_" + account.id, projects)
     
   get_projects: (account) ->
     PivotalRocketStorage.get("projects_" + account.id)
+  
+  delete_project: (account) ->
+    PivotalRocketStorage.delete_by_key("projects_" + account.id)
     
   set_stories: (project, stories, requester = false) ->
     key = if requester then ("stories_" + project.id) else ("requester_stories_" + project.id)
