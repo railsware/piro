@@ -76,6 +76,9 @@
           	     <option value="requester">Requester</option>
           	   </select>
           	 </div>
+          	 <div class="unit-right">
+          	   <a href="#" class="add-task"><img src="images/add.png" alt="Add Task" /></a>
+          	 </div> <!-- unit-right -->
           </div> <!-- outer -->          
         </div> <!-- footer -->      	
       	
@@ -91,8 +94,7 @@
           </div> <!-- plm -->          
         </div> <!-- unit -->
         <div class="unit-right size1of5 txt-right">
-          <span id="loaderSpinner" class="mrs"></span>
-          <a href="#" class="add-task"><img src="images/add.png" alt="Add Task" /></a>
+          <span id="loaderSpinner" class="mrs"></span>          
         </div> <!-- unit -->
       </div>
       <div id="storyInfo" class="data-holder grey-box pam"></div>
@@ -103,7 +105,7 @@
   
   <div id="loginPage" class="pal">
     <div class="txt-center mbm">
-      <img id="loginLogo" src="images/logo.png" alt="Pivotal Rocket" />
+      <img id="loginLogo" src="images/rocket-spinner.gif" alt="Pivotal Rocket" />
     </div> <!-- txt-center -->
     
     <!-- login -->
@@ -194,9 +196,9 @@
     <ul class="list tasks phs">
       {{#tasks}}
         <li class="pvs">
-          <label>
-            <input type="checkbox" {{#complete}}checked="checked"{{/complete}}  />
-            {{description}}
+          <label class="outer block">
+            <span class="unit"><input type="checkbox" {{#complete}}checked="checked"{{/complete}}  /></span>
+            <span class="mlm block">{{description}}</span>
           </label>
         </li>
       {{/tasks}}

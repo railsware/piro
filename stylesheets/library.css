@@ -150,8 +150,13 @@ p {
 
 .add-task {
     position: relative;
-    top: 3px;
-    right: 5px;
+    top: -2px;
+    right: 3px;
+}
+
+#loaderSpinner {
+    position: relative;
+    top: 6px;
 }
 
 /* tabs */
