@@ -90,7 +90,7 @@
       <div class="story-header outer">
         <div class="unit size4of5">
           <div class="plm">            
-            <input id="searchTasks" type="search" placeholder="Search task" />
+            <input id="searchStories" type="search" placeholder="Search task" />
           </div> <!-- plm -->          
         </div> <!-- unit -->
         <div class="unit-right size1of5 txt-right">
@@ -197,7 +197,7 @@
       {{#tasks}}
         <li class="pvs">
           <label class="outer block">
-            <span class="unit"><input class="task_checkbox" type="checkbox" data-task-id="{{id}}" data-story-id="{{story_id}}" data-project-id="{{project_id}}" {{#complete}}checked="checked"{{/complete}} /></span>
+            <span class="unit"><input disabled="disabled" class="task_checkbox" type="checkbox" data-task-id="{{id}}" data-story-id="{{story_id}}" data-project-id="{{project_id}}" {{#complete}}checked="checked"{{/complete}} /></span>
             <span class="mlm block">{{description}}</span>
           </label>
         </li>

@@ -77,6 +77,11 @@ root.PivotalRocketBackground =
     PivotalRocketBackground.popup.$("#storiesTabs").on "click", "li.story_info", (event) =>
       element_object = $(event.target)
       PivotalRocketBackground.bind_story_cell(element_object)
+    # search stories
+    PivotalRocketBackground.popup.$('#mainPage').on "keyup", "#searchStories", (event) =>
+      search_text = $(event.target).val()
+      if search_text.length > 2
+        console.debug search_text
   # change account
   change_account: ->
     account_id = PivotalRocketBackground.popup.$('#changeAccount').val()
