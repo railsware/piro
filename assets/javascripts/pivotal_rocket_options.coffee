@@ -48,6 +48,16 @@ root.PivotalRocketOptions =
     $('#accountList').on "click", "a.confirm_delete_account", (event) =>
       PivotalRocketOptions.delete_account(event)
       return false
+  init_sort_accounts: ->
+    $("#accountList").sortable
+      placeholder: "ui-state-highlight"
+      dropOnEmpty: true
+      handle: "div.sortable_link"
+      update: (event, ui) ->
+        account_ids = $("#accountList").sortable('toArray')
+        accounts = ($("##{object_id}").data("accountId") for object_id in account_ids)
+        PivotalRocketStorage.sort_accounts(accounts)
+    $("#accountList").disableSelection();
   # init option view
   init_view: ->
     PivotalRocketOptions.account_list()
@@ -58,6 +68,8 @@ root.PivotalRocketOptions =
     if PivotalRocketStorage.get_accounts().length > 0
       for account in PivotalRocketStorage.get_accounts()
         $('#accountList').append(PivotalRocketOptions.templates.account.render(account))
+    # bind sorting
+    PivotalRocketOptions.init_sort_accounts()
   # add acoount
   add_account: ->
     username = $('#pivotalEmail').val()

@@ -37,6 +37,13 @@ root.PivotalRocketStorage =
   set_accounts: (accounts) ->
     PivotalRocketStorage.set("accounts", accounts)
     
+  sort_accounts: (account_ids) ->
+    new_account_list = []
+    for id in account_ids
+      account = PivotalRocketStorage.find_account(id)
+      new_account_list.push(account) if account?
+    PivotalRocketStorage.set_accounts(new_account_list)
+    
   delete_account: (account_id) ->
     del_account = PivotalRocketStorage.find_account(account_id)
     projects = PivotalRocketStorage.get_projects(del_account)

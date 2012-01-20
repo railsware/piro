@@ -27,9 +27,10 @@
   
   <!-- templates -->
   <script id="account_template" type="text/x-mustache-template">
-    <li class="account" data-account-id="{{id}}">
+    <li id="account_{{id}}" class="account" data-account-id="{{id}}">
+      <div class="sortable_link">sort</div>
       <div class="view">
-        {{email}} - 
+        {{email}} - {{name}} - {{initials}} - 
         <span class="company_name_text">
           {{#company_name}}
             {{company_name}}
