@@ -48,6 +48,10 @@ root.PivotalRocketOptions =
     $('#accountList').on "click", "a.confirm_delete_account", (event) =>
       PivotalRocketOptions.delete_account(event)
       return false
+    # update options
+    $('#updateOptions').click (event) => 
+      PivotalRocketOptions.update_options()
+      return false
   init_sort_accounts: ->
     $("#accountList").sortable
       placeholder: "ui-state-highlight"
@@ -61,6 +65,7 @@ root.PivotalRocketOptions =
   # init option view
   init_view: ->
     PivotalRocketOptions.account_list()
+    PivotalRocketOptions.init_options_view()
   # account list
   account_list: ->
     # init account list
@@ -70,6 +75,13 @@ root.PivotalRocketOptions =
         $('#accountList').append(PivotalRocketOptions.templates.account.render(account))
     # bind sorting
     PivotalRocketOptions.init_sort_accounts()
+  # init options block
+  init_options_view: ->
+    $('#updateInterval').val(PivotalRocketStorage.get_update_interval())
+    PivotalRocketOptions.background_page.PivotalRocketBackground.updated_options()
+  # update options
+  update_options: ->
+    $('#updateInterval').val(PivotalRocketStorage.set_update_interval($('#updateInterval').val()))
   # add acoount
   add_account: ->
     username = $('#pivotalEmail').val()
@@ -91,7 +103,8 @@ root.PivotalRocketOptions =
           $('#loginSpinner').hide()
           if !PivotalRocketOptions.background_page.PivotalRocketBackground.account?
             PivotalRocketOptions.background_page.PivotalRocketBackground.account = account
-          PivotalRocketOptions.background_page.PivotalRocketBackground.initial_sync(account)
+          if !PivotalRocketOptions.background_page.PivotalRocketBackground.is_loading
+            PivotalRocketOptions.background_page.PivotalRocketBackground.initial_sync(account)
         error: (jqXHR, textStatus, errorThrown) ->
           $('#pivotalAddError').text(errorThrown)
           $('#loginSpinner').hide()
@@ -118,6 +131,10 @@ root.PivotalRocketOptions =
     PivotalRocketStorage.delete_account(account_id)
     if 0 == PivotalRocketStorage.get_accounts().length
       PivotalRocketOptions.background_page.PivotalRocketBackground.account = null
+    else
+      if PivotalRocketOptions.background_page.PivotalRocketBackground.account?
+        if parseInt(PivotalRocketOptions.background_page.PivotalRocketBackground.account.id) == parseInt(account_id)
+          PivotalRocketOptions.background_page.PivotalRocketBackground.account = PivotalRocketStorage.get_accounts()[0]
     PivotalRocketOptions.account_list()
     
 $ ->

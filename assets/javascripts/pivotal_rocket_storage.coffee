@@ -112,3 +112,9 @@ root.PivotalRocketStorage =
     update_interval = PivotalRocketStorage.get('update_interval')
     update_interval = 10 if !update_interval?
     update_interval
+  set_update_interval: (interval) ->
+    value = parseInt(interval)
+    value = 10 if value < 10
+    value = 360 if value > 360
+    PivotalRocketStorage.set('update_interval', value)
+    value
