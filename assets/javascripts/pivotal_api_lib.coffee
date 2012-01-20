@@ -49,7 +49,10 @@ class root.PivotalApiLib
               else
                 one_account
           PivotalRocketStorage.set_accounts(new_accounts)
-          
+  
+  update_story: (params) =>
+    # update story
+        
   get_activities: (date = new Date()) =>
     formated_date = this.formated_date(date)
     console.debug "http://www.pivotaltracker.com/services/v4/activities?limit=100&occurred_since_date=" + encodeURIComponent(formated_date)

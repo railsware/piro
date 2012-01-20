@@ -3,6 +3,15 @@
 <head>
   <title>Pivotal Rocket Options</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <style type="text/css">
+    .account .edit, .account .delete, .account.deleting .view, .account.editing .view{
+      display: none;
+    }
+    
+    .account.editing .edit, .account.deleting .delete{
+      display: block;
+    }
+  </style>
 </head>
 <body>
   
@@ -60,6 +69,7 @@
         <a href="#" class="delete_account">Delete</a>
       </div>
       <div class="edit">
+        {{email}} - {{name}} - {{initials}} 
         <input type="text" class="company_name" value="{{company_name}}" />
         <a href="#" class="confirm_edit_account">Update</a>
         <a href="#" class="cancel_edit_account">Cancel</a>
