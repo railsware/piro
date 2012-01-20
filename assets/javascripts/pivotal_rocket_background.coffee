@@ -342,6 +342,12 @@ root.PivotalRocketBackground =
       account = PivotalRocketStorage.get_accounts()[iterator]
       fcallback = -> PivotalRocketBackground.autoupdate_by_account(iterator + 1)
       PivotalRocketBackground.initial_sync(account, fcallback)
+  # account list updated in options
+  updated_accounts: ->
+    if 0 == PivotalRocketStorage.get_accounts().length
+      PivotalRocketBackground.account = null
+    else if !PivotalRocketBackground.account?
+      PivotalRocketBackground.account = PivotalRocketStorage.get_accounts()[0]
   # updated options on option page
   updated_options: ->
     # restart autoupdate

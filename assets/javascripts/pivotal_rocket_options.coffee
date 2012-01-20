@@ -78,10 +78,10 @@ root.PivotalRocketOptions =
   # init options block
   init_options_view: ->
     $('#updateInterval').val(PivotalRocketStorage.get_update_interval())
-    PivotalRocketOptions.background_page.PivotalRocketBackground.updated_options()
   # update options
   update_options: ->
     $('#updateInterval').val(PivotalRocketStorage.set_update_interval($('#updateInterval').val()))
+    PivotalRocketOptions.background_page.PivotalRocketBackground.updated_options()
   # add acoount
   add_account: ->
     username = $('#pivotalEmail').val()
@@ -101,8 +101,8 @@ root.PivotalRocketOptions =
           $('#accountBox').removeClass('adding')
           PivotalRocketOptions.account_list()
           $('#loginSpinner').hide()
-          if !PivotalRocketOptions.background_page.PivotalRocketBackground.account?
-            PivotalRocketOptions.background_page.PivotalRocketBackground.account = account
+          # notify background page
+          PivotalRocketOptions.background_page.PivotalRocketBackground.updated_accounts()
           if !PivotalRocketOptions.background_page.PivotalRocketBackground.is_loading
             PivotalRocketOptions.background_page.PivotalRocketBackground.initial_sync(account)
         error: (jqXHR, textStatus, errorThrown) ->
@@ -129,13 +129,9 @@ root.PivotalRocketOptions =
     li_object = $(event.target).parents('li.account')
     account_id = li_object.data("accountId")
     PivotalRocketStorage.delete_account(account_id)
-    if 0 == PivotalRocketStorage.get_accounts().length
-      PivotalRocketOptions.background_page.PivotalRocketBackground.account = null
-    else
-      if PivotalRocketOptions.background_page.PivotalRocketBackground.account?
-        if parseInt(PivotalRocketOptions.background_page.PivotalRocketBackground.account.id) == parseInt(account_id)
-          PivotalRocketOptions.background_page.PivotalRocketBackground.account = PivotalRocketStorage.get_accounts()[0]
     PivotalRocketOptions.account_list()
+    # notify background page
+    PivotalRocketOptions.background_page.PivotalRocketBackground.updated_accounts()
     
 $ ->
   PivotalRocketOptions.init()
