@@ -112,6 +112,8 @@ root.PivotalRocketStorage =
       return story if story.title.match(search)? && story.title.match(search).length > 0
     if story.description? && story.description.length > 0
       return story if story.description.match(search)? && story.description.match(search).length > 0
+    if story.labels? && story.labels.length > 0
+      return story if story.labels.match(search)? && story.labels.match(search).length > 0
     return null
       
   find_story: (project_id, story_id, requester = false) ->
