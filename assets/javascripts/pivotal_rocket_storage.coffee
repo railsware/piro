@@ -106,6 +106,8 @@ root.PivotalRocketStorage =
       
   search_by_story: (story, search_text) ->
     search = new RegExp(search_text, "gi")
+    if story.id? && story.id.length > 0
+      return story if story.id.match(search)? && story.id.match(search).length > 0
     if story.title? && story.title.length > 0
       return story if story.title.match(search)? && story.title.match(search).length > 0
     if story.description? && story.description.length > 0
