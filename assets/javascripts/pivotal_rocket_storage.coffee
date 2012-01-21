@@ -79,26 +79,38 @@ root.PivotalRocketStorage =
     key = if requester then ("stories_" + project.id) else ("requester_stories_" + project.id)
     PivotalRocketStorage.delete_by_key(key)
     
-  get_status_stories: (project, requester = false) ->
+  get_status_stories: (project, requester = false, search_text = null) ->
     stories = PivotalRocketStorage.get_stories(project, requester)
     if stories?
       current_stories = []
       done_stories = []
       icebox_stories = []
       for story in stories
-        if "unscheduled" == story.current_state
-          story.box_class = "icebox"
-          icebox_stories.push(story)
-        else if "accepted" == story.current_state
-          story.box_class = "done"
-          done_stories.push(story)
-        else
-          story.box_class = "current"
-          current_stories.push(story)
+        res_story = story
+        if search_text?
+          res_story = PivotalRocketStorage.search_by_story(res_story, search_text)
+        if res_story?  
+          if "unscheduled" == res_story.current_state
+            res_story.box_class = "icebox"
+            icebox_stories.push(res_story)
+          else if "accepted" == res_story.current_state
+            res_story.box_class = "done"
+            done_stories.push(res_story)
+          else
+            res_story.box_class = "current"
+            current_stories.push(res_story)
     
       return {current: current_stories, done: done_stories, icebox: icebox_stories}
     else
       return null
+      
+  search_by_story: (story, search_text) ->
+    search = new RegExp(search_text, "gi")
+    if story.title? && story.title.length > 0
+      return story if story.title.match(search)? && story.title.match(search).length > 0
+    if story.description? && story.description.length > 0
+      return story if story.description.match(search)? && story.description.match(search).length > 0
+    return null
       
   find_story: (project_id, story_id, requester = false) ->
     key = if requester then ("stories_" + project_id) else ("requester_stories_" + project_id)

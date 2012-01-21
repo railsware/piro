@@ -79,9 +79,9 @@ root.PivotalRocketBackground =
       PivotalRocketBackground.bind_story_cell(element_object)
     # search stories
     PivotalRocketBackground.popup.$('#mainPage').on "keyup", "#searchStories", (event) =>
-      search_text = $(event.target).val()
-      if search_text.length > 2
-        console.debug search_text
+      PivotalRocketBackground.init_list_stories()
+    PivotalRocketBackground.popup.$('#mainPage').on "search", "#searchStories", (event) =>
+      PivotalRocketBackground.init_list_stories() if 0 == $(event.target).val().length
   # change account
   change_account: ->
     account_id = PivotalRocketBackground.popup.$('#changeAccount').val()
@@ -147,12 +147,15 @@ root.PivotalRocketBackground =
   # show stories list
   init_list_stories: ->
     if PivotalRocketBackground.popup? && PivotalRocketBackground.account?
+      search_text = null
+      if PivotalRocketBackground.popup.$('#searchStories').val().length > 2
+        search_text = PivotalRocketBackground.popup.$('#searchStories').val()
       stories_list = {current: [], done: [], icebox: [], rcurrent: [], rdone: [], ricebox: []}
       stories_count = {current: 0, done: 0, icebox: 0, rcurrent: 0, rdone: 0, ricebox: 0}
       stored_projects = PivotalRocketStorage.get_projects(PivotalRocketBackground.account)
       if stored_projects?
         for project in stored_projects
-          stored_stories = PivotalRocketStorage.get_status_stories(project)
+          stored_stories = PivotalRocketStorage.get_status_stories(project, false, search_text)
           if stored_stories?
             if stored_stories.current? && stored_stories.current.length > 0
               project.stories = stored_stories.current
@@ -167,7 +170,7 @@ root.PivotalRocketBackground =
               stories_count.icebox += stored_stories.icebox.length
               stories_list.icebox.push(PivotalRocketBackground.templates.project.render(project))
 
-          rstored_stories = PivotalRocketStorage.get_status_stories(project, true)
+          rstored_stories = PivotalRocketStorage.get_status_stories(project, true, search_text)
           if rstored_stories?
             project.is_requested_by_me = true
             if rstored_stories.current? && rstored_stories.current.length > 0
