@@ -108,8 +108,8 @@ root.PivotalRocketStorage =
     search = new RegExp(search_text, "gi")
     if story.id? && story.id.length > 0
       return story if story.id.match(search)? && story.id.match(search).length > 0
-    if story.title? && story.title.length > 0
-      return story if story.title.match(search)? && story.title.match(search).length > 0
+    if story.name? && story.name.length > 0
+      return story if story.name.match(search)? && story.name.match(search).length > 0
     if story.description? && story.description.length > 0
       return story if story.description.match(search)? && story.description.match(search).length > 0
     if story.labels? && story.labels.length > 0
