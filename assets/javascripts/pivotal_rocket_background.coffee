@@ -87,7 +87,7 @@ root.PivotalRocketBackground =
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.story_label", (event) =>
       label = $(event.target).data('label')
       if label?
-        PivotalRocketBackground.popup.$("#searchStories").val(label).trigger('keyup')
+        PivotalRocketBackground.popup.$("#searchStories").val(label).focus().trigger('keyup')
       return false
   # change account
   change_account: ->
