@@ -195,6 +195,11 @@ p {
     border-bottom: 1px dotted;
 }
 
+.error-text {
+    padding: 4px 0 2px 23px;
+    background: url(../images/error.png) no-repeat 0 50%;
+}
+
 /* tasks */
 .tasks li:first-child,
 .comments li:first-child {
@@ -212,6 +217,15 @@ li.account {
     padding: 10px;
     border: 1px solid #dedede;
     background-color: #fff;
+}
+
+.adding .view,
+.add {
+    display: none;
+}
+
+.adding .add {
+    display: block;
 }
 
 

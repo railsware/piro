@@ -12,6 +12,9 @@
   <link href="stylesheets/layout.css" media="screen" rel="stylesheet" type="text/css" />
   <link href="stylesheets/library.css" media="screen" rel="stylesheet" type="text/css" />
   <style type="text/css">
+    html, body {
+        height: 100%;
+    }
     .account .edit, .account .delete, .account.deleting .view, .account.editing .view{
       display: none;
     }
@@ -23,17 +26,21 @@
 </head>
 <body class="settings">
   
-  <div id="loginSpinner">Loading...</div>
-  
   <div class="txt-center pvm">
     <img id="loginLogo" src="images/rocket.png" alt="Pivotal Rocket" />
   </div>
   
   <div id="mainPage" class="settings-page default-box">
-    <div class="title">Settings</div>
+    <div class="title">
+      <div class="unit-right">
+        <div id="loginSpinner"><img src="images/spinner2.gif" alt="{{loading_msg}}" title="{{loading_msg}}" /></div>
+      </div>
+      Settings
+    </div>
     <fieldset class="mas pas">
       <legend>General</legend>
-      <select id="updateInterval" class="mls">
+      <label class="mls">Update every:</label>
+      <select id="updateInterval" class="mlxs">
         <option value="10">10 min</option>
         <option value="15">15 min</option>
         <option value="20">20 min</option>
@@ -44,7 +51,7 @@
         <option value="180">3 hours</option>
         <option value="360">6 hours</option>
       </select>
-      <a href="#" id="updateOptions" class="button tiny primary mls">Update</a>
+      <a href="#" id="updateOptions" class="button tiny primary mls">Save</a>
     </fieldset>
     
     <fieldset class="mas pas">
@@ -55,13 +62,10 @@
           <div class="view mts">
             <a href="#" id="addAccount" class="new-link"><span>Add new account</span></a>
           </div>
-          <div class="add size2of3" style="display: none;">
-            <span id="pivotalAddError"></span>
-
-            <div class="mvs">
-              <label>Account Name</label>
-              <input type="text" id="pivotalCompanyName" />
-            </div> <!-- mvs -->
+          <div class="add size2of3">
+            <div class="pts">
+              <strong id="pivotalAddError" class="negative error-text"></strong>
+            </div> <!-- pts -->
 
             <div class="mvs">
               <label>Email</label>
@@ -71,6 +75,11 @@
             <div class="mvs">
               <label>Password</label>
               <input type="password" id="pivotalPassword" />
+            </div> <!-- mvs -->
+            
+            <div class="mvs">
+              <label>Account Name</label>
+              <input type="text" id="pivotalCompanyName" />
             </div> <!-- mvs -->
 
             <a href="#" id="confirmAddAccount" class="button success">Add</a><span class="mhs">or</span><a href="#" id="cancelAddAccount">Cancel</a>
@@ -85,9 +94,9 @@
     <li id="account_{{id}}" class="account" data-account-id="{{id}}">
       
       <div class="view outer">
-      <div class="unit size2of3">
-      <div class="sortable_link unit" title="Sort accounts"></div>
-        <div class="mlm">
+      <div class="unit size3of4">
+      <div class="sortable_link unit mrs" title="Sort accounts"></div>
+        <div class="unit">
           <div class="company_name_text">
             <strong>{{#company_name}}
               {{company_name}}
@@ -102,7 +111,7 @@
             </div>
         </div>
       </div>
-      <div class="unit size1of3 txt-right">
+      <div class="unit size1of4 txt-right">
         <a href="#" class="edit_account button tiny primary">Edit</a>
         <a href="#" class="delete_account button tiny danger mlxs">Delete</a>
       </div>
@@ -110,7 +119,7 @@
       </div>
       <div class="edit">
         <div class="mbs">
-          <div>{{email}}</div>
+          <strong>{{company_name}}</strong> <span>({{email}})</span>
           <div class="neutral h4">{{name}} aka {{initials}} </div>
         </div>
         <div class="outer">
@@ -124,7 +133,8 @@
 
       </div>
       <div class="delete">
-        <a href="#" class="confirm_delete_account">Confirm delete account</a>
+        <div class="mbs"><strong>{{company_name}}</strong> <span>({{email}})</span></div>
+        <a href="#" class="confirm_delete_account button danger mrs">Confirm delete account</a>
         <a href="#" class="cancel_delete_account">Cancel</a>
       </div>
     </li>
