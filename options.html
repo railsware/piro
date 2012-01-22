@@ -3,6 +3,14 @@
 <head>
   <title>Pivotal Rocket Options</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link href="stylesheets/reset.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="stylesheets/grids.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="stylesheets/spaces.css" media="screen" rel="stylesheet" type="text/css" />  
+  <link href="stylesheets/group-headers.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="stylesheets/group-buttons.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="stylesheets/group-forms.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="stylesheets/layout.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="stylesheets/library.css" media="screen" rel="stylesheet" type="text/css" />
   <style type="text/css">
     .account .edit, .account .delete, .account.deleting .view, .account.editing .view{
       display: none;
@@ -13,30 +21,19 @@
     }
   </style>
 </head>
-<body>
+<body class="settings">
   
   <div id="loginSpinner">Loading...</div>
   
-  <div id="mainPage">
-    <h1>Accounts</h1>
-    <ul id="accountList"></ul>
-    <div id="accountBox">
-      <div class="view">
-        <a href="#" id="addAccount">Add account</a>
-      </div>
-      <div class="add">
-        <span id="pivotalAddError"></span>
-        <input type="text" id="pivotalEmail" />
-        <input type="password" id="pivotalPassword" />
-        <input type="company_name" id="pivotalCompanyName" />
-        <a href="#" id="confirmAddAccount">Add</a>
-        <a href="#" id="cancelAddAccount">Cancel</a>
-      </div>
-    </div>
-    
-    <h1>Options</h1>
-    <div>
-      <select id="updateInterval">
+  <div class="txt-center pvm">
+    <img id="loginLogo" src="images/rocket.png" alt="Pivotal Rocket" />
+  </div>
+  
+  <div id="mainPage" class="settings-page default-box">
+    <div class="title">Settings</div>
+    <fieldset class="mas pas">
+      <legend>General</legend>
+      <select id="updateInterval" class="mls">
         <option value="10">10 min</option>
         <option value="15">15 min</option>
         <option value="20">20 min</option>
@@ -47,32 +44,84 @@
         <option value="180">3 hours</option>
         <option value="360">6 hours</option>
       </select>
-      <a href="#" id="updateOptions">Update</a>
-    </div>
+      <a href="#" id="updateOptions" class="button tiny primary mls">Update</a>
+    </fieldset>
+    
+    <fieldset class="mas pas">
+      <legend>Accounts</legend>
+      <div class="phs">
+        <ul id="accountList"></ul>
+        <div id="accountBox">
+          <div class="view mts">
+            <a href="#" id="addAccount" class="new-link"><span>Add new account</span></a>
+          </div>
+          <div class="add size2of3" style="display: none;">
+            <span id="pivotalAddError"></span>
+
+            <div class="mvs">
+              <label>Account Name</label>
+              <input type="text" id="pivotalCompanyName" />
+            </div> <!-- mvs -->
+
+            <div class="mvs">
+              <label>Email</label>
+              <input type="text" id="pivotalEmail" />
+            </div> <!-- mvs -->
+
+            <div class="mvs">
+              <label>Password</label>
+              <input type="password" id="pivotalPassword" />
+            </div> <!-- mvs -->
+
+            <a href="#" id="confirmAddAccount" class="button success">Add</a><span class="mhs">or</span><a href="#" id="cancelAddAccount">Cancel</a>
+          </div>
+        </div>
+      </div> <!-- phs -->
+    </fieldset>
   </div>
   
   <!-- templates -->
   <script id="account_template" type="text/x-mustache-template">
     <li id="account_{{id}}" class="account" data-account-id="{{id}}">
-      <div class="sortable_link">sort</div>
-      <div class="view">
-        {{email}} - {{name}} - {{initials}} - 
-        <span class="company_name_text">
-          {{#company_name}}
-            {{company_name}}
-          {{/company_name}}
-          {{^company_name}}
-            Not set
-          {{/company_name}}
-        </span>
-        <a href="#" class="edit_account">Edit</a>
-        <a href="#" class="delete_account">Delete</a>
+      
+      <div class="view outer">
+      <div class="unit size2of3">
+      <div class="sortable_link unit" title="Sort accounts"></div>
+        <div class="mlm">
+          <div class="company_name_text">
+            <strong>{{#company_name}}
+              {{company_name}}
+            {{/company_name}}
+            {{^company_name}}
+              Not set
+            {{/company_name}}</strong>
+            <span>({{email}})</span>
+          </div>
+            <div class="neutral h4">
+              {{name}} aka {{initials}}
+            </div>
+        </div>
+      </div>
+      <div class="unit size1of3 txt-right">
+        <a href="#" class="edit_account button tiny primary">Edit</a>
+        <a href="#" class="delete_account button tiny danger mlxs">Delete</a>
+      </div>
+                              
       </div>
       <div class="edit">
-        {{email}} - {{name}} - {{initials}} 
-        <input type="text" class="company_name" value="{{company_name}}" />
-        <a href="#" class="confirm_edit_account">Update</a>
-        <a href="#" class="cancel_edit_account">Cancel</a>
+        <div class="mbs">
+          <div>{{email}}</div>
+          <div class="neutral h4">{{name}} aka {{initials}} </div>
+        </div>
+        <div class="outer">
+          <div class="unit size2of3">
+            <input type="text" class="company_name" value="{{company_name}}" />
+          </div>
+          <div class="unit size1of3">
+            <a href="#" class="confirm_edit_account button primary mls">Update</a><a href="#" class="cancel_edit_account mls">Cancel</a>
+          </div>
+        </div>
+
       </div>
       <div class="delete">
         <a href="#" class="confirm_delete_account">Confirm delete account</a>

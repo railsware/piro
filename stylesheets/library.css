@@ -19,10 +19,6 @@
     color: #333;
 }
 
-.firm {
-    color: #0080BD;
-}
-
 /* links */
 a {
 	color: #135785;
@@ -101,6 +97,12 @@ p {
     background: linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.7) 100%);
 }
 
+.default-box {
+    background-color: #f4f4f4;
+    border: 1px solid #A5A5A5;
+    box-shadow: 0 2px 10px rgba(0,0,0, 0.2);
+}
+
 .title {
     height: 26px;
     line-height: 26px;
@@ -148,80 +150,6 @@ p {
     background: url(../images/empty.png) no-repeat center center;
 }
 
-.add-task {
-    position: relative;
-    top: -2px;
-    right: 3px;
-}
-
-#loaderSpinner {
-    position: relative;
-    top: 6px;
-}
-
-/* tabs */
-.nav {
-    height: 29px;
-    border-radius: 5px 0 0 0;
-    border-bottom: 1px solid #333;
-    background: rgb(125,126,125);
-    background: -moz-linear-gradient(top,  rgba(125,126,125,1) 0%, rgba(14,14,14,1) 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(125,126,125,1)), color-stop(100%,rgba(14,14,14,1)));
-    background: -webkit-linear-gradient(top,  rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%);
-    background: linear-gradient(top,  rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%);
-}
-
-.nav li {
-    float: left;
-}
-
-.nav li a {
-    display: block;
-    height: 29px;
-    line-height: 30px;
-    text-align: center;
-    color: #fff;
-    font-size: 11px;
-    text-transform: uppercase;
-    border-left: 1px solid #222;
-    text-shadow: 0 -1px 0 rgba(0,0,0, 0.8);
-    background: rgb(125,126,125);
-    background: -moz-linear-gradient(top,  rgba(125,126,125,1) 0%, rgba(14,14,14,1) 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(125,126,125,1)), color-stop(100%,rgba(14,14,14,1)));
-    background: -webkit-linear-gradient(top,  rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%);
-    background: linear-gradient(top,  rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%);
-}
-
-.nav li:first-child a {
-    border-radius: 5px 0 0 0;
-}
-
-
-.ui-tabs .ui-tabs-nav { margin: 0; padding: 0; }
-.ui-tabs .ui-tabs-nav li.ui-tabs-selected a { 
-    text-shadow: 0 1px 0 rgba(0,0,0, 0.8);
-    background: rgb(68,68,68);
-    background: -moz-linear-gradient(top,  rgba(68,68,68,1) 0%, rgba(125,126,125,1) 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(68,68,68,1)), color-stop(100%,rgba(125,126,125,1)));
-    background: -webkit-linear-gradient(top,  rgba(68,68,68,1) 0%,rgba(125,126,125,1) 100%);
-    background: linear-gradient(top,  rgba(68,68,68,1) 0%,rgba(125,126,125,1) 100%);    
-}
-
-.ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: text; }
-.ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
-.ui-tabs .ui-tabs-panel { display: block; border-width: 0; }
-.ui-tabs .ui-tabs-hide { display: none !important; }
-
-.story-header {
-    height: 30px;
-    border-radius: 0 5px 0 0;
-    background: rgb(125,126,125);
-    background: -moz-linear-gradient(top,  rgba(125,126,125,1) 0%, rgba(14,14,14,1) 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(125,126,125,1)), color-stop(100%,rgba(14,14,14,1)));
-    background: -webkit-linear-gradient(top,  rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%);
-    background: linear-gradient(top,  rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%);
-}
-
 .feature-icon {
     display: inline-block;
     vertical-align: -2px;
@@ -249,6 +177,24 @@ p {
     background: url(../images/chore.png) no-repeat 0 0;
 }
 
+.sortable_link {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: url(../images/move.png) no-repeat 0 0;
+    cursor: pointer;
+}
+
+.new-link {
+    padding-left: 20px;
+    background: url(../images/new.png) no-repeat 0 50%;
+    color: #333;
+}
+
+.new-link span {
+    border-bottom: 1px dotted;
+}
+
 /* tasks */
 .tasks li:first-child,
 .comments li:first-child {
@@ -262,14 +208,10 @@ p {
     border-bottom: 0;
 }
 
-
-/* login page */
-#loginPage {
-    width: 280px;
-    background: #AEB6B9 url(../images/pattern.png) repeat-x 0 150%;
-    border-radius: 5px;
+li.account {
+    padding: 10px;
+    border: 1px solid #dedede;
+    background-color: #fff;
 }
 
-#loginPage input {
-    padding: 5px;
-}
+

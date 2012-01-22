@@ -2,10 +2,10 @@ input[type="text"],
 input[type="password"],
 input[type="search"] {
     width: 100%;
-    padding: 2px;
+    padding: 5px;
     background-color: #fff;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.3) inset, 0 1px 0 rgba(255,255,255, 0.4);
-    border-radius: 6px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.2) inset, 0 1px 0 rgba(255,255,255, 0.4);
+    border-radius: 3px;
     border: 1px solid #999;
     font-family: arial, sans-serif;
     -moz-box-sizing: border-box;
@@ -15,6 +15,7 @@ input[type="search"] {
 
 select {
     padding: 2px;
+    vertical-align: middle;
 }
 
 option {
@@ -23,4 +24,17 @@ option {
 
 input[type="search"] {
     margin-top: 4px;
+}
+
+fieldset {
+    border: 1px solid #A4A4A4;
+    box-shadow: 0 0 1px #ccc inset;
+}
+
+legend {
+    margin: -15px 0 0;
+    padding: 0 10px;
+    font-weight: bold;
+    background-color: #f4f4f4;
+    text-shadow: 0 1px 0 #fff;
 }

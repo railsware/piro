@@ -1,3 +1,7 @@
+html, body {
+    height: 100%;
+}
+
 body {
     font: 12px/1.4 arial, sans-serif;
     border-radius: 5px;
@@ -43,6 +47,81 @@ body {
     background: linear-gradient(top,  rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%);
 }
 
+.add-task {
+    position: relative;
+    top: -2px;
+    right: 3px;
+}
+
+#loaderSpinner {
+    position: relative;
+    top: 6px;
+}
+
+.story-header {
+    height: 30px;
+    border-radius: 0 5px 0 0;
+    background: rgb(125,126,125);
+    background: -moz-linear-gradient(top,  rgba(125,126,125,1) 0%, rgba(14,14,14,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(125,126,125,1)), color-stop(100%,rgba(14,14,14,1)));
+    background: -webkit-linear-gradient(top,  rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%);
+    background: linear-gradient(top,  rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%);
+}
+
+/* tabs */
+.nav {
+    height: 29px;
+    border-radius: 5px 0 0 0;
+    border-bottom: 1px solid #333;
+    background: rgb(125,126,125);
+    background: -moz-linear-gradient(top,  rgba(125,126,125,1) 0%, rgba(14,14,14,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(125,126,125,1)), color-stop(100%,rgba(14,14,14,1)));
+    background: -webkit-linear-gradient(top,  rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%);
+    background: linear-gradient(top,  rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%);
+}
+
+.nav li {
+    float: left;
+}
+
+.nav li a {
+    display: block;
+    height: 29px;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+    font-size: 11px;
+    text-transform: uppercase;
+    border-left: 1px solid #222;
+    text-shadow: 0 -1px 0 rgba(0,0,0, 0.8);
+    background: rgb(125,126,125);
+    background: -moz-linear-gradient(top,  rgba(125,126,125,1) 0%, rgba(14,14,14,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(125,126,125,1)), color-stop(100%,rgba(14,14,14,1)));
+    background: -webkit-linear-gradient(top,  rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%);
+    background: linear-gradient(top,  rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%);
+}
+
+.nav li:first-child a {
+    border-radius: 5px 0 0 0;
+}
+
+
+.ui-tabs .ui-tabs-nav { margin: 0; padding: 0; }
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a { 
+    text-shadow: 0 1px 0 rgba(0,0,0, 0.8);
+    background: rgb(68,68,68);
+    background: -moz-linear-gradient(top,  rgba(68,68,68,1) 0%, rgba(125,126,125,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(68,68,68,1)), color-stop(100%,rgba(125,126,125,1)));
+    background: -webkit-linear-gradient(top,  rgba(68,68,68,1) 0%,rgba(125,126,125,1) 100%);
+    background: linear-gradient(top,  rgba(68,68,68,1) 0%,rgba(125,126,125,1) 100%);    
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: text; }
+.ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
+.ui-tabs .ui-tabs-panel { display: block; border-width: 0; }
+.ui-tabs .ui-tabs-hide { display: none !important; }
+
+
 /* scrollbars */
 ::-webkit-scrollbar {
     width: 6px;
@@ -60,6 +139,30 @@ body {
 
 ::-webkit-scrollbar-thumb:window-inactive {
 	background: rgba(0,0,0,0.4); 
+}
+
+
+/* pages */
+
+/* login page */
+#loginPage {
+    width: 280px;
+    background: #AEB6B9 url(../images/pattern.png) repeat-x 0 150%;
+    border-radius: 5px;
+}
+
+#loginPage input {
+    padding: 5px;
+}
+
+/* settings */
+.settings {
+    background: #AEB6B9 url(../images/pattern.png) repeat-x 0 100%;
+}
+
+.settings-page {
+    width: 500px;
+    margin: auto;
 }
 
 
