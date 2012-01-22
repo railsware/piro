@@ -105,15 +105,19 @@ root.PivotalRocketStorage =
       return null
       
   search_by_story: (story, search_text) ->
-    search = new RegExp(search_text, "gi")
-    if story.id? && story.id.length > 0
-      return story if story.id.match(search)? && story.id.match(search).length > 0
-    if story.name? && story.name.length > 0
-      return story if story.name.match(search)? && story.name.match(search).length > 0
-    if story.description? && story.description.length > 0
-      return story if story.description.match(search)? && story.description.match(search).length > 0
-    if story.labels? && story.labels.length > 0
-      return story if story.labels.match(search)? && story.labels.match(search).length > 0
+    if search_text.length > 0 && "#" == search_text[0]
+      search = new RegExp(search_text.substr(1), "gi")
+      if story.labels? && story.labels.length > 0
+        return story if story.labels.match(search)? && story.labels.match(search).length > 0
+      return null
+    else
+      search = new RegExp(search_text, "gi")
+      if story.id? && story.id.length > 0
+        return story if story.id.match(search)? && story.id.match(search).length > 0
+      if story.name? && story.name.length > 0
+        return story if story.name.match(search)? && story.name.match(search).length > 0
+      if story.description? && story.description.length > 0
+        return story if story.description.match(search)? && story.description.match(search).length > 0
     return null
       
   find_story: (project_id, story_id, requester = false) ->

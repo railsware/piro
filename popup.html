@@ -183,6 +183,9 @@
     
     <h2 class="mbs">Description</h2>
     <div class="phs">{{description}}</div>
+    {{#labels_html}}
+      <h2 class="mbs">Labels: {{& text}}</h2>
+    {{/labels_html}}
     <h2 class="mbs mtm">Comments</h2>
     <ul class="mbm list comments phs">
       {{#notes}}

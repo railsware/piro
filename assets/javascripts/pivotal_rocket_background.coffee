@@ -83,6 +83,12 @@ root.PivotalRocketBackground =
       PivotalRocketBackground.init_list_stories()
     PivotalRocketBackground.popup.$('#mainPage').on "search", "#searchStories", (event) =>
       PivotalRocketBackground.init_list_stories() if 0 == $(event.target).val().length
+    # search by labels
+    PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.story_label", (event) =>
+      label = $(event.target).data('label')
+      if label?
+        PivotalRocketBackground.popup.$("#searchStories").val(label).trigger('keyup')
+      return false
   # change account
   change_account: ->
     account_id = PivotalRocketBackground.popup.$('#changeAccount').val()
@@ -116,6 +122,14 @@ root.PivotalRocketBackground =
   # show story details
   show_story_info: (story) ->
     if story?
+      if story.labels?
+        console.debug story.labels
+        labels = story.labels.split(",")
+        story.labels_html = {text: ""}
+        if labels.length > 0
+          labels_array = []
+          labels_array.push("<a href='#' class='story_label' data-label='##{label}'>#{label}</a>") for label in labels
+          story.labels_html.text = labels_array.join(", ")
       # generate template
       block_element = PivotalRocketBackground.popup.$('#storyInfo')
       block_element.empty().html(PivotalRocketBackground.templates.story.render(story))
