@@ -16,6 +16,7 @@ root.PivotalRocketOptions =
   init_bindings: ->
     # add accounts
     $('#addAccount').click (event) => 
+      $('#pivotalAddError').hide()
       $('#accountBox').addClass('adding')
       return false
     $('#cancelAddAccount').click (event) => 
@@ -29,6 +30,7 @@ root.PivotalRocketOptions =
     # edit account
     $('#accountList').on "click", "a.edit_account", (event) =>
       $(event.target).parents('li.account').removeClass('deleting').addClass('editing')
+      $(event.target).parents('li.account').find('input.company_name').focus()
       return false
     $('#accountList').on "click", "a.cancel_edit_account", (event) =>
       $(event.target).parents('li.account').removeClass('editing')
@@ -106,10 +108,11 @@ root.PivotalRocketOptions =
           if !PivotalRocketOptions.background_page.PivotalRocketBackground.is_loading
             PivotalRocketOptions.background_page.PivotalRocketBackground.initial_sync(account)
         error: (jqXHR, textStatus, errorThrown) ->
-          $('#pivotalAddError').text(errorThrown)
+          $('#pivotalAddError').show().text(errorThrown)
           $('#loginSpinner').hide()
         beforeSend: (jqXHR, settings) ->
           $('#loginSpinner').show()
+          $('#pivotalAddError').hide()
   # update account
   update_account: (event) ->
     li_object = $(event.target).parents('li.account')

@@ -47,6 +47,7 @@ root.PivotalRocketBackground =
         PivotalRocketBackground.popup.$('#mainPage').show()
       else
         PivotalRocketBackground.popup.$('#mainPage, #storyInfo').hide()
+        PivotalRocketBackground.popup.$('#loginPage .error_msg').hide()
         PivotalRocketBackground.popup.$('#loginPage').show()
   # init templates
   init_templates: ->
@@ -344,9 +345,10 @@ root.PivotalRocketBackground =
         error: (jqXHR, textStatus, errorThrown) ->
           if PivotalRocketBackground.popup?
             PivotalRocketBackground.popup.$('#loginPage').removeClass('locading')
-            PivotalRocketBackground.popup.$('#loginPage .error_msg').text(errorThrown)
+            PivotalRocketBackground.popup.$('#loginPage .error_msg').show().text(errorThrown)
         beforeSend: (jqXHR, settings) ->
           if PivotalRocketBackground.popup?
+            PivotalRocketBackground.popup.$('#loginPage .error_msg').hide()
             PivotalRocketBackground.popup.$('#loginPage').addClass('locading')
   # autoupdate for all data
   autoupdate: ->
