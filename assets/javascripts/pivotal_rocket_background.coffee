@@ -298,6 +298,8 @@ root.PivotalRocketBackground =
             
       error: (jqXHR, textStatus, errorThrown) ->
         # error
+        PivotalRocketBackground.is_loading = false
+        PivotalRocketBackground.init_spinner()
   # normalize story
   normalize_story_for_saving: (story) ->
     # normalize notes
