@@ -1,6 +1,7 @@
 root = global ? window
 
 class root.PivotalApiLib
+  baseUrl: "https://www.pivotaltracker.com/services/v4"
   constructor: (@account) ->
     # constructor
     $.ajaxSetup
@@ -12,13 +13,13 @@ class root.PivotalApiLib
     
   get_projects: (params) =>
     $.ajax
-      url: "https://www.pivotaltracker.com/services/v4/projects"
+      url: "#{this.baseUrl}/projects"
       success: params.success
       error: params.error
     
   get_stories_for_project: (params) =>
     $.ajax
-      url: "http://www.pivotaltracker.com/services/v4/projects/" + params.project.id + "/stories?filter=" + encodeURIComponent("owner:" + @account.initials)
+      url: "#{this.baseUrl}/projects/#{params.project.id}/stories?filter=" + encodeURIComponent("owner:" + @account.initials)
       success: (data, textStatus, jqXHR) ->
         if params? && params.success?
           params.success(data, textStatus, jqXHR, params.project)
@@ -27,7 +28,7 @@ class root.PivotalApiLib
       
   get_stories_for_project_requester: (params) =>
     $.ajax
-      url: "http://www.pivotaltracker.com/services/v4/projects/" + params.project.id + "/stories?filter=" + encodeURIComponent("requester:" + @account.initials)
+      url: "#{this.baseUrl}/projects/#{params.project.id}/stories?filter=" + encodeURIComponent("requester:" + @account.initials)
       success: (data, textStatus, jqXHR) ->
         if params? && params.success?
           params.success(data, textStatus, jqXHR, params.project)
@@ -36,7 +37,7 @@ class root.PivotalApiLib
       
   update_account: =>
     $.ajax
-      url: "https://www.pivotaltracker.com/services/v4/me"
+      url: "#{this.baseUrl}/me"
       success: (data, textStatus, jqXHR) =>
         account = XML2JSON.parse(data, true)
         account = account.person if account.person?
@@ -55,9 +56,8 @@ class root.PivotalApiLib
         
   get_activities: (date = new Date()) =>
     formated_date = this.formated_date(date)
-    console.debug "http://www.pivotaltracker.com/services/v4/activities?limit=100&occurred_since_date=" + encodeURIComponent(formated_date)
     $.ajax
-      url: "http://www.pivotaltracker.com/services/v4/activities?limit=100&occurred_since_date=" + encodeURIComponent(formated_date)
+      url: "#{this.baseUrl}/activities?limit=100&occurred_since_date=" + encodeURIComponent(formated_date)
       success: (data, textStatus, jqXHR) =>
         activities = XML2JSON.parse(data, true)
         console.debug activities
@@ -69,6 +69,7 @@ class root.PivotalApiLib
  
 # pivotal auth lib   
 class root.PivotalAuthLib
+  baseUrl: "https://www.pivotaltracker.com/services/v4"
   constructor: (params) ->      
     $.ajax
       cache: false
@@ -76,7 +77,7 @@ class root.PivotalAuthLib
       dataType: 'xml'
       headers: 
         "X-TrackerToken": null 
-      url: "https://www.pivotaltracker.com/services/v4/me"
+      url: "#{this.baseUrl}/me"
       username: params.username
       password: params.password
       success: params.success
