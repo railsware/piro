@@ -4,21 +4,28 @@ class root.PivotalApiLib
   baseUrl: "https://www.pivotaltracker.com/services/v4"
   constructor: (@account) ->
     # constructor
-    $.ajaxSetup
+  get_projects: (params) =>
+    $.ajax
+      #setup
       timeout: 60000
       crossDomain: true
       dataType: 'xml'
       headers:
         "X-TrackerToken": @account.token.guid
-    
-  get_projects: (params) =>
-    $.ajax
+      # else
       url: "#{this.baseUrl}/projects"
       success: params.success
       error: params.error
     
   get_stories_for_project: (params) =>
     $.ajax
+      #setup
+      timeout: 60000
+      crossDomain: true
+      dataType: 'xml'
+      headers:
+        "X-TrackerToken": @account.token.guid
+      # else
       url: "#{this.baseUrl}/projects/#{params.project.id}/stories?filter=" + encodeURIComponent("owner:" + @account.initials)
       success: (data, textStatus, jqXHR) ->
         if params? && params.success?
@@ -28,6 +35,13 @@ class root.PivotalApiLib
       
   get_stories_for_project_requester: (params) =>
     $.ajax
+      #setup
+      timeout: 60000
+      crossDomain: true
+      dataType: 'xml'
+      headers:
+        "X-TrackerToken": @account.token.guid
+      # else
       url: "#{this.baseUrl}/projects/#{params.project.id}/stories?filter=" + encodeURIComponent("requester:" + @account.initials)
       success: (data, textStatus, jqXHR) ->
         if params? && params.success?
@@ -37,6 +51,13 @@ class root.PivotalApiLib
       
   update_account: =>
     $.ajax
+      #setup
+      timeout: 60000
+      crossDomain: true
+      dataType: 'xml'
+      headers:
+        "X-TrackerToken": @account.token.guid
+      # else
       url: "#{this.baseUrl}/me"
       success: (data, textStatus, jqXHR) =>
         account = XML2JSON.parse(data, true)
@@ -52,11 +73,30 @@ class root.PivotalApiLib
           PivotalRocketStorage.set_accounts(new_accounts)
   
   update_story: (params) =>
-    # update story
+    $.ajax
+      #setup
+      timeout: 60000
+      crossDomain: true
+      dataType: 'xml'
+      headers:
+        "X-TrackerToken": @account.token.guid
+      # else
+      url: "#{this.baseUrl}/projects/#{params.project_id}/stories/#{params.story_id}"
+      type: "PUT"
+      data: params.data
+      success: params.success
+      error: params.error
         
   get_activities: (date = new Date()) =>
     formated_date = this.formated_date(date)
     $.ajax
+      #setup
+      timeout: 60000
+      crossDomain: true
+      dataType: 'xml'
+      headers:
+        "X-TrackerToken": @account.token.guid
+      # else
       url: "#{this.baseUrl}/activities?limit=100&occurred_since_date=" + encodeURIComponent(formated_date)
       success: (data, textStatus, jqXHR) =>
         activities = XML2JSON.parse(data, true)

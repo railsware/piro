@@ -83,12 +83,16 @@ root.PivotalRocketBackground =
       PivotalRocketBackground.init_list_stories()
     PivotalRocketBackground.popup.$('#mainPage').on "search", "#searchStories", (event) =>
       PivotalRocketBackground.init_list_stories() if 0 == $(event.target).val().length
+    # bindings for story show
     # search by labels
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.story_label", (event) =>
       label = $(event.target).data('label')
       if label?
         PivotalRocketBackground.popup.$("#searchStories").val(label).focus().trigger('keyup')
       return false
+    # change of status
+    PivotalRocketBackground.popup.$('#storyInfo').on "change", "select.change_story_state", (event) =>
+      PivotalRocketBackground.change_story_state($(event.target))
   # change account
   change_account: ->
     account_id = PivotalRocketBackground.popup.$('#changeAccount').val()
@@ -123,20 +127,35 @@ root.PivotalRocketBackground =
   show_story_info: (story) ->
     if story?
       if story.labels?
-        console.debug story.labels
         labels = story.labels.split(",")
         story.labels_html = {text: ""}
         if labels.length > 0
           labels_array = []
           labels_array.push("<a href='#' class='story_label' data-label='##{label}'>#{label}</a>") for label in labels
           story.labels_html.text = labels_array.join(", ")
+      # field for story type
+      if story.story_type
+        switch story.story_type
+          when "feature"
+            story.story_type_can_started = true
+            story.story_type_many_statuses = true
+          when "bug"
+            story.story_type_can_started = true
+            story.story_type_many_statuses = true
+          when "chore"
+            story.story_type_can_started = true
       # generate template
       block_element = PivotalRocketBackground.popup.$('#storyInfo')
       block_element.empty().html(PivotalRocketBackground.templates.story.render(story))
       PivotalRocketBackground.popup.$('#infoPanel').hide()
       block_element.show()
+      # select selector for story state
+      PivotalRocketBackground.popup.$('#storyInfo').find('select.change_story_state').val(story.current_state)
       # init clippy
-      chrome.extension.sendRequest {clippy_for_story: {id: story.id, url: story.url}}
+      chrome.extension.sendRequest
+        clippy_for_story:
+          id: story.id
+          url: story.url
   # spinner for update stories
   init_spinner: ->
     PivotalRocketBackground.init_icon_status()
@@ -300,6 +319,30 @@ root.PivotalRocketBackground =
         # error
         PivotalRocketBackground.is_loading = false
         PivotalRocketBackground.init_spinner()
+  # change story state
+  change_story_state: (object) ->
+    if PivotalRocketBackground.account? && PivotalRocketBackground.popup?
+      selected_type = PivotalRocketBackground.popup.$('#selecterStoriesType').val()
+      selected_type_bol = if "requester" == selected_type then true else false
+      story_state = object.val()
+      story_id = object.data('storyId')
+      project_id = object.data('projectId')
+      pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
+      pivotal_lib.update_story
+        project_id: project_id
+        story_id: story_id
+        data:
+          story:
+            current_state: story_state
+        success: (data, textStatus, jqXHR) ->
+          un_story = XML2JSON.parse(data, true)
+          un_story = un_story.story if un_story.story?
+          story = PivotalRocketBackground.normalize_story_for_saving(un_story)
+          console.debug story
+        error: (jqXHR, textStatus, errorThrown) ->
+          story = PivotalRocketStorage.find_story(project_id, story_id, selected_type_bol)
+          if story?
+            PivotalRocketBackground.popup.$('#storyInfo').find("select.change_story_state[data-story-id=#{story_id}]").val(story.current_state)
   # normalize story
   normalize_story_for_saving: (story) ->
     # normalize notes
