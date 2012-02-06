@@ -268,50 +268,31 @@ root.PivotalRocketBackground =
         projects = [projects] if projects.constructor != Array
         PivotalRocketStorage.set_projects(pivotal_account, projects)
         PivotalRocketBackground.tmp_counter = projects.length * 2
+        fcallback_counter = -> 
+          PivotalRocketBackground.tmp_counter--
+          if PivotalRocketBackground.tmp_counter <= 0
+            PivotalRocketBackground.init_list_stories()
+            PivotalRocketBackground.is_loading = false
+            PivotalRocketBackground.init_spinner()
+            if callback_function?
+              callback_function()
+        
         for project in projects
           PivotalRocketBackground.pivotal_api_lib.get_stories_for_project
             project: project
             complete: (jqXHR, textStatus) ->
-              PivotalRocketBackground.tmp_counter--
-              if PivotalRocketBackground.tmp_counter <= 0
-                PivotalRocketBackground.init_list_stories()
-                PivotalRocketBackground.is_loading = false
-                PivotalRocketBackground.init_spinner()
-                if callback_function?
-                  callback_function()
+              fcallback_counter()
             success: (data, textStatus, jqXHR, project) ->
-              stories = []
-              allstories = XML2JSON.parse(data, true)
-              stories = allstories.stories.story if allstories.stories? && allstories.stories.story?
-              stories = [stories] if stories.constructor != Array
-              if stories? && stories.length > 0
-                normalize_stories = (PivotalRocketBackground.normalize_story_for_saving(story) for story in stories)
-                PivotalRocketStorage.set_stories(project, normalize_stories)
-              else
-                PivotalRocketStorage.delete_stories(project)
+              PivotalRocketBackground.save_stories_data_by_project(project, data)
             error: (jqXHR, textStatus, errorThrown) ->
               # error
               
           PivotalRocketBackground.pivotal_api_lib.get_stories_for_project_requester
             project: project
             complete: (jqXHR, textStatus) ->
-              PivotalRocketBackground.tmp_counter--
-              if PivotalRocketBackground.tmp_counter <= 0
-                PivotalRocketBackground.init_list_stories()
-                PivotalRocketBackground.is_loading = false
-                PivotalRocketBackground.init_spinner()
-                if callback_function?
-                  callback_function()
+              fcallback_counter()
             success: (data, textStatus, jqXHR, project) ->
-              stories = []
-              allstories = XML2JSON.parse(data, true)
-              stories = allstories.stories.story if allstories.stories? && allstories.stories.story?
-              stories = [stories] if stories.constructor != Array
-              if stories? && stories.length > 0
-                normalize_stories = (PivotalRocketBackground.normalize_story_for_saving(story) for story in stories)
-                PivotalRocketStorage.set_stories(project, normalize_stories, true)
-              else
-                PivotalRocketStorage.delete_stories(project, true)
+              PivotalRocketBackground.save_stories_data_by_project(project, data, true)
             error: (jqXHR, textStatus, errorThrown) ->
               # error
             
@@ -340,15 +321,7 @@ root.PivotalRocketBackground =
             project: 
               id: project_id
             success: (data, textStatus, jqXHR, project) ->
-              stories = []
-              allstories = XML2JSON.parse(data, true)
-              stories = allstories.stories.story if allstories.stories? && allstories.stories.story?
-              stories = [stories] if stories.constructor != Array
-              if stories? && stories.length > 0
-                normalize_stories = (PivotalRocketBackground.normalize_story_for_saving(story) for story in stories)
-                PivotalRocketStorage.set_stories(project, normalize_stories, selected_type_bol)
-              else
-                PivotalRocketStorage.delete_stories(project, selected_type_bol)
+              PivotalRocketBackground.save_stories_data_by_project(project, data, selected_type_bol)
               PivotalRocketBackground.init_list_stories()
               
           pivotal_lib.get_stories_by_bool(params, selected_type_bol)
@@ -443,6 +416,17 @@ root.PivotalRocketBackground =
     # restart autoupdate
     clearInterval(PivotalRocketBackground.update_timer)
     PivotalRocketBackground.init_autoupdate()
-
+  # save stories by project
+  save_stories_data_by_project: (project, data, requester = false) ->
+    stories = []
+    allstories = XML2JSON.parse(data, true)
+    stories = allstories.stories.story if allstories.stories? && allstories.stories.story?
+    stories = [stories] if stories.constructor != Array
+    if stories? && stories.length > 0
+      normalize_stories = (PivotalRocketBackground.normalize_story_for_saving(story) for story in stories)
+      PivotalRocketStorage.set_stories(project, normalize_stories, requester)
+    else
+      PivotalRocketStorage.delete_stories(project, requester)
+      
 $ ->
   PivotalRocketBackground.init()
