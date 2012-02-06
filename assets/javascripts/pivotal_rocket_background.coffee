@@ -323,7 +323,7 @@ root.PivotalRocketBackground =
   change_story_state: (object) ->
     if PivotalRocketBackground.account? && PivotalRocketBackground.popup?
       selected_type = PivotalRocketBackground.popup.$('#selecterStoriesType').val()
-      selected_type_bol = if "requester" == selected_type then true else false
+      selected_type_bol = if selected_type && "requester" == selected_type then true else false
       story_state = object.val()
       story_id = object.data('storyId')
       project_id = object.data('projectId')
@@ -335,10 +335,23 @@ root.PivotalRocketBackground =
           story:
             current_state: story_state
         success: (data, textStatus, jqXHR) ->
-          un_story = XML2JSON.parse(data, true)
-          un_story = un_story.story if un_story.story?
-          story = PivotalRocketBackground.normalize_story_for_saving(un_story)
-          console.debug story
+          # TODO: need DRY this method (repeats)
+          params = 
+            project: 
+              id: project_id
+            success: (data, textStatus, jqXHR, project) ->
+              stories = []
+              allstories = XML2JSON.parse(data, true)
+              stories = allstories.stories.story if allstories.stories? && allstories.stories.story?
+              stories = [stories] if stories.constructor != Array
+              if stories? && stories.length > 0
+                normalize_stories = (PivotalRocketBackground.normalize_story_for_saving(story) for story in stories)
+                PivotalRocketStorage.set_stories(project, normalize_stories, selected_type_bol)
+              else
+                PivotalRocketStorage.delete_stories(project, selected_type_bol)
+              PivotalRocketBackground.init_list_stories()
+              
+          pivotal_lib.get_stories_by_bool(params, selected_type_bol)
         error: (jqXHR, textStatus, errorThrown) ->
           story = PivotalRocketStorage.find_story(project_id, story_id, selected_type_bol)
           if story?

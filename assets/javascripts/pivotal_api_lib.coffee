@@ -16,7 +16,13 @@ class root.PivotalApiLib
       url: "#{this.baseUrl}/projects"
       success: params.success
       error: params.error
-    
+  
+  get_stories_by_bool: (params, requester = false) ->
+    if requester
+      this.get_stories_for_project_requester(params)
+    else
+      this.get_stories_for_project(params)
+  
   get_stories_for_project: (params) =>
     $.ajax
       #setup
