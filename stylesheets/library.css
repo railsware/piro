@@ -229,3 +229,11 @@ li.account {
 }
 
 
+/* leopard add */
+.change_story_state_box .loader, .change_story_state_box.loading .main {
+  display:none;
+}
+
+.change_story_state_box.loading .loader {
+  display:block;
+}

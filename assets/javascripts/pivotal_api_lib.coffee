@@ -17,13 +17,10 @@ class root.PivotalApiLib
       success: params.success
       error: params.error
   
-  get_stories_by_bool: (params, requester = false) ->
-    if requester
-      this.get_stories_for_project_requester(params)
-    else
-      this.get_stories_for_project(params)
-  
   get_stories_for_project: (params) =>
+    url_params = encodeURIComponent("owner:" + @account.initials)
+    url_params = encodeURIComponent("requester:" + @account.initials) if params.requester? && true == params.requester
+    
     $.ajax
       #setup
       timeout: 60000
@@ -32,23 +29,7 @@ class root.PivotalApiLib
       headers:
         "X-TrackerToken": @account.token.guid
       # else
-      url: "#{this.baseUrl}/projects/#{params.project.id}/stories?filter=" + encodeURIComponent("owner:" + @account.initials)
-      success: (data, textStatus, jqXHR) ->
-        if params? && params.success?
-          params.success(data, textStatus, jqXHR, params.project)
-      error: params.error
-      complete: params.complete
-      
-  get_stories_for_project_requester: (params) =>
-    $.ajax
-      #setup
-      timeout: 60000
-      crossDomain: true
-      dataType: 'xml'
-      headers:
-        "X-TrackerToken": @account.token.guid
-      # else
-      url: "#{this.baseUrl}/projects/#{params.project.id}/stories?filter=" + encodeURIComponent("requester:" + @account.initials)
+      url: "#{this.baseUrl}/projects/#{params.project.id}/stories?filter=" + url_params
       success: (data, textStatus, jqXHR) ->
         if params? && params.success?
           params.success(data, textStatus, jqXHR, params.project)
@@ -92,6 +73,8 @@ class root.PivotalApiLib
       data: params.data
       success: params.success
       error: params.error
+      beforeSend: params.beforeSend
+      complete: params.complete
         
   get_activities: (date = new Date()) =>
     formated_date = this.formated_date(date)

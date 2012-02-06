@@ -171,25 +171,36 @@
       </div>
       <div class="unit size1of3 txt-right">
         <div class="mbxs h4"><!-- {{owned_by.person.name}} --> <span class="pale">Estimate: </span>{{estimate_text}}</div>
-        <div><span class="status">{{current_state}}</span></div>
+        <div><span class="status current_state_for_story" data-story-id="{{id}}">{{current_state}}</span></div>
       </div>
     </div>
     
-    <div>
-        <select class="change_story_state" data-story-id="{{id}}" data-project-id="{{project_id}}">
-          <option value="unstarted">Not Yet Started</option>
-          {{#story_type_can_started}}
-            <option value="started">Started</option>
-          {{/story_type_can_started}}
-          {{#story_type_many_statuses}}
-            <option value="finished">Finished</option>
-            <option value="delivered">Delivered</option>
-          {{/story_type_many_statuses}}
-          <option value="accepted">Accepted</option>
-          {{#story_type_many_statuses}}
-            <option value="rejected">Rejected</option>
-          {{/story_type_many_statuses}}
-        </select>
+    
+    <div class="change_story_state_box">
+      {{#is_estimated}}
+        <div class="main">
+          <select class="change_story_state" data-story-id="{{id}}" data-project-id="{{project_id}}">
+            <option value="unstarted">Not Yet Started</option>
+            {{#story_type_can_started}}
+              <option value="started">Started</option>
+            {{/story_type_can_started}}
+            {{#story_type_many_statuses}}
+              <option value="finished">Finished</option>
+              <option value="delivered">Delivered</option>
+            {{/story_type_many_statuses}}
+            <option value="accepted">Accepted</option>
+            {{#story_type_many_statuses}}
+              <option value="rejected">Rejected</option>
+            {{/story_type_many_statuses}}
+          </select>
+        </div>
+        <div class="loader">
+          <img src="images/spinner3.gif" alt="loading..." title="loading..." />
+        </div>
+      {{/is_estimated}}
+      {{#not_estimated}}
+        Not estimated
+      {{/not_estimated}}
     </div>
     
     <h1 class="mtxs pts mbxs"><span class="{{story_type}}-icon"></span> {{name}}</h1>

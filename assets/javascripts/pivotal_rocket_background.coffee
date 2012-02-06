@@ -13,6 +13,8 @@ root.PivotalRocketBackground =
   update_timer: null
   # pregenerated templates list
   templates: {}
+  # selected story
+  selected_story: null
   # init background page (chrome loaded)
   init: ->
     if PivotalRocketStorage.get_accounts().length > 0
@@ -38,6 +40,7 @@ root.PivotalRocketBackground =
   init_popup: ->
     PivotalRocketBackground.popup = PivotalRocketBackground.load_popup_view() if !PivotalRocketBackground.popup?
     if PivotalRocketBackground.popup?
+      PivotalRocketBackground.selected_story = null
       PivotalRocketBackground.init_templates()
       PivotalRocketBackground.init_spinner()
       PivotalRocketBackground.init_bindings()
@@ -126,6 +129,7 @@ root.PivotalRocketBackground =
   # show story details
   show_story_info: (story) ->
     if story?
+      PivotalRocketBackground.selected_story = story.id
       if story.labels?
         labels = story.labels.split(",")
         story.labels_html = {text: ""}
@@ -254,6 +258,10 @@ root.PivotalRocketBackground =
         PivotalRocketBackground.popup.$('#iceboxRequesterStoriesList').empty().html(stories_list.ricebox.join(""))
       else
         PivotalRocketBackground.popup.$('#iceboxRequesterStoriesList').empty().html(no_stories_msg)
+        
+      # selected story
+      if PivotalRocketBackground.selected_story?
+        PivotalRocketBackground.popup.$("li.story_#{PivotalRocketBackground.selected_story}").addClass('active')
   # sync all data by account    
   initial_sync: (pivotal_account, callback_function = null) ->
     PivotalRocketBackground.is_loading = true
@@ -287,7 +295,8 @@ root.PivotalRocketBackground =
             error: (jqXHR, textStatus, errorThrown) ->
               # error
               
-          PivotalRocketBackground.pivotal_api_lib.get_stories_for_project_requester
+          PivotalRocketBackground.pivotal_api_lib.get_stories_for_project
+            requester: true
             project: project
             complete: (jqXHR, textStatus) ->
               fcallback_counter()
@@ -315,16 +324,31 @@ root.PivotalRocketBackground =
         data:
           story:
             current_state: story_state
+        beforeSend: (jqXHR, settings) ->
+          PivotalRocketBackground.popup.$('#storyInfo')
+          .find("select.change_story_state[data-story-id=#{story_id}]")
+          .parents('div.change_story_state_box').addClass('loading')
+        complete: (jqXHR, textStatus) ->
+          PivotalRocketBackground.popup.$('#storyInfo')
+          .find("select.change_story_state[data-story-id=#{story_id}]")
+          .parents('div.change_story_state_box').removeClass('loading')
         success: (data, textStatus, jqXHR) ->
-          # TODO: need DRY this method (repeats)
-          params = 
-            project: 
-              id: project_id
-            success: (data, textStatus, jqXHR, project) ->
-              PivotalRocketBackground.save_stories_data_by_project(project, data, selected_type_bol)
-              PivotalRocketBackground.init_list_stories()
-              
-          pivotal_lib.get_stories_by_bool(params, selected_type_bol)
+          story = XML2JSON.parse(data, true)
+          story = story.story if story.story?
+          normalized_story = PivotalRocketBackground.normalize_story_for_saving(story)
+          stories = PivotalRocketStorage.get_stories({id: project_id}, selected_type_bol)
+          new_stories = []
+          for st in stories
+            if parseInt(st.id) == parseInt(normalized_story.id)
+              new_stories.push(normalized_story)
+            else
+              new_stories.push(st)
+          if new_stories.length > 0
+            PivotalRocketStorage.set_stories({id: project_id}, new_stories, selected_type_bol)
+          PivotalRocketBackground.init_list_stories()
+          PivotalRocketBackground.popup.$('#storyInfo')
+          .find("span.current_state_for_story[data-story-id=#{story_id}]")
+          .text(normalized_story.current_state)
         error: (jqXHR, textStatus, errorThrown) ->
           story = PivotalRocketStorage.find_story(project_id, story_id, selected_type_bol)
           if story?
@@ -358,8 +382,10 @@ root.PivotalRocketBackground =
         
     if !story.estimate? || (story.estimate? && -1 == parseInt(story.estimate))
       story.estimate_text = "Unestimated"
+      story.not_estimated = true
     else
       story.estimate_text = "#{story.estimate} points"
+      story.is_estimated = true
         
     # normalize description
     if story.description? && jQuery.isEmptyObject(story.description)
