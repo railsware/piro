@@ -177,8 +177,8 @@
     
     
     <div class="change_story_state_box">
-      {{#is_estimated}}
-        <div class="main">
+      <div class="main">
+        {{#is_estimated}}
           <select class="change_story_state" data-story-id="{{id}}" data-project-id="{{project_id}}">
             <option value="unstarted">Not Yet Started</option>
             {{#story_type_can_started}}
@@ -193,14 +193,19 @@
               <option value="rejected">Rejected</option>
             {{/story_type_many_statuses}}
           </select>
-        </div>
-        <div class="loader">
-          <img src="images/spinner3.gif" alt="loading..." title="loading..." />
-        </div>
-      {{/is_estimated}}
-      {{#not_estimated}}
-        Not estimated
-      {{/not_estimated}}
+        {{/is_estimated}}
+        {{#not_estimated}}
+          <select class="change_story_estimate" data-story-id="{{id}}" data-project-id="{{project_id}}">
+            <option value="-1">Unestimated</option>
+            {{#point_scale}}
+              <option value="{{point}}">{{point}} points</option>
+            {{/point_scale}}
+          </select>
+        {{/not_estimated}}
+      </div>
+      <div class="loader">
+        <img src="images/spinner3.gif" alt="loading..." title="loading..." />
+      </div>
     </div>
     
     <h1 class="mtxs pts mbxs"><span class="{{story_type}}-icon"></span> {{name}}</h1>

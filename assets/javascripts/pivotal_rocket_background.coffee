@@ -130,6 +130,14 @@ root.PivotalRocketBackground =
   show_story_info: (story) ->
     if story?
       PivotalRocketBackground.selected_story = story.id
+      project = PivotalRocketStorage.find_project(PivotalRocketBackground.account, story.project_id)
+      # set points
+      if project? && project.point_scale?
+        story.point_scale = []
+        for point in project.point_scale.split(",")
+          story.point_scale.push
+            point: point
+      # parse labels
       if story.labels?
         labels = story.labels.split(",")
         story.labels_html = {text: ""}

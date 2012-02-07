@@ -61,6 +61,13 @@ root.PivotalRocketStorage =
   set_projects: (account, projects) ->
     PivotalRocketStorage.set("projects_" + account.id, projects)
     
+  find_project: (account, project_id) ->
+    projects = PivotalRocketStorage.get("projects_" + account.id)
+    if projects?
+      for project in projects
+        return project if parseInt(project.id) == parseInt(project_id)
+    return null
+    
   get_projects: (account) ->
     PivotalRocketStorage.get("projects_" + account.id)
   
