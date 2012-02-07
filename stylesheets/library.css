@@ -230,10 +230,10 @@ li.account {
 
 
 /* leopard add */
-.change_story_state_box .loader, .change_story_state_box.loading .main {
+.change_story_box .loader, .change_story_box.loading .main {
   display:none;
 }
 
-.change_story_state_box.loading .loader {
+.change_story_box.loading .loader {
   display:block;
 }

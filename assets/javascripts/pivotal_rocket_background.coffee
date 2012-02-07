@@ -96,6 +96,9 @@ root.PivotalRocketBackground =
     # change of status
     PivotalRocketBackground.popup.$('#storyInfo').on "change", "select.change_story_state", (event) =>
       PivotalRocketBackground.change_story_state($(event.target))
+    # change estimate of story
+    PivotalRocketBackground.popup.$('#storyInfo').on "change", "select.change_story_estimate", (event) =>
+      PivotalRocketBackground.change_story_estimate($(event.target))
   # change account
   change_account: ->
     account_id = PivotalRocketBackground.popup.$('#changeAccount').val()
@@ -163,6 +166,8 @@ root.PivotalRocketBackground =
       block_element.show()
       # select selector for story state
       PivotalRocketBackground.popup.$('#storyInfo').find('select.change_story_state').val(story.current_state)
+      # select selector for story estimate
+      PivotalRocketBackground.popup.$('#storyInfo').find('select.change_story_estimate').val(story.estimate)
       # init clippy
       chrome.extension.sendRequest
         clippy_for_story:
@@ -335,32 +340,63 @@ root.PivotalRocketBackground =
         beforeSend: (jqXHR, settings) ->
           PivotalRocketBackground.popup.$('#storyInfo')
           .find("select.change_story_state[data-story-id=#{story_id}]")
-          .parents('div.change_story_state_box').addClass('loading')
-        complete: (jqXHR, textStatus) ->
-          PivotalRocketBackground.popup.$('#storyInfo')
-          .find("select.change_story_state[data-story-id=#{story_id}]")
-          .parents('div.change_story_state_box').removeClass('loading')
+          .parents('div.change_story_box').addClass('loading')
         success: (data, textStatus, jqXHR) ->
-          story = XML2JSON.parse(data, true)
-          story = story.story if story.story?
-          normalized_story = PivotalRocketBackground.normalize_story_for_saving(story)
-          stories = PivotalRocketStorage.get_stories({id: project_id}, selected_type_bol)
-          new_stories = []
-          for st in stories
-            if parseInt(st.id) == parseInt(normalized_story.id)
-              new_stories.push(normalized_story)
-            else
-              new_stories.push(st)
-          if new_stories.length > 0
-            PivotalRocketStorage.set_stories({id: project_id}, new_stories, selected_type_bol)
-          PivotalRocketBackground.init_list_stories()
-          PivotalRocketBackground.popup.$('#storyInfo')
-          .find("span.current_state_for_story[data-story-id=#{story_id}]")
-          .text(normalized_story.current_state)
+          PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
         error: (jqXHR, textStatus, errorThrown) ->
           story = PivotalRocketStorage.find_story(project_id, story_id, selected_type_bol)
           if story?
-            PivotalRocketBackground.popup.$('#storyInfo').find("select.change_story_state[data-story-id=#{story_id}]").val(story.current_state)
+            PivotalRocketBackground.popup.$('#storyInfo')
+            .find("select.change_story_state[data-story-id=#{story_id}]")
+            .val(story.current_state)
+  # change story estimate
+  change_story_estimate: (object) ->
+    if PivotalRocketBackground.account? && PivotalRocketBackground.popup?
+      selected_type = PivotalRocketBackground.popup.$('#selecterStoriesType').val()
+      selected_type_bol = if selected_type && "requester" == selected_type then true else false
+      story_estimate = object.val()
+      story_id = object.data('storyId')
+      project_id = object.data('projectId')
+      pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
+      pivotal_lib.update_story
+        project_id: project_id
+        story_id: story_id
+        data:
+          story:
+            estimate: story_estimate
+        beforeSend: (jqXHR, settings) ->
+          PivotalRocketBackground.popup.$('#storyInfo')
+          .find("select.change_story_estimate[data-story-id=#{story_id}]")
+          .parents('div.change_story_box').addClass('loading')
+        success: (data, textStatus, jqXHR) ->
+          PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
+        error: (jqXHR, textStatus, errorThrown) ->
+          story = PivotalRocketStorage.find_story(project_id, story_id, selected_type_bol)
+          if story?
+            PivotalRocketBackground.popup.$('#storyInfo')
+            .find("select.change_story_estimate[data-story-id=#{story_id}]")
+            .val(story.estimate)
+  # story success chaged
+  story_changed_with_data: (data, requester = false) ->
+    story = XML2JSON.parse(data, true)
+    story = story.story if story.story?
+    normalized_story = PivotalRocketBackground.normalize_story_for_saving(story)
+    stories = PivotalRocketStorage.get_stories({id: story.project_id}, requester)
+    new_stories = []
+    in_list = false
+    for st in stories
+      if parseInt(st.id) == parseInt(normalized_story.id)
+        new_stories.push(normalized_story)
+        in_list = true
+      else
+        new_stories.push(st)
+    new_stories.push(normalized_story) if in_list is false
+    if new_stories.length > 0
+      PivotalRocketStorage.set_stories({id: story.project_id}, new_stories, requester)
+    PivotalRocketBackground.init_list_stories()
+    PivotalRocketBackground.popup.$('#storiesTabs')
+    .find("li.story_#{story.id}")
+    .trigger("click")
   # normalize story
   normalize_story_for_saving: (story) ->
     # normalize notes
