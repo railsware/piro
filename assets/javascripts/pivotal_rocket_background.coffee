@@ -86,6 +86,11 @@ root.PivotalRocketBackground =
       PivotalRocketBackground.init_list_stories()
     PivotalRocketBackground.popup.$('#mainPage').on "search", "#searchStories", (event) =>
       PivotalRocketBackground.init_list_stories() if 0 == $(event.target).val().length
+    # open popup in separate tab
+    PivotalRocketBackground.popup.$('a.open_popup_button').click (event) =>
+      chrome.tabs.create
+        url: chrome.extension.getURL('popup.html')
+      return false
     # bindings for story show
     # search by labels
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.story_label", (event) =>
