@@ -99,6 +99,9 @@ root.PivotalRocketBackground =
     # change estimate of story
     PivotalRocketBackground.popup.$('#storyInfo').on "change", "select.change_story_estimate", (event) =>
       PivotalRocketBackground.change_story_estimate($(event.target))
+    # change task in story
+    PivotalRocketBackground.popup.$('#storyInfo').on "change", "input.task_checkbox", (event) =>
+      PivotalRocketBackground.change_task_status($(event.target))
     # click on links in story description
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.desc_link", (event) =>
       chrome.tabs.create
@@ -338,8 +341,7 @@ root.PivotalRocketBackground =
   # change story state
   change_story_state: (object) ->
     if PivotalRocketBackground.account? && PivotalRocketBackground.popup?
-      selected_type = PivotalRocketBackground.popup.$('#selecterStoriesType').val()
-      selected_type_bol = if selected_type && "requester" == selected_type then true else false
+      selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
       story_state = object.val()
       story_id = object.data('storyId')
       project_id = object.data('projectId')
@@ -365,8 +367,7 @@ root.PivotalRocketBackground =
   # change story estimate
   change_story_estimate: (object) ->
     if PivotalRocketBackground.account? && PivotalRocketBackground.popup?
-      selected_type = PivotalRocketBackground.popup.$('#selecterStoriesType').val()
-      selected_type_bol = if selected_type && "requester" == selected_type then true else false
+      selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
       story_estimate = object.val()
       story_id = object.data('storyId')
       project_id = object.data('projectId')
@@ -389,6 +390,34 @@ root.PivotalRocketBackground =
             PivotalRocketBackground.popup.$('#storyInfo')
             .find("select.change_story_estimate[data-story-id=#{story_id}]")
             .val(story.estimate).parents('div.change_story_box').removeClass('loading')
+  # change task in story
+  change_task_status: (object) ->
+    if PivotalRocketBackground.account? && PivotalRocketBackground.popup?
+      selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
+      completed = if object.is(':checked') then true else false
+      task_id = object.data('taskId')
+      story_id = object.data('storyId')
+      project_id = object.data('projectId')
+      pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
+      pivotal_lib.update_task
+        project_id: project_id
+        story_id: story_id
+        task_id: task_id
+        data:
+          task:
+            complete: completed
+        success: (data, textStatus, jqXHR) ->
+          pivotal_lib.get_story
+            project_id: project_id
+            story_id: story_id
+            success: (data, textStatus, jqXHR) ->
+              PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
+        error: (jqXHR, textStatus, errorThrown) ->
+          if PivotalRocketBackground.popup.$('#storiesTabs').find("li.story_#{story.id}").hasClass('active')
+            PivotalRocketBackground.popup.$('#storiesTabs')
+            .find("li.story_#{story.id}")
+            .trigger("click")
+      
   # story success chaged
   story_changed_with_data: (data, requester = false) ->
     story = XML2JSON.parse(data, true)
@@ -407,9 +436,10 @@ root.PivotalRocketBackground =
     if new_stories.length > 0
       PivotalRocketStorage.set_stories({id: story.project_id}, new_stories, requester)
     PivotalRocketBackground.init_list_stories()
-    PivotalRocketBackground.popup.$('#storiesTabs')
-    .find("li.story_#{story.id}")
-    .trigger("click")
+    if PivotalRocketBackground.popup.$('#storiesTabs').find("li.story_#{story.id}").hasClass('active')
+      PivotalRocketBackground.popup.$('#storiesTabs')
+      .find("li.story_#{story.id}")
+      .trigger("click")
   # normalize story
   normalize_story_for_saving: (story) ->
     # normalize notes
@@ -432,7 +462,7 @@ root.PivotalRocketBackground =
         story.tasks = [story.tasks] if story.tasks.constructor != Array
     if story.tasks? && story.tasks.length > 0
       story.tasks = for task in story.tasks
-        task.complete = if "true" == task.complete then true else false
+        task.complete = if task.complete? && "true" == task.complete then true else false
         task.project_id = story.project_id
         task.story_id = story.id
         task
@@ -510,6 +540,11 @@ root.PivotalRocketBackground =
       PivotalRocketStorage.set_stories(project, normalize_stories, requester)
     else
       PivotalRocketStorage.delete_stories(project, requester)
+  # get requester or no status
+  get_requester_or_owner_status: ->
+    selected_type = PivotalRocketBackground.popup.$('#selecterStoriesType').val()
+    selected_type_bol = if selected_type? && "requester" == selected_type then true else false
+    return selected_type_bol
       
 $ ->
   PivotalRocketBackground.init()

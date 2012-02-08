@@ -23,7 +23,7 @@ class root.PivotalApiLib
     
     $.ajax
       #setup
-      timeout: 60000
+      timeout: 20000
       crossDomain: true
       dataType: 'xml'
       headers:
@@ -39,7 +39,7 @@ class root.PivotalApiLib
   update_account: =>
     $.ajax
       #setup
-      timeout: 60000
+      timeout: 20000
       crossDomain: true
       dataType: 'xml'
       headers:
@@ -58,11 +58,27 @@ class root.PivotalApiLib
               else
                 one_account
           PivotalRocketStorage.set_accounts(new_accounts)
+
+  get_story: (params) =>
+    $.ajax
+      #setup
+      timeout: 20000
+      crossDomain: true
+      dataType: 'xml'
+      headers:
+        "X-TrackerToken": @account.token.guid
+      # else
+      url: "#{this.baseUrl}/projects/#{params.project_id}/stories/#{params.story_id}"
+      type: "GET"
+      success: params.success
+      error: params.error
+      beforeSend: params.beforeSend
+      complete: params.complete
   
   update_story: (params) =>
     $.ajax
       #setup
-      timeout: 60000
+      timeout: 20000
       crossDomain: true
       dataType: 'xml'
       headers:
@@ -75,12 +91,29 @@ class root.PivotalApiLib
       error: params.error
       beforeSend: params.beforeSend
       complete: params.complete
+      
+  update_task: (params) =>
+    $.ajax
+      #setup
+      timeout: 20000
+      crossDomain: true
+      dataType: 'xml'
+      headers:
+        "X-TrackerToken": @account.token.guid
+      # else
+      url: "#{this.baseUrl}/projects/#{params.project_id}/stories/#{params.story_id}/tasks/#{params.task_id}"
+      type: "PUT"
+      data: params.data
+      success: params.success
+      error: params.error
+      beforeSend: params.beforeSend
+      complete: params.complete
         
   get_activities: (date = new Date()) =>
     formated_date = this.formated_date(date)
     $.ajax
       #setup
-      timeout: 60000
+      timeout: 20000
       crossDomain: true
       dataType: 'xml'
       headers:
@@ -103,9 +136,7 @@ class root.PivotalAuthLib
     $.ajax
       cache: false
       global: false
-      dataType: 'xml'
-      headers: 
-        "X-TrackerToken": null 
+      dataType: 'xml' 
       url: "#{this.baseUrl}/me"
       username: params.username
       password: params.password
