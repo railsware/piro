@@ -158,6 +158,8 @@ root.PivotalRocketBackground =
       if story.story_type
         switch story.story_type
           when "feature"
+            story.need_estimate = true if story.current_state? && "unstarted" == story.current_state
+            story.unestimated_feature = true if story.not_estimated? && story.not_estimated is true
             story.story_type_can_started = true
             story.story_type_many_statuses = true
           when "bug"
@@ -359,7 +361,7 @@ root.PivotalRocketBackground =
           if story?
             PivotalRocketBackground.popup.$('#storyInfo')
             .find("select.change_story_state[data-story-id=#{story_id}]")
-            .val(story.current_state)
+            .val(story.current_state).parents('div.change_story_box').removeClass('loading')
   # change story estimate
   change_story_estimate: (object) ->
     if PivotalRocketBackground.account? && PivotalRocketBackground.popup?
@@ -386,7 +388,7 @@ root.PivotalRocketBackground =
           if story?
             PivotalRocketBackground.popup.$('#storyInfo')
             .find("select.change_story_estimate[data-story-id=#{story_id}]")
-            .val(story.estimate)
+            .val(story.estimate).parents('div.change_story_box').removeClass('loading')
   # story success chaged
   story_changed_with_data: (data, requester = false) ->
     story = XML2JSON.parse(data, true)
