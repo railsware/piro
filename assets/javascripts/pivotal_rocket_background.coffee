@@ -23,6 +23,8 @@ root.PivotalRocketBackground =
       # autoupdate
       PivotalRocketBackground.init_autoupdate()
       PivotalRocketBackground.autoupdate()
+      # register omnibox
+      PivotalRocketBackground.init_omnibox()
   # init autoupdate
   init_autoupdate: ->
     fcallback = -> PivotalRocketBackground.autoupdate()
@@ -550,6 +552,29 @@ root.PivotalRocketBackground =
     selected_type = PivotalRocketBackground.popup.$('#selecterStoriesType').val()
     selected_type_bol = if selected_type? && "requester" == selected_type then true else false
     return selected_type_bol
+  # register omnibox (for search)
+  init_omnibox: ->
+    chrome.omnibox.onInputCancelled.addListener ->
+      PivotalRocketBackground.default_omnibox_suggestion()
+    chrome.omnibox.onInputStarted.addListener ->
+      PivotalRocketBackground.set_omnibox_suggestion('')
+    chrome.omnibox.onInputChanged.addListener (text, suggest) ->
+      PivotalRocketBackground.set_omnibox_suggestion(text)
+    chrome.omnibox.onInputEntered.addListener (text) ->
+      chrome.tabs.getSelected null, (tab) ->
+        chrome.tabs.update tab.id, 
+          url: "http://www.pivotaltracker.com/story/show/#{text}"
+  # default omnibox text
+  default_omnibox_suggestion: ->
+    chrome.omnibox.setDefaultSuggestion
+      description: '<url><match>prkt:</match></url> Go by Pivotaltracker ID'
+  # default omnibox text
+  set_omnibox_suggestion: (text) ->
+    def_descr = "<match><url>prkt</url></match><dim> [</dim> "
+    def_descr += if text.length > 0 then "<match>#{text}</match>" else "pivotal story id"
+    def_descr += "<dim> ]</dim>"
+    chrome.omnibox.setDefaultSuggestion
+      description: def_descr
       
 $ ->
   PivotalRocketBackground.init()

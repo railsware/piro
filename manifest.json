@@ -10,6 +10,9 @@
     "default_icon": "images/icon.png",
     "popup": "popup.html?popup"
   },
+  "omnibox": { 
+    "keyword" : "prkt"
+  },
   "icons": { 
     "16": "images/icon19.png",
     "19": "images/icon19.png",
