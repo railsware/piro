@@ -158,7 +158,7 @@ root.PivotalRocketBackground =
       if story.story_type
         switch story.story_type
           when "feature"
-            story.need_estimate = true if story.current_state? && "unstarted" == story.current_state
+            story.need_estimate = true if story.current_state? && jQuery.inArray(story.current_state, ["unstarted", "started"]) != -1
             story.unestimated_feature = true if story.not_estimated? && story.not_estimated is true
             story.story_type_can_started = true
             story.story_type_many_statuses = true
