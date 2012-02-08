@@ -89,7 +89,7 @@ root.PivotalRocketBackground =
     # open popup in separate tab
     PivotalRocketBackground.popup.$('a.open_popup_button').click (event) =>
       chrome.tabs.create
-        url: chrome.extension.getURL('popup.html')
+        url: "https://www.pivotaltracker.com/"
       return false
     # bindings for story show
     # search by labels
