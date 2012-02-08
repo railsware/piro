@@ -168,6 +168,11 @@ root.PivotalRocketBackground =
       PivotalRocketBackground.popup.$('#storyInfo').find('select.change_story_state').val(story.current_state)
       # select selector for story estimate
       PivotalRocketBackground.popup.$('#storyInfo').find('select.change_story_estimate').val(story.estimate)
+      # story description
+      if PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description').length > 0
+        exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig
+        descr_object = PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description')
+        descr_object.html(descr_object.html().replace(exp,"<a href='$1' target='_blank'>$1</a>"))
       # init clippy
       chrome.extension.sendRequest
         clippy_for_story:
