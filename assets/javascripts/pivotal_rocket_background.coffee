@@ -99,6 +99,12 @@ root.PivotalRocketBackground =
     # change estimate of story
     PivotalRocketBackground.popup.$('#storyInfo').on "change", "select.change_story_estimate", (event) =>
       PivotalRocketBackground.change_story_estimate($(event.target))
+    # click on links in story description
+    PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.desc_link", (event) =>
+      chrome.tabs.create
+        url: $(event.target).attr('href')
+        active: false
+      return false
   # change account
   change_account: ->
     account_id = PivotalRocketBackground.popup.$('#changeAccount').val()
@@ -172,7 +178,7 @@ root.PivotalRocketBackground =
       if PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description').length > 0
         exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig
         descr_object = PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description')
-        descr_object.html(descr_object.html().replace(exp,"<a href='$1' target='_blank'>$1</a>"))
+        descr_object.html(descr_object.html().replace(exp,"<a class='desc_link' href='$1'>$1</a>"))
       # init clippy
       chrome.extension.sendRequest
         clippy_for_story:
