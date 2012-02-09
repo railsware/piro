@@ -25,15 +25,16 @@ root.PivotalRocketPopup =
       width: width
       height: height
       bgcolor: "#000"
-      
-    swfobject.embedSWF('images/clippy/clippy.swf', 
-    "clippyStory#{story_data.id}", width, height, '9.0.0', 
-    'javascripts/vendors/swfobject/expressInstall.swf', 
-    {text: story_data.id}, params, {})
-    swfobject.embedSWF('images/clippy/clippy.swf', 
-    "clippyUrl#{story_data.id}", width, height, '9.0.0', 
-    'javascripts/vendors/swfobject/expressInstall.swf', 
-    {text: story_data.url}, params, {})
+    if $("#clippyStory#{story_data.id}").length > 0  
+      swfobject.embedSWF('images/clippy/clippy.swf', 
+      "clippyStory#{story_data.id}", width, height, '9.0.0', 
+      'javascripts/vendors/swfobject/expressInstall.swf', 
+      {text: story_data.id}, params, {})
+    if $("#clippyUrl#{story_data.id}").length > 0  
+      swfobject.embedSWF('images/clippy/clippy.swf', 
+      "clippyUrl#{story_data.id}", width, height, '9.0.0', 
+      'javascripts/vendors/swfobject/expressInstall.swf', 
+      {text: story_data.url}, params, {})
     
 $ ->
   PivotalRocketPopup.init()
