@@ -240,15 +240,18 @@ root.PivotalRocketBackground =
           if stored_stories?
             if stored_stories.current? && stored_stories.current.length > 0
               project.stories = stored_stories.current
-              stories_count.current += stored_stories.current.length
+              project.count_of_stories = stored_stories.current.length
+              stories_count.current += project.count_of_stories
               stories_list.current.push(PivotalRocketBackground.templates.project.render(project))
             if stored_stories.done? && stored_stories.done.length > 0
               project.stories = stored_stories.done
-              stories_count.done += stored_stories.done.length
+              project.count_of_stories = stored_stories.done.length
+              stories_count.done += project.count_of_stories
               stories_list.done.push(PivotalRocketBackground.templates.project.render(project))
             if stored_stories.icebox? && stored_stories.icebox.length > 0
               project.stories = stored_stories.icebox
-              stories_count.icebox += stored_stories.icebox.length
+              project.count_of_stories = stored_stories.icebox.length
+              stories_count.icebox += project.count_of_stories
               stories_list.icebox.push(PivotalRocketBackground.templates.project.render(project))
 
           rstored_stories = PivotalRocketStorage.get_status_stories(project, true, search_text)
@@ -256,15 +259,18 @@ root.PivotalRocketBackground =
             project.is_requested_by_me = true
             if rstored_stories.current? && rstored_stories.current.length > 0
               project.stories = rstored_stories.current
-              stories_count.rcurrent += rstored_stories.current.length
+              project.count_of_stories = rstored_stories.current.length
+              stories_count.rcurrent += project.count_of_stories
               stories_list.rcurrent.push(PivotalRocketBackground.templates.project.render(project))
             if rstored_stories.done? && rstored_stories.done.length > 0
               project.stories = rstored_stories.done
-              stories_count.rdone += rstored_stories.done.length
+              project.count_of_stories = rstored_stories.done.length
+              stories_count.rdone += project.count_of_stories
               stories_list.rdone.push(PivotalRocketBackground.templates.project.render(project))
             if rstored_stories.icebox? && rstored_stories.icebox.length > 0
               project.stories = rstored_stories.icebox
-              stories_count.ricebox += rstored_stories.icebox.length
+              project.count_of_stories = rstored_stories.icebox.length
+              stories_count.ricebox += project.count_of_stories
               stories_list.ricebox.push(PivotalRocketBackground.templates.project.render(project))
 
       no_stories_msg = "<li class='txt-center pal'>#{chrome.i18n.getMessage("no_stories_msg")}</li>"
