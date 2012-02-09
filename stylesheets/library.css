@@ -229,11 +229,15 @@ li.account {
 }
 
 
-/* leopard add */
+/* leopard added, vasiliy will change by best practice */
 .change_story_box .loader, .change_story_box.loading .main {
   display:none;
 }
 
 .change_story_box.loading .loader {
   display:block;
+}
+
+.project_cell.hide-project ul.list{
+  display:none;
 }

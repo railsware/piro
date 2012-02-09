@@ -59,6 +59,11 @@ root.PivotalRocketStorage =
     PivotalRocketStorage.set_accounts(new_accounts)
     
   set_projects: (account, projects) ->
+    projects = for project in projects
+      old_project = PivotalRocketStorage.find_project(account, project.id)
+      if !project.view_conditions?
+        project.view_conditions = if old_project? && old_project.view_conditions? then old_project.view_conditions else {} 
+      project
     PivotalRocketStorage.set("projects_" + account.id, projects)
     
   find_project: (account, project_id) ->
@@ -67,6 +72,28 @@ root.PivotalRocketStorage =
       for project in projects
         return project if parseInt(project.id) == parseInt(project_id)
     return null
+  
+  update_project: (account, new_project) ->
+    projects = PivotalRocketStorage.get_projects(account)
+    if projects?
+      updated_projects = for project in projects
+        if parseInt(new_project.id) == parseInt(project.id) then new_project else project
+      PivotalRocketStorage.set_projects(account, updated_projects)
+    
+  update_view_options_in_project: (account, project_id, new_options) ->
+    project = PivotalRocketStorage.find_project(account, project_id)
+    if new_options? && project?
+      for option_key, option_value of new_options
+        switch option_key
+          when "hide_project_cell"
+            if option_value is true
+              project.view_conditions[option_key] = true
+            else
+              delete project.view_conditions[option_key]
+          else
+            project.view_conditions[option_key] = option_value
+      PivotalRocketStorage.update_project(account, project)
+    return true
     
   get_projects: (account) ->
     PivotalRocketStorage.get("projects_" + account.id)

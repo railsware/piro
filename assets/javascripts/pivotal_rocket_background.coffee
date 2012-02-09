@@ -79,6 +79,13 @@ root.PivotalRocketBackground =
     # change type list
     PivotalRocketBackground.popup.$('#selecterStoriesType').change (event) =>
       PivotalRocketBackground.change_view_type()
+    # projects toggle
+    PivotalRocketBackground.popup.$("ul.projects_stories_list").on "click", "span.toggle_project", (event) =>
+      PivotalRocketBackground.toggle_project_cell($(event.target))
+    # projects sorting
+    PivotalRocketBackground.popup.$("ul.projects_stories_list").sortable
+      handle: 'span.sort_project'
+    .disableSelection()
     # click on story  
     PivotalRocketBackground.popup.$("#storiesTabs").on "click", "li.story_info", (event) =>
       element_object = $(event.target)
@@ -552,6 +559,17 @@ root.PivotalRocketBackground =
     selected_type = PivotalRocketBackground.popup.$('#selecterStoriesType').val()
     selected_type_bol = if selected_type? && "requester" == selected_type then true else false
     return selected_type_bol
+  # toggle project cell in list
+  toggle_project_cell: (object) ->
+    if PivotalRocketBackground.popup?
+      project_id = object.data('projectId')
+      project_cell = object.parents("li.project_cell")
+      if project_cell.hasClass('hide-project')
+        PivotalRocketStorage.update_view_options_in_project(PivotalRocketBackground.account, project_id, {hide_project_cell: false})
+        PivotalRocketBackground.popup.$("ul.projects_stories_list").find("li.project_#{project_id}").removeClass('hide-project')
+      else
+        PivotalRocketStorage.update_view_options_in_project(PivotalRocketBackground.account, project_id, {hide_project_cell: true})
+        PivotalRocketBackground.popup.$("ul.projects_stories_list").find("li.project_#{project_id}").addClass('hide-project')
   # register omnibox (for search)
   init_omnibox: ->
     chrome.omnibox.onInputCancelled.addListener ->
@@ -567,10 +585,10 @@ root.PivotalRocketBackground =
   # default omnibox text
   default_omnibox_suggestion: ->
     chrome.omnibox.setDefaultSuggestion
-      description: '<url><match>prkt:</match></url> Go by Pivotaltracker ID'
+      description: '<url><match>piro:</match></url> Go by Pivotaltracker ID'
   # default omnibox text
   set_omnibox_suggestion: (text) ->
-    def_descr = "<match><url>prkt</url></match><dim> [</dim> "
+    def_descr = "<match><url>piro</url></match><dim> [</dim> "
     def_descr += if text.length > 0 then "<match>#{text}</match>" else "pivotal story id"
     def_descr += "<dim> ]</dim>"
     chrome.omnibox.setDefaultSuggestion
