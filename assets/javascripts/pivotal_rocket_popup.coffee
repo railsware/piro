@@ -10,7 +10,7 @@ root.PivotalRocketPopup =
   # init listener
   init_listener: ->
     chrome.extension.onRequest.addListener (request, sender, sendResponse) ->
-      if !sender.tab? && request.clippy_for_story?
+      if request.clippy_for_story?
         PivotalRocketPopup.init_clippy_for_story(request.clippy_for_story)
         sendResponse({})
   # init clippy for story view
