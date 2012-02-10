@@ -472,14 +472,14 @@ root.PivotalRocketBackground =
   # normalize story
   normalize_story_for_saving: (story) ->
     # normalize notes
-    if story.notes?
-      if story.notes.note?
-        if story.notes.note.constructor != Array
-          story.notes = [story.notes.note]
+    if story.comments?
+      if story.comments.comment?
+        if story.comments.comment.constructor != Array
+          story.comments = [story.comments.comment]
         else
-          story.notes = story.notes.note
+          story.comments = story.comments.comment
       else
-        story.notes = [story.notes] if story.notes.constructor != Array
+        story.comments = [story.comments] if story.comments.constructor != Array
     # normalize tasks
     if story.tasks?
       if story.tasks.task?

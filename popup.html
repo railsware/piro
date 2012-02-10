@@ -218,15 +218,6 @@
     {{#labels_html}}
       <h2 class="mbs">Labels: {{& text}}</h2>
     {{/labels_html}}
-    <h2 class="mbs mtm">Comments</h2>
-    <ul class="mbm list comments phs">
-      {{#notes}}
-        <li class="pvs">
-          <strong>{{author.person.name}} </strong>
-          <div class="neutral">{{text}}</div>
-        </li>
-      {{/notes}}
-    </ul>
     <h2 class="mbs mtm">Tasks</h2>
     <ul class="list tasks phs">
       {{#tasks}}
@@ -237,6 +228,15 @@
           </label>
         </li>
       {{/tasks}}
+    </ul>
+    <h2 class="mbs mtm">Comments</h2>
+    <ul class="mbm list comments phs">
+      {{#comments}}
+        <li class="pvs">
+          <strong>{{author.person.name}} </strong>
+          <div class="neutral">{{text}}</div>
+        </li>
+      {{/comments}}
     </ul>
   </script>
   
