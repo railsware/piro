@@ -86,6 +86,13 @@ root.PivotalRocketBackground =
     # projects sorting
     PivotalRocketBackground.popup.$("ul.projects_stories_list").sortable
       handle: 'span.sort_project'
+      update: (event) ->
+        objects = $(event.target).parents("ul.projects_stories_list").find("li.project_cell")
+        object_ids = []
+        objects.each (index) ->
+          object_ids.push($(this).data('projectId'))
+        if object_ids.length > 0
+          PivotalRocketStorage.sort_projects(PivotalRocketBackground.account, object_ids)
     .disableSelection()
     # click on story  
     PivotalRocketBackground.popup.$("#storiesTabs").on "click", "li.story_info", (event) =>

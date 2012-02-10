@@ -70,10 +70,35 @@ root.PivotalRocketStorage =
         old_project = PivotalRocketStorage.find_project(account, project.id)
         project.view_conditions = if old_project? && old_project.view_conditions? then old_project.view_conditions else {} 
       project
+    # sorting
+    old_projects = PivotalRocketStorage.get_projects(account)
+    if old_projects? && old_projects.length > 0
+      project_ids = (old_project.id for old_project in old_projects)
+      projects = PivotalRocketStorage.sort_projects_by_ids(projects, project_ids)
     PivotalRocketStorage.set("projects_" + account.id, projects)
+  
+  sort_projects: (account, project_ids) ->
+    projects = PivotalRocketStorage.get_projects(account)
+    if projects? && project_ids?
+      sorted_projects = PivotalRocketStorage.sort_projects_by_ids(projects, project_ids)
+      PivotalRocketStorage.set("projects_" + account.id, sorted_projects)
+  
+  sort_projects_by_ids: (projects, ids) ->
+    sorted_hash = {}
+    for project_id, project_sort in ids
+      sorted_hash[parseInt(project_id)] = project_sort
+    projects.sort (a,b) ->
+      a_order = sorted_hash[parseInt(a.id)]
+      a_order = jQuery.inArray(a, projects) if !a_order?
+      a_order = projects.length if -1 == a_order
+      b_order = sorted_hash[parseInt(b.id)]
+      b_order = jQuery.inArray(b, projects) if !b_order?
+      b_order = projects.length if -1 == b_order
+      a_order - b_order
+    projects
     
   find_project: (account, project_id) ->
-    projects = PivotalRocketStorage.get("projects_" + account.id)
+    projects = PivotalRocketStorage.get_projects(account)
     if projects?
       for project in projects
         return project if parseInt(project.id) == parseInt(project_id)
