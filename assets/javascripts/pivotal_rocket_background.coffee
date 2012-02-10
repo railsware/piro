@@ -193,7 +193,8 @@ root.PivotalRocketBackground =
             story.story_type_many_statuses = true
           when "chore"
             story.story_type_can_started = true
-      # tasks and comments bool
+      # attachments, tasks and comments bool
+      story.has_attachments = true if story.attachments? && story.attachments.length > 0
       story.has_tasks = true if story.tasks? && story.tasks.length > 0
       story.has_comments = true if story.comments? && story.comments.length > 0
       # generate template
@@ -467,7 +468,7 @@ root.PivotalRocketBackground =
     PivotalRocketBackground.init_list_stories()
   # normalize story
   normalize_story_for_saving: (story) ->
-    # normalize notes
+    # normalize comments
     if story.comments?
       if story.comments.comment?
         if story.comments.comment.constructor != Array
@@ -476,6 +477,21 @@ root.PivotalRocketBackground =
           story.comments = story.comments.comment
       else
         story.comments = [story.comments] if story.comments.constructor != Array
+      
+      clean_comments = []
+      for comment in story.comments
+        if comment.text? && comment.text.constructor == String
+          clean_comments.push(comment)
+      story.comments = clean_comments
+    # normalize attachments
+    if story.attachments?
+      if story.attachments.attachment?
+        if story.attachments.attachment.constructor != Array
+          story.attachments = [story.attachments.attachment]
+        else
+          story.attachments = story.attachments.attachment
+      else
+        story.attachments = [story.attachments] if story.attachments.constructor != Array
     # normalize tasks
     if story.tasks?
       if story.tasks.task?

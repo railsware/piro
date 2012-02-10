@@ -247,6 +247,17 @@
         {{/tasks}}
       </ul>
     {{/has_tasks}}
+    {{#has_attachments}}
+      <h2 class="mbs mtm">Attachments</h2>
+      <ul class="mbm list comments phs">
+        {{#attachments}}
+          <li class="pvs">
+            <strong>{{uploaded_by.person.name}} </strong>
+            <div class="neutral"><a href="{{url}}" target="_blank">{{filename}}</a></div>
+          </li>
+        {{/attachments}}
+      </ul>
+    {{/has_attachments}}
     {{#has_comments}}
       <h2 class="mbs mtm">Comments</h2>
       <ul class="mbm list comments phs">
