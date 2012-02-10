@@ -173,9 +173,9 @@
       </div>
       <div class="unit size1of2 txt-right">        
         <div class="change_story_box">
-          <div class="main options">
-            <span class="label">Status:</span>
-            {{^unestimated_feature}}
+          <div class="main options">      
+          {{^unestimated_feature}}
+              <span class="label">Status:</span>
               <select class="change_story_state mbxs" data-story-id="{{id}}" data-project-id="{{project_id}}">
                 <option value="unstarted">Not Yet Started</option>
                 {{#story_type_can_started}}
@@ -191,8 +191,15 @@
                 {{/story_type_many_statuses}}
               </select>
             {{/unestimated_feature}}
-            <span class="label">Estimate: </span>
+            
+            {{#unestimated_feature}}
+              <div>
+                <span class="status">{{current_state}}</span>
+              </div>
+            {{/unestimated_feature}}
+            
             {{#need_estimate}}
+              <span class="label">Estimate: </span>
               <select class="change_story_estimate" data-story-id="{{id}}" data-project-id="{{project_id}}">
                 <option value="-1">Unestimated</option>
                 {{#point_scale}}
@@ -200,14 +207,17 @@
                 {{/point_scale}}
               </select>
             {{/need_estimate}}
+            
+            {{^need_estimate}}
+              <div>
+                <span class="pale h4">Estimate: </span>{{estimate_text}}
+              </div>
+            {{/need_estimate}}
           </div>
           <div class="loader">
             <img src="images/spinner3.gif" alt="loading..." title="loading..." />
           </div>
         </div>
-        <div class="mtxs"><!-- {{owned_by.person.name}} --><span class="pale h4">Estimate: </span>{{estimate_text}} </div>
-        
-      <!--  <div><span class="status current_state_for_story" data-story-id="{{id}}">{{current_state}}</span></div> -->
       </div>
     </div>
     
@@ -224,26 +234,30 @@
     {{#labels_html}}
       <h2 class="mbs">Labels: {{& text}}</h2>
     {{/labels_html}}
-    <h2 class="mbs mtm">Tasks</h2>
-    <ul class="list tasks phs">
-      {{#tasks}}
-        <li class="pvs">
-          <label class="outer block">
-            <span class="unit"><input class="task_checkbox" type="checkbox" data-task-id="{{id}}" data-story-id="{{story_id}}" data-project-id="{{project_id}}" {{#complete}}checked="checked"{{/complete}} /></span>
-            <span class="mlm block">{{description}}</span>
-          </label>
-        </li>
-      {{/tasks}}
-    </ul>
-    <h2 class="mbs mtm">Comments</h2>
-    <ul class="mbm list comments phs">
-      {{#comments}}
-        <li class="pvs">
-          <strong>{{author.person.name}} </strong>
-          <div class="neutral">{{text}}</div>
-        </li>
-      {{/comments}}
-    </ul>
+    {{#has_tasks}}
+      <h2 class="mbs mtm">Tasks</h2>
+      <ul class="list tasks phs">
+        {{#tasks}}
+          <li class="pvs">
+            <label class="outer block">
+              <span class="unit"><input class="task_checkbox" type="checkbox" data-task-id="{{id}}" data-story-id="{{story_id}}" data-project-id="{{project_id}}" {{#complete}}checked="checked"{{/complete}} /></span>
+              <span class="mlm block">{{description}}</span>
+            </label>
+          </li>
+        {{/tasks}}
+      </ul>
+    {{/has_tasks}}
+    {{#has_comments}}
+      <h2 class="mbs mtm">Comments</h2>
+      <ul class="mbm list comments phs">
+        {{#comments}}
+          <li class="pvs">
+            <strong>{{author.person.name}} </strong>
+            <div class="neutral">{{text}}</div>
+          </li>
+        {{/comments}}
+      </ul>
+    {{/has_comments}}
   </script>
   
   <!-- vendors scripts -->

@@ -157,14 +157,14 @@ root.PivotalRocketBackground =
     requester = element_object.parent('ul.list').data("requested")
     requester = if requester? then true else false
     story = PivotalRocketStorage.find_story(project_id, story_id, requester)
-    if PivotalRocketBackground.popup?
+    if story? && PivotalRocketBackground.popup?
+      PivotalRocketBackground.selected_story = story.id
       PivotalRocketBackground.popup.$('#storiesTabs').find('li.story_info').removeClass('active')
       element_object.addClass('active')
       PivotalRocketBackground.show_story_info(story)  
   # show story details
   show_story_info: (story) ->
     if story?
-      PivotalRocketBackground.selected_story = story.id
       project = PivotalRocketStorage.find_project(PivotalRocketBackground.account, story.project_id)
       # set points
       if project? && project.point_scale?
@@ -193,6 +193,9 @@ root.PivotalRocketBackground =
             story.story_type_many_statuses = true
           when "chore"
             story.story_type_can_started = true
+      # tasks and comments bool
+      story.has_tasks = true if story.tasks? && story.tasks.length > 0
+      story.has_comments = true if story.comments? && story.comments.length > 0
       # generate template
       block_element = PivotalRocketBackground.popup.$('#storyInfo')
       block_element.empty().html(PivotalRocketBackground.templates.story.render(story))
@@ -319,7 +322,7 @@ root.PivotalRocketBackground =
         
       # selected story
       if PivotalRocketBackground.selected_story?
-        PivotalRocketBackground.popup.$('#storiesTabs').find("li.story_#{PivotalRocketBackground.selected_story}").trigger('click')
+        PivotalRocketBackground.bind_story_cell(PivotalRocketBackground.popup.$('#storiesTabs').find("li.story_#{PivotalRocketBackground.selected_story}"))
   # sync all data by account    
   initial_sync: (pivotal_account, callback_function = null) ->
     PivotalRocketBackground.is_loading = true
