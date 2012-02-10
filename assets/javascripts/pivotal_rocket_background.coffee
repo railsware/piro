@@ -148,13 +148,13 @@ root.PivotalRocketBackground =
       selector = PivotalRocketBackground.popup.$("#storiesTabs ##{selected_type}Stories")
       selector.show()
   # binding on story cell
-  bind_story_cell: (element_object) ->
-    story_id = element_object.data("story-id")
-    if !story_id
+  bind_story_cell: (element_object) -> 
+    story_id = element_object.data("storyId")
+    if !story_id?
       element_object = element_object.parents('li.story_info')
-      story_id = element_object.data("story-id")
-    project_id = element_object.parent('ul').data("project-id")
-    requester = element_object.parent('ul').data("requested")
+      story_id = element_object.data("storyId")
+    project_id = element_object.parent('ul.list').data("projectId")
+    requester = element_object.parent('ul.list').data("requested")
     requester = if requester? then true else false
     story = PivotalRocketStorage.find_story(project_id, story_id, requester)
     if PivotalRocketBackground.popup?
@@ -319,7 +319,7 @@ root.PivotalRocketBackground =
         
       # selected story
       if PivotalRocketBackground.selected_story?
-        PivotalRocketBackground.popup.$("li.story_#{PivotalRocketBackground.selected_story}").addClass('active')
+        PivotalRocketBackground.popup.$('#storiesTabs').find("li.story_#{PivotalRocketBackground.selected_story}").trigger('click')
   # sync all data by account    
   initial_sync: (pivotal_account, callback_function = null) ->
     PivotalRocketBackground.is_loading = true
@@ -442,10 +442,7 @@ root.PivotalRocketBackground =
             success: (data, textStatus, jqXHR) ->
               PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
         error: (jqXHR, textStatus, errorThrown) ->
-          if PivotalRocketBackground.popup.$('#storiesTabs').find("li.story_#{story.id}").hasClass('active')
-            PivotalRocketBackground.popup.$('#storiesTabs')
-            .find("li.story_#{story.id}")
-            .trigger("click")
+          PivotalRocketBackground.init_list_stories()
       
   # story success chaged
   story_changed_with_data: (data, requester = false) ->
@@ -465,10 +462,6 @@ root.PivotalRocketBackground =
     if new_stories.length > 0
       PivotalRocketStorage.set_stories({id: story.project_id}, new_stories, requester)
     PivotalRocketBackground.init_list_stories()
-    if PivotalRocketBackground.popup.$('#storiesTabs').find("li.story_#{story.id}").hasClass('active')
-      PivotalRocketBackground.popup.$('#storiesTabs')
-      .find("li.story_#{story.id}")
-      .trigger("click")
   # normalize story
   normalize_story_for_saving: (story) ->
     # normalize notes
