@@ -66,8 +66,8 @@ root.PivotalRocketStorage =
     
   set_projects: (account, projects) ->
     projects = for project in projects
-      old_project = PivotalRocketStorage.find_project(account, project.id)
       if !project.view_conditions?
+        old_project = PivotalRocketStorage.find_project(account, project.id)
         project.view_conditions = if old_project? && old_project.view_conditions? then old_project.view_conditions else {} 
       project
     PivotalRocketStorage.set("projects_" + account.id, projects)
