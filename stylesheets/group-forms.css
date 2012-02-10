@@ -14,8 +14,20 @@ input[type="search"] {
 }
 
 select {
-    padding: 2px;
+    padding: 2px;    
     vertical-align: middle;
+}
+
+.options select,
+.options .value {
+    width: 115px;
+}
+
+.options .label {
+    width: 70px;
+    text-align: right;
+    color: #999;
+    font-size: 11px;
 }
 
 option {
@@ -24,6 +36,7 @@ option {
 
 input[type="search"] {
     margin-top: 4px;
+    padding: 2px;
 }
 
 fieldset {
