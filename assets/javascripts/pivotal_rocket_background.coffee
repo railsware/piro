@@ -78,6 +78,7 @@ root.PivotalRocketBackground =
       PivotalRocketBackground.change_account()
     # change type list
     PivotalRocketBackground.popup.$('#selecterStoriesType').change (event) =>
+      PivotalRocketStorage.set_role($(event.target).val())
       PivotalRocketBackground.change_view_type()
     # projects toggle
     PivotalRocketBackground.popup.$("ul.projects_stories_list").on "click", "span.toggle_project", (event) =>
@@ -134,7 +135,8 @@ root.PivotalRocketBackground =
   # change view type
   change_view_type: ->
     if PivotalRocketBackground.popup? && PivotalRocketBackground.account?
-      selected_type = PivotalRocketBackground.popup.$('#selecterStoriesType').val()
+      selected_type = PivotalRocketStorage.get_role()
+      PivotalRocketBackground.popup.$('#selecterStoriesType').val(selected_type)
       PivotalRocketBackground.popup.$('#storiesTabs div.tabs_content_block').hide()
       selector = PivotalRocketBackground.popup.$("#storiesTabs ##{selected_type}Stories")
       selector.show()

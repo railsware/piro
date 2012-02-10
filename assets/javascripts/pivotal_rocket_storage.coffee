@@ -11,6 +11,12 @@ root.PivotalRocketStorage =
     json_data
   delete_by_key: (key) ->
     window.localStorage.removeItem(key)
+  
+  get_role: ->
+    PivotalRocketStorage.get("user_role") || "owner"
+    
+  set_role: (value) ->
+    PivotalRocketStorage.set("user_role", value)
     
   get_accounts: ->
     PivotalRocketStorage.get("accounts") || []
