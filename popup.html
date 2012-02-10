@@ -140,14 +140,16 @@
   
   <script id="project_cell_template" type="text/x-mustache-template">
     <li class="project_{{id}} project_cell{{#view_conditions}}{{#hide_project_cell}} hide-project{{/hide_project_cell}}{{/view_conditions}}" data-project-id="{{id}}">
-      <div class="title"><span class="toggle_project" data-project-id="{{id}}">toggle</span> {{name}} ({{count_of_stories}}) <span class="sort_project" data-project-id="{{id}}">drag</span></div>
+
+      <div class="title"><span class="toggle_project" data-project-id="{{id}}"></span> {{name}} ({{count_of_stories}}) <span class="sort_project" title="Drag to sort projects" data-project-id="{{id}}"></span></div>
+      
       <ul data-project-id="{{id}}" {{#is_requested_by_me}}data-requested="true"{{/is_requested_by_me}} class="list">
         {{#stories}}
-          <li class="story_info story_{{id}} {{box_class}}-box pas outer" data-story-id="{{id}}">
+          <li class="story_info story_{{id}} {{box_class}}-box outer" data-story-id="{{id}}">
             <div class="unit"><span class="{{story_type}}-icon"></span></div>
             <div class="unit size3of4">
               <div class="pls">
-                {{name}} <span class="status">{{current_state}}</span>
+                {{name}} <!-- <span class="status">{{current_state}}</span> -->
               </div>              
             </div>              
           </li>
@@ -159,54 +161,58 @@
   <script id="story_info_template" type="text/x-mustache-template">
     
     <div class="outer">
-      <div class="unit size2of3">
-        <div class="outer">
+      <div class="unit size1of2">
+        <div class="outer clippy-holder">
           <div class="unit pale">ID: <span class="clippy-text neutral">{{id}}</span> </div>
-          <div class="unit mls"><div id="clippyStory{{id}}"></div></div>
+          <div class="clippy-box"><div id="clippyStory{{id}}"></div></div>
         </div>
-        <div class="outer">
-          <div class="unit pale"><a href="{{url}}" target="_blank">Story link</a>: </div>
-          <div class="unit mls"><div id="clippyUrl{{id}}"></div></div>
+        <div class="outer clippy-holder">
+          <div class="unit pale"><a href="{{url}}" target="_blank">Story link</a> </div>
+          <div class="clippy-box"><div id="clippyUrl{{id}}"></div></div>
         </div>
       </div>
-      <div class="unit size1of3 txt-right">
-        <div class="mbxs h4"><!-- {{owned_by.person.name}} --> <span class="pale">Estimate: </span>{{estimate_text}}</div>
-        <div><span class="status current_state_for_story" data-story-id="{{id}}">{{current_state}}</span></div>
+      <div class="unit size1of2 txt-right">        
+        <div class="change_story_box">
+          <div class="main options">
+            <span class="label">Status:</span>
+            {{^unestimated_feature}}
+              <select class="change_story_state mbxs" data-story-id="{{id}}" data-project-id="{{project_id}}">
+                <option value="unstarted">Not Yet Started</option>
+                {{#story_type_can_started}}
+                  <option value="started">Started</option>
+                {{/story_type_can_started}}
+                {{#story_type_many_statuses}}
+                  <option value="finished">Finished</option>
+                  <option value="delivered">Delivered</option>
+                {{/story_type_many_statuses}}
+                <option value="accepted">Accepted</option>
+                {{#story_type_many_statuses}}
+                  <option value="rejected">Rejected</option>
+                {{/story_type_many_statuses}}
+              </select>
+            {{/unestimated_feature}}
+            <span class="label">Estimate: </span>
+            {{#need_estimate}}
+              <select class="change_story_estimate" data-story-id="{{id}}" data-project-id="{{project_id}}">
+                <option value="-1">Unestimated</option>
+                {{#point_scale}}
+                  <option value="{{point}}">{{point}} points</option>
+                {{/point_scale}}
+              </select>
+            {{/need_estimate}}
+          </div>
+          <div class="loader">
+            <img src="images/spinner3.gif" alt="loading..." title="loading..." />
+          </div>
+        </div>
+        <div class="mtxs"><!-- {{owned_by.person.name}} --><span class="pale h4">Estimate: </span>{{estimate_text}} </div>
+        
+      <!--  <div><span class="status current_state_for_story" data-story-id="{{id}}">{{current_state}}</span></div> -->
       </div>
     </div>
     
     
-    <div class="change_story_box">
-      <div class="main">
-        {{^unestimated_feature}}
-          <select class="change_story_state" data-story-id="{{id}}" data-project-id="{{project_id}}">
-            <option value="unstarted">Not Yet Started</option>
-            {{#story_type_can_started}}
-              <option value="started">Started</option>
-            {{/story_type_can_started}}
-            {{#story_type_many_statuses}}
-              <option value="finished">Finished</option>
-              <option value="delivered">Delivered</option>
-            {{/story_type_many_statuses}}
-            <option value="accepted">Accepted</option>
-            {{#story_type_many_statuses}}
-              <option value="rejected">Rejected</option>
-            {{/story_type_many_statuses}}
-          </select>
-        {{/unestimated_feature}}
-        {{#need_estimate}}
-          <select class="change_story_estimate" data-story-id="{{id}}" data-project-id="{{project_id}}">
-            <option value="-1">Unestimated</option>
-            {{#point_scale}}
-              <option value="{{point}}">{{point}} points</option>
-            {{/point_scale}}
-          </select>
-        {{/need_estimate}}
-      </div>
-      <div class="loader">
-        <img src="images/spinner3.gif" alt="loading..." title="loading..." />
-      </div>
-    </div>
+    
     
     <h1 class="mtxs pts mbxs"><span class="{{story_type}}-icon"></span> {{name}}</h1>
     <div class="mbm">
