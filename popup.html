@@ -139,7 +139,7 @@
   </script>
   
   <script id="project_cell_template" type="text/x-mustache-template">
-    <li class="project_{{id}} project_cell {{#view_conditions}}{{#hide_project_cell}}hide-project{{/hide_project_cell}}{{/view_conditions}}">
+    <li class="project_{{id}} project_cell{{#view_conditions}}{{#hide_project_cell}} hide-project{{/hide_project_cell}}{{/view_conditions}}">
       <div class="title"><span class="toggle_project" data-project-id="{{id}}">toggle</span> {{name}} ({{count_of_stories}}) <span class="sort_project" data-project-id="{{id}}">sort</span></div>
       <ul data-project-id="{{id}}" {{#is_requested_by_me}}data-requested="true"{{/is_requested_by_me}} class="list">
         {{#stories}}
