@@ -140,7 +140,9 @@
   
   <script id="project_cell_template" type="text/x-mustache-template">
     <li class="project_{{id}} project_cell{{#view_conditions}}{{#hide_project_cell}} hide-project{{/hide_project_cell}}{{/view_conditions}}" data-project-id="{{id}}">
-      <div class="title"><span class="toggle_project" title="" data-project-id="{{id}}"></span> {{name}} ({{count_of_stories}}) <span class="sort_project" title="Drag to sort projects" data-project-id="{{id}}"></span></div>
+
+      <div class="title"><span class="toggle_project" data-project-id="{{id}}"></span> {{name}} ({{count_of_stories}}) <span class="sort_project" title="Drag to sort projects" data-project-id="{{id}}"></span></div>
+      
       <ul data-project-id="{{id}}" {{#is_requested_by_me}}data-requested="true"{{/is_requested_by_me}} class="list">
         {{#stories}}
           <li class="story_info story_{{id}} {{box_class}}-box outer" data-story-id="{{id}}">
@@ -222,15 +224,6 @@
     {{#labels_html}}
       <h2 class="mbs">Labels: {{& text}}</h2>
     {{/labels_html}}
-    <h2 class="mbs mtm">Comments</h2>
-    <ul class="mbm list comments phs">
-      {{#notes}}
-        <li class="pvs">
-          <strong>{{author.person.name}} </strong>
-          <div class="neutral">{{text}}</div>
-        </li>
-      {{/notes}}
-    </ul>
     <h2 class="mbs mtm">Tasks</h2>
     <ul class="list tasks phs">
       {{#tasks}}
@@ -241,6 +234,15 @@
           </label>
         </li>
       {{/tasks}}
+    </ul>
+    <h2 class="mbs mtm">Comments</h2>
+    <ul class="mbm list comments phs">
+      {{#comments}}
+        <li class="pvs">
+          <strong>{{author.person.name}} </strong>
+          <div class="neutral">{{text}}</div>
+        </li>
+      {{/comments}}
     </ul>
   </script>
   
