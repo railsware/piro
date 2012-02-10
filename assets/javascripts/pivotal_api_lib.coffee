@@ -109,7 +109,8 @@ class root.PivotalApiLib
       beforeSend: params.beforeSend
       complete: params.complete
         
-  get_activities: (date = new Date()) =>
+  get_activities: =>
+    date = new Date()
     formated_date = this.formated_date(date)
     $.ajax
       #setup
