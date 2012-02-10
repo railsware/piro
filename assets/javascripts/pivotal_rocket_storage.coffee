@@ -78,7 +78,7 @@ root.PivotalRocketStorage =
     if projects?
       updated_projects = for project in projects
         if parseInt(new_project.id) == parseInt(project.id) then new_project else project
-      PivotalRocketStorage.set_projects(account, updated_projects)
+      PivotalRocketStorage.set("projects_" + account.id, updated_projects)
     
   update_view_options_in_project: (account, project_id, new_options) ->
     project = PivotalRocketStorage.find_project(account, project_id)
