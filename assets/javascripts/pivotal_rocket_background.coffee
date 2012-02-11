@@ -86,6 +86,8 @@ root.PivotalRocketBackground =
     # projects sorting
     PivotalRocketBackground.popup.$("ul.projects_stories_list").sortable
       handle: 'span.sort_project'
+      axis: 'y'
+      placeholder: 'ui-state-highlight'
       update: (event) ->
         objects = $(event.target).parents("ul.projects_stories_list").find("li.project_cell")
         object_ids = []
