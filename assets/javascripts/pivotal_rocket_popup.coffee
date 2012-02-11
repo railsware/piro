@@ -35,6 +35,14 @@ root.PivotalRocketPopup =
       "clippyUrl#{story_data.id}", width, height, '9.0.0', 
       'javascripts/vendors/swfobject/expressInstall.swf', 
       {text: story_data.url}, params, {})
+    if $('div.attachment_clippy').length > 0
+      $('div.attachment_clippy').each (index) ->
+        url = $(this).data('attachmentUrl')
+        attachment_id = $(this).attr('id')
+        swfobject.embedSWF('images/clippy/clippy.swf', 
+        attachment_id, width, height, '9.0.0', 
+        'javascripts/vendors/swfobject/expressInstall.swf', 
+        {text:url}, params, {})
     
 $ ->
   PivotalRocketPopup.init()

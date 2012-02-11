@@ -249,11 +249,12 @@
     {{/has_tasks}}
     {{#has_attachments}}
       <h2 class="mbs mtm">Attachments</h2>
-      <ul class="mbm list comments phs">
+      <ul class="mbm list attachments phs">
         {{#attachments}}
           <li class="pvs">
             <strong>{{uploaded_by.person.name}} </strong>
             <div class="neutral"><a href="{{url}}" target="_blank">{{filename}}</a></div>
+            <div id="attachment_{{id}}" class="attachment_clippy" data-attachment-url="{{url}}"></div>
           </li>
         {{/attachments}}
       </ul>
