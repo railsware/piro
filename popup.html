@@ -175,7 +175,7 @@
         <div class="change_story_box">
           <div class="main options">      
           {{^unestimated_feature}}
-              <span class="label">Status:</span>
+              <span class="label">Status: </span>
               <select class="change_story_state mbxs" data-story-id="{{id}}" data-project-id="{{project_id}}">
                 <option value="unstarted">Not Yet Started</option>
                 {{#story_type_can_started}}
@@ -194,7 +194,7 @@
             
             {{#unestimated_feature}}
               <div>
-                <span class="status">{{current_state}}</span>
+                <span class="pale h4">Status: </span> <span class="status">{{current_state}}</span>
               </div>
             {{/unestimated_feature}}
             
