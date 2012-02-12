@@ -493,7 +493,8 @@ root.PivotalRocketBackground =
         else
           story.attachments = story.attachments.attachment
       else
-        story.attachments = [story.attachments] if story.attachments.constructor != Array
+        story.attachments = [story.attachments] if story.attachments.constructor != Array && story.attachments.url?
+    (delete story.attachments) if story.attachments? && story.attachments.type?
     # normalize tasks
     if story.tasks?
       if story.tasks.task?
