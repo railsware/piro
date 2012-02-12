@@ -252,9 +252,13 @@
       <ul class="mbm list attachments phs">
         {{#attachments}}
           <li class="pvs">
-            <strong>{{uploaded_by.person.name}} </strong>
-            <div class="neutral"><a href="{{url}}" target="_blank">{{filename}}</a></div>
-            <div id="attachment_{{id}}" class="attachment_clippy" data-attachment-url="{{url}}"></div>
+            <div class="clippy-holder">
+              <strong>{{uploaded_by.person.name}} </strong>
+              <div class="neutral"><a href="{{url}}" target="_blank">{{filename}}</a></div>
+              <div class="clippy-box">
+                <div id="attachment_{{id}}" class="attachment_clippy" data-attachment-url="{{url}}"></div>
+              </div>
+            </div>
           </li>
         {{/attachments}}
       </ul>
