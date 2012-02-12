@@ -24,7 +24,7 @@ root.PivotalRocketPopup =
       quality: 'high'
       width: width
       height: height
-      bgcolor: "#000"
+      bgcolor: "#fff"
     if $("#clippyStory#{story_data.id}").length > 0  
       swfobject.embedSWF('images/clippy/clippy_attachment.swf', 
       "clippyStory#{story_data.id}", width, height, '9.0.0', 
