@@ -15,7 +15,7 @@ root.PivotalRocketPopup =
         sendResponse({})
   # init clippy for story view
   init_clippy_for_story: (story_data) ->
-    width = 110
+    width = 15
     height = 15
     params = 
       allowScriptAccess: 'always'
@@ -26,12 +26,12 @@ root.PivotalRocketPopup =
       height: height
       bgcolor: "#000"
     if $("#clippyStory#{story_data.id}").length > 0  
-      swfobject.embedSWF('images/clippy/clippy.swf', 
+      swfobject.embedSWF('images/clippy/clippy_attachment.swf', 
       "clippyStory#{story_data.id}", width, height, '9.0.0', 
       'javascripts/vendors/swfobject/expressInstall.swf', 
       {text: story_data.id}, params, {})
     if $("#clippyUrl#{story_data.id}").length > 0  
-      swfobject.embedSWF('images/clippy/clippy.swf', 
+      swfobject.embedSWF('images/clippy/clippy_attachment.swf', 
       "clippyUrl#{story_data.id}", width, height, '9.0.0', 
       'javascripts/vendors/swfobject/expressInstall.swf', 
       {text: story_data.url}, params, {})
@@ -40,7 +40,7 @@ root.PivotalRocketPopup =
         url = $(this).data('attachmentUrl')
         attachment_id = $(this).attr('id')
         swfobject.embedSWF('images/clippy/clippy_attachment.swf', 
-        attachment_id, height, height, '9.0.0', 
+        attachment_id, width, height, '9.0.0', 
         'javascripts/vendors/swfobject/expressInstall.swf', 
         {text:url}, params, {})
     
