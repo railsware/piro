@@ -194,7 +194,7 @@
             
             {{#unestimated_feature}}
               <div>
-                <span class="pale h4">Status: </span> <span class="status">{{current_state}}</span>
+                <span class="label">Status: </span> <div class="value">{{current_state}}</div>
               </div>
             {{/unestimated_feature}}
             
@@ -210,7 +210,7 @@
             
             {{^need_estimate}}
               <div>
-                <span class="pale h4">Estimate: </span>{{estimate_text}}
+                <span class="label">Estimate: </span> <div class="value">{{estimate_text}}</div>
               </div>
             {{/need_estimate}}
           </div>
