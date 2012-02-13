@@ -20,7 +20,9 @@ select {
 
 .options select,
 .options .value {
+    display: inline-block;
     width: 115px;
+    text-align: left;
 }
 
 .options .label {
