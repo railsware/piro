@@ -19,7 +19,7 @@ class root.PivotalApiLib
   
   get_stories_for_project: (params) =>
     url_params = encodeURIComponent("owner:" + @account.initials)
-    url_params = encodeURIComponent("requester:" + @account.initials) if params.requester? && true == params.requester
+    url_params = encodeURIComponent("requester:" + @account.initials) if params.requester? && params.requester is true
     
     $.ajax
       #setup
