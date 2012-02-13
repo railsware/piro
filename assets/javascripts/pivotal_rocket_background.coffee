@@ -80,14 +80,11 @@ root.PivotalRocketBackground =
     PivotalRocketBackground.popup.$('#selecterStoriesType').change (event) =>
       PivotalRocketStorage.set_role($(event.target).val())
       PivotalRocketBackground.change_view_type()
-    # projects toggle
-    PivotalRocketBackground.popup.$("ul.projects_stories_list").on "click", "span.toggle_project", (event) =>
-      PivotalRocketBackground.toggle_project_cell($(event.target))
     # projects sorting
     PivotalRocketBackground.popup.$("ul.projects_stories_list").sortable
       handle: 'span.sort_project'
       axis: 'y'
-      #placeholder: 'ui-state-highlight'
+      placeholder: 'ui-state-highlight'
       update: (event) ->
         objects = $(event.target).parents("ul.projects_stories_list").find("li.project_cell")
         object_ids = []
@@ -96,6 +93,9 @@ root.PivotalRocketBackground =
         if object_ids.length > 0
           PivotalRocketStorage.sort_projects(PivotalRocketBackground.account, object_ids)
     .disableSelection()
+    # projects toggle
+    PivotalRocketBackground.popup.$("ul.projects_stories_list").on "click", "span.toggle_project", (event) =>
+      PivotalRocketBackground.toggle_project_cell($(event.target))
     # click on story  
     PivotalRocketBackground.popup.$("#storiesTabs").on "click", "li.story_info", (event) =>
       element_object = $(event.target)
