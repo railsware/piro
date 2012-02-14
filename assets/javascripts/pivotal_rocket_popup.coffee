@@ -15,7 +15,7 @@ root.PivotalRocketPopup =
         sendResponse({})
   # init clippy for story view
   init_clippy_for_story: (story_data) ->
-    width = 15
+    width = 51
     height = 15
     params = 
       allowScriptAccess: 'always'
