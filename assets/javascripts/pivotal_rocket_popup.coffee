@@ -4,9 +4,41 @@ root.PivotalRocketPopup =
   background_page: chrome.extension.getBackgroundPage()
   # init popup view
   init: ->
-    PivotalRocketPopup.background_page.PivotalRocketBackground.popup = root
-    PivotalRocketPopup.background_page.PivotalRocketBackground.init_popup()
-    PivotalRocketPopup.init_listener()
+    if PivotalRocketPopup.check_working_mode()
+      PivotalRocketPopup.background_page.PivotalRocketBackground.popup = root
+      PivotalRocketPopup.background_page.PivotalRocketBackground.init_popup()
+      PivotalRocketPopup.init_listener()
+  # check fullscreen/popup mode
+  check_working_mode: ->
+    popup_url = chrome.extension.getURL('popup.html')
+    # fullscreen
+    if PivotalRocketStorage.get_fullscreen_mode()
+      $('body').addClass('fullscreen-mode')
+      if document.location.search == '?popup'
+        $('body').css
+          width: 0
+          height: 0
+          display: 'none'
+        chrome.tabs.query {}, (tabs) ->
+          for tab in tabs
+            if tab.url.substring(0, popup_url.length) == popup_url
+              chrome.tabs.update tab.id, {active: true}
+              window.close()
+              return false
+          chrome.tabs.create {url: popup_url, active: true}, (tab) ->
+            window.close()
+            return false
+        return false
+    #popup
+    else
+      if document.location.search != '?popup'
+        chrome.tabs.query {active: true}, (tabs) ->
+          for tab in tabs
+            if document.location.href.substring(0, popup_url.length) == popup_url
+              chrome.tabs.remove(tab.id)
+        window.close()
+        return false
+    return true
   # init listener
   init_listener: ->
     chrome.extension.onRequest.addListener (request, sender, sendResponse) ->

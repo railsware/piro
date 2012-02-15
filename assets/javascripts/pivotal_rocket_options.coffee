@@ -80,9 +80,21 @@ root.PivotalRocketOptions =
   # init options block
   init_options_view: ->
     $('#updateInterval').val(PivotalRocketStorage.get_update_interval())
+    if PivotalRocketStorage.get_fullscreen_mode()
+      $('#fullscreenMode').attr("checked", "checked")
+    else
+      $('#fullscreenMode').removeAttr("checked")
   # update options
   update_options: ->
     $('#updateInterval').val(PivotalRocketStorage.set_update_interval($('#updateInterval').val()))
+    PivotalRocketStorage.set_fullscreen_mode($("#fullscreenMode").is(":checked"))
+    # cleanup popups
+    popup_url = chrome.extension.getURL('popup.html')
+    chrome.tabs.query {}, (tabs) ->
+      for tab in tabs
+        if tab.url.substring(0, popup_url.length) == popup_url
+          chrome.tabs.remove tab.id
+    # update background timer
     PivotalRocketOptions.background_page.PivotalRocketBackground.updated_options()
   # add acoount
   add_account: ->

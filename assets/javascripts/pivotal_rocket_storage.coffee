@@ -203,3 +203,8 @@ root.PivotalRocketStorage =
     value = 360 if value > 360
     PivotalRocketStorage.set('update_interval', value)
     value
+  
+  get_fullscreen_mode: ->
+    PivotalRocketStorage.get('fullscreen_mode') || false
+  set_fullscreen_mode: (value) ->
+    PivotalRocketStorage.set('fullscreen_mode', value)

@@ -609,9 +609,10 @@ root.PivotalRocketBackground =
     chrome.omnibox.onInputChanged.addListener (text, suggest) ->
       PivotalRocketBackground.set_omnibox_suggestion(text)
     chrome.omnibox.onInputEntered.addListener (text) ->
-      chrome.tabs.getSelected null, (tab) ->
-        chrome.tabs.update tab.id, 
-          url: "http://www.pivotaltracker.com/story/show/#{text}"
+      chrome.tabs.query {active: true}, (tabs) ->
+        for tab in tabs
+          chrome.tabs.update tab.id, 
+            url: "http://www.pivotaltracker.com/story/show/#{text}"
   # default omnibox text
   default_omnibox_suggestion: ->
     chrome.omnibox.setDefaultSuggestion
