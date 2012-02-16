@@ -13,7 +13,6 @@ root.PivotalRocketPopup =
     popup_url = chrome.extension.getURL('popup.html')
     # fullscreen
     if PivotalRocketStorage.get_fullscreen_mode()
-      $('body').addClass('fullscreen-mode')
       if document.location.search == '?popup'
         $('body').css
           width: 0
@@ -31,6 +30,7 @@ root.PivotalRocketPopup =
         return false
     #popup
     else
+      $('body').addClass('popup-mode')
       if document.location.search != '?popup'
         chrome.tabs.query {active: true}, (tabs) ->
           for tab in tabs
