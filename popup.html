@@ -64,21 +64,27 @@
       
         <div class="footer">
           <div class="outer ptxs">
-            <div id="changeAccountBox" class="unit mls">
-              <label class="h4">Account:</label>
-          	   <select id="changeAccount">
-          	   </select>
-          	 </div>
-          	 <div id="selecterStoriesBox" class="unit mlm">
-          	   <label class="h4">Role:</label>
-          	   <select id="selecterStoriesType">
-          	     <option value="owner">Owner</option>
-          	     <option value="requester">Requester</option>
-          	   </select>
-          	 </div>
-          	 <div class="unit-right">
-          	   <a href="#" class="add-task open_popup_button"><img src="images/add.png" alt="Add Task" /></a>
-          	 </div> <!-- unit-right -->
+            <div class="unit size1of2">
+              <div id="changeAccountBox" class="unit mls">
+                <!-- <label class="h4">Account:</label> -->
+            	   <select id="changeAccount">
+            	   </select>
+            	</div>
+            	<div id="selecterStoriesBox" class="unit-right mrs">
+            	   <label class="h4">Role:</label>
+            	   <select id="selecterStoriesType">
+            	     <option value="owner">Owner</option>
+            	     <option value="requester">Requester</option>
+            	   </select>
+            	 </div>
+            </div> <!-- unit size1of2 -->
+            <div class="unit size1of2">
+              <div class="outer">
+                <div class="unit-right">
+              	   <a href="#" class="add-task open_popup_button"><img src="images/add.png" alt="Add Task" /></a>
+              	 </div> <!-- unit-right -->
+              </div> <!-- outer -->
+            </div> <!-- unit size1of2 -->
           </div> <!-- outer -->          
         </div> <!-- footer -->      	
       	
@@ -160,9 +166,9 @@
   
   <script id="story_info_template" type="text/x-mustache-template">
     
-    <div class="outer">
+    <div class="outer story-details-header">
       <div class="unit size1of2">
-        <div class="outer clippy-holder">
+        <div class="outer clippy-holder mbxs">
           <div class="unit pale">ID: <span class="clippy-text neutral">{{id}}</span> </div>
           <div class="clippy-box"><div id="clippyStory{{id}}"></div></div>
         </div>
@@ -175,6 +181,7 @@
         <div class="change_story_box">
           <div class="main options">      
           {{^unestimated_feature}}
+          <div>
               <span class="label">Status: </span>
               <select class="change_story_state mbxs" data-story-id="{{id}}" data-project-id="{{project_id}}">
                 <option value="unstarted">Not Yet Started</option>
@@ -190,6 +197,7 @@
                   <option value="rejected">Rejected</option>
                 {{/story_type_many_statuses}}
               </select>
+            </div>
             {{/unestimated_feature}}
             
             {{#unestimated_feature}}
@@ -199,6 +207,7 @@
             {{/unestimated_feature}}
             
             {{#need_estimate}}
+              <div>
               <span class="label">Estimate: </span>
               <select class="change_story_estimate" data-story-id="{{id}}" data-project-id="{{project_id}}">
                 <option value="-1">Unestimated</option>
@@ -206,6 +215,7 @@
                   <option value="{{point}}">{{point}} points</option>
                 {{/point_scale}}
               </select>
+              </div>
             {{/need_estimate}}
             
             {{^need_estimate}}
@@ -249,7 +259,7 @@
     {{/has_tasks}}
     {{#has_attachments}}
       <h2 class="mbs mtm">Attachments</h2>
-      <ul class="mbm list attachments phs">
+      <ul class="mbm list attachments mhs">
         {{#attachments}}
           <li class="pvs">
             <div class="clippy-holder">
