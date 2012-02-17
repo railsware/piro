@@ -9,6 +9,7 @@ body {
     position: relative;
     border-radius: 5px;
     background: #AEB6B9 url(../images/pattern.png) repeat-x 0 100%;
+    border: 1px solid #aaa;
 }
 
 .data-holder {
@@ -97,9 +98,10 @@ body {
     text-align: center;
     color: #fff;
     font-size: 11px;
+    font-weight: bold;
     text-transform: uppercase;
     border-left: 1px solid #222;
-    text-shadow: 0 -1px 0 rgba(0,0,0, 0.8);
+    text-shadow: 0 -1px 0 rgba(0,0,0, 0.5);
     background: rgb(125,126,125);
     background: -moz-linear-gradient(top,  rgba(125,126,125,1) 0%, rgba(14,14,14,1) 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(125,126,125,1)), color-stop(100%,rgba(14,14,14,1)));
@@ -109,18 +111,56 @@ body {
 
 .nav li:first-child a {
     border-radius: 5px 0 0 0;
+    border-left: 0;
 }
 
 
 .ui-tabs .ui-tabs-nav { margin: 0; padding: 0; }
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected a { 
-    text-shadow: 0 1px 0 rgba(0,0,0, 0.8);
+    color: #000;
+    font-weight: bold;
+    text-shadow: 0 1px 0 rgba(255,255,255, 0.5);
+    box-shadow: 0 1px 0 rgba(255,255,255, 0.4) inset;
     background: rgb(68,68,68);
     background: -moz-linear-gradient(top,  rgba(68,68,68,1) 0%, rgba(125,126,125,1) 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(68,68,68,1)), color-stop(100%,rgba(125,126,125,1)));
     background: -webkit-linear-gradient(top,  rgba(68,68,68,1) 0%,rgba(125,126,125,1) 100%);
     background: linear-gradient(top,  rgba(68,68,68,1) 0%,rgba(125,126,125,1) 100%);    
 }
+
+.ui-tabs .ui-tabs-nav li a:hover {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.25)), color-stop(100%,rgba(255,255,255,0)));
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,0.25) 0%,rgba(255,255,255,0) 100%);
+    background: linear-gradient(top,  rgba(255,255,255,0.25) 0%,rgba(255,255,255,0) 100%);
+}
+
+
+
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a#currentRequesterTabLabel,
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a#currentTabLabel {
+    background: rgb(241,231,103);    
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(241,231,103,1)), color-stop(100%,rgba(254,182,69,1)));
+    background: -webkit-linear-gradient(top,  rgba(241,231,103,1) 0%,rgba(254,182,69,1) 100%);
+    background: linear-gradient(top,  rgba(241,231,103,1) 0%,rgba(254,182,69,1) 100%);
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a#doneRequesterTabLabel,
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a#doneTabLabel {
+    background: rgb(198,226,113);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(198,226,113,1)), color-stop(100%,rgba(143,196,0,1)));
+    background: -webkit-linear-gradient(top,  rgba(198,226,113,1) 0%,rgba(143,196,0,1) 100%);
+    background: linear-gradient(top,  rgba(198,226,113,1) 0%,rgba(143,196,0,1) 100%);
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a#iceboxRequesterTabLabel,
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a#iceboxTabLabel {
+    background: rgb(135,224,253);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(135,224,253,1)), color-stop(40%,rgba(83,203,241,1)), color-stop(100%,rgba(5,171,224,1)));
+    background: -webkit-linear-gradient(top,  rgba(135,224,253,1) 0%,rgba(83,203,241,1) 40%,rgba(5,171,224,1) 100%);
+    background: linear-gradient(top,  rgba(135,224,253,1) 0%,rgba(83,203,241,1) 40%,rgba(5,171,224,1) 100%);
+}
+
 
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: text; }
 .ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */

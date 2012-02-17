@@ -240,13 +240,13 @@
     </div>
     
     <h2 class="mbs">Description</h2>
-    <div class="phs story_description">{{description}}</div>
+    <div class="story_description">{{description}}</div>
     {{#labels_html}}
       <h2 class="mbs">Labels: {{& text}}</h2>
     {{/labels_html}}
     {{#has_tasks}}
       <h2 class="mbs mtm">Tasks</h2>
-      <ul class="list tasks phs">
+      <ul class="list tasks">
         {{#tasks}}
           <li class="pvs">
             <label class="outer block">
@@ -259,7 +259,7 @@
     {{/has_tasks}}
     {{#has_attachments}}
       <h2 class="mbs mtm">Attachments</h2>
-      <ul class="mbm list attachments mhs">
+      <ul class="mbm list attachments">
         {{#attachments}}
           <li class="pvs">
             <div class="clippy-holder">
@@ -275,7 +275,7 @@
     {{/has_attachments}}
     {{#has_comments}}
       <h2 class="mbs mtm">Comments</h2>
-      <ul class="mbm list comments mhs">
+      <ul class="mbm list comments">
         {{#comments}}
           <li class="pvs">
             <strong>{{author.person.name}} </strong>
