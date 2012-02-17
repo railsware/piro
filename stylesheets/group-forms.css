@@ -21,7 +21,7 @@ select {
 .options select,
 .options .value {
     display: inline-block;
-    width: 115px;
+    width: 100px;
     text-align: left;
 }
 
