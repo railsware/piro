@@ -56,14 +56,6 @@ root.PivotalRocketPopup =
       quality: 'high'
       width: width
       height: height
-      bgcolor: "#FFFFFF"
-    params_attachments =
-      allowScriptAccess: 'always'
-      wmode: 'opaque'
-      scale: 'noscale'
-      quality: 'high'
-      width: width
-      height: height
       bgcolor: "#EEEEEE"
     if $("#clippyStory#{story_data.id}").length > 0  
       swfobject.embedSWF('images/clippy/clippy_attachment.swf', 
@@ -82,7 +74,7 @@ root.PivotalRocketPopup =
         swfobject.embedSWF('images/clippy/clippy_attachment.swf', 
         attachment_id, width, height, '9.0.0', 
         'javascripts/vendors/swfobject/expressInstall.swf', 
-        {text:url}, params_attachments, {})
+        {text:url}, params, {})
     
 $ ->
   PivotalRocketPopup.init()
