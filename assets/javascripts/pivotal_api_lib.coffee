@@ -7,7 +7,7 @@ class root.PivotalApiLib
   get_projects: (params) =>
     $.ajax
       #setup
-      timeout: 60000
+      timeout: 80000
       crossDomain: true
       dataType: 'xml'
       headers:
@@ -23,7 +23,7 @@ class root.PivotalApiLib
     
     $.ajax
       #setup
-      timeout: 20000
+      timeout: 40000
       crossDomain: true
       dataType: 'xml'
       headers:
@@ -39,7 +39,7 @@ class root.PivotalApiLib
   update_account: =>
     $.ajax
       #setup
-      timeout: 20000
+      timeout: 40000
       crossDomain: true
       dataType: 'xml'
       headers:
@@ -62,7 +62,7 @@ class root.PivotalApiLib
   get_story: (params) =>
     $.ajax
       #setup
-      timeout: 20000
+      timeout: 40000
       crossDomain: true
       dataType: 'xml'
       headers:
@@ -78,7 +78,7 @@ class root.PivotalApiLib
   update_story: (params) =>
     $.ajax
       #setup
-      timeout: 20000
+      timeout: 40000
       crossDomain: true
       dataType: 'xml'
       headers:
@@ -95,7 +95,7 @@ class root.PivotalApiLib
   update_task: (params) =>
     $.ajax
       #setup
-      timeout: 20000
+      timeout: 40000
       crossDomain: true
       dataType: 'xml'
       headers:
@@ -109,9 +109,8 @@ class root.PivotalApiLib
       beforeSend: params.beforeSend
       complete: params.complete
         
-  get_activities: =>
-    date = new Date()
-    formated_date = this.formated_date(date)
+  get_activities: (params) =>
+    formated_date = this.formated_date(params.from_date)
     $.ajax
       #setup
       timeout: 20000
@@ -121,9 +120,7 @@ class root.PivotalApiLib
         "X-TrackerToken": @account.token.guid
       # else
       url: "#{this.baseUrl}/activities?limit=100&occurred_since_date=" + encodeURIComponent(formated_date)
-      success: (data, textStatus, jqXHR) =>
-        activities = XML2JSON.parse(data, true)
-        console.debug activities
+      success: params.success
     
   formated_date: (date) =>
     return "#{date.getFullYear()}/#{date.getMonth() + 1}/#{date.getDate()} #{date.getHours()}:#{date.getMinutes()}:00"

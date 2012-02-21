@@ -335,40 +335,55 @@ root.PivotalRocketBackground =
     PivotalRocketBackground.pivotal_api_lib.get_projects
       success: (data, textStatus, jqXHR) =>
         allprojects = XML2JSON.parse(data, true)
-        projects = []
-        projects = allprojects.projects.project if allprojects.projects? && allprojects.projects.project?
-        projects = [projects] if projects.constructor != Array
-        PivotalRocketStorage.set_projects(pivotal_account, projects)
-        PivotalRocketBackground.tmp_counter = projects.length * 2
-        fcallback_counter = -> 
-          PivotalRocketBackground.tmp_counter--
-          if PivotalRocketBackground.tmp_counter <= 0
-            PivotalRocketBackground.init_list_stories()
-            PivotalRocketBackground.is_loading = false
-            PivotalRocketBackground.init_spinner()
-            if callback_function?
-              callback_function()
+        if allprojects.projects?
+          projects = []
+          projects = allprojects.projects.project if allprojects.projects? && allprojects.projects.project?
+          projects = [projects] if projects.constructor != Array
+          PivotalRocketStorage.set_projects(pivotal_account, projects)
+          # activities
+          from_date = new Date(new Date() - (1000 * 60 * 60 * 24)) # day ago
+          PivotalRocketBackground.pivotal_api_lib.get_activities
+            from_date: from_date
+            success: (data, textStatus, jqXHR) ->
+              activities = XML2JSON.parse(data, true)
+              console.debug activities
+          # projects
+          PivotalRocketBackground.tmp_counter = projects.length * 2
+          fcallback_counter = -> 
+            PivotalRocketBackground.tmp_counter--
+            if PivotalRocketBackground.tmp_counter <= 0
+              PivotalRocketBackground.init_list_stories()
+              PivotalRocketBackground.is_loading = false
+              PivotalRocketBackground.init_spinner()
+              if callback_function?
+                callback_function()
         
-        for project in projects
-          PivotalRocketBackground.pivotal_api_lib.get_stories_for_project
-            project: project
-            complete: (jqXHR, textStatus) ->
-              fcallback_counter()
-            success: (data, textStatus, jqXHR, project) ->
-              PivotalRocketBackground.save_stories_data_by_project(project, data)
-            error: (jqXHR, textStatus, errorThrown) ->
-              # error
+          for project in projects
+            PivotalRocketBackground.pivotal_api_lib.get_stories_for_project
+              project: project
+              complete: (jqXHR, textStatus) ->
+                fcallback_counter()
+              success: (data, textStatus, jqXHR, project) ->
+                PivotalRocketBackground.save_stories_data_by_project(project, data)
+              error: (jqXHR, textStatus, errorThrown) ->
+                # error
               
-          PivotalRocketBackground.pivotal_api_lib.get_stories_for_project
-            requester: true
-            project: project
-            complete: (jqXHR, textStatus) ->
-              fcallback_counter()
-            success: (data, textStatus, jqXHR, project) ->
-              PivotalRocketBackground.save_stories_data_by_project(project, data, true)
-            error: (jqXHR, textStatus, errorThrown) ->
-              # error
-            
+            PivotalRocketBackground.pivotal_api_lib.get_stories_for_project
+              requester: true
+              project: project
+              complete: (jqXHR, textStatus) ->
+                fcallback_counter()
+              success: (data, textStatus, jqXHR, project) ->
+                PivotalRocketBackground.save_stories_data_by_project(project, data, true)
+              error: (jqXHR, textStatus, errorThrown) ->
+                # error
+        # no projects
+        else
+          PivotalRocketBackground.init_list_stories()
+          PivotalRocketBackground.is_loading = false
+          PivotalRocketBackground.init_spinner()
+          if callback_function?
+            callback_function()
       error: (jqXHR, textStatus, errorThrown) ->
         # error
         PivotalRocketBackground.is_loading = false
