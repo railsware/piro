@@ -9,3 +9,14 @@ gem "less"
 gem "jasmine", ">= 1.0.0"
 gem "actionpack", ">= 3.1.0"
 gem "activesupport", ">= 3.1.0"
+gem "guard"
+gem "guard-shell"
+
+# notify
+group :linux_development do
+  gem "rb-inotify" 
+  gem "libnotify"
+end
+group :mac_development do
+  gem "growl"
+end

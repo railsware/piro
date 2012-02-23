@@ -306,3 +306,7 @@ Vasiliy saw and decided to leave it as is for now :) */
 .project_cell.hide-project ul.list{
   display:none;
 }
+
+.story_description {
+  white-space: pre;
+}

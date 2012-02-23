@@ -213,11 +213,35 @@ root.PivotalRocketBackground =
         exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig
         descr_object = PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description')
         descr_object.html(descr_object.html().replace(exp,"<a class='desc_link' href='$1'>$1</a>"))
+      # init story bindings
+      PivotalRocketBackground.bindings_story_info()
       # init clippy
       chrome.extension.sendRequest
         clippy_for_story:
           id: story.id
           url: story.url
+  # init show bindings for story
+  bindings_story_info: ->
+    # story title
+    PivotalRocketBackground.popup.$('#storyInfo').find('h1.story_title').editable (value, settings) ->
+      console.log value
+      return value
+    ,
+      type    : 'text'
+      tooltip : 'Click to edit...'
+      indicator : '<img src="images/spinner3.gif" alt="loading..." title="loading..." />'
+      style   : 'editable-input'
+    # story description
+    PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description').editable (value, settings) ->
+      console.log value
+      return value
+    ,
+      type    : 'textarea'
+      submit  : 'OK'
+      cancel  : 'Cancel'
+      tooltip : 'Click to edit...'
+      indicator : '<img src="images/spinner3.gif" alt="loading..." title="loading..." />'
+      style   : 'editable-textarea'
   # spinner for update stories
   init_spinner: ->
     PivotalRocketBackground.init_icon_status()

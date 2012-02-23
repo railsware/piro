@@ -16,20 +16,24 @@ namespace :pack do
   
   desc "compile coffee-scripts from ./assets/javascripts to ./javascripts"
   task :compile do
-    source = "#{File.dirname(__FILE__)}/assets/javascripts/"
-    javascripts = "#{File.dirname(__FILE__)}/javascripts/"
+    begin
+      source = "#{File.dirname(__FILE__)}/assets/javascripts/"
+      javascripts = "#{File.dirname(__FILE__)}/javascripts/"
     
-    Dir.foreach(source) do |cf|
-      unless cf == '.' || cf == '..' 
-        js_compiled = CoffeeScript.compile File.read("#{source}#{cf}")
-        js = Uglifier.compile js_compiled
-        open "#{javascripts}#{cf.gsub('.coffee', '.js')}", 'w' do |f|
-          f.puts js
+      Dir.foreach(source) do |cf|
+        unless cf == '.' || cf == '..' 
+          js_compiled = CoffeeScript.compile File.read("#{source}#{cf}")
+          js = Uglifier.compile js_compiled
+          open "#{javascripts}#{cf.gsub('.coffee', '.js')}", 'w' do |f|
+            f.puts js
+          end 
         end 
-      end 
-    end
+      end
     
-    puts "All done."
+      puts "All coffescripts compiled successful!"
+    rescue => e
+      puts "Error on compilation: #{e.inspect}"
+    end
   end
 end
 
