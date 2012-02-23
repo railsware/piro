@@ -340,13 +340,6 @@ root.PivotalRocketBackground =
           projects = allprojects.projects.project if allprojects.projects? && allprojects.projects.project?
           projects = [projects] if projects.constructor != Array
           PivotalRocketStorage.set_projects(pivotal_account, projects)
-          # activities
-          #from_date = new Date(new Date() - (1000 * 60 * 60 * 24)) # day ago
-          #PivotalRocketBackground.pivotal_api_lib.get_activities
-          #  from_date: from_date
-          # success: (data, textStatus, jqXHR) ->
-          #    activities = XML2JSON.parse(data, true)
-          #    console.debug activities
           # projects
           PivotalRocketBackground.tmp_counter = projects.length * 2
           fcallback_counter = -> 
@@ -553,8 +546,6 @@ root.PivotalRocketBackground =
         success: (data, textStatus, jqXHR) ->
           account = XML2JSON.parse(data, true)
           account = account.person if account.person?
-          company_name = PivotalRocketBackground.popup.$('#loginCompanyName').val()
-          account.company_name = company_name if company_name.length > 0
           PivotalRocketBackground.account = PivotalRocketBackground.save_account(account)
           PivotalRocketBackground.initial_sync(PivotalRocketBackground.account)
           PivotalRocketBackground.init_popup()

@@ -1,12 +1,12 @@
 {
-  "name": "Pivotal Rocket",
+  "name": "PiRo",
   "version": "0.1.0",
   "default_locale": "en",
   "description": "__MSG_app_description__",
   "background_page": "background.html",
   "options_page": "options.html",
   "browser_action": {
-    "default_title": "Pivotal Rocket",
+    "default_title": "PiRo",
     "default_icon": "images/icon.png",
     "popup": "popup.html?popup"
   },

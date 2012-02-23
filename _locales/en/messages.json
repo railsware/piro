@@ -1,6 +1,6 @@
 {
   "app_description": {
-    "message": "Pivotal Rocket is your rocket for Pivotal Tracker",
+    "message": "PiRo is your Rocket for PivotalTracker account(s)",
     "description": "The string we defined description for app."
   },
   "current_stories_tab": {
