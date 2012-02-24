@@ -334,3 +334,7 @@ Vasiliy saw and decided to leave it as is for now :) */
 .tasks_list.completed li.uncompleted, .tasks_list.uncompleted li.completed{
   display: none;
 }
+
+#loginPage {
+  display: none;
+}
