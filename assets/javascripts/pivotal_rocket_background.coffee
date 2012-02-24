@@ -132,8 +132,10 @@ root.PivotalRocketBackground =
     # edit task
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.edit_task_link", (event) =>
       $(event.target).parents('li.task_block').addClass('editing')
+      return false
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.cancel_task_link", (event) =>
       $(event.target).parents('li.task_block').removeClass('editing')
+      return false
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "input.edit_task_button", (event) =>
       PivotalRocketBackground.edit_task_in_story($(event.target))
     PivotalRocketBackground.popup.$('#storyInfo').on "keydown", "input.edit_task_text", (event) =>
@@ -141,9 +143,26 @@ root.PivotalRocketBackground =
     # delete task
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.delete_task_link", (event) =>
       PivotalRocketBackground.delete_task_in_story($(event.target))
+      return false
     # change task in story
     PivotalRocketBackground.popup.$('#storyInfo').on "change", "input.task_checkbox", (event) =>
       PivotalRocketBackground.change_task_status($(event.target))
+    # filter tasks in story
+    PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.filter_all_tasks", (event) =>
+      PivotalRocketBackground.popup.$('#storyInfo').find('a.filter_tasks').removeClass('active')
+      $(event.target).addClass('active')
+      PivotalRocketBackground.popup.$('#storyInfo').find('ul.tasks_list').removeClass('completed uncompleted')
+      return false
+    PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.filter_completed_tasks", (event) =>
+      PivotalRocketBackground.popup.$('#storyInfo').find('a.filter_tasks').removeClass('active')
+      $(event.target).addClass('active')
+      PivotalRocketBackground.popup.$('#storyInfo').find('ul.tasks_list').removeClass('completed uncompleted').addClass('completed')
+      return false
+    PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.filter_uncompleted_tasks", (event) =>
+      PivotalRocketBackground.popup.$('#storyInfo').find('a.filter_tasks').removeClass('active')
+      $(event.target).addClass('active')
+      PivotalRocketBackground.popup.$('#storyInfo').find('ul.tasks_list').removeClass('completed uncompleted').addClass('uncompleted')
+      return false
     # click on links in story description
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.desc_link", (event) =>
       chrome.tabs.create

@@ -326,3 +326,11 @@ Vasiliy saw and decided to leave it as is for now :) */
 .task_block.editing .edit, .task_block.loading .loader {
   display:block;
 }
+
+.filter_tasks.active {
+  color: #000;
+}
+
+.tasks_list.completed li.uncompleted, .tasks_list.uncompleted li.completed{
+  display: none;
+}
