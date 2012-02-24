@@ -9,6 +9,7 @@ root.PivotalRocketBackground =
   is_loading: false
   # tmp variables
   tmp_counter: 0
+  tmp_action_counter: 0
   # updater timer
   update_timer: null
   # pregenerated templates list
@@ -299,6 +300,41 @@ root.PivotalRocketBackground =
       indicator : '<img src="images/spinner3.gif" alt="loading..." title="loading..." />'
       style   : 'editable-textarea'
       event   : 'dblclick'
+    # init tasks sorting
+    PivotalRocketBackground.popup.$('#storyInfo').find("ul.tasks_list").sortable
+      handle: 'span.sort_task'
+      axis: 'y'
+      placeholder: 'ui-state-highlight'
+      update: (event) ->
+        objects = $(event.target).parents("ul.tasks_list").find("input.task_checkbox")
+        story_id = objects.data('storyId')
+        project_id = objects.data('projectId')
+        selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
+        object_ids = []
+        objects.each (index) ->
+          object_ids.push($(this).data('taskId'))
+        if object_ids.length > 0
+          PivotalRocketBackground.tmp_action_counter = object_ids.length
+          pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
+          for task_id, key in object_ids
+            pivotal_lib.update_task
+              project_id: project_id
+              story_id: story_id
+              task_id: task_id
+              data:
+                task:
+                  position: (parseInt(key) + 1)
+              complete: (jqXHR, textStatus) ->
+                PivotalRocketBackground.tmp_action_counter--
+                if PivotalRocketBackground.tmp_action_counter <= 0
+                  pivotal_lib.get_story
+                    project_id: story.project_id
+                    story_id: story.id
+                    success: (data, textStatus, jqXHR) ->
+                      PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
+                    error: (jqXHR, textStatus, errorThrown) ->
+                      PivotalRocketBackground.init_list_stories()
+    .disableSelection()
   # spinner for update stories
   init_spinner: ->
     PivotalRocketBackground.init_icon_status()

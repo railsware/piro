@@ -239,10 +239,11 @@
     <!-- tasks -->
     <h2 class="mbs mtm">Tasks</h2>
     {{#has_tasks}}
-      <ul class="list tasks">
+      <ul class="list tasks tasks_list">
         {{#tasks}}
           <li class="pvs task_block">
             <div class="main">
+              <span class="sort_task">sort</span>
               <label class="outer block">
                 <span class="unit"><input class="task_checkbox" type="checkbox" data-task-id="{{id}}" data-story-id="{{story_id}}" data-project-id="{{project_id}}" {{#complete}}checked="checked"{{/complete}} /></span>
                 <span class="mlm block">{{description}}</span>
