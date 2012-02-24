@@ -19,7 +19,7 @@ namespace :pack do
     begin
       source = "#{File.dirname(__FILE__)}/assets/javascripts/"
       javascripts = "#{File.dirname(__FILE__)}/javascripts/"
-    
+  
       Dir.foreach(source) do |cf|
         unless cf == '.' || cf == '..' 
           js_compiled = CoffeeScript.compile File.read("#{source}#{cf}")
@@ -29,10 +29,11 @@ namespace :pack do
           end 
         end 
       end
-    
+  
       puts "All coffescripts compiled successful!"
     rescue => e
-      puts "Error on compilation: #{e.inspect}"
+      puts "Compilation error: #{e.inspect}"
+      raise e
     end
   end
 end

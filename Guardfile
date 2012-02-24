@@ -4,7 +4,11 @@
 guard :shell do
   watch(%r{^assets/javascripts/(.+)\.coffee$}) do
     msg = `bundle exec rake`
-    n msg, 'PiRo'
+    if $?.success?
+      Notifier.notify(msg, :title => 'PiRo', :image => :success, :priority => -2)
+    else
+      Notifier.notify(msg, :title => 'PiRo', :image => :failed, :priority => 2)
+    end
     "-> #{msg}"
   end
 end

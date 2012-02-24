@@ -214,18 +214,37 @@ root.PivotalRocketBackground =
         descr_object = PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description')
         descr_object.html(descr_object.html().replace(exp,"<a class='desc_link' href='$1'>$1</a>"))
       # init story bindings
-      PivotalRocketBackground.bindings_story_info()
+      PivotalRocketBackground.bindings_story_info(story)
       # init clippy
       chrome.extension.sendRequest
         clippy_for_story:
           id: story.id
           url: story.url
   # init show bindings for story
-  bindings_story_info: ->
+  bindings_story_info: (story) ->
     # story title
     PivotalRocketBackground.popup.$('#storyInfo').find('h1.story_title').editable (value, settings) ->
-      console.log value
-      return value
+      selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
+      pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
+      pivotal_lib.update_story
+        project_id: story.project_id
+        story_id: story.id
+        data:
+          story:
+            name: value
+        success: (data, textStatus, jqXHR) ->
+          pivotal_lib.get_story
+            project_id: story.project_id
+            story_id: story.id
+            success: (data, textStatus, jqXHR) ->
+              PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
+            error: (jqXHR, textStatus, errorThrown) ->
+              PivotalRocketBackground.init_list_stories()
+              PivotalRocketBackground.popup.$('#storyInfo').find('h1.story_title').text(value)
+        error: (jqXHR, textStatus, errorThrown) ->
+          PivotalRocketBackground.init_list_stories()
+          PivotalRocketBackground.popup.$('#storyInfo').find('h1.story_title').text(value)
+      return '<img src="images/spinner3.gif" alt="loading..." title="loading..." />'
     ,
       type    : 'text'
       tooltip : 'Click to edit...'
@@ -233,8 +252,27 @@ root.PivotalRocketBackground =
       style   : 'editable-input'
     # story description
     PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description').editable (value, settings) ->
-      console.log value
-      return value
+      selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
+      pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
+      pivotal_lib.update_story
+        project_id: story.project_id
+        story_id: story.id
+        data:
+          story:
+            description: value
+        success: (data, textStatus, jqXHR) ->
+          pivotal_lib.get_story
+            project_id: story.project_id
+            story_id: story.id
+            success: (data, textStatus, jqXHR) ->
+              PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
+            error: (jqXHR, textStatus, errorThrown) ->
+              PivotalRocketBackground.init_list_stories()
+              PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description').text(value)
+        error: (jqXHR, textStatus, errorThrown) ->
+          PivotalRocketBackground.init_list_stories()
+          PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description').text(value)
+      return '<img src="images/spinner3.gif" alt="loading..." title="loading..." />'
     ,
       type    : 'textarea'
       submit  : 'OK'
