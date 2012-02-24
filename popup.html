@@ -224,9 +224,7 @@
         </div>
       </div>
     </div>
-    
-    
-    
+
     
     <h1 class="mtxs pts mbxs story_title {{story_type}}-icon-title">{{name}}</h1>
     <div class="mbm">
@@ -238,22 +236,40 @@
     {{#labels_html}}
       <h2 class="mbs">Labels: {{& text}}</h2>
     {{/labels_html}}
+    <!-- tasks -->
+    <h2 class="mbs mtm">Tasks</h2>
     {{#has_tasks}}
-      <h2 class="mbs mtm">Tasks</h2>
       <ul class="list tasks">
         {{#tasks}}
-          <li class="pvs">
-            <label class="outer block">
-              <span class="unit"><input class="task_checkbox" type="checkbox" data-task-id="{{id}}" data-story-id="{{story_id}}" data-project-id="{{project_id}}" {{#complete}}checked="checked"{{/complete}} /></span>
-              <span class="mlm block">{{description}}</span>
-            </label>
+          <li class="pvs task_block">
+            <div class="main">
+              <label class="outer block">
+                <span class="unit"><input class="task_checkbox" type="checkbox" data-task-id="{{id}}" data-story-id="{{story_id}}" data-project-id="{{project_id}}" {{#complete}}checked="checked"{{/complete}} /></span>
+                <span class="mlm block">{{description}}</span>
+              </label>
+              <a href="#" class="edit_task_link">Edit</a>
+              <a href="#" class="delete_task_link">Delete</a>
+            </div>
+            <div class="edit">
+              <input class="edit_task_text" type="text" value="{{description}}" />
+              <input class="edit_task_button" type="button" value="Edit" />
+              <a href="#" class="cancel_task_link">Cancel</a>
+            </div>
+            <div class="loader">
+              <img src="images/spinner3.gif" alt="loading..." title="loading..." />
+            </div>
           </li>
         {{/tasks}}
       </ul>
     {{/has_tasks}}
-    <div class="add_task_block">
-      <input class="add_task_text" type="text" />
-      <input class="add_task_button" type="button" value="Add" />
+    <div class="add_task_block" data-story-id="{{id}}" data-project-id="{{project_id}}">
+      <div class="main">
+        <input class="add_task_text" type="text" />
+        <input class="add_task_button" type="button" value="Add" />
+      </div>
+      <div class="loader">
+        <img src="images/spinner3.gif" alt="loading..." title="loading..." />
+      </div>
     </div>
     {{#has_attachments}}
       <h2 class="mbs mtm">Attachments</h2>

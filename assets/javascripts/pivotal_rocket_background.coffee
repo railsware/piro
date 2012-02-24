@@ -123,6 +123,23 @@ root.PivotalRocketBackground =
     # change estimate of story
     PivotalRocketBackground.popup.$('#storyInfo').on "change", "select.change_story_estimate", (event) =>
       PivotalRocketBackground.change_story_estimate($(event.target))
+    # add task in story
+    PivotalRocketBackground.popup.$('#storyInfo').on "click", "input.add_task_button", (event) =>
+      PivotalRocketBackground.add_task_to_story($(event.target))
+    PivotalRocketBackground.popup.$('#storyInfo').on "keydown", "input.add_task_text", (event) =>
+      PivotalRocketBackground.add_task_to_story($(event.target)) if 13 == event.keyCode
+    # edit task
+    PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.edit_task_link", (event) =>
+      $(event.target).parents('li.task_block').addClass('editing')
+    PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.cancel_task_link", (event) =>
+      $(event.target).parents('li.task_block').removeClass('editing')
+    PivotalRocketBackground.popup.$('#storyInfo').on "click", "input.edit_task_button", (event) =>
+      PivotalRocketBackground.edit_task_in_story($(event.target))
+    PivotalRocketBackground.popup.$('#storyInfo').on "keydown", "input.edit_task_text", (event) =>
+      PivotalRocketBackground.edit_task_in_story($(event.target)) if 13 == event.keyCode
+    # delete task
+    PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.delete_task_link", (event) =>
+      PivotalRocketBackground.delete_task_in_story($(event.target))
     # change task in story
     PivotalRocketBackground.popup.$('#storyInfo').on "change", "input.task_checkbox", (event) =>
       PivotalRocketBackground.change_task_status($(event.target))
@@ -247,9 +264,10 @@ root.PivotalRocketBackground =
       return '<img src="images/spinner3.gif" alt="loading..." title="loading..." />'
     ,
       type    : 'text'
-      tooltip : 'Click to edit...'
+      tooltip : 'Double click to edit...'
       indicator : '<img src="images/spinner3.gif" alt="loading..." title="loading..." />'
       style   : 'editable-input'
+      event   : 'dblclick'
     # story description
     PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description').editable (value, settings) ->
       selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
@@ -277,9 +295,10 @@ root.PivotalRocketBackground =
       type    : 'textarea'
       submit  : 'OK'
       cancel  : 'Cancel'
-      tooltip : 'Click to edit...'
+      tooltip : 'Double click to edit...'
       indicator : '<img src="images/spinner3.gif" alt="loading..." title="loading..." />'
       style   : 'editable-textarea'
+      event   : 'dblclick'
   # spinner for update stories
   init_spinner: ->
     PivotalRocketBackground.init_icon_status()
@@ -495,6 +514,96 @@ root.PivotalRocketBackground =
             PivotalRocketBackground.popup.$('#storyInfo')
             .find("select.change_story_estimate[data-story-id=#{story_id}]")
             .val(story.estimate).parents('div.change_story_box').removeClass('loading')
+  # add task to story
+  add_task_to_story: (object) ->
+    if PivotalRocketBackground.account? && PivotalRocketBackground.popup?
+      object_parent = object.parents('div.add_task_block')
+      selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
+      story_id = object_parent.data('storyId')
+      project_id = object_parent.data('projectId')
+      description = object.parents('div.add_task_block').find('input.add_task_text').val()
+      if story_id? && project_id? && description? && description.length > 0
+        pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
+        pivotal_lib.add_task
+          project_id: project_id
+          story_id: story_id
+          data:
+            task:
+              description: description
+              complete: false
+          beforeSend: (jqXHR, settings) ->
+            object_parent.addClass('loading')
+          success: (data, textStatus, jqXHR) ->
+            pivotal_lib.get_story
+              project_id: project_id
+              story_id: story_id
+              error: (jqXHR, textStatus, errorThrown) ->
+                object_parent.removeClass('loading')
+              success: (data, textStatus, jqXHR) ->
+                PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
+          error: (jqXHR, textStatus, errorThrown) ->
+            PivotalRocketBackground.init_list_stories()
+            object_parent.removeClass('loading')
+  # edit task in story
+  edit_task_in_story: (object) ->
+    if PivotalRocketBackground.account? && PivotalRocketBackground.popup?
+      object_parent = object.parents('li.task_block')
+      selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
+      object_data = object_parent.find('input.task_checkbox')
+      task_id = object_data.data('taskId')
+      story_id = object_data.data('storyId')
+      project_id = object_data.data('projectId')
+      description = object_parent.find('input.edit_task_text').val()
+      if task_id? && story_id? && project_id? && description? && description.length > 0
+        pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
+        pivotal_lib.update_task
+          project_id: project_id
+          story_id: story_id
+          task_id: task_id
+          data:
+            task:
+              description: description
+          beforeSend: (jqXHR, settings) ->
+            object_parent.removeClass('editing').addClass('loading')
+          success: (data, textStatus, jqXHR) ->
+            pivotal_lib.get_story
+              project_id: project_id
+              story_id: story_id
+              error: (jqXHR, textStatus, errorThrown) ->
+                object_parent.removeClass('loading')
+              success: (data, textStatus, jqXHR) ->
+                PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
+          error: (jqXHR, textStatus, errorThrown) ->
+            PivotalRocketBackground.init_list_stories()
+            object_parent.removeClass('loading')
+  # edit task in story
+  delete_task_in_story: (object) ->
+    if PivotalRocketBackground.account? && PivotalRocketBackground.popup?
+      object_parent = object.parents('li.task_block')
+      selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
+      object_data = object_parent.find('input.task_checkbox')
+      task_id = object_data.data('taskId')
+      story_id = object_data.data('storyId')
+      project_id = object_data.data('projectId')
+      if task_id? && story_id? && project_id?
+        pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
+        pivotal_lib.delete_task
+          project_id: project_id
+          story_id: story_id
+          task_id: task_id
+          beforeSend: (jqXHR, settings) ->
+            object_parent.removeClass('editing').addClass('loading')
+          success: (data, textStatus, jqXHR) ->
+            pivotal_lib.get_story
+              project_id: project_id
+              story_id: story_id
+              error: (jqXHR, textStatus, errorThrown) ->
+                object_parent.removeClass('loading')
+              success: (data, textStatus, jqXHR) ->
+                PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
+          error: (jqXHR, textStatus, errorThrown) ->
+            PivotalRocketBackground.init_list_stories()
+            object_parent.removeClass('loading')
   # change task in story
   change_task_status: (object) ->
     if PivotalRocketBackground.account? && PivotalRocketBackground.popup?
@@ -503,22 +612,23 @@ root.PivotalRocketBackground =
       task_id = object.data('taskId')
       story_id = object.data('storyId')
       project_id = object.data('projectId')
-      pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
-      pivotal_lib.update_task
-        project_id: project_id
-        story_id: story_id
-        task_id: task_id
-        data:
-          task:
-            complete: completed
-        success: (data, textStatus, jqXHR) ->
-          pivotal_lib.get_story
-            project_id: project_id
-            story_id: story_id
-            success: (data, textStatus, jqXHR) ->
-              PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
-        error: (jqXHR, textStatus, errorThrown) ->
-          PivotalRocketBackground.init_list_stories()
+      if task_id? && story_id? && project_id?
+        pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
+        pivotal_lib.update_task
+          project_id: project_id
+          story_id: story_id
+          task_id: task_id
+          data:
+            task:
+              complete: completed
+          success: (data, textStatus, jqXHR) ->
+            pivotal_lib.get_story
+              project_id: project_id
+              story_id: story_id
+              success: (data, textStatus, jqXHR) ->
+                PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
+          error: (jqXHR, textStatus, errorThrown) ->
+            PivotalRocketBackground.init_list_stories()
       
   # story success chaged
   story_changed_with_data: (data, requester = false) ->

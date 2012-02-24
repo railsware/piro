@@ -91,6 +91,23 @@ class root.PivotalApiLib
       error: params.error
       beforeSend: params.beforeSend
       complete: params.complete
+  
+  add_task: (params) =>
+    $.ajax
+      #setup
+      timeout: 40000
+      crossDomain: true
+      dataType: 'xml'
+      headers:
+        "X-TrackerToken": @account.token.guid
+      # else
+      url: "#{this.baseUrl}/projects/#{params.project_id}/stories/#{params.story_id}/tasks"
+      type: "POST"
+      data: params.data
+      success: params.success
+      error: params.error
+      beforeSend: params.beforeSend
+      complete: params.complete
       
   update_task: (params) =>
     $.ajax
@@ -103,6 +120,23 @@ class root.PivotalApiLib
       # else
       url: "#{this.baseUrl}/projects/#{params.project_id}/stories/#{params.story_id}/tasks/#{params.task_id}"
       type: "PUT"
+      data: params.data
+      success: params.success
+      error: params.error
+      beforeSend: params.beforeSend
+      complete: params.complete
+
+  delete_task: (params) =>
+    $.ajax
+      #setup
+      timeout: 40000
+      crossDomain: true
+      dataType: 'xml'
+      headers:
+        "X-TrackerToken": @account.token.guid
+      # else
+      url: "#{this.baseUrl}/projects/#{params.project_id}/stories/#{params.story_id}/tasks/#{params.task_id}"
+      type: "DELETE"
       data: params.data
       success: params.success
       error: params.error

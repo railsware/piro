@@ -310,3 +310,19 @@ Vasiliy saw and decided to leave it as is for now :) */
 .story_description {
   white-space: pre;
 }
+
+.add_task_block .loader, .add_task_block.loading .main {
+  display:none;
+}
+
+.add_task_block.loading .loader {
+  display:block;
+}
+
+.task_block .edit, .task_block.editing .main, .task_block .loader, .task_block.loading .main {
+  display:none;
+}
+
+.task_block.editing .edit, .task_block.loading .loader {
+  display:block;
+}
