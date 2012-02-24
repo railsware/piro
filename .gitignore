@@ -4,7 +4,6 @@
 .config
 .yardoc
 .project
-Gemfile.lock
 InstalledFiles
 _yardoc
 coverage

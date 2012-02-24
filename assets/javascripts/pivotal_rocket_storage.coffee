@@ -11,12 +11,28 @@ root.PivotalRocketStorage =
     json_data
   delete_by_key: (key) ->
     window.localStorage.removeItem(key)
+    
+  get_user_options: ->
+    PivotalRocketStorage.get("user_options") || {user_role: "owner", tasks_filter: null}
+
+  set_user_options: (option) ->
+    PivotalRocketStorage.set("user_options", option)
   
   get_role: ->
-    PivotalRocketStorage.get("user_role") || "owner"
+    PivotalRocketStorage.get_user_options().user_role
     
   set_role: (value) ->
-    PivotalRocketStorage.set("user_role", value)
+    user_options = PivotalRocketStorage.get_user_options()
+    user_options.user_role = value
+    PivotalRocketStorage.set_user_options(user_options)
+
+  get_tasks_filter: ->
+    PivotalRocketStorage.get_user_options().tasks_filter
+
+  set_tasks_filter: (value) ->
+    user_options = PivotalRocketStorage.get_user_options()
+    user_options.tasks_filter = value
+    PivotalRocketStorage.set_user_options(user_options)
     
   get_accounts: ->
     PivotalRocketStorage.get("accounts") || []

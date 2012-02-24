@@ -244,6 +244,11 @@ root.PivotalRocketBackground =
         exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig
         descr_object = PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description')
         descr_object.html(descr_object.html().replace(exp,"<a class='desc_link' href='$1'>$1</a>"))
+      # set tasks filter
+      if PivotalRocketStorage.get_tasks_filter()?
+        PivotalRocketBackground.popup.$('#storyInfo').find('a.filter_tasks').removeClass('active')
+        PivotalRocketBackground.popup.$('#storyInfo').find("a.filter_#{PivotalRocketStorage.get_tasks_filter()}_tasks")
+        .addClass('active').trigger('click')
       # init story bindings
       PivotalRocketBackground.bindings_story_info(story)
       # init clippy
@@ -661,6 +666,7 @@ root.PivotalRocketBackground =
       tasks_list = PivotalRocketBackground.popup.$('#storyInfo').find('ul.tasks_list')
       tasks_list.removeClass('completed uncompleted')
       tasks_list.addClass(state) if state?
+      PivotalRocketStorage.set_tasks_filter(state)
   # change task in story
   change_task_status: (object) ->
     if PivotalRocketBackground.account? && PivotalRocketBackground.popup?
