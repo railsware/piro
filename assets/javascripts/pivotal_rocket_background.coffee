@@ -240,10 +240,7 @@ root.PivotalRocketBackground =
       # select selector for story estimate
       PivotalRocketBackground.popup.$('#storyInfo').find('select.change_story_estimate').val(story.estimate)
       # story description
-      if PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description').length > 0
-        exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig
-        descr_object = PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description')
-        descr_object.html(descr_object.html().replace(exp,"<a class='desc_link' href='$1'>$1</a>"))
+      PivotalRocketBackground.set_description_links()
       # set tasks filter
       if PivotalRocketStorage.get_tasks_filter()?
         PivotalRocketBackground.popup.$('#storyInfo').find('a.filter_tasks').removeClass('active')
@@ -256,6 +253,12 @@ root.PivotalRocketBackground =
         clippy_for_story:
           id: story.id
           url: story.url
+  # set links in description
+  set_description_links: ->
+    if PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description').length > 0
+      exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig
+      descr_object = PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description')
+      descr_object.html(descr_object.html().replace(exp,"<a class='desc_link' href='$1'>$1</a>"))
   # init show bindings for story
   bindings_story_info: (story) ->
     # story title
@@ -302,13 +305,17 @@ root.PivotalRocketBackground =
             project_id: story.project_id
             story_id: story.id
             success: (data, textStatus, jqXHR) ->
+              PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description').text(value).data({description: value})
+              PivotalRocketBackground.set_description_links()
               PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
             error: (jqXHR, textStatus, errorThrown) ->
               PivotalRocketBackground.init_list_stories()
-              PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description').text(value)
+              PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description').text(value).data({description: value})
+              PivotalRocketBackground.set_description_links()
         error: (jqXHR, textStatus, errorThrown) ->
           PivotalRocketBackground.init_list_stories()
-          PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description').text(value)
+          PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description').text(value).data({description: value})
+          PivotalRocketBackground.set_description_links()
       return '<img src="images/spinner3.gif" alt="loading..." title="loading..." />'
     ,
       type    : 'textarea'
@@ -318,6 +325,8 @@ root.PivotalRocketBackground =
       indicator : '<img src="images/spinner3.gif" alt="loading..." title="loading..." />'
       style   : 'editable-textarea'
       event   : 'dblclick'
+      data    : (value, settings) ->
+        return PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description').data('description')
     # init tasks sorting
     PivotalRocketBackground.popup.$('#storyInfo').find("ul.tasks_list").sortable
       handle: 'span.sort_task'
