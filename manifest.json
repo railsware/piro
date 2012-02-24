@@ -21,6 +21,7 @@
     "128": "images/icon128.png"
   },
   "permissions": [
+    "background",
     "tabs",
     "notifications",
     "unlimitedStorage",
