@@ -149,19 +149,13 @@ root.PivotalRocketBackground =
       PivotalRocketBackground.change_task_status($(event.target))
     # filter tasks in story
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.filter_all_tasks", (event) =>
-      PivotalRocketBackground.popup.$('#storyInfo').find('a.filter_tasks').removeClass('active')
-      $(event.target).addClass('active')
-      PivotalRocketBackground.popup.$('#storyInfo').find('ul.tasks_list').removeClass('completed uncompleted')
+      PivotalRocketBackground.filter_tasks_by_state($(event.target))
       return false
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.filter_completed_tasks", (event) =>
-      PivotalRocketBackground.popup.$('#storyInfo').find('a.filter_tasks').removeClass('active')
-      $(event.target).addClass('active')
-      PivotalRocketBackground.popup.$('#storyInfo').find('ul.tasks_list').removeClass('completed uncompleted').addClass('completed')
+      PivotalRocketBackground.filter_tasks_by_state($(event.target), 'completed')
       return false
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.filter_uncompleted_tasks", (event) =>
-      PivotalRocketBackground.popup.$('#storyInfo').find('a.filter_tasks').removeClass('active')
-      $(event.target).addClass('active')
-      PivotalRocketBackground.popup.$('#storyInfo').find('ul.tasks_list').removeClass('completed uncompleted').addClass('uncompleted')
+      PivotalRocketBackground.filter_tasks_by_state($(event.target), 'uncompleted')
       return false
     # click on links in story description
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.desc_link", (event) =>
@@ -659,6 +653,14 @@ root.PivotalRocketBackground =
           error: (jqXHR, textStatus, errorThrown) ->
             PivotalRocketBackground.init_list_stories()
             object_parent.removeClass('loading')
+  # filter tasks by state
+  filter_tasks_by_state: (object, state = null) ->
+    if PivotalRocketBackground.popup?
+      PivotalRocketBackground.popup.$('#storyInfo').find('a.filter_tasks').removeClass('active')
+      object.addClass('active')
+      tasks_list = PivotalRocketBackground.popup.$('#storyInfo').find('ul.tasks_list')
+      tasks_list.removeClass('completed uncompleted')
+      tasks_list.addClass(state) if state?
   # change task in story
   change_task_status: (object) ->
     if PivotalRocketBackground.account? && PivotalRocketBackground.popup?
