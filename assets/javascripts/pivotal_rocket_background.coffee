@@ -135,7 +135,9 @@ root.PivotalRocketBackground =
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "input.add_task_button", (event) =>
       PivotalRocketBackground.add_task_to_story($(event.target))
     PivotalRocketBackground.popup.$('#storyInfo').on "keydown", "input.add_task_text", (event) =>
-      PivotalRocketBackground.add_task_to_story($(event.target)) if 13 == event.keyCode
+      if (((event.metaKey? && event.metaKey is true) || (event.ctrlKey? && event.ctrlKey is true)) && event.keyCode? && 83 == event.keyCode) || (13 == event.keyCode)
+        event.preventDefault()
+        PivotalRocketBackground.add_task_to_story($(event.target))
     # edit task
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.edit_task_link", (event) =>
       $(event.target).parents('li.task_block').addClass('editing')
@@ -146,7 +148,9 @@ root.PivotalRocketBackground =
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "input.edit_task_button", (event) =>
       PivotalRocketBackground.edit_task_in_story($(event.target))
     PivotalRocketBackground.popup.$('#storyInfo').on "keydown", "input.edit_task_text", (event) =>
-      PivotalRocketBackground.edit_task_in_story($(event.target)) if 13 == event.keyCode
+      if (((event.metaKey? && event.metaKey is true) || (event.ctrlKey? && event.ctrlKey is true)) && event.keyCode? && 83 == event.keyCode) || (13 == event.keyCode)
+        event.preventDefault()
+        PivotalRocketBackground.edit_task_in_story($(event.target))
     # delete task
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.delete_task_link", (event) =>
       PivotalRocketBackground.delete_task_in_story($(event.target))
