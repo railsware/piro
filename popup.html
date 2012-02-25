@@ -258,7 +258,7 @@
               <a href="#" class="delete_task_link">Delete</a>
             </div>
             <div class="edit">
-              <input class="edit_task_text" type="text" value="{{description}}" />
+              <input class="edit_task_text" autocomplete="off" type="text" value="{{description}}" />
               <input class="edit_task_button" type="button" value="Edit" />
               <a href="#" class="cancel_task_link">Cancel</a>
             </div>
@@ -269,9 +269,9 @@
         {{/tasks}}
       </ul>
     {{/has_tasks}}
-    <div class="add_task_block" data-story-id="{{id}}" data-project-id="{{project_id}}">
+    <div class="add_task_block action_block" data-story-id="{{id}}" data-project-id="{{project_id}}">
       <div class="main">
-        <input class="add_task_text" type="text" />
+        <input class="add_task_text" autocomplete="off" type="text" />
         <input class="add_task_button" type="button" value="Add" />
       </div>
       <div class="loader">
@@ -294,17 +294,38 @@
         {{/attachments}}
       </ul>
     {{/has_attachments}}
+    <h2 class="mbs mtm">Comments</h2>
     {{#has_comments}}
-      <h2 class="mbs mtm">Comments</h2>
-      <ul class="mbm list comments">
+      <ul class="mbm list comments comments_list" data-story-id="{{id}}" data-project-id="{{project_id}}">
         {{#comments}}
-          <li class="pvs">
-            <strong>{{author.person.name}} </strong>
-            <div class="neutral">{{text}}</div>
+          <li class="pvs comment_block action_block">
+            <div class="main fine_delete">
+              <strong>{{author.person.name}} </strong>
+              <div class="neutral">{{text}}</div>
+              <div class="fine_delete_main">
+                <a class="fine_delete_link" href="#">Delete</a>
+              </div>
+              <div class="fine_delete_confirm">
+                <a class="delete_comment_link" href="#" data-id="{{id}}">Confirm Delete</a>
+                <a class="fine_delete_cancel" href="#">Cancel</a>
+              </div>
+            </div>
+            <div class="loader">
+              <img src="images/spinner3.gif" alt="loading..." title="loading..." />
+            </div>
           </li>
         {{/comments}}
       </ul>
     {{/has_comments}}
+    <div class="add_comment_block action_block" data-story-id="{{id}}" data-project-id="{{project_id}}">
+      <div class="main">
+        <textarea class="add_comment_text" style="width:100%;height:40px;" autocomplete="off"></textarea>
+        <input class="add_comment_button" type="button" value="Add" />
+      </div>
+      <div class="loader">
+        <img src="images/spinner3.gif" alt="loading..." title="loading..." />
+      </div>
+    </div>
   </script>
   
   <!-- vendors scripts -->

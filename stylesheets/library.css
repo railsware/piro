@@ -311,11 +311,11 @@ Vasiliy saw and decided to leave it as is for now :) */
   white-space: pre;
 }
 
-.add_task_block .loader, .add_task_block.loading .main {
+.action_block .loader, .action_block.loading .main {
   display:none;
 }
 
-.add_task_block.loading .loader {
+.action_block.loading .loader {
   display:block;
 }
 
@@ -337,4 +337,12 @@ Vasiliy saw and decided to leave it as is for now :) */
 
 #loginPage {
   display: none;
+}
+
+.fine_delete .fine_delete_confirm, .fine_delete.delete_confirm .fine_delete_main {
+  display: none;
+}
+
+.fine_delete.delete_confirm .fine_delete_confirm {
+  display: block;
 }

@@ -142,6 +142,40 @@ class root.PivotalApiLib
       error: params.error
       beforeSend: params.beforeSend
       complete: params.complete
+
+  add_comment: (params) =>
+    $.ajax
+      #setup
+      timeout: 40000
+      crossDomain: true
+      dataType: 'xml'
+      headers:
+        "X-TrackerToken": @account.token.guid
+      # else
+      url: "#{this.baseUrl}/projects/#{params.project_id}/stories/#{params.story_id}/comments"
+      type: "POST"
+      data: params.data
+      success: params.success
+      error: params.error
+      beforeSend: params.beforeSend
+      complete: params.complete
+
+  delete_comment: (params) =>
+    $.ajax
+      #setup
+      timeout: 40000
+      crossDomain: true
+      dataType: 'xml'
+      headers:
+        "X-TrackerToken": @account.token.guid
+      # else
+      url: "#{this.baseUrl}/projects/#{params.project_id}/stories/#{params.story_id}/comments/#{params.comment_id}"
+      type: "DELETE"
+      data: params.data
+      success: params.success
+      error: params.error
+      beforeSend: params.beforeSend
+      complete: params.complete
         
   get_activities: (params) =>
     formated_date = this.formated_date(params.from_date)

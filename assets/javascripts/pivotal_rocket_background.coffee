@@ -66,6 +66,13 @@ root.PivotalRocketBackground =
     # tabs
     PivotalRocketBackground.popup.$('#ownerStories').tabs()
     PivotalRocketBackground.popup.$('#requesterStories').tabs()
+    # fine delete
+    PivotalRocketBackground.popup.$("#storyInfo").on "click", "a.fine_delete_link", (event) =>
+      $(event.target).parents('.fine_delete').addClass('delete_confirm')
+      return false
+    PivotalRocketBackground.popup.$("#storyInfo").on "click", "a.fine_delete_cancel", (event) =>
+      $(event.target).parents('.fine_delete').removeClass('delete_confirm')
+      return false
     # login  
     PivotalRocketBackground.popup.$('#loginButton').click (event) =>
       PivotalRocketBackground.login_by_user()
@@ -144,7 +151,7 @@ root.PivotalRocketBackground =
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.delete_task_link", (event) =>
       PivotalRocketBackground.delete_task_in_story($(event.target))
       return false
-    # change task in story
+    # change task in story (completed/uncompleted)
     PivotalRocketBackground.popup.$('#storyInfo').on "change", "input.task_checkbox", (event) =>
       PivotalRocketBackground.change_task_status($(event.target))
     # filter tasks in story
@@ -156,6 +163,21 @@ root.PivotalRocketBackground =
       return false
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.filter_uncompleted_tasks", (event) =>
       PivotalRocketBackground.filter_tasks_by_state($(event.target), 'uncompleted')
+      return false
+    # add comment to story
+    PivotalRocketBackground.popup.$('#storyInfo').on "click", "input.add_comment_button", (event) =>
+      PivotalRocketBackground.add_comment_to_story($(event.target))
+      return false
+    PivotalRocketBackground.popup.$('#storyInfo').on "keydown", "textarea.add_comment_text", (event) =>
+      if ((event.metaKey? && event.metaKey is true) || (event.ctrlKey? && event.ctrlKey is true)) && event.keyCode? && 83 == event.keyCode
+        event.preventDefault()
+        PivotalRocketBackground.add_comment_to_story($(event.target))
+        return false
+      else
+        return true
+    # delete comment from story
+    PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.delete_comment_link", (event) =>
+      PivotalRocketBackground.delete_comment_from_story($(event.target))
       return false
     # click on links in story description
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.desc_link", (event) =>
@@ -701,7 +723,63 @@ root.PivotalRocketBackground =
                 PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
           error: (jqXHR, textStatus, errorThrown) ->
             PivotalRocketBackground.init_list_stories()
-      
+  # add comment to story
+  add_comment_to_story: (object) ->
+    if PivotalRocketBackground.account? && PivotalRocketBackground.popup?
+      selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
+      object_parent = object.parents('div.add_comment_block')
+      story_id = object_parent.data('storyId')
+      project_id = object_parent.data('projectId')
+      description = object_parent.find('textarea.add_comment_text').val()
+      if story_id? && project_id? && description? && description.length > 0
+        pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
+        pivotal_lib.add_comment
+          project_id: project_id
+          story_id: story_id
+          data:
+            comment:
+              text: description
+          beforeSend: (jqXHR, settings) ->
+            object_parent.addClass('loading')
+          success: (data, textStatus, jqXHR) ->
+            pivotal_lib.get_story
+              project_id: project_id
+              story_id: story_id
+              error: (jqXHR, textStatus, errorThrown) ->
+                object_parent.removeClass('loading')
+              success: (data, textStatus, jqXHR) ->
+                PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
+          error: (jqXHR, textStatus, errorThrown) ->
+            PivotalRocketBackground.init_list_stories()
+            object_parent.removeClass('loading')
+  # delete comment from story
+  delete_comment_from_story: (object) ->
+    if PivotalRocketBackground.account? && PivotalRocketBackground.popup?
+      selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
+      comment_id = object.data('id')
+      object_parent = object.parents('li.comment_block')
+      object_data = object.parents('ul.comments_list')
+      story_id = object_data.data('storyId')
+      project_id = object_data.data('projectId')
+      if comment_id? && story_id? && project_id?
+        pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
+        pivotal_lib.delete_comment
+          project_id: project_id
+          story_id: story_id
+          comment_id: comment_id
+          beforeSend: (jqXHR, settings) ->
+            object_parent.addClass('loading')
+          success: (data, textStatus, jqXHR) ->
+            pivotal_lib.get_story
+              project_id: project_id
+              story_id: story_id
+              error: (jqXHR, textStatus, errorThrown) ->
+                object_parent.removeClass('loading')
+              success: (data, textStatus, jqXHR) ->
+                PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
+          error: (jqXHR, textStatus, errorThrown) ->
+            PivotalRocketBackground.init_list_stories()
+            object_parent.removeClass('loading')
   # story success chaged
   story_changed_with_data: (data, requester = false) ->
     story = XML2JSON.parse(data, true)
