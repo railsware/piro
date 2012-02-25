@@ -81,7 +81,7 @@ root.PivotalRocketBackground =
     # update link
     PivotalRocketBackground.popup.$('#mainPage').on "click", "a.update_stories", (event) =>
       PivotalRocketBackground.autoupdate()      
-    # change type list
+    # change account
     PivotalRocketBackground.popup.$('#changeAccount').change (event) =>
       PivotalRocketBackground.change_account()
     # change type list
@@ -270,8 +270,9 @@ root.PivotalRocketBackground =
       PivotalRocketBackground.popup.$('#storyInfo').find('select.change_story_state').val(story.current_state)
       # select selector for story estimate
       PivotalRocketBackground.popup.$('#storyInfo').find('select.change_story_estimate').val(story.estimate)
-      # story description
+      # story description and comments
       PivotalRocketBackground.set_description_links()
+      PivotalRocketBackground.set_comments_links()
       # set tasks filter
       if PivotalRocketStorage.get_tasks_filter()?
         PivotalRocketBackground.popup.$('#storyInfo').find('a.filter_tasks').removeClass('active')
@@ -290,6 +291,13 @@ root.PivotalRocketBackground =
       exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig
       descr_object = PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description')
       descr_object.html(descr_object.html().replace(exp,"<a class='desc_link' href='$1'>$1</a>"))
+  # set links in comments
+  set_comments_links: ->
+    if PivotalRocketBackground.popup.$('#storyInfo').find('div.comment_description').length > 0
+      exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig
+      $.each PivotalRocketBackground.popup.$('#storyInfo').find('div.comment_description'), (key, object) ->
+        object = $(object)
+        object.html(object.html().replace(exp,"<a class='desc_link' href='$1'>$1</a>"))
   # init show bindings for story
   bindings_story_info: (story) ->
     # story title
