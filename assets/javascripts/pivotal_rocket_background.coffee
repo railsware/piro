@@ -138,6 +138,7 @@ root.PivotalRocketBackground =
       if (((event.metaKey? && event.metaKey is true) || (event.ctrlKey? && event.ctrlKey is true)) && event.keyCode? && 83 == event.keyCode) || (13 == event.keyCode)
         event.preventDefault()
         PivotalRocketBackground.add_task_to_story($(event.target))
+        return false
     # edit task
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.edit_task_link", (event) =>
       $(event.target).parents('li.task_block').addClass('editing')
@@ -151,6 +152,7 @@ root.PivotalRocketBackground =
       if (((event.metaKey? && event.metaKey is true) || (event.ctrlKey? && event.ctrlKey is true)) && event.keyCode? && 83 == event.keyCode) || (13 == event.keyCode)
         event.preventDefault()
         PivotalRocketBackground.edit_task_in_story($(event.target))
+        return false
     # delete task
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.delete_task_link", (event) =>
       PivotalRocketBackground.delete_task_in_story($(event.target))
@@ -177,8 +179,6 @@ root.PivotalRocketBackground =
         event.preventDefault()
         PivotalRocketBackground.add_comment_to_story($(event.target))
         return false
-      else
-        return true
     # delete comment from story
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.delete_comment_link", (event) =>
       PivotalRocketBackground.delete_comment_from_story($(event.target))
