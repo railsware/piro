@@ -251,7 +251,12 @@ root.PivotalRocketBackground =
       # attachments, tasks and comments bool
       story.has_attachments = true if story.attachments? && story.attachments.length > 0
       story.has_tasks = true if story.tasks? && story.tasks.length > 0
-      story.has_comments = true if story.comments? && story.comments.length > 0
+      if story.comments? && story.comments.length > 0
+        story.has_comments = true
+        story.comments = for comment in story.comments
+          comment.is_owner = true if comment.author? && comment.author.person? && comment.author.person.id? && 
+          parseInt(comment.author.person.id) == parseInt(PivotalRocketBackground.account.id)
+          comment
       # generate template
       block_element = PivotalRocketBackground.popup.$('#storyInfo')
       block_element.empty().html(PivotalRocketBackground.templates.story.render(story))
