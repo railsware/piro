@@ -13,7 +13,7 @@ root.PivotalRocketStorage =
     window.localStorage.removeItem(key)
     
   get_user_options: ->
-    PivotalRocketStorage.get("user_options") || {user_role: "owner", tasks_filter: null}
+    PivotalRocketStorage.get("user_options") || {user_role: "owner", tasks_filter: null, opened_task_box: false, opened_comment_box: false}
 
   set_user_options: (option) ->
     PivotalRocketStorage.set("user_options", option)
@@ -24,6 +24,14 @@ root.PivotalRocketStorage =
   set_role: (value) ->
     user_options = PivotalRocketStorage.get_user_options()
     user_options.user_role = value
+    PivotalRocketStorage.set_user_options(user_options)
+    
+  get_opened_by_type: (key) ->
+    PivotalRocketStorage.get_user_options()[key]
+
+  set_opened_by_type: (key, value) ->
+    user_options = PivotalRocketStorage.get_user_options()
+    user_options[key] = value
     PivotalRocketStorage.set_user_options(user_options)
 
   get_tasks_filter: ->

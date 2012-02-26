@@ -68,10 +68,20 @@ root.PivotalRocketBackground =
     PivotalRocketBackground.popup.$('#requesterStories').tabs()
     # fine add block
     PivotalRocketBackground.popup.$("#storyInfo").on "click", "a.open_add_block", (event) =>
-      $(event.target).parents('.action_block').removeClass('loading').addClass('adding')
+      box = $(event.target).parents('.action_block')
+      if box.hasClass('add_task_block')
+        PivotalRocketStorage.set_opened_by_type('opened_task_box', true)
+      else if box.hasClass('add_comment_block')
+        PivotalRocketStorage.set_opened_by_type('opened_comment_box', true)
+      box.removeClass('loading').addClass('adding')
       return false
     PivotalRocketBackground.popup.$("#storyInfo").on "click", "a.close_add_block", (event) =>
-      $(event.target).parents('.action_block').removeClass('adding')
+      box = $(event.target).parents('.action_block')
+      if box.hasClass('add_task_block')
+        PivotalRocketStorage.set_opened_by_type('opened_task_box', false)
+      else if box.hasClass('add_comment_block')
+        PivotalRocketStorage.set_opened_by_type('opened_comment_box', false)
+      box.removeClass('adding')
       return false
     # fine delete
     PivotalRocketBackground.popup.$("#storyInfo").on "click", "a.fine_delete_link", (event) =>
@@ -268,6 +278,10 @@ root.PivotalRocketBackground =
           comment.is_owner = true if comment.author? && comment.author.person? && comment.author.person.id? && 
           parseInt(comment.author.person.id) == parseInt(PivotalRocketBackground.account.id)
           comment
+      # story open or closed blocks
+      user_options = PivotalRocketStorage.get_user_options()
+      story.opened_task_box = true if user_options.opened_task_box? && user_options.opened_task_box is true
+      story.opened_comment_box = true if user_options.opened_comment_box? && user_options.opened_comment_box is true
       # generate template
       block_element = PivotalRocketBackground.popup.$('#storyInfo')
       block_element.empty().html(PivotalRocketBackground.templates.story.render(story))
@@ -281,9 +295,9 @@ root.PivotalRocketBackground =
       PivotalRocketBackground.set_description_links()
       PivotalRocketBackground.set_comments_links()
       # set tasks filter
-      if PivotalRocketStorage.get_tasks_filter()?
+      if user_options.tasks_filter?
         PivotalRocketBackground.popup.$('#storyInfo').find('a.filter_tasks').removeClass('active')
-        PivotalRocketBackground.popup.$('#storyInfo').find("a.filter_#{PivotalRocketStorage.get_tasks_filter()}_tasks")
+        PivotalRocketBackground.popup.$('#storyInfo').find("a.filter_#{user_options.tasks_filter}_tasks")
         .addClass('active').trigger('click')
       # init story bindings
       PivotalRocketBackground.bindings_story_info(story)
@@ -804,7 +818,7 @@ root.PivotalRocketBackground =
           error: (jqXHR, textStatus, errorThrown) ->
             PivotalRocketBackground.init_list_stories()
             object_parent.removeClass('loading')
-  # story success chaged
+  # story success changed
   story_changed_with_data: (data, requester = false) ->
     story = XML2JSON.parse(data, true)
     story = story.story if story.story?
@@ -822,7 +836,7 @@ root.PivotalRocketBackground =
     if new_stories.length > 0
       PivotalRocketStorage.set_stories({id: story.project_id}, new_stories, requester)
     PivotalRocketBackground.init_list_stories()
-  # normalize story
+  # normalize story (after converting from xml to json)
   normalize_story_for_saving: (story) ->
     # normalize comments
     if story.comments?

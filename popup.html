@@ -270,7 +270,7 @@
         {{/tasks}}
       </ul>
     {{/has_tasks}}
-    <div class="add_task_block action_block" data-story-id="{{id}}" data-project-id="{{project_id}}">
+    <div class="add_task_block action_block {{#opened_task_box}}adding{{/opened_task_box}}" data-story-id="{{id}}" data-project-id="{{project_id}}">
       <div class="main">
         <a class="open_add_block" href="#">Add task</a>
       </div>
@@ -312,6 +312,7 @@
                   <a class="fine_delete_link" href="#">Delete</a>
                 </div>
                 <div class="fine_delete_confirm">
+                  Make sure you want to do this. 
                   <a class="delete_comment_link" href="#" data-id="{{id}}">Confirm Delete</a>
                   <a class="fine_delete_cancel" href="#">Cancel</a>
                 </div>
@@ -324,7 +325,7 @@
         {{/comments}}
       </ul>
     {{/has_comments}}
-    <div class="add_comment_block action_block" data-story-id="{{id}}" data-project-id="{{project_id}}">
+    <div class="add_comment_block action_block {{#opened_comment_box}}adding{{/opened_comment_box}}" data-story-id="{{id}}" data-project-id="{{project_id}}">
       <div class="main">
         <a class="open_add_block" href="#">Add comment</a>
       </div>
