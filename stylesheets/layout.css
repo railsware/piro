@@ -1,3 +1,7 @@
+html, body {
+    height: 100%;
+}
+
 body {
     font: 12px/1.4 arial, sans-serif;
     border-radius: 5px;
@@ -34,8 +38,16 @@ body {
 }
 
 .fullscreen .page {
-    width: 98%;
-    margin: 10px auto;
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    top: 20px;
+    bottom: 20px;
+    width: auto;
+    height: auto;
+    margin: auto;
+    max-width: 1200px;
+    box-shadow: 0 0 0 5px rgba(0,0,0, 0.1);
 }
 
 .fullscreen .data-holder {

@@ -170,7 +170,7 @@ p {
 .ui-state-highlight {
     height: 26px;
     margin: 2px;
-    border: 2px dashed rgba(0,0,0, 0.2);
+    border: 2px dashed rgba(0,0,0, 0.2) !important;
 }
 
 .empty {
@@ -205,6 +205,21 @@ p {
     background: url(../images/chore.png) no-repeat 0 0;
 }
 
+.feature-icon-title {
+    padding-left: 24px;
+    background: url(../images/star.png) no-repeat 0 4px;
+}
+
+.bug-icon-title {
+    padding-left: 24px;
+    background: url(../images/bug.png) no-repeat 0 4px;
+}
+
+.chore-icon-title {
+    padding-left: 24px;
+    background: url(../images/chore.png) no-repeat 0 4px;
+}
+
 .sortable_link {
     display: inline-block;
     width: 16px;
@@ -231,7 +246,6 @@ p {
 /* tasks */
 .tasks li:first-child,
 .comments li:first-child {
-    padding-top: 0;
     border-top: 0;
 }
 
@@ -256,7 +270,7 @@ li.account {
     display: block;
 }
 
-.sort_project {
+.sort_project, .sort_task {
     position: absolute;
     right: 5px;
     top: 5px;
@@ -265,6 +279,17 @@ li.account {
     height: 16px;
     background: url(../images/sort.png) no-repeat 0 0;
     cursor: pointer;
+}
+
+.sort_task {
+    position: static;
+    vertical-align: -2px;
+    background: url(../images/sort-dark.png) no-repeat 0 0;
+}
+
+.edit_task_link,
+.delete_task_link {
+    margin-left: 5px;
 }
 
 .toggle_project {

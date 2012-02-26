@@ -226,7 +226,7 @@
     </div>
 
     
-    <h1 class="mtxs pts mbxs story_title {{story_type}}-icon-title">{{name}}</h1>
+    <h1 class="mts mbxs story_title {{story_type}}-icon-title">{{name}}</h1>
     <div class="mbm">
         <div><span class="pale">Requested by:</span> {{requested_by.person.name}}</div>
         <div><span class="pale">Owned by:</span> {{owned_by.person.name}}</div>
@@ -250,14 +250,19 @@
       <ul class="list mbm mrs tasks tasks_list">
         {{#tasks}}
           <li class="pvs task_block {{#complete}}completed{{/complete}}{{^complete}}uncompleted{{/complete}}">
-            <div class="main">
-              <span class="sort_task">sort</span>
+            <div class="main">              
               <label class="outer block">
                 <span class="unit"><input class="task_checkbox" type="checkbox" data-task-id="{{id}}" data-story-id="{{story_id}}" data-project-id="{{project_id}}" {{#complete}}checked="checked"{{/complete}} /></span>
+                <span class="unit-right mls">
+                  <span class="sort_task"></span>
+                  <a href="#" class="edit_task_link">Edit</a>
+                  <a href="#" class="delete_task_link negative">Delete</a>
+                </span>
                 <span class="mlm block">{{description}}</span>
+                
               </label>
-              <a href="#" class="edit_task_link">Edit</a>
-              <a href="#" class="delete_task_link">Delete</a>
+              
+              
             </div>
             <div class="edit">
               <input class="edit_task_text" autocomplete="off" type="text" value="{{description}}" />
@@ -304,19 +309,23 @@
       <ul class="mbm list mrs comments comments_list" data-story-id="{{id}}" data-project-id="{{project_id}}">
         {{#comments}}
           <li class="pvs comment_block action_block">
-            <div class="main fine_delete">
-              <strong>{{author.person.name}} </strong>
-              <div class="neutral comment_description">{{text}}</div>
-              {{#is_owner}}
-                <div class="fine_delete_main">
-                  <a class="fine_delete_link" href="#">Delete</a>
-                </div>
-                <div class="fine_delete_confirm">
-                  Make sure you want to do this. 
-                  <a class="delete_comment_link" href="#" data-id="{{id}}">Confirm Delete</a>
-                  <a class="fine_delete_cancel" href="#">Cancel</a>
-                </div>
-              {{/is_owner}}
+            <div class="main fine_delete outer">
+              <div class="unit size4of5">
+                <strong>{{author.person.name}} </strong>
+                <div class="neutral comment_description">{{text}}</div>
+              </div>
+              <div class="unit size1of5">
+                {{#is_owner}}
+                  <div class="fine_delete_main unit-right">
+                    <a class="fine_delete_link negative" href="#">Delete</a>
+                  </div>
+                  <div class="fine_delete_confirm">
+                    Make sure you want to do this. 
+                    <a class="delete_comment_link" href="#" data-id="{{id}}">Confirm Delete</a>
+                    <a class="fine_delete_cancel" href="#">Cancel</a>
+                  </div>
+                {{/is_owner}}
+              </div>
             </div>
             <div class="loader">
               <img src="images/spinner3.gif" alt="loading..." title="loading..." />
