@@ -126,7 +126,8 @@ p {
     border-bottom: 1px solid rgba(0,0,0, 0.2);
 }
 
-.list.comments li {
+.list.comments li,
+.list.tasks li {
     padding: 6px 0;
 }
 
@@ -289,6 +290,62 @@ li.account {
 
 .clippy-holder:hover .clippy-box {
     left: 80px;
+}
+
+.filter a {
+    position: relative;
+    margin-left: 15px;
+    font-weight: normal;
+    text-shadow: none;
+}
+
+.filter a:hover {
+    color: #c70000;
+}
+
+.filter a:first-child {
+    padding-left: 0;
+}
+
+.filter a:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: -12px;
+    top: 6px;
+    width: 4px;
+    height: 4px;
+    background-color: #777;
+    box-shadow: 0 -1px 0 rgba(255,255,255, 0.3);
+    border-radius: 7px;
+}
+
+.filter a:first-child:before {
+    display: none;
+}
+
+.filter a.active {
+    border: 0;
+    font-weight: bold;
+    text-shadow: 0 1px 0 rgba(255,255,255, 0.4);
+    cursor: default;
+}
+
+.filter a.active:hover {
+    color: inherit;
+}
+
+.tags {
+    padding: 4px 0 4px 20px;
+    color: #777;
+    background: url(../images/tag3.png) no-repeat 0 50%;
+}
+
+.tags-box {
+    padding-top: 15px;
+    margin-top: 15px;
+    border-top: 1px solid rgba(0,0,0, 0.2);
+    box-shadow: 0 1px 0 rgba(255,255,255, 0.8) inset;
 }
 
 
