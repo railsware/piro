@@ -352,6 +352,8 @@ root.PivotalRocketBackground =
       indicator : '<img src="images/spinner3.gif" alt="loading..." title="loading..." />'
       style   : 'editable-input'
       event   : 'dblclick'
+      width   : 'none'
+      height  : 'none'
     # story description
     PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description').editable (value, settings) ->
       selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
