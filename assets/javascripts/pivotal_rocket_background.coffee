@@ -350,7 +350,7 @@ root.PivotalRocketBackground =
       type    : 'text'
       tooltip : 'Double click to edit...'
       indicator : '<img src="images/spinner3.gif" alt="loading..." title="loading..." />'
-      style   : 'editable-input'
+      cssclass  : 'editable-input'
       event   : 'dblclick'
       width   : 'none'
       height  : 'none'
@@ -388,7 +388,7 @@ root.PivotalRocketBackground =
       button_separator: '<span class="mhs h4">or</span>'
       tooltip : 'Double click to edit...'
       indicator : '<img src="images/spinner3.gif" alt="loading..." title="loading..." />'
-      style   : 'editable-textarea'
+      cssclass  : 'editable-textarea'
       event   : 'dblclick'
       data    : (value, settings) ->
         return PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description').data('description')
