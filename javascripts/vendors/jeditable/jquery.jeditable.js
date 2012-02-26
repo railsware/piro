@@ -432,6 +432,11 @@
                         }
                         $(this).append(submit);
                     }
+                    
+                    if (settings.button_separator) {
+                      $(this).append(settings.button_separator);
+                    }
+                    
                     if (settings.cancel) {
                         /* if given html string use that */
                         if (settings.cancel.match(/>$/)) {

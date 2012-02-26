@@ -381,8 +381,9 @@ root.PivotalRocketBackground =
       return '<img src="images/spinner3.gif" alt="loading..." title="loading..." />'
     ,
       type    : 'textarea'
-      submit  : 'OK'
-      cancel  : 'Cancel'
+      submit  : '<input class="button success tiny" type="submit" value="Save" />'
+      cancel  : '<a class="h4" href="#">Cancel</a>'
+      button_separator: '<span class="mhs h4">or</span>'
       tooltip : 'Double click to edit...'
       indicator : '<img src="images/spinner3.gif" alt="loading..." title="loading..." />'
       style   : 'editable-textarea'
