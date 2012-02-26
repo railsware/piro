@@ -28,9 +28,9 @@ root.PivotalRocketPopup =
             window.close()
             return false
         return false
+      $('body').addClass('fullscreen')
     #popup
     else
-      $('body').addClass('popup-mode')
       if document.location.search != '?popup'
         chrome.tabs.query {active: true}, (tabs) ->
           for tab in tabs
