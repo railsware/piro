@@ -69,3 +69,7 @@ legend {
     background-color: #f4f4f4;
     text-shadow: 0 1px 0 #fff;
 }
+
+.editable-textarea textarea {
+    margin-bottom: 10px;
+}
