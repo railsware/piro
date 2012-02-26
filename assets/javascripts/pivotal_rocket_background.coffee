@@ -66,6 +66,13 @@ root.PivotalRocketBackground =
     # tabs
     PivotalRocketBackground.popup.$('#ownerStories').tabs()
     PivotalRocketBackground.popup.$('#requesterStories').tabs()
+    # fine add block
+    PivotalRocketBackground.popup.$("#storyInfo").on "click", "a.open_add_block", (event) =>
+      $(event.target).parents('.action_block').removeClass('loading').addClass('adding')
+      return false
+    PivotalRocketBackground.popup.$("#storyInfo").on "click", "a.close_add_block", (event) =>
+      $(event.target).parents('.action_block').removeClass('adding')
+      return false
     # fine delete
     PivotalRocketBackground.popup.$("#storyInfo").on "click", "a.fine_delete_link", (event) =>
       $(event.target).parents('.fine_delete').addClass('delete_confirm')
@@ -634,7 +641,7 @@ root.PivotalRocketBackground =
               description: description
               complete: false
           beforeSend: (jqXHR, settings) ->
-            object_parent.addClass('loading')
+            object_parent.removeClass('adding').addClass('loading')
           success: (data, textStatus, jqXHR) ->
             pivotal_lib.get_story
               project_id: project_id
@@ -757,7 +764,7 @@ root.PivotalRocketBackground =
             comment:
               text: description
           beforeSend: (jqXHR, settings) ->
-            object_parent.addClass('loading')
+            object_parent.removeClass('adding').addClass('loading')
           success: (data, textStatus, jqXHR) ->
             pivotal_lib.get_story
               project_id: project_id

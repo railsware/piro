@@ -271,8 +271,12 @@
     {{/has_tasks}}
     <div class="add_task_block action_block" data-story-id="{{id}}" data-project-id="{{project_id}}">
       <div class="main">
+        <a class="open_add_block" href="#">Add task</a>
+      </div>
+      <div class="add">
         <input class="add_task_text" autocomplete="off" type="text" />
         <input class="add_task_button" type="button" value="Add" />
+        <a class="close_add_block" href="#">Cancel</a>
       </div>
       <div class="loader">
         <img src="images/spinner3.gif" alt="loading..." title="loading..." />
@@ -321,8 +325,12 @@
     {{/has_comments}}
     <div class="add_comment_block action_block" data-story-id="{{id}}" data-project-id="{{project_id}}">
       <div class="main">
+        <a class="open_add_block" href="#">Add comment</a>
+      </div>
+      <div class="add">
         <textarea class="add_comment_text" style="width:100%;height:40px;" autocomplete="off"></textarea>
         <input class="add_comment_button" type="button" value="Add" />
+        <a class="close_add_block" href="#">Cancel</a>
       </div>
       <div class="loader">
         <img src="images/spinner3.gif" alt="loading..." title="loading..." />

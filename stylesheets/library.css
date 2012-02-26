@@ -311,11 +311,12 @@ Vasiliy saw and decided to leave it as is for now :) */
   white-space: pre;
 }
 
-.action_block .loader, .action_block.loading .main {
+.action_block .loader, .action_block .add, 
+.action_block.loading .main, .action_block.adding .main {
   display:none;
 }
 
-.action_block.loading .loader {
+.action_block.loading .loader, .action_block.adding .add {
   display:block;
 }
 
