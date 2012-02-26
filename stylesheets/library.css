@@ -268,14 +268,16 @@ li.account {
 }
 
 .toggle_project {
-    position: absolute;
-    right: 25px;
-    top: 5px;
     display: inline-block;
+    vertical-align: middle;
     width: 16px;
-    height: 16px;
-    background: url(../images/toggle.png) no-repeat 0 0;
+    height: 19px;
+    background: url(../images/toggle.png) no-repeat 0 -23px;
     cursor: pointer;
+}
+
+.hide-project .toggle_project {
+    background-position: 0 0;
 }
 
 .clippy-box {
@@ -337,6 +339,7 @@ li.account {
 
 .tags {
     padding: 4px 0 4px 20px;
+    margin-right: 5px;
     color: #777;
     background: url(../images/tag3.png) no-repeat 0 50%;
 }
@@ -346,6 +349,16 @@ li.account {
     margin-top: 15px;
     border-top: 1px solid rgba(0,0,0, 0.2);
     box-shadow: 0 1px 0 rgba(255,255,255, 0.8) inset;
+}
+
+.tags-box a {
+    color: #000;
+    padding-bottom: 1px;
+    border-bottom: 1px dotted;
+}
+
+.tags-box a:hover {
+    color: #c70000;
 }
 
 
