@@ -235,21 +235,19 @@
     <h2 class="mbs">Description</h2>
     <div class="story_description" data-description="{{description}}">{{description}}</div>
     {{#labels_html}}
-      <h2 class="mbs mtm">Labels</h2>
-      <div class="mbs">
-        {{& text}}
-      </div>
+      <div class="mtm tags-box"><span class="tags">Labels:</span> {{& text}} </div>
     {{/labels_html}}
     <!-- tasks -->
     <h2 class="mbs mtm">
       Tasks 
-      (filter:
-      <a href="#" class="filter_all_tasks filter_tasks active">all</a> | 
-      <a href="#" class="filter_completed_tasks filter_tasks">completed</a> | 
-      <a href="#" class="filter_uncompleted_tasks filter_tasks">uncompleted</a>)
+      <span class="unit-right filter">
+        <a href="#" class="filter_all_tasks filter_tasks active">all</a>
+        <a href="#" class="filter_completed_tasks filter_tasks">completed</a>
+        <a href="#" class="filter_uncompleted_tasks filter_tasks">uncompleted</a>
+      </span>      
     </h2>
     {{#has_tasks}}
-      <ul class="list tasks tasks_list">
+      <ul class="list mbm mrs tasks tasks_list">
         {{#tasks}}
           <li class="pvs task_block {{#complete}}completed{{/complete}}{{^complete}}uncompleted{{/complete}}">
             <div class="main">
@@ -303,7 +301,7 @@
     {{/has_attachments}}
     <h2 class="mbs mtm">Comments</h2>
     {{#has_comments}}
-      <ul class="mbm list comments comments_list" data-story-id="{{id}}" data-project-id="{{project_id}}">
+      <ul class="mbm list mrs comments comments_list" data-story-id="{{id}}" data-project-id="{{project_id}}">
         {{#comments}}
           <li class="pvs comment_block action_block">
             <div class="main fine_delete">

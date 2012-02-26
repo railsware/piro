@@ -29,6 +29,10 @@ body {
 }
 
 /* fullscreen */
+.fullscreen {
+    background-color: #f2f2f2;
+}
+
 .fullscreen .page {
     width: 98%;
     margin: 10px auto;
