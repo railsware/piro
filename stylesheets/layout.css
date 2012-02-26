@@ -34,7 +34,7 @@ body {
 
 /* fullscreen */
 .fullscreen {
-    background-color: #f2f2f2;
+    background: #1d153a url(../images/space.jpg) no-repeat 50% 50%;
 }
 
 .fullscreen .page {
@@ -47,7 +47,7 @@ body {
     height: auto;
     margin: auto;
     max-width: 1200px;
-    box-shadow: 0 0 0 5px rgba(0,0,0, 0.1);
+    box-shadow: 0 0 0 5px rgba(0,0,0, 0.4);
 }
 
 .fullscreen .data-holder {
