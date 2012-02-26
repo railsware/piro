@@ -1,6 +1,6 @@
-# Pivotal Rocket
+# PiRo
 
-Pivotal Rocket is a open-source Google Chrome extension for Pivotal Tracker ([http://www.pivotaltracker.com/](http://www.pivotaltracker.com/)). 
+PiRo is a open-source Google Chrome extension for Pivotal Tracker ([http://www.pivotaltracker.com/](http://www.pivotaltracker.com/)). 
 It:
 
 * simple;
