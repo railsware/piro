@@ -69,19 +69,21 @@ root.PivotalRocketBackground =
     # fine add block
     PivotalRocketBackground.popup.$("#storyInfo").on "click", "a.open_add_block", (event) =>
       box = $(event.target).parents('.action_block')
+      box.removeClass('loading').addClass('adding')
       if box.hasClass('add_task_block')
         PivotalRocketStorage.set_opened_by_type('opened_task_box', true)
+        box.find('input.add_task_text').focus()
       else if box.hasClass('add_comment_block')
+        box.find('textarea.add_comment_text').focus()
         PivotalRocketStorage.set_opened_by_type('opened_comment_box', true)
-      box.removeClass('loading').addClass('adding')
       return false
     PivotalRocketBackground.popup.$("#storyInfo").on "click", "a.close_add_block", (event) =>
       box = $(event.target).parents('.action_block')
+      box.removeClass('adding')
       if box.hasClass('add_task_block')
         PivotalRocketStorage.set_opened_by_type('opened_task_box', false)
       else if box.hasClass('add_comment_block')
         PivotalRocketStorage.set_opened_by_type('opened_comment_box', false)
-      box.removeClass('adding')
       return false
     # fine delete
     PivotalRocketBackground.popup.$("#storyInfo").on "click", "a.fine_delete_link", (event) =>
