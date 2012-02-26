@@ -4,9 +4,7 @@ body {
 }
 
 .page {
-    width: 98%;
-    margin: 10px auto;
-    /* width: 760px; */
+    width: 760px;
     height: 560px;
     position: relative;
     border-radius: 5px;
@@ -28,6 +26,16 @@ body {
 
 .data-holder:hover {
     overflow: auto;
+}
+
+/* fullscreen */
+.fullscreen .page {
+    width: 98%;
+    margin: 10px auto;
+}
+
+.fullscreen .data-holder {
+    width: 50%;
 }
 
 .footer {
