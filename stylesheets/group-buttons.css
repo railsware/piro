@@ -10,11 +10,12 @@
     background-image: -webkit-linear-gradient(top, rgba(255,255,255,0.32) 0%,rgba(255,255,255,0) 100%); /* Chrome10+,Safari5.1+ */
     background-image: linear-gradient(top, rgba(255,255,255,0.32) 0%,rgba(255,255,255,0) 100%); /* W3C */
     color: #fff;
+    cursor: pointer;
 }
 
 .button.tiny {
-    padding: 1px 5px;
-    font-size: 10px;
+    padding: 2px 7px;
+    font-size: 11px;
 }
 
 .button.large {

@@ -1,21 +1,37 @@
 input[type="text"],
 input[type="password"],
-input[type="search"] {
+input[type="search"],
+textarea {
     width: 100%;
     padding: 5px;
     background-color: #fff;
-    box-shadow: 0 1px 1px rgba(0,0,0,0.2) inset, 0 1px 0 rgba(255,255,255, 0.4);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1) inset, 0 1px 0 rgba(255,255,255, 0.4);
     border-radius: 3px;
-    border: 1px solid #999;
+    border: 1px solid #9c9c9c;
     font-family: arial, sans-serif;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+textarea:focus {
+    box-shadow: 0 0 0 2px rgba(6,126,176, 0.2), 0 1px 1px rgba(0,0,0,0.1) inset;
+    border-color: #067eb0;
+}
+
 select {
     padding: 2px;    
     vertical-align: middle;
+}
+
+textarea {
+    height: 40px;
+    min-width: 100%;
+    max-width: 100%;
+    max-height: 150px;
 }
 
 .options select,
