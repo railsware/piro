@@ -4,7 +4,9 @@ body {
 }
 
 .page {
-    width: 760px;
+    width: 98%;
+    margin: 10px auto;
+    /* width: 760px; */
     height: 560px;
     position: relative;
     border-radius: 5px;
