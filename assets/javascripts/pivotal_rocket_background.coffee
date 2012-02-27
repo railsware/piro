@@ -58,10 +58,11 @@ root.PivotalRocketBackground =
   # init templates
   init_templates: ->
     if PivotalRocketBackground.popup?
-      PivotalRocketBackground.templates.spinner   = Hogan.compile(PivotalRocketBackground.popup.$('#spinner_template').html())
-      PivotalRocketBackground.templates.project   = Hogan.compile(PivotalRocketBackground.popup.$('#project_cell_template').html())
-      PivotalRocketBackground.templates.story     = Hogan.compile(PivotalRocketBackground.popup.$('#story_info_template').html())
-      PivotalRocketBackground.templates.add_story = Hogan.compile(PivotalRocketBackground.popup.$('#add_story_template').html())
+      PivotalRocketBackground.templates.spinner           = Hogan.compile(PivotalRocketBackground.popup.$('#spinner_template').html())
+      PivotalRocketBackground.templates.project           = Hogan.compile(PivotalRocketBackground.popup.$('#project_cell_template').html())
+      PivotalRocketBackground.templates.story             = Hogan.compile(PivotalRocketBackground.popup.$('#story_info_template').html())
+      PivotalRocketBackground.templates.add_story         = Hogan.compile(PivotalRocketBackground.popup.$('#add_story_template').html())
+      PivotalRocketBackground.templates.add_story_result  = Hogan.compile(PivotalRocketBackground.popup.$('#add_story_result_template').html())
   # init popup bindings
   init_bindings: ->
     # tabs
@@ -1048,8 +1049,8 @@ root.PivotalRocketBackground =
       title = box.find('input.add_story_name').val()
       story_type = box.find('select.add_story_story_type').val()
       story_point = box.find('select.add_story_point').val() if story_type? && 'feature' == story_type.toLowerCase()
-      requester = box.find('select.add_story_requester_id').data('name')
-      owner = box.find('select.add_story_owner_id').data('name')
+      requester = box.find('select.add_story_requester_id').find(":selected").data('name')
+      owner = box.find('select.add_story_owner_id').find(":selected").data('name')
       description = box.find('textarea.add_story_description').val()
       labels = box.find('input.add_story_labels').val()
       
@@ -1070,19 +1071,24 @@ root.PivotalRocketBackground =
           beforeSend: (jqXHR, settings) ->
             PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_box').addClass('loading')
           success: (data, textStatus, jqXHR) ->
-            story = XML2JSON.parse(data, true)
-            PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_result').html(story.story.url)
+            story_data = XML2JSON.parse(data, true)
+            PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_result').empty()
+            .html(PivotalRocketBackground.templates.add_story_result.render(story_data.story))
             # update stories
+            project = 
+              id: project_id
             pivotal_lib.get_stories_for_project
-              project: 
-                id: project_id
+              project: project
               complete: (jqXHR, textStatus) ->
                 pivotal_lib.get_stories_for_project
                   requester: true
-                  project: 
-                    id: project_id
+                  project: project
                   complete: (jqXHR, textStatus) ->
                     PivotalRocketBackground.init_list_stories()
+                  success: (data, textStatus, jqXHR, project) ->
+                    PivotalRocketBackground.save_stories_data_by_project(project, data, true)
+              success: (data, textStatus, jqXHR, project) ->
+                PivotalRocketBackground.save_stories_data_by_project(project, data)
           error: (jqXHR, textStatus, errorThrown) ->
             PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_box').removeClass('loading')
   # register omnibox (for search)

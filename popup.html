@@ -403,11 +403,16 @@
           <a class="add_story_close h4" href="#">Cancel</a>
         </div>
       </div>
-      <div class="loader">
+      <div class="add_story_result loader">
         Loading...
-        <div class="add_story_result">
-        </div>
       </div>
+    </div>
+  </script>
+  
+  <script id="add_story_result_template" type="text/x-mustache-template">
+    <div>
+      {{name}}
+      <a href="{{url}}" target="_blank">{{url}}</a>
     </div>
   </script>
   
