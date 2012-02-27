@@ -58,9 +58,10 @@ root.PivotalRocketBackground =
   # init templates
   init_templates: ->
     if PivotalRocketBackground.popup?
-      PivotalRocketBackground.templates.spinner = Hogan.compile(PivotalRocketBackground.popup.$('#spinner_template').html())
-      PivotalRocketBackground.templates.project = Hogan.compile(PivotalRocketBackground.popup.$('#project_cell_template').html())
-      PivotalRocketBackground.templates.story = Hogan.compile(PivotalRocketBackground.popup.$('#story_info_template').html())
+      PivotalRocketBackground.templates.spinner   = Hogan.compile(PivotalRocketBackground.popup.$('#spinner_template').html())
+      PivotalRocketBackground.templates.project   = Hogan.compile(PivotalRocketBackground.popup.$('#project_cell_template').html())
+      PivotalRocketBackground.templates.story     = Hogan.compile(PivotalRocketBackground.popup.$('#story_info_template').html())
+      PivotalRocketBackground.templates.add_story = Hogan.compile(PivotalRocketBackground.popup.$('#add_story_template').html())
   # init popup bindings
   init_bindings: ->
     # tabs
@@ -132,10 +133,9 @@ root.PivotalRocketBackground =
       PivotalRocketBackground.init_list_stories()
     PivotalRocketBackground.popup.$('#mainPage').on "search", "#searchStories", (event) =>
       PivotalRocketBackground.init_list_stories() if 0 == $(event.target).val().length
-    # open popup in separate tab
-    PivotalRocketBackground.popup.$('a.open_popup_button').click (event) =>
-      chrome.tabs.create
-        url: "https://www.pivotaltracker.com/"
+    # open screen for add story
+    PivotalRocketBackground.popup.$('a.add_new_story_link').click (event) =>
+      PivotalRocketBackground.show_add_story_view()
       return false
     # bindings for story show
     # search by labels
@@ -287,7 +287,7 @@ root.PivotalRocketBackground =
       # generate template
       block_element = PivotalRocketBackground.popup.$('#storyInfo')
       block_element.empty().html(PivotalRocketBackground.templates.story.render(story))
-      PivotalRocketBackground.popup.$('#infoPanel').hide()
+      PivotalRocketBackground.popup.$('#addStoryView, #infoPanel').hide()
       block_element.show()
       # select selector for story state
       PivotalRocketBackground.popup.$('#storyInfo').find('select.change_story_state').val(story.current_state)
@@ -971,6 +971,50 @@ root.PivotalRocketBackground =
       else
         PivotalRocketStorage.update_view_options_in_project(PivotalRocketBackground.account, project_id, {hide_project_cell: true})
         PivotalRocketBackground.popup.$("ul.projects_stories_list").find("li.project_#{project_id}").addClass('hide-project')
+  # show add story view
+  show_add_story_view: ->
+    if PivotalRocketBackground.popup?
+      add_story_object = 
+        projects: PivotalRocketStorage.get_projects(PivotalRocketBackground.account)
+      PivotalRocketBackground.popup.$('#addStoryView').empty().html(PivotalRocketBackground.templates.add_story.render(add_story_object))
+      
+      PivotalRocketBackground.selected_story = null
+      PivotalRocketBackground.popup.$('#storiesTabs').find('li.story_info').removeClass('active')
+      PivotalRocketBackground.popup.$('#storyInfo, #infoPanel').hide()
+      PivotalRocketBackground.popup.$('#addStoryView').show()
+      PivotalRocketBackground.binding_add_story_view()
+  # binding add story view
+  binding_add_story_view: ->
+    PivotalRocketBackground.popup.$('#addStoryView').find('select.chosen_selector').chosen()
+    PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_project_id').change ->
+      PivotalRocketBackground.changed_project_in_add_story()
+    PivotalRocketBackground.changed_project_in_add_story()
+  # add story changed project
+  changed_project_in_add_story: ->
+    if PivotalRocketBackground.popup?
+      project_id = PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_project_id').val()
+      if project_id?
+        project = PivotalRocketStorage.find_project(PivotalRocketBackground.account, project_id)
+        if project?
+          # members
+          option_list = []
+          for member in project.memberships
+            if member.member? && member.member.person? && member.member.person.name?
+              person = member.member.person
+              option_list.push "<option value='#{person.id}' data-name='#{person.name}'>#{person.name} (#{person.initials})</option>"
+          PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_requester_id, select.add_story_owner_id').empty()
+          if option_list.length > 0
+            PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_requester_id, select.add_story_owner_id')
+            .html(option_list.join("")).val(PivotalRocketBackground.account.id.toString()).trigger("liszt:updated")
+          # points
+          if project? && project.point_scale?
+            point_scale = []
+            point_scale.push "<option value='-1'>Unestimated</option>"
+            for point in project.point_scale.split(",")
+              point_scale.push "<option value='#{point}'>#{point} points</option>"
+            if point_scale.length > 0
+              PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_point')
+              .html(point_scale.join("")).trigger("liszt:updated")
   # register omnibox (for search)
   init_omnibox: ->
     chrome.omnibox.onInputCancelled.addListener ->

@@ -90,6 +90,16 @@ root.PivotalRocketStorage =
     
   set_projects: (account, projects) ->
     projects = for project in projects
+      # normalize memberships in project
+      if project.memberships?
+        if project.memberships.membership?
+          if project.memberships.membership.constructor != Array
+            project.memberships = [project.memberships.membership]
+          else
+            project.memberships = project.memberships.membership
+        else
+          project.memberships = [project.memberships] if project.memberships.constructor != Array
+          
       if !project.view_conditions?
         old_project = PivotalRocketStorage.find_project(account, project.id)
         project.view_conditions = if old_project? && old_project.view_conditions? then old_project.view_conditions else {} 

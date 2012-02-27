@@ -431,7 +431,7 @@ Vasiliy saw and decided to leave it as is for now :) */
   display: none;
 }
 
-#loginPage {
+#loginPage, #addStoryView, #storyInfo {
   display: none;
 }
 
