@@ -88,12 +88,8 @@ root.PivotalRocketOptions =
   update_options: ->
     $('#updateInterval').val(PivotalRocketStorage.set_update_interval($('#updateInterval').val()))
     PivotalRocketStorage.set_fullscreen_mode($("#fullscreenMode").is(":checked"))
-    # cleanup popups
-    popup_url = chrome.extension.getURL('popup.html')
-    chrome.tabs.query {}, (tabs) ->
-      for tab in tabs
-        if tab.url.substring(0, popup_url.length) == popup_url
-          chrome.tabs.remove tab.id
+    # cleanup popup
+    PivotalRocketOptions.cleanup_popup()
     # update background timer
     PivotalRocketOptions.background_page.PivotalRocketBackground.updated_options()
   # add acoount
@@ -139,14 +135,28 @@ root.PivotalRocketOptions =
       PivotalRocketStorage.save_account(account)
     li_object.find('.company_name_text').text(account.company_name || 'Not set')
     li_object.removeClass('editing')
+    # fullscreen need reload
+    PivotalRocketOptions.cleanup_popup()
+    # notify background page
+    PivotalRocketOptions.background_page.PivotalRocketBackground.updated_accounts()
   # delete account
   delete_account: (account_id) ->
     li_object = $(event.target).parents('li.account')
     account_id = li_object.data("accountId")
     PivotalRocketStorage.delete_account(account_id)
     PivotalRocketOptions.account_list()
+    # cleanup popup
+    PivotalRocketOptions.cleanup_popup()
     # notify background page
     PivotalRocketOptions.background_page.PivotalRocketBackground.updated_accounts()
+  # cleanup popup
+  cleanup_popup: ->
+    # cleanup popups
+    popup_url = chrome.extension.getURL('popup.html')
+    chrome.tabs.query {}, (tabs) ->
+      for tab in tabs
+        if tab.url.substring(0, popup_url.length) == popup_url
+          chrome.tabs.remove tab.id
     
 $ ->
   PivotalRocketOptions.init()
