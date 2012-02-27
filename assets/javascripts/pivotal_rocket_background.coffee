@@ -208,6 +208,15 @@ root.PivotalRocketBackground =
         url: $(event.target).attr('href')
         active: false
       return false
+    # add story save link
+    PivotalRocketBackground.popup.$('#addStoryView').on "click", "input.add_story_button", (event) =>
+      PivotalRocketBackground.save_new_story()
+      return false
+    # add story cancel link
+    PivotalRocketBackground.popup.$('#addStoryView').on "click", "a.add_story_close", (event) =>
+      PivotalRocketBackground.popup.$('#storyInfo, #addStoryView').hide()
+      PivotalRocketBackground.popup.$('#infoPanel').show()
+      return false
   # change account
   change_account: ->
     account_id = PivotalRocketBackground.popup.$('#changeAccount').val()
@@ -985,10 +994,21 @@ root.PivotalRocketBackground =
       PivotalRocketBackground.binding_add_story_view()
   # binding add story view
   binding_add_story_view: ->
+    PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_owner_id').chosen
+      allow_single_deselect: true
     PivotalRocketBackground.popup.$('#addStoryView').find('select.chosen_selector').chosen()
-    PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_project_id').change ->
+    PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_project_id').change (event) ->
       PivotalRocketBackground.changed_project_in_add_story()
+    PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_story_type').change (event) ->
+      PivotalRocketBackground.changed_story_type_on_add_story()
     PivotalRocketBackground.changed_project_in_add_story()
+    PivotalRocketBackground.changed_story_type_on_add_story()
+  # add story change type
+  changed_story_type_on_add_story: ->
+    if 'feature' == PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_story_type').val().toLowerCase()
+      PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_point_box').show()
+    else  
+      PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_point_box').hide()
   # add story changed project
   changed_project_in_add_story: ->
     if PivotalRocketBackground.popup?
@@ -997,15 +1017,20 @@ root.PivotalRocketBackground =
         project = PivotalRocketStorage.find_project(PivotalRocketBackground.account, project_id)
         if project?
           # members
-          option_list = []
+          requester_option_list = []
+          owner_option_list = []
+          owner_option_list.push "<option></option>"
           for member in project.memberships
             if member.member? && member.member.person? && member.member.person.name?
               person = member.member.person
-              option_list.push "<option value='#{person.id}' data-name='#{person.name}'>#{person.name} (#{person.initials})</option>"
+              requester_option_list.push "<option value='#{person.id}' data-name='#{person.name}'>#{person.name} (#{person.initials})</option>"
+              owner_option_list.push "<option value='#{person.id}' data-name='#{person.name}'>#{person.name} (#{person.initials})</option>"
           PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_requester_id, select.add_story_owner_id').empty()
-          if option_list.length > 0
-            PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_requester_id, select.add_story_owner_id')
-            .html(option_list.join("")).val(PivotalRocketBackground.account.id.toString()).trigger("liszt:updated")
+          if requester_option_list.length > 0
+            PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_requester_id').html(requester_option_list.join(""))
+            PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_owner_id').html(owner_option_list.join(""))
+            PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_requester_id').val(PivotalRocketBackground.account.id.toString())
+            PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_requester_id, select.add_story_owner_id').trigger("liszt:updated")
           # points
           if project? && project.point_scale?
             point_scale = []
@@ -1015,6 +1040,51 @@ root.PivotalRocketBackground =
             if point_scale.length > 0
               PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_point')
               .html(point_scale.join("")).trigger("liszt:updated")
+  # save new story
+  save_new_story: ->
+    if PivotalRocketBackground.popup?
+      box = PivotalRocketBackground.popup.$('#addStoryView')
+      project_id = box.find('select.add_story_project_id').val()
+      title = box.find('input.add_story_name').val()
+      story_type = box.find('select.add_story_story_type').val()
+      story_point = box.find('select.add_story_point').val() if story_type? && 'feature' == story_type.toLowerCase()
+      requester = box.find('select.add_story_requester_id').data('name')
+      owner = box.find('select.add_story_owner_id').data('name')
+      description = box.find('textarea.add_story_description').val()
+      labels = box.find('input.add_story_labels').val()
+      
+      if title? && title.length > 0 && story_type? && project_id?
+        story_data = 
+          name: title
+          story_type: story_type
+          requested_by: requester
+          description: description
+          labels: labels
+        story_data.estimate = story_point if story_point? && story_point.length > 0
+        story_data.owned_by = owner if owner? && owner.length > 0
+        pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
+        pivotal_lib.add_story
+          project_id: project_id
+          data:
+            story: story_data
+          beforeSend: (jqXHR, settings) ->
+            PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_box').addClass('loading')
+          success: (data, textStatus, jqXHR) ->
+            story = XML2JSON.parse(data, true)
+            PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_result').html(story.story.url)
+            # update stories
+            pivotal_lib.get_stories_for_project
+              project: 
+                id: project_id
+              complete: (jqXHR, textStatus) ->
+                pivotal_lib.get_stories_for_project
+                  requester: true
+                  project: 
+                    id: project_id
+                  complete: (jqXHR, textStatus) ->
+                    PivotalRocketBackground.init_list_stories()
+          error: (jqXHR, textStatus, errorThrown) ->
+            PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_box').removeClass('loading')
   # register omnibox (for search)
   init_omnibox: ->
     chrome.omnibox.onInputCancelled.addListener ->

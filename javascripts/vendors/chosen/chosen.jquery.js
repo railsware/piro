@@ -297,7 +297,7 @@ Copyright (c) 2011 by Harvest
       var container_div, dd_top, dd_width, sf_width;
       this.container_id = this.form_field.id.length ? this.form_field.id.replace(/(:|\.)/g, '_') : this.generate_field_id();
       this.container_id += "_chzn";
-      this.f_width = this.form_field_jq.outerWidth();
+      this.f_width = this.form_field_jq.outerWidth() + 30;
       this.default_text = this.form_field_jq.data('placeholder') ? this.form_field_jq.data('placeholder') : this.default_text_default;
       container_div = $("<div />", {
         id: this.container_id,
@@ -365,7 +365,7 @@ Copyright (c) 2011 by Harvest
         return _this.search_results_mouseout(evt);
       });
       this.form_field_jq.bind("liszt:updated", function(evt) {
-        _this.f_width = _this.form_field_jq.outerWidth();
+        _this.f_width = _this.form_field_jq.outerWidth() + 30;
         _this.container.css({'width': _this.f_width + "px"});
         dd_top = _this.container.height();
         dd_width = _this.f_width - get_side_border_padding(_this.dropdown);

@@ -75,6 +75,23 @@ class root.PivotalApiLib
       error: params.error
       beforeSend: params.beforeSend
       complete: params.complete
+
+  add_story: (params) =>
+    $.ajax
+      #setup
+      timeout: 40000
+      crossDomain: true
+      dataType: 'xml'
+      headers:
+        "X-TrackerToken": @account.token.guid
+      # else
+      url: "#{this.baseUrl}/projects/#{params.project_id}/stories"
+      type: "POST"
+      data: params.data
+      success: params.success
+      error: params.error
+      beforeSend: params.beforeSend
+      complete: params.complete
   
   update_story: (params) =>
     $.ajax

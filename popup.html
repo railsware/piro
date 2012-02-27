@@ -352,38 +352,62 @@
   </script>
   
   <script id="add_story_template" type="text/x-mustache-template">
-    <div>
-      Projects:
-      <select class="add_story_project_id chosen_selector">
-      {{#projects}}
-        <option value="{{id}}">{{name}}</option>
-      {{/projects}}
-      </select>
-    </div>
-    <div>
-      Title:
-      <input class="add_story_name" type="text" />
-    </div>
-    <div>
-      Story type:
-      <select class="add_story_story_type chosen_selector">
-        <option value="feature">Feature</option>
-        <option value="bug">Bug</option>
-        <option value="chore">Chore</option>
-        <option value="Release">Release</option>
-      </select>
-    </div>
-    <div>
-      Story points:
-      <select class="add_story_point chosen_selector"></select>
-    </div>
-    <div>
-      Requester:
-      <select class="add_story_requester_id chosen_selector"></select>
-    </div>
-    <div>
-      Owner:
-      <select class="add_story_owner_id chosen_selector"></select>
+    <div class="add_story_box">
+      <div class="main">
+        <div>
+          Projects:
+          <select class="add_story_project_id chosen_selector">
+          {{#projects}}
+            <option value="{{id}}">{{name}}</option>
+          {{/projects}}
+          </select>
+        </div>
+        <div>
+          Title:
+          <input class="add_story_name" type="text" />
+        </div>
+        <div>
+          Story type:
+          <select class="add_story_story_type chosen_selector">
+            <option value="feature">Feature</option>
+            <option value="bug">Bug</option>
+            <option value="chore">Chore</option>
+            <option value="release">Release</option>
+          </select>
+        </div>
+        <div class="add_story_point_box">
+          Story points:
+          <select class="add_story_point chosen_selector"></select>
+        </div>
+        <div>
+          Requester:
+          <select class="add_story_requester_id chosen_selector"></select>
+        </div>
+        <div>
+          Owner:
+          <select data-placeholder="Select owner" class="add_story_owner_id chosen_selector">
+            <option></option>
+          </select>
+        </div>
+        <div>
+          Description:
+          <textarea class="add_story_description"></textarea>
+        </div>
+        <div>
+          Labels:
+          <input class="add_story_labels" type="text" />
+        </div>
+        <div class="mbxs">
+          <input class="add_story_button button success" type="button" value="Add" />
+          <span class="mhs h4">or</span>
+          <a class="add_story_close h4" href="#">Cancel</a>
+        </div>
+      </div>
+      <div class="loader">
+        Loading...
+        <div class="add_story_result">
+        </div>
+      </div>
     </div>
   </script>
   
