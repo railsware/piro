@@ -576,6 +576,7 @@ root.PivotalRocketBackground =
                 PivotalRocketBackground.init_list_stories()
                 PivotalRocketBackground.init_spinner()
               catch error
+                PivotalRocketBackground.popup = null
                 console.debug "Error: #{error}"
               callback_function() if callback_function?
         
