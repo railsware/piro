@@ -73,3 +73,10 @@ legend {
 .editable-textarea textarea {
     margin-bottom: 10px;
 }
+
+.form label {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 12px;
+    color: #777;
+}
