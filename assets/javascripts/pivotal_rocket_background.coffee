@@ -217,7 +217,7 @@ root.PivotalRocketBackground =
         active: false
       return false
     # add story save link
-    PivotalRocketBackground.popup.$('#addStoryView').on "click", "input.add_story_button", (event) =>
+    PivotalRocketBackground.popup.$('#addStoryView').on "click", "input.add_story_button, a.add_more_stories", (event) =>
       PivotalRocketBackground.save_new_story()
       return false
     # add story cancel link
@@ -571,11 +571,13 @@ root.PivotalRocketBackground =
           fcallback_counter = -> 
             PivotalRocketBackground.tmp_counter--
             if PivotalRocketBackground.tmp_counter <= 0
-              PivotalRocketBackground.init_list_stories()
               PivotalRocketBackground.is_loading = false
-              PivotalRocketBackground.init_spinner()
-              if callback_function?
-                callback_function()
+              try
+                PivotalRocketBackground.init_list_stories()
+                PivotalRocketBackground.init_spinner()
+              catch error
+                console.debug "Error: #{error}"
+              callback_function() if callback_function?
         
           for project in projects
             PivotalRocketBackground.pivotal_api_lib.get_stories_for_project
@@ -1072,6 +1074,7 @@ root.PivotalRocketBackground =
           data:
             story: story_data
           beforeSend: (jqXHR, settings) ->
+            PivotalRocketBackground.popup.$('#addStoryView').find('div.errors_box').empty()
             PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_box').addClass('loading')
           success: (data, textStatus, jqXHR) ->
             story_data = XML2JSON.parse(data, true)
@@ -1094,6 +1097,7 @@ root.PivotalRocketBackground =
                 PivotalRocketBackground.save_stories_data_by_project(project, data)
           error: (jqXHR, textStatus, errorThrown) ->
             PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_box').removeClass('loading')
+            PivotalRocketBackground.popup.$('#addStoryView').find('div.errors_box').html(errorThrown)
   # register omnibox (for search)
   init_omnibox: ->
     chrome.omnibox.onInputCancelled.addListener ->
