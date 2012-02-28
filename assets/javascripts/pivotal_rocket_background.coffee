@@ -577,8 +577,6 @@ root.PivotalRocketBackground =
                 fcallback_counter()
               success: (data, textStatus, jqXHR, project) ->
                 PivotalRocketBackground.save_stories_data_by_project(project, data)
-              error: (jqXHR, textStatus, errorThrown) ->
-                # error
               
             PivotalRocketBackground.pivotal_api_lib.get_stories_for_project
               requester: true
@@ -587,8 +585,6 @@ root.PivotalRocketBackground =
                 fcallback_counter()
               success: (data, textStatus, jqXHR, project) ->
                 PivotalRocketBackground.save_stories_data_by_project(project, data, true)
-              error: (jqXHR, textStatus, errorThrown) ->
-                # error
         # no projects
         else
           PivotalRocketBackground.init_list_stories()
