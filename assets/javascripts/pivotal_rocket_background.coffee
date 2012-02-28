@@ -109,6 +109,13 @@ root.PivotalRocketBackground =
     PivotalRocketBackground.popup.$('#selecterStoriesType').change (event) =>
       PivotalRocketStorage.set_role($(event.target).val())
       PivotalRocketBackground.change_view_type()
+    # settings link
+    PivotalRocketBackground.popup.$('#settingsLink').click (event) ->
+      options_url = chrome.extension.getURL('options.html')
+      chrome.tabs.create
+        url: options_url
+        active: true
+      return false
     # projects sorting
     PivotalRocketBackground.popup.$("ul.projects_stories_list").sortable
       handle: 'span.sort_project'
