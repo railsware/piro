@@ -217,7 +217,7 @@ root.PivotalRocketBackground =
         active: false
       return false
     # add story save link
-    PivotalRocketBackground.popup.$('#addStoryView').on "click", "input.add_story_button", (event) =>
+    PivotalRocketBackground.popup.$('#addStoryView').on "click", "input.add_story_button, a.add_more_stories", (event) =>
       PivotalRocketBackground.save_new_story()
       return false
     # add story cancel link
