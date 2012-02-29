@@ -14,6 +14,8 @@
   
   <!-- chosen -->
   <link href="stylesheets/chosen/chosen.css" media="screen" rel="stylesheet" type="text/css" />
+  <!-- jquery ui datepicker -->
+  <link href="stylesheets/jquery_ui/datepicker.css" media="screen" rel="stylesheet" type="text/css" />
 </head>
 <body>
   
@@ -239,6 +241,9 @@
     <div class="mbm">
         <div><span class="pale">Requested by:</span> {{requested_by.person.name}}</div>
         <div><span class="pale">Owned by:</span> {{owned_by.person.name}}</div>
+        {{#deadline}}
+          <div><span class="pale">Deadline:</span> {{deadline}}</div>
+        {{/deadline}}
     </div>
     
     <h2 class="mbs">Description</h2>
@@ -385,6 +390,10 @@
         <div class="add_story_point_box mbs">
           <label>Story points:</label>
           <select class="add_story_point chosen_selector"></select>
+        </div>
+        <div class="add_story_release_date_box mbs">
+          <label>Date:</label>
+          <input class="add_story_release_date" type="text" />
         </div>
         <div class="mbs">
           <label>Requester:</label>
