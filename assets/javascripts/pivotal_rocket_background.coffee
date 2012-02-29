@@ -145,6 +145,9 @@ root.PivotalRocketBackground =
     PivotalRocketBackground.popup.$('a.add_new_story_link').click (event) =>
       PivotalRocketBackground.show_add_story_view()
       return false
+    PivotalRocketBackground.popup.$('#addStoryView').on "click", "a.add_more_stories", (event) =>
+      PivotalRocketBackground.show_add_story_view()
+      return false
     # bindings for story show
     # search by labels
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.story_label", (event) =>
@@ -217,7 +220,7 @@ root.PivotalRocketBackground =
         active: false
       return false
     # add story save link
-    PivotalRocketBackground.popup.$('#addStoryView').on "click", "input.add_story_button, a.add_more_stories", (event) =>
+    PivotalRocketBackground.popup.$('#addStoryView').on "click", "input.add_story_button", (event) =>
       PivotalRocketBackground.save_new_story()
       return false
     # add story cancel link
@@ -279,7 +282,7 @@ root.PivotalRocketBackground =
       if story.story_type
         switch story.story_type
           when "feature"
-            story.need_estimate = true if story.current_state? && jQuery.inArray(story.current_state, ["unstarted", "started"]) != -1
+            story.need_estimate = true if story.current_state? && jQuery.inArray(story.current_state, ["unscheduled", "unstarted", "started"]) != -1
             story.unestimated_feature = true if story.not_estimated? && story.not_estimated is true
             story.story_type_can_started = true
             story.story_type_many_statuses = true
@@ -573,8 +576,8 @@ root.PivotalRocketBackground =
             if PivotalRocketBackground.tmp_counter <= 0
               PivotalRocketBackground.is_loading = false
               try
-                PivotalRocketBackground.init_list_stories()
                 PivotalRocketBackground.init_spinner()
+                PivotalRocketBackground.init_list_stories()
               catch error
                 PivotalRocketBackground.popup = null
                 console.debug "Error: #{error}"
@@ -1082,20 +1085,29 @@ root.PivotalRocketBackground =
             PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_result').empty()
             .html(PivotalRocketBackground.templates.add_story_result.render(story_data.story))
             # update stories
-            project = 
-              id: project_id
-            pivotal_lib.get_stories_for_project
-              project: project
-              complete: (jqXHR, textStatus) ->
-                pivotal_lib.get_stories_for_project
-                  requester: true
-                  project: project
-                  complete: (jqXHR, textStatus) ->
-                    PivotalRocketBackground.init_list_stories()
-                  success: (data, textStatus, jqXHR, project) ->
-                    PivotalRocketBackground.save_stories_data_by_project(project, data, true)
-              success: (data, textStatus, jqXHR, project) ->
-                PivotalRocketBackground.save_stories_data_by_project(project, data)
+            fcallback_update = -> 
+              project = 
+                id: project_id
+              pivotal_lib.get_stories_for_project
+                project: project
+                beforeSend: (jqXHR, settings) ->
+                  if PivotalRocketBackground.is_loading is false
+                    PivotalRocketBackground.is_loading = true
+                    PivotalRocketBackground.init_spinner()
+                complete: (jqXHR, textStatus) ->
+                  pivotal_lib.get_stories_for_project
+                    requester: true
+                    project: project
+                    complete: (jqXHR, textStatus) ->
+                      PivotalRocketBackground.is_loading = false
+                      PivotalRocketBackground.init_spinner()
+                      PivotalRocketBackground.init_list_stories()
+                    success: (data, textStatus, jqXHR, project) ->
+                      PivotalRocketBackground.save_stories_data_by_project(project, data, true)
+                success: (data, textStatus, jqXHR, project) ->
+                  PivotalRocketBackground.save_stories_data_by_project(project, data)
+            # update after 10 sec
+            root.setTimeout(fcallback_update, 10000)
           error: (jqXHR, textStatus, errorThrown) ->
             PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_box').removeClass('loading')
             PivotalRocketBackground.popup.$('#addStoryView').find('div.errors_box').html(errorThrown)

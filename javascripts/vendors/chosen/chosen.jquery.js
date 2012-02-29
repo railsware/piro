@@ -302,7 +302,7 @@ Copyright (c) 2011 by Harvest
       container_div = $("<div />", {
         id: this.container_id,
         "class": "chzn-container" + (this.is_rtl ? ' chzn-rtl' : ''),
-        style: 'width: ' + this.f_width + 'px;'
+        style: 'width: 100%;'
       });
       if (this.is_multiple) {
         container_div.html('<ul class="chzn-choices"><li class="search-field"><input type="text" value="' + this.default_text + '" class="default" autocomplete="off" style="width:25px;" /></li></ul><div class="chzn-drop" style="left:-9000px;"><ul class="chzn-results"></ul></div>');
@@ -316,7 +316,7 @@ Copyright (c) 2011 by Harvest
       dd_top = this.container.height();
       dd_width = this.f_width - get_side_border_padding(this.dropdown);
       this.dropdown.css({
-        "width": dd_width + "px",
+        "width": "100%",
         "top": dd_top + "px"
       });
       this.search_field = this.container.find('input').first();
@@ -331,7 +331,7 @@ Copyright (c) 2011 by Harvest
         this.selected_item = this.container.find('.chzn-single').first();
         sf_width = dd_width - get_side_border_padding(this.search_container) - get_side_border_padding(this.search_field);
         this.search_field.css({
-          "width": sf_width + "px"
+          "width": "99%"
         });
       }
       this.results_build();
@@ -365,17 +365,16 @@ Copyright (c) 2011 by Harvest
         return _this.search_results_mouseout(evt);
       });
       this.form_field_jq.bind("liszt:updated", function(evt) {
-        _this.f_width = _this.form_field_jq.outerWidth() + 30;
-        _this.container.css({'width': _this.f_width + "px"});
+        _this.container.css({'width': "100%"});
         dd_top = _this.container.height();
         dd_width = _this.f_width - get_side_border_padding(_this.dropdown);
         _this.dropdown.css({
-          "width": dd_width + "px",
+          "width": "100%",
           "top": dd_top + "px"
         });
         sf_width = dd_width - get_side_border_padding(_this.search_container) - get_side_border_padding(_this.search_field);
         _this.search_field.css({
-          "width": sf_width + "px"
+          "width": "99%"
         });
         return _this.results_update_field(evt);
       });

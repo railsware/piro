@@ -36,6 +36,7 @@ class root.PivotalApiLib
           params.success(data, textStatus, jqXHR, params.project)
       error: params.error
       complete: params.complete
+      beforeSend: params.beforeSend
       
   update_account: =>
     $.ajax
@@ -85,7 +86,8 @@ class root.PivotalApiLib
       headers:
         "X-TrackerToken": @account.token.guid
       # else
-      url: "#{this.baseUrl}/projects/#{params.project_id}/stories"
+      # using v3, because v4 broken
+      url: "https://www.pivotaltracker.com/services/v3/projects/#{params.project_id}/stories"
       type: "POST"
       data: params.data
       success: params.success
