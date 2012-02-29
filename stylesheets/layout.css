@@ -26,6 +26,7 @@ body {
     bottom: 30px;
     overflow: hidden;
     word-wrap: break-word;
+    box-shadow: 0 0 0 1px rgba(255,255,255, 0.2) inset;
 }
 
 .data-holder:hover {
@@ -214,8 +215,10 @@ body {
 	background: rgba(0,0,0,0.4); 
 }
 
-
-/* pages */
+.powered img {
+    margin-left: 2px;
+    vertical-align: -3px;
+}
 
 /* login page */
 #loginPage {

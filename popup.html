@@ -88,7 +88,7 @@
                 <a id="settingsLink" href="#">Settings</a>
             	</div>
             	<div class="unit-right mrs">
-            	   <a href="http://railsware.com/projects" target="_blank">Railsware project</a>
+            	   <span class="h4 neutral powered">Brought to you by <a href="http://railsware.com/projects" target="_blank"><img src="images/rw.png" alt="Railsware" /></a></span>
             	 </div>
             </div> <!-- unit size1of2 -->
           </div> <!-- outer -->          
@@ -152,17 +152,24 @@
   <script id="project_cell_template" type="text/x-mustache-template">
     <li class="project_{{id}} project_cell{{#view_conditions}}{{#hide_project_cell}} hide-project{{/hide_project_cell}}{{/view_conditions}}" data-project-id="{{id}}">
 
-      <div class="title"><span class="toggle_project"></span> <span class="dbclick_toggle_project">({{count_of_stories}}) {{name}}</span> <span class="sort_project" title="Drag to sort projects" data-project-id="{{id}}"></span></div>
+      <div class="title">
+        <span class="toggle_project unit"></span> 
+        <span class="dbclick_toggle_project project-title">({{count_of_stories}}) {{name}}</span> 
+        <span class="sort_project unit-right" title="Drag to sort projects" data-project-id="{{id}}"></span>
+      </div>
       
       <ul data-project-id="{{id}}" {{#is_requested_by_me}}data-requested="true"{{/is_requested_by_me}} class="list">
         {{#stories}}
           <li class="story_info story_{{id}} {{box_class}}-box outer" data-story-id="{{id}}">
             <div class="unit"><span class="{{story_type}}-icon"></span></div>
             <div class="unit size3of4">
-              <div class="pls">
-                {{name}} <span class="status">{{current_state}}</span>
-              </div>              
-            </div>              
+              <div class="pls">                
+                {{name}}
+              </div>   
+            </div>
+            <div class="unit-right">
+              <span class="status">{{current_state}}</span>
+            </div>      
           </li>
         {{/stories}}
       </ul>
@@ -207,7 +214,7 @@
             
             {{#unestimated_feature}}
               <div class="mbxs">
-                <span class="label">Status: </span> <div class="value">{{current_state}}</div>
+                <span class="label">Status: </span> <div class="value"><span class="status">{{current_state}}</span></div>
               </div>
             {{/unestimated_feature}}
             
@@ -225,7 +232,7 @@
             
             {{^need_estimate}}
               <div>
-                <span class="label">Estimate: </span> <div class="value">{{estimate_text}}</div>
+                <span class="label">Estimate: </span> <div class="value"><span class="status">{{estimate_text}}</span></div>
               </div>
             {{/need_estimate}}
           </div>
@@ -378,32 +385,45 @@
           <label>Title:</label>
           <input class="add_story_name" type="text" />
         </div>
-        <div class="mbs">
-          <label>Story type:</label>
-          <select class="add_story_story_type chosen_selector">
-            <option value="feature">Feature</option>
-            <option value="bug">Bug</option>
-            <option value="chore">Chore</option>
-            <option value="release">Release</option>
-          </select>
+        <div class="outer mbs">
+          <div class="unit size1of2">
+            <div class="prs">
+              <label>Story type:</label>
+              <select class="add_story_story_type chosen_selector">
+                <option value="feature">Feature</option>
+                <option value="bug">Bug</option>
+                <option value="chore">Chore</option>
+                <option value="release">Release</option>
+              </select>
+            </div>
+          </div>
+          <div class="unit size1of2">
+            <div class="add_story_point_box pls">
+              <label>Story points:</label>
+              <select class="add_story_point chosen_selector"></select>
+            </div>
+            <div class="add_story_release_date_box pls">
+              <label>Release Date:</label>
+              <input class="add_story_release_date" type="text" />
+            </div>
+          </div>
         </div>
-        <div class="add_story_point_box mbs">
-          <label>Story points:</label>
-          <select class="add_story_point chosen_selector"></select>
-        </div>
-        <div class="add_story_release_date_box mbs">
-          <label>Date:</label>
-          <input class="add_story_release_date" type="text" />
-        </div>
-        <div class="mbs">
-          <label>Requester:</label>
-          <select class="add_story_requester_id chosen_selector"></select>
-        </div>
-        <div class="mbs">
-          <label>Owner:</label>
-          <select data-placeholder="Select owner" class="add_story_owner_id chosen_selector">
-            <option></option>
-          </select>
+        
+        <div class="outer mbs">
+          <div class="unit size1of2">
+            <div class="prs">
+              <label>Requester:</label>
+              <select class="add_story_requester_id chosen_selector"></select>
+            </div>
+          </div>
+          <div class="unit size1of2">
+            <div class="pls">
+              <label>Owner:</label>
+              <select data-placeholder="Select owner" class="add_story_owner_id chosen_selector">
+                <option></option>
+              </select>
+            </div>
+          </div>
         </div>
         <div class="mbs">
           <label>Description:</label>

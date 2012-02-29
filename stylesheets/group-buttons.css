@@ -4,7 +4,8 @@
     text-decoration: none;
     border-radius: 4px;
     box-shadow: 0 1px 0 rgba(255,255,255, 0.4) inset, 
-                0 1px 1px rgba(80,80,80, 0.3);    
+                0 1px 1px rgba(80,80,80, 0.3),
+                0 0 0 2px rgba(80,80,80, 0.1);
     background-image: -moz-linear-gradient(top, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0) 100%); /* FF3.6+ */
     background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.32)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
     background-image: -webkit-linear-gradient(top, rgba(255,255,255,0.32) 0%,rgba(255,255,255,0) 100%); /* Chrome10+,Safari5.1+ */
@@ -71,7 +72,7 @@
 }
 
 .button:active {
-    box-shadow: 0 1px 1px rgba(0,0,0, 0.2) inset;
+    box-shadow: 0 1px 1px rgba(0,0,0, 0.2) inset, 0 0 0 2px rgba(80,80,80, 0.1);
 }
 
 .button.default:active {
