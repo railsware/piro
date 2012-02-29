@@ -1013,7 +1013,6 @@ root.PivotalRocketBackground =
       PivotalRocketBackground.changed_project_in_add_story()
     PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_story_type').change (event) ->
       PivotalRocketBackground.changed_story_type_on_add_story()
-
     PivotalRocketBackground.popup.$('#addStoryView').find('input.add_story_release_date').datepicker
       changeMonth: true
       changeYear: true
@@ -1021,7 +1020,6 @@ root.PivotalRocketBackground =
       dateFormat: "mm/dd/yy"
       showOtherMonths: true
       selectOtherMonths: true
-
     PivotalRocketBackground.changed_project_in_add_story()
     PivotalRocketBackground.changed_story_type_on_add_story()
   # add story change type
