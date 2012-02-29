@@ -1013,14 +1013,24 @@ root.PivotalRocketBackground =
       PivotalRocketBackground.changed_project_in_add_story()
     PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_story_type').change (event) ->
       PivotalRocketBackground.changed_story_type_on_add_story()
+    PivotalRocketBackground.popup.$('#addStoryView').find('input.add_story_release_date').datepicker
+      changeMonth: true
+      changeYear: true
+      minDate: 1
+      dateFormat: "mm/dd/yy"
+      showOtherMonths: true
+      selectOtherMonths: true
     PivotalRocketBackground.changed_project_in_add_story()
     PivotalRocketBackground.changed_story_type_on_add_story()
   # add story change type
   changed_story_type_on_add_story: ->
-    if 'feature' == PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_story_type').val().toLowerCase()
-      PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_point_box').show()
-    else  
-      PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_point_box').hide()
+    story_type = PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_story_type').val().toLowerCase()
+    PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_point_box, div.add_story_release_date_box').hide()
+    switch story_type
+      when 'feature'
+        PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_point_box').show()
+      when 'release'
+        PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_release_date_box').show()
   # add story changed project
   changed_project_in_add_story: ->
     if PivotalRocketBackground.popup?
@@ -1060,6 +1070,7 @@ root.PivotalRocketBackground =
       title = box.find('input.add_story_name').val()
       story_type = box.find('select.add_story_story_type').val()
       story_point = box.find('select.add_story_point').val() if story_type? && 'feature' == story_type.toLowerCase()
+      story_deadline = box.find('input.add_story_release_date').val() if story_type? && 'release' == story_type.toLowerCase()
       requester = box.find('select.add_story_requester_id').find(":selected").data('name')
       owner = box.find('select.add_story_owner_id').find(":selected").data('name')
       description = box.find('textarea.add_story_description').val()
@@ -1074,6 +1085,7 @@ root.PivotalRocketBackground =
           labels: labels
         story_data.estimate = story_point if story_point? && story_point.length > 0
         story_data.owned_by = owner if owner? && owner.length > 0
+        story_data.deadline = story_deadline if story_deadline? && story_deadline.length > 0
         pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
         pivotal_lib.add_story
           project_id: project_id
