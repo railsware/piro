@@ -150,7 +150,7 @@
   <script id="project_cell_template" type="text/x-mustache-template">
     <li class="project_{{id}} project_cell{{#view_conditions}}{{#hide_project_cell}} hide-project{{/hide_project_cell}}{{/view_conditions}}" data-project-id="{{id}}">
 
-      <div class="title"><span class="toggle_project" data-project-id="{{id}}"></span> ({{count_of_stories}}) {{name}} <span class="sort_project" title="Drag to sort projects" data-project-id="{{id}}"></span></div>
+      <div class="title"><span class="toggle_project"></span> <span class="dbclick_toggle_project">({{count_of_stories}}) {{name}}</span> <span class="sort_project" title="Drag to sort projects" data-project-id="{{id}}"></span></div>
       
       <ul data-project-id="{{id}}" {{#is_requested_by_me}}data-requested="true"{{/is_requested_by_me}} class="list">
         {{#stories}}

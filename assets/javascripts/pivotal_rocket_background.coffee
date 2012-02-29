@@ -132,6 +132,8 @@ root.PivotalRocketBackground =
     # projects toggle
     PivotalRocketBackground.popup.$("ul.projects_stories_list").on "click", "span.toggle_project", (event) =>
       PivotalRocketBackground.toggle_project_cell($(event.target))
+    PivotalRocketBackground.popup.$("ul.projects_stories_list").on "dblclick", "span.dbclick_toggle_project", (event) =>
+      PivotalRocketBackground.toggle_project_cell($(event.target))
     # click on story  
     PivotalRocketBackground.popup.$("#storiesTabs").on "click", "li.story_info", (event) =>
       element_object = $(event.target)
@@ -982,8 +984,8 @@ root.PivotalRocketBackground =
   # toggle project cell in list
   toggle_project_cell: (object) ->
     if PivotalRocketBackground.popup?
-      project_id = object.data('projectId')
       project_cell = object.parents("li.project_cell")
+      project_id = project_cell.data('projectId')
       if project_cell.hasClass('hide-project')
         PivotalRocketStorage.update_view_options_in_project(PivotalRocketBackground.account, project_id, {hide_project_cell: false})
         PivotalRocketBackground.popup.$("ul.projects_stories_list").find("li.project_#{project_id}").removeClass('hide-project')
