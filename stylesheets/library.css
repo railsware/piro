@@ -45,10 +45,6 @@ a:hover, a:active {
     text-align: right;
 }
 
-abbr {
-    cursor: help;
-}
-
 p {
     margin-bottom: 10px;
 }
