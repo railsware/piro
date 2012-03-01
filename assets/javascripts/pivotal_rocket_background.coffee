@@ -69,8 +69,8 @@ root.PivotalRocketBackground =
     PivotalRocketBackground.popup.$('#ownerStories').tabs()
     PivotalRocketBackground.popup.$('#requesterStories').tabs()
     # fine add block
-    PivotalRocketBackground.popup.$("#storyInfo").on "click", "a.open_add_block", (event) =>
-      box = $(event.target).parents('.action_block')
+    open_fine_edit_block = (object) ->
+      box = object.parents('.action_block')
       box.removeClass('loading').addClass('adding')
       if box.hasClass('add_task_block')
         PivotalRocketStorage.set_opened_by_type('opened_task_box', true)
@@ -79,14 +79,18 @@ root.PivotalRocketBackground =
         box.find('textarea.add_comment_text').focus()
         PivotalRocketStorage.set_opened_by_type('opened_comment_box', true)
       return false
-    PivotalRocketBackground.popup.$("#storyInfo").on "click", "a.close_add_block", (event) =>
-      box = $(event.target).parents('.action_block')
+    close_fine_edit_block = (object) ->
+      box = object.parents('.action_block')
       box.removeClass('adding')
       if box.hasClass('add_task_block')
         PivotalRocketStorage.set_opened_by_type('opened_task_box', false)
       else if box.hasClass('add_comment_block')
         PivotalRocketStorage.set_opened_by_type('opened_comment_box', false)
       return false
+    PivotalRocketBackground.popup.$("#storyInfo").on "click", "a.open_add_block", (event) =>
+      open_fine_edit_block($(event.target))
+    PivotalRocketBackground.popup.$("#storyInfo").on "click", "a.close_add_block", (event) =>
+      close_fine_edit_block($(event.target))
     # fine delete
     PivotalRocketBackground.popup.$("#storyInfo").on "click", "a.fine_delete_link", (event) =>
       $(event.target).parents('.fine_delete').addClass('delete_confirm')
@@ -180,6 +184,11 @@ root.PivotalRocketBackground =
         event.preventDefault()
         PivotalRocketBackground.add_task_to_story($(event.target))
         return false
+      else if 27 == event.keyCode
+        event.preventDefault()
+        close_links = $(event.target).parents('div.add_task_block').find("a.close_add_block")
+        close_fine_edit_block($(close_links[0])) if close_links.length > 0
+        return false
     # edit task
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.edit_task_link", (event) =>
       $(event.target).parents('li.task_block').addClass('editing').find('input.edit_task_text').focus()
@@ -193,6 +202,11 @@ root.PivotalRocketBackground =
       if (((event.metaKey? && event.metaKey is true) || (event.ctrlKey? && event.ctrlKey is true)) && event.keyCode? && 83 == event.keyCode) || (13 == event.keyCode)
         event.preventDefault()
         PivotalRocketBackground.edit_task_in_story($(event.target))
+        return false
+      else if 27 == event.keyCode
+        event.preventDefault()
+        close_links = $(event.target).parents('li.task_block').find("a.cancel_task_link")
+        close_fine_edit_block($(close_links[0])) if close_links.length > 0
         return false
     # delete task
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.delete_task_link", (event) =>
@@ -219,6 +233,11 @@ root.PivotalRocketBackground =
       if ((event.metaKey? && event.metaKey is true) || (event.ctrlKey? && event.ctrlKey is true)) && event.keyCode? && 83 == event.keyCode
         event.preventDefault()
         PivotalRocketBackground.add_comment_to_story($(event.target))
+        return false
+      else if 27 == event.keyCode
+        event.preventDefault()
+        close_links = $(event.target).parents('div.add_comment_block').find("a.close_add_block")
+        close_fine_edit_block($(close_links[0])) if close_links.length > 0
         return false
     # delete comment from story
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.delete_comment_link", (event) =>
