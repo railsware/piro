@@ -290,17 +290,17 @@
         {{#tasks}}
           <li class="pvs task_block {{#complete}}completed{{/complete}}{{^complete}}uncompleted{{/complete}}">
             <div class="main">
-              <label class="outer block">
+              <div class="outer block">
                 <span class="unit">
                   <span class="sort_task"></span>
-                  <input class="task_checkbox" type="checkbox" data-task-id="{{id}}" data-story-id="{{story_id}}" data-project-id="{{project_id}}" {{#complete}}checked="checked"{{/complete}} /> 
+                  <input id="taskCheckbox{{id}}" class="task_checkbox" type="checkbox" data-task-id="{{id}}" data-story-id="{{story_id}}" data-project-id="{{project_id}}" {{#complete}}checked="checked"{{/complete}} /> 
                 </span>
                 <span class="unit-right mls">
                   <a href="#" class="edit_task_link edit-link">Edit</a>
                   <a href="#" class="delete_task_link del-link">Delete</a>
                 </span>
-                <span class="mll block">{{description}}</span>
-              </label>
+                <span class="mll block"><label for="taskCheckbox{{id}}">{{description}}</label></span>
+              </div>
             </div>
             <div class="edit">
               <input class="edit_task_text mbs" autocomplete="off" type="text" value="{{description}}" />
