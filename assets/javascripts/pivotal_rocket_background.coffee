@@ -427,7 +427,7 @@ root.PivotalRocketBackground =
     PivotalRocketBackground.popup.$('#storyInfo').find("ul.tasks_list").sortable
       handle: 'span.sort_task'
       axis: 'y'
-      placeholder: 'ui-state-highlight'
+      placeholder: 'ui-tasks-highlight'
       update: (event) ->
         objects = $(event.target).parents("ul.tasks_list").find("input.task_checkbox")
         story_id = objects.data('storyId')
