@@ -182,7 +182,7 @@ root.PivotalRocketBackground =
         return false
     # edit task
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.edit_task_link", (event) =>
-      $(event.target).parents('li.task_block').addClass('editing')
+      $(event.target).parents('li.task_block').addClass('editing').find('input.edit_task_text').focus()
       return false
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.cancel_task_link", (event) =>
       $(event.target).parents('li.task_block').removeClass('editing')
