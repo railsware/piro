@@ -27,8 +27,10 @@
 .ui-datepicker .ui-datepicker-buttonpane button { float: right; margin: .5em .2em .4em; cursor: pointer; padding: .2em .6em .3em .6em; width:auto; overflow:visible; }
 .ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current { float:left; }
 
-.ui-datepicker .ui-datepicker-today span {font-weight: bold; color: #fff; background-color: #067eb0;}
+.ui-datepicker .ui-datepicker-today span {font-weight: bold; background-color: #eee;}
 .ui-datepicker .ui-datepicker-other-month span {color: #ddd;}
+.ui-datepicker .ui-datepicker-current-day span,
+.ui-datepicker .ui-datepicker-current-day a {font-weight: bold; color: #fff; background-color: #067eb0;}
 /* with multiple calendars */
 .ui-datepicker.ui-datepicker-multi { width:auto; }
 .ui-datepicker-multi .ui-datepicker-group { float:left; }
