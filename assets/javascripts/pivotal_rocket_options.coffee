@@ -22,7 +22,17 @@ root.PivotalRocketOptions =
     $('#cancelAddAccount').click (event) => 
       $('#accountBox').removeClass('adding')
       return false
-    $('#pivotalEmail, #pivotalPassword, #pivotalCompanyName').keydown (event) => 
+    # account login
+    $('#pivotalTokenAuth').hide()
+    $('#pivotalTokenAuthLink').click (event) =>
+      $('#pivotalBaseAuth').hide()
+      $('#pivotalTokenAuth').show()
+      return false
+    $('#pivotalBaseAuthLink').click (event) =>
+      $('#pivotalTokenAuth').hide()
+      $('#pivotalBaseAuth').show()
+      return false
+    $('#pivotalEmail, #pivotalPassword, #pivotalCompanyName, #pivotalToken').keydown (event) => 
       PivotalRocketOptions.add_account() if 13 == event.keyCode
     $('#confirmAddAccount').click (event) => 
       PivotalRocketOptions.add_account()
@@ -94,33 +104,38 @@ root.PivotalRocketOptions =
     PivotalRocketOptions.background_page.PivotalRocketBackground.updated_options()
   # add acoount
   add_account: ->
-    username = $('#pivotalEmail').val()
-    password = $('#pivotalPassword').val()
-    if username.length > 0 && password.length > 0
-      pivotal_auth_lib = new PivotalAuthLib
-        username: username
-        password: password
-        success: (data, textStatus, jqXHR) ->
-          account = XML2JSON.parse(data, true)
-          account = account.person if account.person?
-          company_name = $('#pivotalCompanyName').val()
-          account.company_name = company_name if company_name.length > 0
-          PivotalRocketStorage.save_account(account)
-          $('#pivotalEmail, #pivotalPassword, #pivotalCompanyName').val('')
-          $('#pivotalAddError').empty()
-          $('#accountBox').removeClass('adding')
-          PivotalRocketOptions.account_list()
-          $('#loginSpinner').hide()
-          # notify background page
-          PivotalRocketOptions.background_page.PivotalRocketBackground.updated_accounts()
-          if !PivotalRocketOptions.background_page.PivotalRocketBackground.is_loading
-            PivotalRocketOptions.background_page.PivotalRocketBackground.initial_sync(account)
-        error: (jqXHR, textStatus, errorThrown) ->
-          $('#pivotalAddError').show().text(errorThrown)
-          $('#loginSpinner').hide()
-        beforeSend: (jqXHR, settings) ->
-          $('#loginSpinner').show()
-          $('#pivotalAddError').hide()
+    params = 
+      success: (data, textStatus, jqXHR) ->
+        account = XML2JSON.parse(data, true)
+        account = account.person if account.person?
+        company_name = $('#pivotalCompanyName').val()
+        account.company_name = company_name if company_name.length > 0
+        PivotalRocketStorage.save_account(account)
+        $('#pivotalEmail, #pivotalPassword, #pivotalCompanyName').val('')
+        $('#pivotalAddError').empty()
+        $('#accountBox').removeClass('adding')
+        PivotalRocketOptions.account_list()
+        $('#loginSpinner').hide()
+        # notify background page
+        PivotalRocketOptions.background_page.PivotalRocketBackground.updated_accounts()
+        if !PivotalRocketOptions.background_page.PivotalRocketBackground.is_loading
+          PivotalRocketOptions.background_page.PivotalRocketBackground.initial_sync(account)
+      error: (jqXHR, textStatus, errorThrown) ->
+        $('#pivotalAddError').show().text(errorThrown)
+        $('#loginSpinner').hide()
+      beforeSend: (jqXHR, settings) ->
+        $('#loginSpinner').show()
+        $('#pivotalAddError').hide()
+    if $('#pivotalBaseAuth').is(':visible')
+      params.username = $('#pivotalEmail').val()
+      params.password = $('#pivotalPassword').val()
+      if params.username.length > 0 && params.password.length > 0
+        pivotal_auth_lib = new PivotalAuthLib params
+    else
+      params.token = $('#pivotalToken').val()
+      if params.token.length > 0
+        pivotal_auth_lib = new PivotalAuthLib params
+        
   # update account
   update_account: (event) ->
     li_object = $(event.target).parents('li.account')
