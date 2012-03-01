@@ -205,8 +205,7 @@ root.PivotalRocketBackground =
         return false
       else if 27 == event.keyCode
         event.preventDefault()
-        close_links = $(event.target).parents('li.task_block').find("a.cancel_task_link")
-        close_fine_edit_block($(close_links[0])) if close_links.length > 0
+        close_links = $(event.target).parents('li.task_block').removeClass('editing')
         return false
     # delete task
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.delete_task_link", (event) =>
