@@ -194,9 +194,27 @@
       </div>
       <div class="unit size1of2 txt-right">        
         <div class="change_story_box">
-          <div class="main options">      
+          <div class="main options">
+          {{#need_estimate}}
+            <div class="mbxs">
+              <span class="label">Estimate: </span>
+              <select class="change_story_estimate" data-story-id="{{id}}" data-project-id="{{project_id}}">
+                <option value="-1">Unestimated</option>
+                {{#point_scale}}
+                  <option value="{{point}}">{{point}} points</option>
+                {{/point_scale}}
+              </select>
+            </div>
+          {{/need_estimate}}
+          
+          {{^need_estimate}}
+            <div class="mbxs">
+              <span class="label">Estimate: </span> <div class="value"><span class="status">{{estimate_text}}</span></div>
+            </div>
+          {{/need_estimate}}
+          
           {{^unestimated_feature}}
-          <div>
+            <div>
               <span class="label">Status: </span>
               <select class="change_story_state mbxs" data-story-id="{{id}}" data-project-id="{{project_id}}">
                 <option value="unstarted">Not Yet Started</option>
@@ -213,31 +231,14 @@
                 {{/story_type_many_statuses}}
               </select>
             </div>
-            {{/unestimated_feature}}
+          {{/unestimated_feature}}
             
-            {{#unestimated_feature}}
-              <div class="mbxs">
-                <span class="label">Status: </span> <div class="value"><span class="status">{{current_state}}</span></div>
-              </div>
-            {{/unestimated_feature}}
+          {{#unestimated_feature}}
+            <div>
+              <span class="label">Status: </span> <div class="value"><span class="status">{{current_state}}</span></div>
+            </div>
+          {{/unestimated_feature}}
             
-            {{#need_estimate}}
-              <div>
-              <span class="label">Estimate: </span>
-              <select class="change_story_estimate" data-story-id="{{id}}" data-project-id="{{project_id}}">
-                <option value="-1">Unestimated</option>
-                {{#point_scale}}
-                  <option value="{{point}}">{{point}} points</option>
-                {{/point_scale}}
-              </select>
-              </div>
-            {{/need_estimate}}
-            
-            {{^need_estimate}}
-              <div>
-                <span class="label">Estimate: </span> <div class="value"><span class="status">{{estimate_text}}</span></div>
-              </div>
-            {{/need_estimate}}
           </div>
           <div class="loader">
             <img src="images/spinner3.gif" alt="loading..." title="loading..." />
