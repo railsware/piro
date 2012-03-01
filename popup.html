@@ -217,7 +217,7 @@
             
             {{#unestimated_feature}}
               <div class="mbxs">
-                <span class="label">Status: </span> <div class="value"><span class="status">{{current_state}}</span></div>
+                <span class="label">Status: </span> <div class="value"><span class="status block txt-center">{{current_state}}</span></div>
               </div>
             {{/unestimated_feature}}
             
@@ -235,7 +235,7 @@
             
             {{^need_estimate}}
               <div>
-                <span class="label">Estimate: </span> <div class="value"><span class="status">{{estimate_text}}</span></div>
+                <span class="label">Estimate: </span> <div class="value"><span class="status block txt-center">{{estimate_text}}</span></div>
               </div>
             {{/need_estimate}}
           </div>
@@ -274,15 +274,17 @@
       <ul class="list mbm mrs tasks tasks_list">
         {{#tasks}}
           <li class="pvs task_block {{#complete}}completed{{/complete}}{{^complete}}uncompleted{{/complete}}">
-            <div class="main">              
+            <div class="main">
               <label class="outer block">
-                <span class="unit"><input class="task_checkbox" type="checkbox" data-task-id="{{id}}" data-story-id="{{story_id}}" data-project-id="{{project_id}}" {{#complete}}checked="checked"{{/complete}} /></span>
-                <span class="unit-right mls">
+                <span class="unit">
                   <span class="sort_task"></span>
-                  <a href="#" class="edit_task_link">Edit</a>
-                  <a href="#" class="delete_task_link negative">Delete</a>
+                  <input class="task_checkbox" type="checkbox" data-task-id="{{id}}" data-story-id="{{story_id}}" data-project-id="{{project_id}}" {{#complete}}checked="checked"{{/complete}} /> 
                 </span>
-                <span class="mlm block">{{description}}</span>
+                <span class="unit-right mls">
+                  <a href="#" class="edit_task_link edit-link">Edit</a>
+                  <a href="#" class="delete_task_link del-link">Delete</a>
+                </span>
+                <span class="mll block">{{description}}</span>
                 
               </label>
               
@@ -316,20 +318,21 @@
       <ul class="mbm list attachments">
         {{#attachments}}
           <li class="pvs">
-            <div class="clippy-holder">
-              <strong>{{uploaded_by.person.name}} </strong>
-              <div class="neutral"><a href="{{url}}" target="_blank">{{filename}}</a></div>
-              <div class="clippy-box">
-                <div id="attachment_{{id}}" class="attachment_clippy" data-attachment-url="{{url}}"></div>
-              </div>
-            </div>
+              <span class="unit attach-icon"></span>
+              <div class="mll">
+                <strong>{{uploaded_by.person.name}} </strong>
+                <div class="neutral"><a href="{{url}}" target="_blank">{{filename}}</a></div>
+                <div class="clippy-box">
+                  <div id="attachment_{{id}}" class="attachment_clippy" data-attachment-url="{{url}}"></div>
+                </div>
+              </div>              
           </li>
         {{/attachments}}
       </ul>
     {{/has_attachments}}
     <h2 class="mbs mtm">Comments</h2>
     {{#has_comments}}
-      <ul class="mbm list mrs comments comments_list" data-story-id="{{id}}" data-project-id="{{project_id}}">
+      <ul class="pbm list mrs comments comments_list" data-story-id="{{id}}" data-project-id="{{project_id}}">
         {{#comments}}
           <li class="pvs comment_block action_block">
             <div class="main fine_delete outer">
@@ -340,12 +343,12 @@
               <div class="unit size1of5">
                 {{#is_owner}}
                   <div class="fine_delete_main unit-right">
-                    <a class="fine_delete_link negative" href="#">Delete</a>
+                    <a class="fine_delete_link negative del-link" href="#">Delete</a>
                   </div>
-                  <div class="fine_delete_confirm">
-                    Make sure you want to do this. 
-                    <a class="delete_comment_link" href="#" data-id="{{id}}">Confirm Delete</a>
-                    <a class="fine_delete_cancel" href="#">Cancel</a>
+                  <div class="fine_delete_confirm txt-right">
+                    <div class="mbs">Really?</div> 
+                    <a class="delete_comment_link button danger tiny mrs" href="#" data-id="{{id}}">Yes</a>
+                    <a class="fine_delete_cancel" href="#">No</a>
                   </div>
                 {{/is_owner}}
               </div>

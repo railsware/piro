@@ -135,8 +135,19 @@ p {
 }
 
 .list.comments li,
-.list.tasks li {
+.list.tasks li,
+.list.attachments li {
     padding: 6px 0;
+}
+
+.list.tasks li {
+    border-top: 0;
+    padding: 3px 0;
+    box-shadow: 0 1px 0 rgba(255,255,255, 0.8);
+}
+
+.list.tasks li:last-child {
+    box-shadow: none;
 }
 
 .list li.current-box:hover {
@@ -239,6 +250,12 @@ p {
     background: url(../images/release.png) no-repeat 0 0;
 }
 
+.attach-icon {
+    width: 32px;
+    height: 32px;
+    background: url(../images/page_attach.png) no-repeat 0 0;
+}
+
 .feature-icon-title {
     padding-left: 24px;
     background: url(../images/star.png) no-repeat 0 4px;
@@ -267,11 +284,29 @@ p {
     cursor: pointer;
 }
 
+.edit-link, .del-link {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    text-indent: -9000px;
+    margin-top: 1px;
+    background: url(../images/edit.png) no-repeat 0 0;
+}
+
+.del-link {
+    background: url(../images/del.png) no-repeat 0 0;
+}
+
+.edit-link:hover, .del-link:hover {
+    background-color: #ddd;
+}
+
 .new-link {
     padding-left: 20px;
     background: url(../images/new.png) no-repeat 0 50%;
     color: #333;
 }
+
 
 .new-link span {
     border-bottom: 1px dotted;
@@ -284,12 +319,14 @@ p {
 
 /* tasks */
 .tasks li:first-child,
-.comments li:first-child {
+.comments li:first-child,
+.attachments li:first-child {
     border-top: 0;
 }
 
 .tasks li:last-child,
-.comments li:last-child {
+.comments li:last-child,
+.attachments li:last-child {
     padding-bottom: 0;
     border-bottom: 0;
 }
@@ -310,9 +347,6 @@ li.account {
 }
 
 .sort_project, .sort_task {
-    /* position: absolute;
-        right: 10px;
-        top: 5px; */
     display: inline-block;
     width: 16px;
     height: 16px;
@@ -327,8 +361,10 @@ li.account {
 }
 
 .sort_task {
-    position: static;
+    position: relative;
+    top: 2px;
     vertical-align: -2px;
+    margin-right: 3px;
     background: url(../images/sort-dark.png) no-repeat 0 0;
 }
 
@@ -371,6 +407,10 @@ li.account {
     left: 80px;
 }
 
+.attachments .clippy-box {
+    position: static;
+}
+
 .filter a {
     position: relative;
     top: -1px;
@@ -406,7 +446,7 @@ li.account {
 }
 
 .tags-box {
-    padding-top: 15px;
+    padding-top: 10px;
     margin-top: 15px;
     border-top: 1px solid rgba(0,0,0, 0.2);
     box-shadow: 0 1px 0 rgba(255,255,255, 0.8) inset;
