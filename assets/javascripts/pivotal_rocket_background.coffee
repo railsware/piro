@@ -996,7 +996,12 @@ root.PivotalRocketBackground =
   show_add_story_view: ->
     if PivotalRocketBackground.popup?
       add_story_object = 
-        projects: PivotalRocketStorage.get_projects(PivotalRocketBackground.account)
+        # get and sort projects
+        projects: PivotalRocketStorage.get_projects(PivotalRocketBackground.account).sort (a, b) ->
+          if a.name? && b.name?
+            return -1 if (a.name < b.name)
+            return 1 if (a.name > b.name)
+          return 0
       PivotalRocketBackground.popup.$('#addStoryView').empty().html(PivotalRocketBackground.templates.add_story.render(add_story_object))
       
       PivotalRocketBackground.selected_story = null
@@ -1042,6 +1047,13 @@ root.PivotalRocketBackground =
           requester_option_list = []
           owner_option_list = []
           owner_option_list.push "<option></option>"
+          # sort members
+          project.memberships = project.memberships.sort (a, b) ->
+            if a.member? && a.member.person? && a.member.person.name? &&
+            b.member? && b.member.person? && b.member.person.name?
+              return -1 if (a.member.person.name < b.member.person.name)
+              return 1 if (a.member.person.name > b.member.person.name)
+            return 0
           for member in project.memberships
             if member.member? && member.member.person? && member.member.person.name?
               person = member.member.person
