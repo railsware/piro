@@ -94,10 +94,19 @@ root.PivotalRocketBackground =
     PivotalRocketBackground.popup.$("#storyInfo").on "click", "a.fine_delete_cancel", (event) =>
       $(event.target).parents('.fine_delete').removeClass('delete_confirm')
       return false
-    # login  
+    # login
+    PivotalRocketBackground.popup.$('#pivotalTokenAuthLink').click (event) =>
+      PivotalRocketBackground.popup.$('#pivotalBaseAuth').hide()
+      PivotalRocketBackground.popup.$('#pivotalTokenAuth').show()
+      return false
+    PivotalRocketBackground.popup.$('#pivotalBaseAuthLink').click (event) =>
+      PivotalRocketBackground.popup.$('#pivotalTokenAuth').hide()
+      PivotalRocketBackground.popup.$('#pivotalBaseAuth').show()
+      return false
     PivotalRocketBackground.popup.$('#loginButton').click (event) =>
       PivotalRocketBackground.login_by_user()
-    PivotalRocketBackground.popup.$('#loginUsername, #loginPassword, #loginCompanyName').keydown (event) =>
+      return false
+    PivotalRocketBackground.popup.$('#loginUsername, #loginPassword, #loginToken, #loginCompanyName').keydown (event) =>
       PivotalRocketBackground.login_by_user() if 13 == event.keyCode
     # update link
     PivotalRocketBackground.popup.$('#mainPage').on "click", "a.update_stories", (event) =>
@@ -923,19 +932,15 @@ root.PivotalRocketBackground =
       PivotalRocketStorage.save_account(account)
   # login
   login_by_user: ->
-    username = PivotalRocketBackground.popup.$('#loginUsername').val()
-    password = PivotalRocketBackground.popup.$('#loginPassword').val()
-    if username? && password?
-      pivotal_auth_lib = new PivotalAuthLib
-        username: username
-        password: password
+    if PivotalRocketBackground.popup?
+      params = 
         success: (data, textStatus, jqXHR) ->
           account = XML2JSON.parse(data, true)
           account = account.person if account.person?
           PivotalRocketBackground.account = PivotalRocketBackground.save_account(account)
           PivotalRocketBackground.initial_sync(PivotalRocketBackground.account)
           PivotalRocketBackground.init_popup()
-          
+        
         error: (jqXHR, textStatus, errorThrown) ->
           if PivotalRocketBackground.popup?
             PivotalRocketBackground.popup.$('#loginPage').removeClass('locading')
@@ -944,6 +949,16 @@ root.PivotalRocketBackground =
           if PivotalRocketBackground.popup?
             PivotalRocketBackground.popup.$('#loginPage .error_msg').hide()
             PivotalRocketBackground.popup.$('#loginPage').addClass('locading')
+          
+      if PivotalRocketBackground.popup.$('#pivotalBaseAuth').is(':visible')
+        params.username = PivotalRocketBackground.popup.$('#loginUsername').val()
+        params.password = PivotalRocketBackground.popup.$('#loginPassword').val()
+        if params.username.length > 0 && params.password.length > 0
+          pivotal_auth_lib = new PivotalAuthLib params
+      else
+        params.token = PivotalRocketBackground.popup.$('#loginToken').val()
+        if params.token.length > 0
+          pivotal_auth_lib = new PivotalAuthLib params 
   # autoupdate for all data
   autoupdate: ->
     if !PivotalRocketBackground.is_loading && PivotalRocketStorage.get_accounts().length > 0

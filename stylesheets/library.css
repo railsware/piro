@@ -467,7 +467,7 @@ Vasiliy saw and decided to leave it as is for now :) */
   display: none;
 }
 
-#loginPage, #addStoryView, #storyInfo {
+#loginPage, #addStoryView, #storyInfo, #pivotalTokenAuth {
   display: none;
 }
 

@@ -127,12 +127,25 @@
     
     <!-- login -->
     <strong class="error_msg error-text negative"></strong>
-    <div class="pbs">
-      <input id="loginUsername" class="h2" type="text" placeholder="Email" />
-    </div> <!-- pbs -->
-    <div class="pbs">
-      <input id="loginPassword" class="h2" type="password" placeholder="Password" />
-    </div> <!-- pbs -->
+    <div id="pivotalBaseAuth">
+      <div class="pbs">
+        <a id="pivotalTokenAuthLink" href="#">I don't have email and password, but I have token.</a>
+      </div> <!-- mvs -->
+      <div class="pbs">
+        <input id="loginUsername" class="h2" type="text" placeholder="Email" />
+      </div> <!-- pbs -->
+      <div class="pbs">
+        <input id="loginPassword" class="h2" type="password" placeholder="Password" />
+      </div> <!-- pbs -->
+    </div>
+    <div id="pivotalTokenAuth">
+      <div class="pbs">
+        <a id="pivotalBaseAuthLink" href="#">I don't have token, but I have email and password.</a>
+      </div> <!-- pbs -->
+      <div class="pbs">
+        <input id="loginToken" class="h2" type="text" placeholder="Token" />
+      </div> <!-- pbs -->
+    </div>
     <div>
       <div class="pvs txt-center">
         <a href="#" id="loginButton" class="button success large">Login</a>

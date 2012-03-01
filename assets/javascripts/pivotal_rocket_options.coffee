@@ -23,7 +23,6 @@ root.PivotalRocketOptions =
       $('#accountBox').removeClass('adding')
       return false
     # account login
-    $('#pivotalTokenAuth').hide()
     $('#pivotalTokenAuthLink').click (event) =>
       $('#pivotalBaseAuth').hide()
       $('#pivotalTokenAuth').show()
