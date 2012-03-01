@@ -218,14 +218,26 @@ class root.PivotalApiLib
 # pivotal auth lib   
 class root.PivotalAuthLib
   baseUrl: "https://www.pivotaltracker.com/services/v4"
-  constructor: (params) ->      
-    $.ajax
-      cache: false
-      global: false
-      dataType: 'xml' 
-      url: "#{this.baseUrl}/me"
-      username: params.username
-      password: params.password
-      success: params.success
-      error: params.error
-      beforeSend: params.beforeSend
+  constructor: (params) ->
+    if params.username? && params.password?
+      $.ajax
+        cache: false
+        global: false
+        dataType: 'xml' 
+        url: "#{this.baseUrl}/me"
+        username: params.username
+        password: params.password
+        success: params.success
+        error: params.error
+        beforeSend: params.beforeSend
+    else
+      $.ajax
+        cache: false
+        global: false
+        dataType: 'xml' 
+        url: "#{this.baseUrl}/me"
+        headers:
+          "X-TrackerToken": params.token
+        success: params.success
+        error: params.error
+        beforeSend: params.beforeSend
