@@ -72,6 +72,11 @@ p {
     box-shadow: 0 1px 0 rgba(255,255,255, 0.5);
 }
 
+.release-box .status {
+    border-color: #fff;
+    box-shadow: none;
+}
+
 /* boxes */
 .current-box {
     background-color: #FFF8D7;
@@ -83,6 +88,11 @@ p {
 
 .done-box {
     background-color: #DAEBCF;
+}
+
+.release-box {
+    background-color: #407AA5;
+    color: #fff;
 }
 
 .grey-box {
@@ -141,6 +151,16 @@ p {
     background-color: #cbd5dc;
 }
 
+.list li.release-box:hover {
+    background-color: #306494;
+}
+
+.list li.release-box.active {
+    box-shadow: 0 1px 2px rgba(0,0,0, 0.1) inset;
+    background-color: #306494;
+    border-top: none;
+}
+
 .list li.current-box.active {
     box-shadow: 0 1px 2px rgba(0,0,0, 0.1) inset;
     background-color: #e4dec3;
@@ -161,7 +181,8 @@ p {
 
 .list li.current-box,
 .list li.icebox-box,
-.list li.done-box {
+.list li.done-box,
+.list li.release-box {
     cursor: pointer;
 }
 
@@ -174,6 +195,12 @@ p {
 .empty {
     border-left: 1px solid rgba(0,0,0, 0.2);
     background: url(../images/empty.png) no-repeat center center;
+}
+
+.footer-sep {
+    height: 24px;
+    border-left: 1px solid rgba(0,0,0, 0.3);
+    box-shadow: 1px 0 0 rgba(255,255,255, 0.4) inset;
 }
 
 .feature-icon {
@@ -203,6 +230,15 @@ p {
     background: url(../images/chore.png) no-repeat 0 0;
 }
 
+.release-icon {
+    display: inline-block;
+    vertical-align: -2px;
+    margin-right: 2px;
+    width: 14px;
+    height: 14px;
+    background: url(../images/release.png) no-repeat 0 0;
+}
+
 .feature-icon-title {
     padding-left: 24px;
     background: url(../images/star.png) no-repeat 0 4px;
@@ -216,6 +252,11 @@ p {
 .chore-icon-title {
     padding-left: 24px;
     background: url(../images/chore.png) no-repeat 0 4px;
+}
+
+.release-icon-title {
+    padding-left: 24px;
+    background: url(../images/release.png) no-repeat 0 4px;
 }
 
 .sortable_link {

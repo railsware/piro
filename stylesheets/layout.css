@@ -215,6 +215,10 @@ body {
 	background: rgba(0,0,0,0.4); 
 }
 
+.powered {
+    text-shadow: 0 1px 0 rgba(255,255,255, 0.8);
+}
+
 .powered img {
     margin-left: 2px;
     vertical-align: -3px;
@@ -233,6 +237,14 @@ body {
 
 #loginSpinner {
     display: none;
+}
+
+.fullscreen #loginPage {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -167px 0 0 -140px;
+    box-shadow: 0 0 0 5px rgba(0,0,0, 0.4);
 }
 
 /* settings */
