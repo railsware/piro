@@ -30,7 +30,7 @@ body {
 }
 
 .data-holder:hover {
-    width: 384px;
+    width: 380px;
     overflow: auto;
 }
 

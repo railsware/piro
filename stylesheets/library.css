@@ -462,6 +462,48 @@ li.account {
     color: #c70000;
 }
 
+.switcher {
+    display: inline-block;
+    margin-top: -1px;
+}
+
+.switcher.wide a {
+    width: 128px;
+}
+
+.switcher a {
+    float: left;
+    width: 60px;
+    text-align: center;
+    padding: 2px 5px;
+    text-decoration: none;
+    border: 1px solid #999;
+    border-left: 0;
+    background-color: #f5f5f5;
+    box-shadow: 0 1px 0 rgba(255,255,255, 0.5);
+    color: #3a3a3a;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.switcher a:hover {
+    background-color: #fff;
+}
+
+.switcher a.active {
+    box-shadow: 0 1px 1px rgba(0,0,0, 0.4) inset, 0 1px 0 rgba(255,255,255, 0.5);
+    background: #666;
+    color: #fff;
+}
+
+.switcher a:first-child {
+    border-left: 1px solid #999;
+    border-radius: 4px 0 0 4px;
+}
+
+.switcher a:last-child {
+    border-radius: 0 4px 4px 0;
+}
 
 /* leopard added, vasiliy will change by best practice. 
 Vasiliy saw and decided to leave it as is for now :) */
