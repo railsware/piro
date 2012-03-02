@@ -86,7 +86,7 @@ class root.PivotalApiLib
       headers:
         "X-TrackerToken": @account.token.guid
       # else
-      # using v3, because v4 broken
+      # using v3, because v4 broken (http://community.pivotaltracker.com/pivotal/topics/create_story_error_by_api)
       url: "https://www.pivotaltracker.com/services/v3/projects/#{params.project_id}/stories"
       type: "POST"
       data: params.data
