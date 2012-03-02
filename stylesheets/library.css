@@ -108,7 +108,7 @@ p {
 .default-box {
     background-color: #f4f4f4;
     border: 1px solid #A5A5A5;
-    box-shadow: 0 2px 10px rgba(0,0,0, 0.2);
+/*     box-shadow: 0 2px 10px rgba(0,0,0, 0.2); */
 }
 
 .title {

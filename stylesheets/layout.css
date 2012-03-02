@@ -230,6 +230,7 @@ body {
 /* login page */
 #loginPage {
     width: 280px;
+    height: 340px;
     background: #AEB6B9 url(../images/pattern.png) repeat-x 0 150%;
     border-radius: 5px;
 }
