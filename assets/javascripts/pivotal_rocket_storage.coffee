@@ -144,11 +144,10 @@ root.PivotalRocketStorage =
       updated_projects = for project in projects
         if parseInt(new_project.id) == parseInt(project.id) then new_project else project
       PivotalRocketStorage.set("projects_" + account.id, updated_projects)
-    
-  update_view_options_in_project: (account, project_id, new_options) ->
-    project = PivotalRocketStorage.find_project(account, project_id)
-    if new_options? && project?
-      for option_key, option_value of new_options
+  
+  set_options_for_project: (project, options) ->
+    if project? && options?
+      for option_key, option_value of options
         switch option_key
           when "hide_project_cell"
             if option_value is true
@@ -157,8 +156,21 @@ root.PivotalRocketStorage =
               delete project.view_conditions[option_key]
           else
             project.view_conditions[option_key] = option_value
+    # ret project
+    return project
+    
+  update_view_options_in_project: (account, project_id, new_options) ->
+    project = PivotalRocketStorage.find_project(account, project_id)
+    if new_options? && project?
+      project = PivotalRocketStorage.set_options_for_project(project, new_options)
       PivotalRocketStorage.update_project(account, project)
     return true
+    
+  update_view_options_all_in_projects: (account, new_options) ->
+    projects = PivotalRocketStorage.get_projects(account)
+    updated_projects = for project in projects
+      PivotalRocketStorage.set_options_for_project(project, new_options)
+    PivotalRocketStorage.set("projects_" + account.id, updated_projects)
     
   get_projects: (account) ->
     PivotalRocketStorage.get("projects_" + account.id)

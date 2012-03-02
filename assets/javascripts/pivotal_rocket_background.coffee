@@ -76,17 +76,31 @@ root.PivotalRocketBackground =
             tabs = PivotalRocketBackground.owner_tabs
           else
             tabs = PivotalRocketBackground.requester_tabs
+          console.debug event
           if tabs?
             switch event.keyCode
+              # click first tab (sh + 1)
               when 49
                 event.preventDefault()
                 tabs.tabs('select', 0)
+              # click second tab (sh + 2)
               when 50
                 event.preventDefault()
                 tabs.tabs('select', 1)
+              # click third tab (sh + 3)
               when 51
                 event.preventDefault()
                 tabs.tabs('select', 2)
+              # min all projects (sh + 4)
+              when 52
+                event.preventDefault()
+                PivotalRocketStorage.update_view_options_all_in_projects(PivotalRocketBackground.account, {hide_project_cell: true})
+                PivotalRocketBackground.init_list_stories()
+              # min all projects (sh + 5)
+              when 53
+                event.preventDefault()
+                PivotalRocketStorage.update_view_options_all_in_projects(PivotalRocketBackground.account, {hide_project_cell: false})
+                PivotalRocketBackground.init_list_stories()
               # search field focus (sh + S)
               when 83
                 event.preventDefault()
