@@ -119,8 +119,8 @@ root.PivotalRocketBackground =
     PivotalRocketBackground.popup.$('#changeAccount').change (event) =>
       PivotalRocketBackground.change_account()
     # change type list
-    PivotalRocketBackground.popup.$('#selecterStoriesType').change (event) =>
-      PivotalRocketStorage.set_role($(event.target).val())
+    PivotalRocketBackground.popup.$('a.selecter_stories_type').click (event) =>
+      PivotalRocketStorage.set_role($(event.target).data('value'))
       PivotalRocketBackground.change_view_type()
     # settings link
     PivotalRocketBackground.popup.$('#settingsLink').click (event) ->
@@ -270,7 +270,8 @@ root.PivotalRocketBackground =
   change_view_type: ->
     if PivotalRocketBackground.popup? && PivotalRocketBackground.account?
       selected_type = PivotalRocketStorage.get_role()
-      PivotalRocketBackground.popup.$('#selecterStoriesType').val(selected_type)
+      PivotalRocketBackground.popup.$("a.selecter_stories_type").removeClass('active')
+      PivotalRocketBackground.popup.$("a.selecter_stories_type[data-value=#{selected_type}]").addClass('active')
       PivotalRocketBackground.popup.$('#storiesTabs div.tabs_content_block').hide()
       selector = PivotalRocketBackground.popup.$("#storiesTabs ##{selected_type}Stories")
       selector.show()
@@ -1011,7 +1012,8 @@ root.PivotalRocketBackground =
       PivotalRocketStorage.delete_stories(project, requester)
   # get requester or no status
   get_requester_or_owner_status: ->
-    selected_type = PivotalRocketBackground.popup.$('#selecterStoriesType').val()
+    selected_type = PivotalRocketStorage.get_role()
+    selected_type = PivotalRocketBackground.popup.$("a.selecter_stories_type.active").data('value') if !selected_type?
     selected_type_bol = if selected_type? && "requester" == selected_type then true else false
     return selected_type_bol
   # toggle project cell in list
