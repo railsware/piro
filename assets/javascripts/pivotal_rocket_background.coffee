@@ -450,6 +450,7 @@ root.PivotalRocketBackground =
       event   : 'dblclick'
       width   : 'none'
       height  : 'none'
+      onblur  : 'ignore'
     # story description
     PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description').editable (value, settings) ->
       selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
@@ -486,6 +487,7 @@ root.PivotalRocketBackground =
       indicator : '<img src="images/spinner3.gif" alt="loading..." title="loading..." />'
       cssclass  : 'editable-textarea'
       event   : 'dblclick'
+      onblur  : 'ignore'
       data    : (value, settings) ->
         return PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description').data('description')
     # init tasks sorting
