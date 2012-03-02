@@ -293,6 +293,11 @@ root.PivotalRocketBackground =
     PivotalRocketBackground.popup.$('#addStoryView').on "click", "input.add_story_button", (event) =>
       PivotalRocketBackground.save_new_story()
       return false
+    PivotalRocketBackground.popup.$('#addStoryView').on "keydown", "input.add_story_name, textarea.add_story_description, input.add_story_labels", (event) =>
+      if ((event.metaKey? && event.metaKey is true) || (event.ctrlKey? && event.ctrlKey is true)) && event.keyCode? && 83 == event.keyCode
+        event.preventDefault()
+        PivotalRocketBackground.save_new_story()
+        return false
     # add story cancel link
     PivotalRocketBackground.popup.$('#addStoryView').on "click", "a.add_story_close", (event) =>
       PivotalRocketBackground.popup.$('#storyInfo, #addStoryView').hide()
