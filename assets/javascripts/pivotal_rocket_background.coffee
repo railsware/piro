@@ -1101,6 +1101,11 @@ root.PivotalRocketBackground =
       dateFormat: "mm/dd/yy"
       showOtherMonths: true
       selectOtherMonths: true
+    # assign owner to me
+    PivotalRocketBackground.popup.$('#addStoryView').find('a.add_story_set_owner_on_me').click (event) ->
+      PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_owner_id').
+      val(PivotalRocketBackground.account.id.toString()).trigger("liszt:updated")
+      return false
     PivotalRocketBackground.changed_project_in_add_story()
     PivotalRocketBackground.changed_story_type_on_add_story()
   # add story change type
