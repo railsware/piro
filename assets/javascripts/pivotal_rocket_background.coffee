@@ -122,6 +122,7 @@ root.PivotalRocketBackground =
     PivotalRocketBackground.popup.$('a.selecter_stories_type').click (event) =>
       PivotalRocketStorage.set_role($(event.target).data('value'))
       PivotalRocketBackground.change_view_type()
+      return false
     # settings link
     PivotalRocketBackground.popup.$('#settingsLink').click (event) ->
       options_url = chrome.extension.getURL('options.html')
