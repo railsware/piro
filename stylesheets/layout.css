@@ -24,21 +24,24 @@ body {
     width: 380px;
     top: 30px;
     bottom: 30px;
-    overflow: hidden;
+    overflow: auto;
     word-wrap: break-word;
     box-shadow: 0 0 0 1px rgba(255,255,255, 0.2) inset;
 }
 
 .data-holder:hover {
+    width: 384px;
     overflow: auto;
 }
 
 /* fullscreen */
 .fullscreen {
+    min-width: 800px;
     background: #1d153a url(../images/space.jpg) no-repeat 50% 50%;
 }
 
 .fullscreen .page {
+    min-width: 800px;
     position: absolute;
     left: 20px;
     right: 20px;
@@ -199,15 +202,15 @@ body {
 
 /* scrollbars */
 ::-webkit-scrollbar {
-    width: 6px;
+    width: 4px;
 }
  
 ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px rgba(0,0,0,0.1); 
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
 }
  
 ::-webkit-scrollbar-thumb {
-    background: rgba(0,0,0,0.2); 
+    background: rgba(0,0,0,0.4); 
     box-shadow: inset 0 0 3px rgba(0,0,0,0.5); 
 }
 
