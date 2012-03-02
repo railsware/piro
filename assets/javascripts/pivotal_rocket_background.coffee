@@ -58,6 +58,7 @@ root.PivotalRocketBackground =
         PivotalRocketBackground.popup.$('#mainPage, #storyInfo').hide()
         PivotalRocketBackground.popup.$('#loginPage .error_msg').hide()
         PivotalRocketBackground.popup.$('#loginPage').show()
+        PivotalRocketBackground.popup.$('#loginUsername').focus()
   # init templates
   init_templates: ->
     if PivotalRocketBackground.popup?
@@ -153,12 +154,18 @@ root.PivotalRocketBackground =
       return false
     # login
     PivotalRocketBackground.popup.$('#pivotalTokenAuthLink').click (event) =>
+      PivotalRocketBackground.popup.$('a.login_switcher_link').removeClass('active')
+      $(event.target).addClass('active')
       PivotalRocketBackground.popup.$('#pivotalBaseAuth').hide()
       PivotalRocketBackground.popup.$('#pivotalTokenAuth').show()
+      PivotalRocketBackground.popup.$('#loginToken').focus()
       return false
     PivotalRocketBackground.popup.$('#pivotalBaseAuthLink').click (event) =>
+      PivotalRocketBackground.popup.$('a.login_switcher_link').removeClass('active')
+      $(event.target).addClass('active')
       PivotalRocketBackground.popup.$('#pivotalTokenAuth').hide()
       PivotalRocketBackground.popup.$('#pivotalBaseAuth').show()
+      PivotalRocketBackground.popup.$('#loginUsername').focus()
       return false
     PivotalRocketBackground.popup.$('#loginButton').click (event) =>
       PivotalRocketBackground.login_by_user()
