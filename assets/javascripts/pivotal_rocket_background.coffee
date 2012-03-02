@@ -16,6 +16,9 @@ root.PivotalRocketBackground =
   templates: {}
   # selected story
   selected_story: null
+  # tabs
+  owner_tabs: null
+  requester_tabs: null
   # init background page (chrome loaded)
   init: ->
     if PivotalRocketStorage.get_accounts().length > 0
@@ -63,11 +66,48 @@ root.PivotalRocketBackground =
       PivotalRocketBackground.templates.story             = Hogan.compile(PivotalRocketBackground.popup.$('#story_info_template').html())
       PivotalRocketBackground.templates.add_story         = Hogan.compile(PivotalRocketBackground.popup.$('#add_story_template').html())
       PivotalRocketBackground.templates.add_story_result  = Hogan.compile(PivotalRocketBackground.popup.$('#add_story_result_template').html())
+  # init global hotkeys
+  init_global_hotkeys: ->
+    $(PivotalRocketBackground.popup).keydown (event) ->
+      if event.target? && event.target.nodeName? && -1 == jQuery.inArray(event.target.nodeName.toLowerCase(), ["input", "textarea", "select"])
+        if event.keyCode? && event.shiftKey? && event.shiftKey is true
+          tabs = null
+          if PivotalRocketBackground.popup.$('#ownerStories').is(':visible') is true 
+            tabs = PivotalRocketBackground.owner_tabs
+          else
+            tabs = PivotalRocketBackground.requester_tabs
+          if tabs?
+            switch event.keyCode
+              when 49
+                event.preventDefault()
+                tabs.tabs('select', 0)
+              when 50
+                event.preventDefault()
+                tabs.tabs('select', 1)
+              when 51
+                event.preventDefault()
+                tabs.tabs('select', 2)
+              # search field focus (sh + S)
+              when 83
+                event.preventDefault()
+                PivotalRocketBackground.popup.$('#searchStories').focus()
+              # update (sh + U)
+              when 85
+                event.preventDefault()
+                PivotalRocketBackground.autoupdate()
+              # new story (sh + N)
+              when 78
+                event.preventDefault()
+                PivotalRocketBackground.show_add_story_view()
+              else
+                return true
   # init popup bindings
   init_bindings: ->
     # tabs
-    PivotalRocketBackground.popup.$('#ownerStories').tabs()
-    PivotalRocketBackground.popup.$('#requesterStories').tabs()
+    PivotalRocketBackground.owner_tabs = PivotalRocketBackground.popup.$('#ownerStories').tabs()
+    PivotalRocketBackground.requester_tabs = PivotalRocketBackground.popup.$('#requesterStories').tabs()
+    # global hotkeys
+    PivotalRocketBackground.init_global_hotkeys()
     # fine add block
     open_fine_edit_block = (object) ->
       box = object.parents('.action_block')
@@ -114,7 +154,7 @@ root.PivotalRocketBackground =
       PivotalRocketBackground.login_by_user() if 13 == event.keyCode
     # update link
     PivotalRocketBackground.popup.$('#mainPage').on "click", "a.update_stories", (event) =>
-      PivotalRocketBackground.autoupdate()      
+      PivotalRocketBackground.autoupdate()
     # change account
     PivotalRocketBackground.popup.$('#changeAccount').change (event) =>
       PivotalRocketBackground.change_account()
