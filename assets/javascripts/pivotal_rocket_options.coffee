@@ -18,18 +18,28 @@ root.PivotalRocketOptions =
     $('#addAccount').click (event) => 
       $('#pivotalAddError').hide()
       $('#accountBox').addClass('adding')
+      if $('#pivotalBaseAuth').is(':visible')
+        $('#pivotalEmail').focus()
+      else
+        $('#pivotalToken').focus()
       return false
     $('#cancelAddAccount').click (event) => 
       $('#accountBox').removeClass('adding')
       return false
     # account login
     $('#pivotalTokenAuthLink').click (event) =>
+      $('a.login_switcher_link').removeClass('active')
+      $(event.target).addClass('active')
       $('#pivotalBaseAuth').hide()
       $('#pivotalTokenAuth').show()
+      $('#pivotalToken').focus()
       return false
     $('#pivotalBaseAuthLink').click (event) =>
+      $('a.login_switcher_link').removeClass('active')
+      $(event.target).addClass('active')
       $('#pivotalTokenAuth').hide()
       $('#pivotalBaseAuth').show()
+      $('#pivotalEmail').focus()
       return false
     $('#pivotalEmail, #pivotalPassword, #pivotalCompanyName, #pivotalToken').keydown (event) => 
       PivotalRocketOptions.add_account() if 13 == event.keyCode
