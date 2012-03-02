@@ -96,7 +96,7 @@ root.PivotalRocketBackground =
                 event.preventDefault()
                 PivotalRocketStorage.update_view_options_all_in_projects(PivotalRocketBackground.account, {hide_project_cell: true})
                 PivotalRocketBackground.init_list_stories()
-              # min all projects (sh + 5)
+              # max all projects (sh + 5)
               when 53
                 event.preventDefault()
                 PivotalRocketStorage.update_view_options_all_in_projects(PivotalRocketBackground.account, {hide_project_cell: false})
