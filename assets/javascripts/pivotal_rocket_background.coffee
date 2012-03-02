@@ -1128,6 +1128,8 @@ root.PivotalRocketBackground =
       return false
     PivotalRocketBackground.changed_project_in_add_story()
     PivotalRocketBackground.changed_story_type_on_add_story()
+    # focus
+    PivotalRocketBackground.popup.$('#addStoryView').find('input.add_story_name').focus()
   # add story change type
   changed_story_type_on_add_story: ->
     story_type = PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_story_type').val().toLowerCase()
