@@ -76,7 +76,6 @@ root.PivotalRocketBackground =
             tabs = PivotalRocketBackground.owner_tabs
           else
             tabs = PivotalRocketBackground.requester_tabs
-          console.debug event
           if tabs?
             switch event.keyCode
               # click first tab (sh + 1)
