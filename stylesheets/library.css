@@ -396,15 +396,29 @@ li.account {
 .clippy-box {
     position: absolute;
     top: 0;
+    padding: 3px;
+    margin: 1px;
+    height: 14px;
+    background-color: #eee;
+    border-radius: 4px;
     left: -800px;
 }
 
 .clippy-holder {
     position: relative;
+    width: 137px;
+    padding: 3px 6px;
+    margin-left: -6px;
+    margin-top: -3px;
+    border-radius: 4px;
+}
+
+.clippy-holder:hover {
+    background-color: #ddd;
 }
 
 .clippy-holder:hover .clippy-box {
-    left: 80px;
+    left: 90px;
 }
 
 .attachments .clippy-box {

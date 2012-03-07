@@ -133,9 +133,9 @@ body {
     font-weight: bold;
     text-transform: uppercase;
     border-left: 1px solid #222;
+    box-shadow: 0 0 0 1px rgba(255,255,255, 0.1) inset;
     text-shadow: 0 -1px 0 rgba(0,0,0, 0.5);
     background: rgb(125,126,125);
-    background: -moz-linear-gradient(top,  rgba(125,126,125,1) 0%, rgba(14,14,14,1) 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(125,126,125,1)), color-stop(100%,rgba(14,14,14,1)));
     background: -webkit-linear-gradient(top,  rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%);
     background: linear-gradient(top,  rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%);
@@ -146,6 +146,9 @@ body {
     border-left: 0;
 }
 
+.nav li:last-child a {
+    border-right: 1px solid #222;
+}
 
 .ui-tabs .ui-tabs-nav { margin: 0; padding: 0; }
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected a { 
@@ -154,7 +157,6 @@ body {
     text-shadow: 0 1px 0 rgba(255,255,255, 0.5);
     box-shadow: 0 1px 0 rgba(255,255,255, 0.4) inset;
     background: rgb(68,68,68);
-    background: -moz-linear-gradient(top,  rgba(68,68,68,1) 0%, rgba(125,126,125,1) 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(68,68,68,1)), color-stop(100%,rgba(125,126,125,1)));
     background: -webkit-linear-gradient(top,  rgba(68,68,68,1) 0%,rgba(125,126,125,1) 100%);
     background: linear-gradient(top,  rgba(68,68,68,1) 0%,rgba(125,126,125,1) 100%);    
@@ -165,9 +167,6 @@ body {
     background: -webkit-linear-gradient(top,  rgba(255,255,255,0.25) 0%,rgba(255,255,255,0) 100%);
     background: linear-gradient(top,  rgba(255,255,255,0.25) 0%,rgba(255,255,255,0) 100%);
 }
-
-
-
 
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected a#currentRequesterTabLabel,
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected a#currentTabLabel {
