@@ -42,11 +42,10 @@ class root.PivotalApiLib
       return false unless account.email?
       accounts = PivotalRocketStorage.get_accounts()
       new_accounts = for one_account in accounts
-        if one_account.email?
-          if one_account.email == account.email
-            account
-          else
-            one_account
+        if one_account.email? && one_account.email == account.email
+          account
+        else
+          one_account
       PivotalRocketStorage.set_accounts(new_accounts)
     this.send_pivotal_request(params)
 
