@@ -24,8 +24,8 @@ class root.PivotalApiLib
     this.send_pivotal_request(params)
   
   get_stories_for_project: (params) =>
-    url_params = encodeURIComponent("owner:" + @account.initials)
-    url_params = encodeURIComponent("requester:" + @account.initials) if params.requester? && params.requester is true
+    url_params = encodeURIComponent("owner:#{@account.initials}")
+    url_params = encodeURIComponent("requester:#{@account.initials}") if params.requester? && params.requester is true
     params.url = "#{this.baseUrl}/projects/#{params.project.id}/stories?filter=#{url_params}"
     if params.success?
       params.success_function = params.success
