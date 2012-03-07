@@ -720,6 +720,8 @@ root.PivotalRocketBackground =
             PivotalRocketBackground.popup.$('#storyInfo')
             .find("select.change_story_state[data-story-id=#{story_id}]")
             .val(story.current_state).parents('div.change_story_box').removeClass('loading')
+          else
+            PivotalRocketBackground.popup.$('#storyInfo').find('div.change_story_box').removeClass('loading')
   # change story estimate
   change_story_estimate: (object) ->
     if PivotalRocketBackground.account? && PivotalRocketBackground.popup?
@@ -746,6 +748,8 @@ root.PivotalRocketBackground =
             PivotalRocketBackground.popup.$('#storyInfo')
             .find("select.change_story_estimate[data-story-id=#{story_id}]")
             .val(story.estimate).parents('div.change_story_box').removeClass('loading')
+          else
+            PivotalRocketBackground.popup.$('#storyInfo').find('div.change_story_box').removeClass('loading')
   # add task to story
   add_task_to_story: (object) ->
     if PivotalRocketBackground.account? && PivotalRocketBackground.popup?
@@ -1093,7 +1097,7 @@ root.PivotalRocketBackground =
             return 1 if (a.name > b.name)
           return 0
       PivotalRocketBackground.popup.$('#addStoryView').empty().html(PivotalRocketBackground.templates.add_story.render(add_story_object))
-      
+      PivotalRocketBackground.popup.$('#addStoryView .errors_box').hide()
       PivotalRocketBackground.selected_story = null
       PivotalRocketBackground.popup.$('#storiesTabs').find('li.story_info').removeClass('active')
       PivotalRocketBackground.popup.$('#storyInfo, #infoPanel').hide()
@@ -1101,10 +1105,15 @@ root.PivotalRocketBackground =
       PivotalRocketBackground.binding_add_story_view()
   # binding add story view
   binding_add_story_view: ->
+    # set latest selected project
+    PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_project_id').val(PivotalRocketStorage.get_last_created_project_id())
+    # chosen
     PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_owner_id').chosen
       allow_single_deselect: true
     PivotalRocketBackground.popup.$('#addStoryView').find('select.chosen_selector').chosen()
     PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_project_id').change (event) ->
+      # save latest selected project
+      PivotalRocketStorage.set_last_created_project_id(PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_project_id').val())
       PivotalRocketBackground.changed_project_in_add_story()
     PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_story_type').change (event) ->
       PivotalRocketBackground.changed_story_type_on_add_story()
@@ -1233,7 +1242,7 @@ root.PivotalRocketBackground =
             root.setTimeout(fcallback_update, 10000)
           error: (jqXHR, textStatus, errorThrown) ->
             PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_box').removeClass('loading')
-            PivotalRocketBackground.popup.$('#addStoryView').find('div.errors_box').html(errorThrown)
+            PivotalRocketBackground.popup.$('#addStoryView').find('.errors_box').show().html(errorThrown)
   # register omnibox (for search)
   init_omnibox: ->
     chrome.omnibox.onInputCancelled.addListener ->

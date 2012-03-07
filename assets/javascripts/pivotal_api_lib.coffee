@@ -56,6 +56,7 @@ class root.PivotalApiLib
 
   add_story: (params) =>
     # using v3, because v4 broken (http://community.pivotaltracker.com/pivotal/topics/create_story_error_by_api)
+    #params.url = "#{this.baseUrl}/projects/#{params.project_id}/stories"
     params.url = "https://www.pivotaltracker.com/services/v3/projects/#{params.project_id}/stories"
     params.type = "POST"
     this.send_pivotal_request(params)
