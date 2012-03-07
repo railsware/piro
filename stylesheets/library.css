@@ -401,6 +401,7 @@ li.account {
     height: 14px;
     background-color: #eee;
     border-radius: 4px;
+    box-shadow: 0 0 1px rgba(0,0,0, 0.1) inset;
     left: -800px;
 }
 
@@ -415,6 +416,7 @@ li.account {
 
 .clippy-holder:hover {
     background-color: #ddd;
+    box-shadow: 0 0 1px rgba(0,0,0, 0.1) inset;
 }
 
 .clippy-holder:hover .clippy-box {
