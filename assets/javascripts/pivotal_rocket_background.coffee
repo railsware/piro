@@ -72,7 +72,6 @@ root.PivotalRocketBackground =
     $(PivotalRocketBackground.popup).keydown (event) ->
       return true if !(event.target? && event.target.nodeName? && -1 == jQuery.inArray(event.target.nodeName.toLowerCase(), ["input", "textarea", "select"]))
       return true if !(event.keyCode? && event.shiftKey? && event.shiftKey is true)
-      tabs = null
       if PivotalRocketBackground.popup.$('#ownerStories').is(':visible') is true 
         tabs = PivotalRocketBackground.owner_tabs
       else
@@ -1251,7 +1250,7 @@ root.PivotalRocketBackground =
   # default omnibox text
   default_omnibox_suggestion: ->
     chrome.omnibox.setDefaultSuggestion
-      description: '<url><match>piro:</match></url> Go by Pivotaltracker ID'
+      description: '<url><match>piro:</match></url> Go by PivotalTracker ID'
   # default omnibox text
   set_omnibox_suggestion: (text) ->
     def_descr = "<match><url>piro</url></match><dim> [</dim> "
