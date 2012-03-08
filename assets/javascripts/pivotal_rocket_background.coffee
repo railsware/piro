@@ -413,17 +413,17 @@ root.PivotalRocketBackground =
         url: story.url
   # set links in description
   set_description_links: ->
-    if PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description').length > 0
-      exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig
-      descr_object = PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description')
-      descr_object.html(descr_object.html().replace(exp,"<a class='desc_link' href='$1'>$1</a>"))
+    return false unless PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description').length > 0
+    exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig
+    descr_object = PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description')
+    descr_object.html(descr_object.html().replace(exp,"<a class='desc_link' href='$1'>$1</a>"))
   # set links in comments
   set_comments_links: ->
-    if PivotalRocketBackground.popup.$('#storyInfo').find('div.comment_description').length > 0
-      exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig
-      $.each PivotalRocketBackground.popup.$('#storyInfo').find('div.comment_description'), (key, object) ->
-        object = $(object)
-        object.html(object.html().replace(exp,"<a class='desc_link' href='$1'>$1</a>"))
+    return false unless PivotalRocketBackground.popup.$('#storyInfo').find('div.comment_description').length > 0
+    exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig
+    $.each PivotalRocketBackground.popup.$('#storyInfo').find('div.comment_description'), (key, object) ->
+      object = $(object)
+      object.html(object.html().replace(exp,"<a class='desc_link' href='$1'>$1</a>"))
   # init show bindings for story
   bindings_story_info: (story) ->
     # story title
@@ -535,111 +535,110 @@ root.PivotalRocketBackground =
   # spinner for update stories
   init_spinner: ->
     PivotalRocketBackground.init_icon_status()
-    if PivotalRocketBackground.popup? && PivotalRocketBackground.account?
-      hash_data =
-        update_msg: chrome.i18n.getMessage("update_stories_link")
-      if PivotalRocketBackground.is_loading
-        hash_data.is_loading =
-          loading_msg: chrome.i18n.getMessage("loading_msg")
-    
-      PivotalRocketBackground.popup.$('#loaderSpinner').empty().html(PivotalRocketBackground.templates.spinner.render(hash_data))
-      # init account switcher
-      PivotalRocketBackground.init_account_swither()
-      PivotalRocketBackground.change_view_type()
+    return false if !(PivotalRocketBackground.popup? && PivotalRocketBackground.account?)
+    hash_data =
+      update_msg: chrome.i18n.getMessage("update_stories_link")
+    if PivotalRocketBackground.is_loading
+      hash_data.is_loading =
+        loading_msg: chrome.i18n.getMessage("loading_msg")
+  
+    PivotalRocketBackground.popup.$('#loaderSpinner').empty().html(PivotalRocketBackground.templates.spinner.render(hash_data))
+    # init account switcher
+    PivotalRocketBackground.init_account_swither()
+    PivotalRocketBackground.change_view_type()
   # account switch between accounts
   init_account_swither: ->
-    if PivotalRocketBackground.popup? && PivotalRocketBackground.account?
-      PivotalRocketBackground.popup.$('#changeAccount').prop('disabled', PivotalRocketBackground.is_loading).empty()
-      for account in PivotalRocketStorage.get_accounts()
-        account_title = if account.company_name then account.company_name else account.email
-        PivotalRocketBackground.popup.$('#changeAccount').append("<option value='#{account.id}'>#{account_title}</option>")
-      PivotalRocketBackground.popup.$('#changeAccount').val(PivotalRocketBackground.account.id)
+    return false if !(PivotalRocketBackground.popup? && PivotalRocketBackground.account?)
+    PivotalRocketBackground.popup.$('#changeAccount').prop('disabled', PivotalRocketBackground.is_loading).empty()
+    for account in PivotalRocketStorage.get_accounts()
+      account_title = if account.company_name then account.company_name else account.email
+      PivotalRocketBackground.popup.$('#changeAccount').append("<option value='#{account.id}'>#{account_title}</option>")
+    PivotalRocketBackground.popup.$('#changeAccount').val(PivotalRocketBackground.account.id)
   # show stories list
   init_list_stories: ->
-    if PivotalRocketBackground.popup? && PivotalRocketBackground.account?
-      search_text = null
-      if PivotalRocketBackground.popup.$('#searchStories').val().length > 2
-        search_text = PivotalRocketBackground.popup.$('#searchStories').val()
-      stories_list = {current: [], done: [], icebox: [], rcurrent: [], rdone: [], ricebox: []}
-      stories_count = {current: 0, done: 0, icebox: 0, rcurrent: 0, rdone: 0, ricebox: 0}
-      stored_projects = PivotalRocketStorage.get_projects(PivotalRocketBackground.account)
-      if stored_projects?
-        for project in stored_projects
-          stored_stories = PivotalRocketStorage.get_status_stories(project, false, search_text)
-          if stored_stories?
-            if stored_stories.current? && stored_stories.current.length > 0
-              project.stories = stored_stories.current
-              project.count_of_stories = stored_stories.current.length
-              stories_count.current += project.count_of_stories
-              stories_list.current.push(PivotalRocketBackground.templates.project.render(project))
-            if stored_stories.done? && stored_stories.done.length > 0
-              project.stories = stored_stories.done
-              project.count_of_stories = stored_stories.done.length
-              stories_count.done += project.count_of_stories
-              stories_list.done.push(PivotalRocketBackground.templates.project.render(project))
-            if stored_stories.icebox? && stored_stories.icebox.length > 0
-              project.stories = stored_stories.icebox
-              project.count_of_stories = stored_stories.icebox.length
-              stories_count.icebox += project.count_of_stories
-              stories_list.icebox.push(PivotalRocketBackground.templates.project.render(project))
+    return false if !(PivotalRocketBackground.popup? && PivotalRocketBackground.account?)
+    search_text = null
+    search_text = PivotalRocketBackground.popup.$('#searchStories').val() if PivotalRocketBackground.popup.$('#searchStories').val().length > 2
+    stories_list = {current: [], done: [], icebox: [], rcurrent: [], rdone: [], ricebox: []}
+    stories_count = {current: 0, done: 0, icebox: 0, rcurrent: 0, rdone: 0, ricebox: 0}
+    stored_projects = PivotalRocketStorage.get_projects(PivotalRocketBackground.account)
+    if stored_projects?
+      for project in stored_projects
+        stored_stories = PivotalRocketStorage.get_status_stories(project, false, search_text)
+        if stored_stories?
+          if stored_stories.current? && stored_stories.current.length > 0
+            project.stories = stored_stories.current
+            project.count_of_stories = stored_stories.current.length
+            stories_count.current += project.count_of_stories
+            stories_list.current.push(PivotalRocketBackground.templates.project.render(project))
+          if stored_stories.done? && stored_stories.done.length > 0
+            project.stories = stored_stories.done
+            project.count_of_stories = stored_stories.done.length
+            stories_count.done += project.count_of_stories
+            stories_list.done.push(PivotalRocketBackground.templates.project.render(project))
+          if stored_stories.icebox? && stored_stories.icebox.length > 0
+            project.stories = stored_stories.icebox
+            project.count_of_stories = stored_stories.icebox.length
+            stories_count.icebox += project.count_of_stories
+            stories_list.icebox.push(PivotalRocketBackground.templates.project.render(project))
 
-          rstored_stories = PivotalRocketStorage.get_status_stories(project, true, search_text)
-          if rstored_stories?
-            project.is_requested_by_me = true
-            if rstored_stories.current? && rstored_stories.current.length > 0
-              project.stories = rstored_stories.current
-              project.count_of_stories = rstored_stories.current.length
-              stories_count.rcurrent += project.count_of_stories
-              stories_list.rcurrent.push(PivotalRocketBackground.templates.project.render(project))
-            if rstored_stories.done? && rstored_stories.done.length > 0
-              project.stories = rstored_stories.done
-              project.count_of_stories = rstored_stories.done.length
-              stories_count.rdone += project.count_of_stories
-              stories_list.rdone.push(PivotalRocketBackground.templates.project.render(project))
-            if rstored_stories.icebox? && rstored_stories.icebox.length > 0
-              project.stories = rstored_stories.icebox
-              project.count_of_stories = rstored_stories.icebox.length
-              stories_count.ricebox += project.count_of_stories
-              stories_list.ricebox.push(PivotalRocketBackground.templates.project.render(project))
+        rstored_stories = PivotalRocketStorage.get_status_stories(project, true, search_text)
+        if rstored_stories?
+          project.is_requested_by_me = true
+          if rstored_stories.current? && rstored_stories.current.length > 0
+            project.stories = rstored_stories.current
+            project.count_of_stories = rstored_stories.current.length
+            stories_count.rcurrent += project.count_of_stories
+            stories_list.rcurrent.push(PivotalRocketBackground.templates.project.render(project))
+          if rstored_stories.done? && rstored_stories.done.length > 0
+            project.stories = rstored_stories.done
+            project.count_of_stories = rstored_stories.done.length
+            stories_count.rdone += project.count_of_stories
+            stories_list.rdone.push(PivotalRocketBackground.templates.project.render(project))
+          if rstored_stories.icebox? && rstored_stories.icebox.length > 0
+            project.stories = rstored_stories.icebox
+            project.count_of_stories = rstored_stories.icebox.length
+            stories_count.ricebox += project.count_of_stories
+            stories_list.ricebox.push(PivotalRocketBackground.templates.project.render(project))
 
-      no_stories_msg = "<li class='txt-center pal'>#{chrome.i18n.getMessage("no_stories_msg")}</li>"
-      # owner
-      PivotalRocketBackground.popup.$('#currentTabLabel').empty().text("#{chrome.i18n.getMessage("current_stories_tab")} (#{stories_count.current.toString()})")
-      if stories_count.current > 0
-        PivotalRocketBackground.popup.$('#currentStoriesList').empty().html(stories_list.current.join(""))
-      else
-        PivotalRocketBackground.popup.$('#currentStoriesList').empty().html(no_stories_msg)
-      PivotalRocketBackground.popup.$('#doneTabLabel').empty().text("#{chrome.i18n.getMessage("done_stories_tab")} (#{stories_count.done.toString()})")
-      if stories_count.done > 0
-        PivotalRocketBackground.popup.$('#doneStoriesList').empty().html(stories_list.done.join(""))
-      else
-        PivotalRocketBackground.popup.$('#doneStoriesList').empty().html(no_stories_msg)
-      PivotalRocketBackground.popup.$('#iceboxTabLabel').empty().text("#{chrome.i18n.getMessage("icebox_stories_tab")} (#{stories_count.icebox.toString()})")
-      if stories_count.icebox > 0
-        PivotalRocketBackground.popup.$('#iceboxStoriesList').empty().html(stories_list.icebox.join(""))
-      else
-        PivotalRocketBackground.popup.$('#iceboxStoriesList').empty().html(no_stories_msg)
+    no_stories_msg = "<li class='txt-center pal'>#{chrome.i18n.getMessage("no_stories_msg")}</li>"
+    # owner
+    PivotalRocketBackground.popup.$('#currentTabLabel').empty().text("#{chrome.i18n.getMessage("current_stories_tab")} (#{stories_count.current.toString()})")
+    if stories_count.current > 0
+      PivotalRocketBackground.popup.$('#currentStoriesList').empty().html(stories_list.current.join(""))
+    else
+      PivotalRocketBackground.popup.$('#currentStoriesList').empty().html(no_stories_msg)
+    PivotalRocketBackground.popup.$('#doneTabLabel').empty().text("#{chrome.i18n.getMessage("done_stories_tab")} (#{stories_count.done.toString()})")
+    if stories_count.done > 0
+      PivotalRocketBackground.popup.$('#doneStoriesList').empty().html(stories_list.done.join(""))
+    else
+      PivotalRocketBackground.popup.$('#doneStoriesList').empty().html(no_stories_msg)
+    PivotalRocketBackground.popup.$('#iceboxTabLabel').empty().text("#{chrome.i18n.getMessage("icebox_stories_tab")} (#{stories_count.icebox.toString()})")
+    if stories_count.icebox > 0
+      PivotalRocketBackground.popup.$('#iceboxStoriesList').empty().html(stories_list.icebox.join(""))
+    else
+      PivotalRocketBackground.popup.$('#iceboxStoriesList').empty().html(no_stories_msg)
 
-      # requester
-      PivotalRocketBackground.popup.$('#currentRequesterTabLabel').empty().text("#{chrome.i18n.getMessage("current_stories_tab")} (#{stories_count.rcurrent.toString()})")
-      if stories_count.rcurrent > 0
-        PivotalRocketBackground.popup.$('#currentRequesterStoriesList').empty().html(stories_list.rcurrent.join(""))
-      else
-        PivotalRocketBackground.popup.$('#currentRequesterStoriesList').empty().html(no_stories_msg)
-      PivotalRocketBackground.popup.$('#doneRequesterTabLabel').empty().text("#{chrome.i18n.getMessage("done_stories_tab")} (#{stories_count.rdone.toString()})")
-      if stories_count.rdone > 0
-        PivotalRocketBackground.popup.$('#doneRequesterStoriesList').empty().html(stories_list.rdone.join(""))
-      else
-        PivotalRocketBackground.popup.$('#doneRequesterStoriesList').empty().html(no_stories_msg)
-      PivotalRocketBackground.popup.$('#iceboxRequesterTabLabel').empty().text("#{chrome.i18n.getMessage("icebox_stories_tab")} (#{stories_count.ricebox.toString()})")
-      if stories_count.ricebox > 0
-        PivotalRocketBackground.popup.$('#iceboxRequesterStoriesList').empty().html(stories_list.ricebox.join(""))
-      else
-        PivotalRocketBackground.popup.$('#iceboxRequesterStoriesList').empty().html(no_stories_msg)
-        
-      # selected story
-      if PivotalRocketBackground.selected_story?
-        PivotalRocketBackground.bind_story_cell(PivotalRocketBackground.popup.$('#storiesTabs').find("li.story_#{PivotalRocketBackground.selected_story}"))
+    # requester
+    PivotalRocketBackground.popup.$('#currentRequesterTabLabel').empty().text("#{chrome.i18n.getMessage("current_stories_tab")} (#{stories_count.rcurrent.toString()})")
+    if stories_count.rcurrent > 0
+      PivotalRocketBackground.popup.$('#currentRequesterStoriesList').empty().html(stories_list.rcurrent.join(""))
+    else
+      PivotalRocketBackground.popup.$('#currentRequesterStoriesList').empty().html(no_stories_msg)
+    PivotalRocketBackground.popup.$('#doneRequesterTabLabel').empty().text("#{chrome.i18n.getMessage("done_stories_tab")} (#{stories_count.rdone.toString()})")
+    if stories_count.rdone > 0
+      PivotalRocketBackground.popup.$('#doneRequesterStoriesList').empty().html(stories_list.rdone.join(""))
+    else
+      PivotalRocketBackground.popup.$('#doneRequesterStoriesList').empty().html(no_stories_msg)
+    PivotalRocketBackground.popup.$('#iceboxRequesterTabLabel').empty().text("#{chrome.i18n.getMessage("icebox_stories_tab")} (#{stories_count.ricebox.toString()})")
+    if stories_count.ricebox > 0
+      PivotalRocketBackground.popup.$('#iceboxRequesterStoriesList').empty().html(stories_list.ricebox.join(""))
+    else
+      PivotalRocketBackground.popup.$('#iceboxRequesterStoriesList').empty().html(no_stories_msg)
+      
+    # selected story
+    if PivotalRocketBackground.selected_story?
+      PivotalRocketBackground.bind_story_cell(PivotalRocketBackground.popup.$('#storiesTabs').find("li.story_#{PivotalRocketBackground.selected_story}"))
   # sync all data by account    
   initial_sync: (pivotal_account, callback_function = null) ->
     PivotalRocketBackground.is_loading = true
@@ -696,241 +695,241 @@ root.PivotalRocketBackground =
         PivotalRocketBackground.init_spinner()
   # change story state
   change_story_state: (object) ->
-    if PivotalRocketBackground.account? && PivotalRocketBackground.popup?
-      selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
-      story_state = object.val()
-      story_id = object.data('storyId')
-      project_id = object.data('projectId')
-      pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
-      pivotal_lib.update_story
-        project_id: project_id
-        story_id: story_id
-        data:
-          story:
-            current_state: story_state
-        beforeSend: (jqXHR, settings) ->
+    return false if !(PivotalRocketBackground.account? && PivotalRocketBackground.popup?)
+    selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
+    story_state = object.val()
+    story_id = object.data('storyId')
+    project_id = object.data('projectId')
+    pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
+    pivotal_lib.update_story
+      project_id: project_id
+      story_id: story_id
+      data:
+        story:
+          current_state: story_state
+      beforeSend: (jqXHR, settings) ->
+        PivotalRocketBackground.popup.$('#storyInfo')
+        .find("select.change_story_state[data-story-id=#{story_id}]")
+        .parents('div.change_story_box').addClass('loading')
+      success: (data, textStatus, jqXHR) ->
+        PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
+      error: (jqXHR, textStatus, errorThrown) ->
+        story = PivotalRocketStorage.find_story(project_id, story_id, selected_type_bol)
+        if story?
           PivotalRocketBackground.popup.$('#storyInfo')
           .find("select.change_story_state[data-story-id=#{story_id}]")
-          .parents('div.change_story_box').addClass('loading')
-        success: (data, textStatus, jqXHR) ->
-          PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
-        error: (jqXHR, textStatus, errorThrown) ->
-          story = PivotalRocketStorage.find_story(project_id, story_id, selected_type_bol)
-          if story?
-            PivotalRocketBackground.popup.$('#storyInfo')
-            .find("select.change_story_state[data-story-id=#{story_id}]")
-            .val(story.current_state).parents('div.change_story_box').removeClass('loading')
-          else
-            PivotalRocketBackground.popup.$('#storyInfo').find('div.change_story_box').removeClass('loading')
+          .val(story.current_state).parents('div.change_story_box').removeClass('loading')
+        else
+          PivotalRocketBackground.popup.$('#storyInfo').find('div.change_story_box').removeClass('loading')
   # change story estimate
   change_story_estimate: (object) ->
-    if PivotalRocketBackground.account? && PivotalRocketBackground.popup?
-      selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
-      story_estimate = object.val()
-      story_id = object.data('storyId')
-      project_id = object.data('projectId')
+    return false if !(PivotalRocketBackground.account? && PivotalRocketBackground.popup?)
+    selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
+    story_estimate = object.val()
+    story_id = object.data('storyId')
+    project_id = object.data('projectId')
+    pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
+    pivotal_lib.update_story
+      project_id: project_id
+      story_id: story_id
+      data:
+        story:
+          estimate: story_estimate
+      beforeSend: (jqXHR, settings) ->
+        PivotalRocketBackground.popup.$('#storyInfo')
+        .find("select.change_story_estimate[data-story-id=#{story_id}]")
+        .parents('div.change_story_box').addClass('loading')
+      success: (data, textStatus, jqXHR) ->
+        PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
+      error: (jqXHR, textStatus, errorThrown) ->
+        story = PivotalRocketStorage.find_story(project_id, story_id, selected_type_bol)
+        if story?
+          PivotalRocketBackground.popup.$('#storyInfo')
+          .find("select.change_story_estimate[data-story-id=#{story_id}]")
+          .val(story.estimate).parents('div.change_story_box').removeClass('loading')
+        else
+          PivotalRocketBackground.popup.$('#storyInfo').find('div.change_story_box').removeClass('loading')
+  # add task to story
+  add_task_to_story: (object) ->
+    return false if !(PivotalRocketBackground.account? && PivotalRocketBackground.popup?)
+    object_parent = object.parents('div.add_task_block')
+    selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
+    story_id = object_parent.data('storyId')
+    project_id = object_parent.data('projectId')
+    description = object.parents('div.add_task_block').find('input.add_task_text').val()
+    if story_id? && project_id? && description? && description.length > 0
       pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
-      pivotal_lib.update_story
+      pivotal_lib.add_task
         project_id: project_id
         story_id: story_id
         data:
-          story:
-            estimate: story_estimate
+          task:
+            description: description
+            complete: false
         beforeSend: (jqXHR, settings) ->
-          PivotalRocketBackground.popup.$('#storyInfo')
-          .find("select.change_story_estimate[data-story-id=#{story_id}]")
-          .parents('div.change_story_box').addClass('loading')
+          object_parent.removeClass('adding').addClass('loading')
         success: (data, textStatus, jqXHR) ->
-          PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
+          pivotal_lib.get_story
+            project_id: project_id
+            story_id: story_id
+            error: (jqXHR, textStatus, errorThrown) ->
+              object_parent.removeClass('loading')
+            success: (data, textStatus, jqXHR) ->
+              PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
         error: (jqXHR, textStatus, errorThrown) ->
-          story = PivotalRocketStorage.find_story(project_id, story_id, selected_type_bol)
-          if story?
-            PivotalRocketBackground.popup.$('#storyInfo')
-            .find("select.change_story_estimate[data-story-id=#{story_id}]")
-            .val(story.estimate).parents('div.change_story_box').removeClass('loading')
-          else
-            PivotalRocketBackground.popup.$('#storyInfo').find('div.change_story_box').removeClass('loading')
-  # add task to story
-  add_task_to_story: (object) ->
-    if PivotalRocketBackground.account? && PivotalRocketBackground.popup?
-      object_parent = object.parents('div.add_task_block')
-      selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
-      story_id = object_parent.data('storyId')
-      project_id = object_parent.data('projectId')
-      description = object.parents('div.add_task_block').find('input.add_task_text').val()
-      if story_id? && project_id? && description? && description.length > 0
-        pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
-        pivotal_lib.add_task
-          project_id: project_id
-          story_id: story_id
-          data:
-            task:
-              description: description
-              complete: false
-          beforeSend: (jqXHR, settings) ->
-            object_parent.removeClass('adding').addClass('loading')
-          success: (data, textStatus, jqXHR) ->
-            pivotal_lib.get_story
-              project_id: project_id
-              story_id: story_id
-              error: (jqXHR, textStatus, errorThrown) ->
-                object_parent.removeClass('loading')
-              success: (data, textStatus, jqXHR) ->
-                PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
-          error: (jqXHR, textStatus, errorThrown) ->
-            PivotalRocketBackground.init_list_stories()
-            object_parent.removeClass('loading')
+          PivotalRocketBackground.init_list_stories()
+          object_parent.removeClass('loading')
   # edit task in story
   edit_task_in_story: (object) ->
-    if PivotalRocketBackground.account? && PivotalRocketBackground.popup?
-      object_parent = object.parents('li.task_block')
-      selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
-      object_data = object_parent.find('input.task_checkbox')
-      task_id = object_data.data('taskId')
-      story_id = object_data.data('storyId')
-      project_id = object_data.data('projectId')
-      description = object_parent.find('input.edit_task_text').val()
-      if task_id? && story_id? && project_id? && description? && description.length > 0
-        pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
-        pivotal_lib.update_task
-          project_id: project_id
-          story_id: story_id
-          task_id: task_id
-          data:
-            task:
-              description: description
-          beforeSend: (jqXHR, settings) ->
-            object_parent.removeClass('editing').addClass('loading')
-          success: (data, textStatus, jqXHR) ->
-            pivotal_lib.get_story
-              project_id: project_id
-              story_id: story_id
-              error: (jqXHR, textStatus, errorThrown) ->
-                object_parent.removeClass('loading')
-              success: (data, textStatus, jqXHR) ->
-                PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
-          error: (jqXHR, textStatus, errorThrown) ->
-            PivotalRocketBackground.init_list_stories()
-            object_parent.removeClass('loading')
+    return false if !(PivotalRocketBackground.account? && PivotalRocketBackground.popup?)
+    object_parent = object.parents('li.task_block')
+    selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
+    object_data = object_parent.find('input.task_checkbox')
+    task_id = object_data.data('taskId')
+    story_id = object_data.data('storyId')
+    project_id = object_data.data('projectId')
+    description = object_parent.find('input.edit_task_text').val()
+    if task_id? && story_id? && project_id? && description? && description.length > 0
+      pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
+      pivotal_lib.update_task
+        project_id: project_id
+        story_id: story_id
+        task_id: task_id
+        data:
+          task:
+            description: description
+        beforeSend: (jqXHR, settings) ->
+          object_parent.removeClass('editing').addClass('loading')
+        success: (data, textStatus, jqXHR) ->
+          pivotal_lib.get_story
+            project_id: project_id
+            story_id: story_id
+            error: (jqXHR, textStatus, errorThrown) ->
+              object_parent.removeClass('loading')
+            success: (data, textStatus, jqXHR) ->
+              PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
+        error: (jqXHR, textStatus, errorThrown) ->
+          PivotalRocketBackground.init_list_stories()
+          object_parent.removeClass('loading')
   # edit task in story
   delete_task_in_story: (object) ->
-    if PivotalRocketBackground.account? && PivotalRocketBackground.popup?
-      object_parent = object.parents('li.task_block')
-      selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
-      object_data = object_parent.find('input.task_checkbox')
-      task_id = object_data.data('taskId')
-      story_id = object_data.data('storyId')
-      project_id = object_data.data('projectId')
-      if task_id? && story_id? && project_id?
-        pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
-        pivotal_lib.delete_task
-          project_id: project_id
-          story_id: story_id
-          task_id: task_id
-          beforeSend: (jqXHR, settings) ->
-            object_parent.removeClass('editing').addClass('loading')
-          success: (data, textStatus, jqXHR) ->
-            pivotal_lib.get_story
-              project_id: project_id
-              story_id: story_id
-              error: (jqXHR, textStatus, errorThrown) ->
-                object_parent.removeClass('loading')
-              success: (data, textStatus, jqXHR) ->
-                PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
-          error: (jqXHR, textStatus, errorThrown) ->
-            PivotalRocketBackground.init_list_stories()
-            object_parent.removeClass('loading')
+    return false if !(PivotalRocketBackground.account? && PivotalRocketBackground.popup?)
+    object_parent = object.parents('li.task_block')
+    selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
+    object_data = object_parent.find('input.task_checkbox')
+    task_id = object_data.data('taskId')
+    story_id = object_data.data('storyId')
+    project_id = object_data.data('projectId')
+    if task_id? && story_id? && project_id?
+      pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
+      pivotal_lib.delete_task
+        project_id: project_id
+        story_id: story_id
+        task_id: task_id
+        beforeSend: (jqXHR, settings) ->
+          object_parent.removeClass('editing').addClass('loading')
+        success: (data, textStatus, jqXHR) ->
+          pivotal_lib.get_story
+            project_id: project_id
+            story_id: story_id
+            error: (jqXHR, textStatus, errorThrown) ->
+              object_parent.removeClass('loading')
+            success: (data, textStatus, jqXHR) ->
+              PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
+        error: (jqXHR, textStatus, errorThrown) ->
+          PivotalRocketBackground.init_list_stories()
+          object_parent.removeClass('loading')
   # filter tasks by state
   filter_tasks_by_state: (object, state = null) ->
-    if PivotalRocketBackground.popup?
-      PivotalRocketBackground.popup.$('#storyInfo').find('a.filter_tasks').removeClass('active')
-      object.addClass('active')
-      tasks_list = PivotalRocketBackground.popup.$('#storyInfo').find('ul.tasks_list')
-      tasks_list.removeClass('completed uncompleted')
-      tasks_list.addClass(state) if state?
-      PivotalRocketStorage.set_tasks_filter(state)
+    return false if !(PivotalRocketBackground.account? && PivotalRocketBackground.popup?)
+    PivotalRocketBackground.popup.$('#storyInfo').find('a.filter_tasks').removeClass('active')
+    object.addClass('active')
+    tasks_list = PivotalRocketBackground.popup.$('#storyInfo').find('ul.tasks_list')
+    tasks_list.removeClass('completed uncompleted')
+    tasks_list.addClass(state) if state?
+    PivotalRocketStorage.set_tasks_filter(state)
   # change task in story
   change_task_status: (object) ->
-    if PivotalRocketBackground.account? && PivotalRocketBackground.popup?
-      selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
-      completed = if object.is(':checked') then true else false
-      task_id = object.data('taskId')
-      story_id = object.data('storyId')
-      project_id = object.data('projectId')
-      if task_id? && story_id? && project_id?
-        pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
-        pivotal_lib.update_task
-          project_id: project_id
-          story_id: story_id
-          task_id: task_id
-          data:
-            task:
-              complete: completed
-          success: (data, textStatus, jqXHR) ->
-            pivotal_lib.get_story
-              project_id: project_id
-              story_id: story_id
-              success: (data, textStatus, jqXHR) ->
-                PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
-          error: (jqXHR, textStatus, errorThrown) ->
-            PivotalRocketBackground.init_list_stories()
+    return false if !(PivotalRocketBackground.account? && PivotalRocketBackground.popup?)
+    selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
+    completed = if object.is(':checked') then true else false
+    task_id = object.data('taskId')
+    story_id = object.data('storyId')
+    project_id = object.data('projectId')
+    if task_id? && story_id? && project_id?
+      pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
+      pivotal_lib.update_task
+        project_id: project_id
+        story_id: story_id
+        task_id: task_id
+        data:
+          task:
+            complete: completed
+        success: (data, textStatus, jqXHR) ->
+          pivotal_lib.get_story
+            project_id: project_id
+            story_id: story_id
+            success: (data, textStatus, jqXHR) ->
+              PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
+        error: (jqXHR, textStatus, errorThrown) ->
+          PivotalRocketBackground.init_list_stories()
   # add comment to story
   add_comment_to_story: (object) ->
-    if PivotalRocketBackground.account? && PivotalRocketBackground.popup?
-      selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
-      object_parent = object.parents('div.add_comment_block')
-      story_id = object_parent.data('storyId')
-      project_id = object_parent.data('projectId')
-      description = object_parent.find('textarea.add_comment_text').val()
-      if story_id? && project_id? && description? && description.length > 0
-        pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
-        pivotal_lib.add_comment
-          project_id: project_id
-          story_id: story_id
-          data:
-            comment:
-              text: description
-          beforeSend: (jqXHR, settings) ->
-            object_parent.removeClass('adding').addClass('loading')
-          success: (data, textStatus, jqXHR) ->
-            pivotal_lib.get_story
-              project_id: project_id
-              story_id: story_id
-              error: (jqXHR, textStatus, errorThrown) ->
-                object_parent.removeClass('loading')
-              success: (data, textStatus, jqXHR) ->
-                PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
-          error: (jqXHR, textStatus, errorThrown) ->
-            PivotalRocketBackground.init_list_stories()
-            object_parent.removeClass('loading')
+    return false if !(PivotalRocketBackground.account? && PivotalRocketBackground.popup?)
+    selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
+    object_parent = object.parents('div.add_comment_block')
+    story_id = object_parent.data('storyId')
+    project_id = object_parent.data('projectId')
+    description = object_parent.find('textarea.add_comment_text').val()
+    if story_id? && project_id? && description? && description.length > 0
+      pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
+      pivotal_lib.add_comment
+        project_id: project_id
+        story_id: story_id
+        data:
+          comment:
+            text: description
+        beforeSend: (jqXHR, settings) ->
+          object_parent.removeClass('adding').addClass('loading')
+        success: (data, textStatus, jqXHR) ->
+          pivotal_lib.get_story
+            project_id: project_id
+            story_id: story_id
+            error: (jqXHR, textStatus, errorThrown) ->
+              object_parent.removeClass('loading')
+            success: (data, textStatus, jqXHR) ->
+              PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
+        error: (jqXHR, textStatus, errorThrown) ->
+          PivotalRocketBackground.init_list_stories()
+          object_parent.removeClass('loading')
   # delete comment from story
   delete_comment_from_story: (object) ->
-    if PivotalRocketBackground.account? && PivotalRocketBackground.popup?
-      selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
-      comment_id = object.data('id')
-      object_parent = object.parents('li.comment_block')
-      object_data = object.parents('ul.comments_list')
-      story_id = object_data.data('storyId')
-      project_id = object_data.data('projectId')
-      if comment_id? && story_id? && project_id?
-        pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
-        pivotal_lib.delete_comment
-          project_id: project_id
-          story_id: story_id
-          comment_id: comment_id
-          beforeSend: (jqXHR, settings) ->
-            object_parent.addClass('loading')
-          success: (data, textStatus, jqXHR) ->
-            pivotal_lib.get_story
-              project_id: project_id
-              story_id: story_id
-              error: (jqXHR, textStatus, errorThrown) ->
-                object_parent.removeClass('loading')
-              success: (data, textStatus, jqXHR) ->
-                PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
-          error: (jqXHR, textStatus, errorThrown) ->
-            PivotalRocketBackground.init_list_stories()
-            object_parent.removeClass('loading')
+    return false if !(PivotalRocketBackground.account? && PivotalRocketBackground.popup?)
+    selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
+    comment_id = object.data('id')
+    object_parent = object.parents('li.comment_block')
+    object_data = object.parents('ul.comments_list')
+    story_id = object_data.data('storyId')
+    project_id = object_data.data('projectId')
+    if comment_id? && story_id? && project_id?
+      pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
+      pivotal_lib.delete_comment
+        project_id: project_id
+        story_id: story_id
+        comment_id: comment_id
+        beforeSend: (jqXHR, settings) ->
+          object_parent.addClass('loading')
+        success: (data, textStatus, jqXHR) ->
+          pivotal_lib.get_story
+            project_id: project_id
+            story_id: story_id
+            error: (jqXHR, textStatus, errorThrown) ->
+              object_parent.removeClass('loading')
+            success: (data, textStatus, jqXHR) ->
+              PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
+        error: (jqXHR, textStatus, errorThrown) ->
+          PivotalRocketBackground.init_list_stories()
+          object_parent.removeClass('loading')
   # story success changed
   story_changed_with_data: (data, requester = false) ->
     story = XML2JSON.parse(data, true)
@@ -1010,33 +1009,33 @@ root.PivotalRocketBackground =
       PivotalRocketStorage.save_account(account)
   # login
   login_by_user: ->
-    if PivotalRocketBackground.popup?
-      params = 
-        success: (data, textStatus, jqXHR) ->
-          account = XML2JSON.parse(data, true)
-          account = account.person if account.person?
-          PivotalRocketBackground.account = PivotalRocketBackground.save_account(account)
-          PivotalRocketBackground.initial_sync(PivotalRocketBackground.account)
-          PivotalRocketBackground.init_popup()
+    return false unless PivotalRocketBackground.popup?
+    params = 
+      success: (data, textStatus, jqXHR) ->
+        account = XML2JSON.parse(data, true)
+        account = account.person if account.person?
+        PivotalRocketBackground.account = PivotalRocketBackground.save_account(account)
+        PivotalRocketBackground.initial_sync(PivotalRocketBackground.account)
+        PivotalRocketBackground.init_popup()
+      
+      error: (jqXHR, textStatus, errorThrown) ->
+        if PivotalRocketBackground.popup?
+          PivotalRocketBackground.popup.$('#loginPage').removeClass('locading')
+          PivotalRocketBackground.popup.$('#loginPage .error_msg').show().text(errorThrown)
+      beforeSend: (jqXHR, settings) ->
+        if PivotalRocketBackground.popup?
+          PivotalRocketBackground.popup.$('#loginPage .error_msg').hide()
+          PivotalRocketBackground.popup.$('#loginPage').addClass('locading')
         
-        error: (jqXHR, textStatus, errorThrown) ->
-          if PivotalRocketBackground.popup?
-            PivotalRocketBackground.popup.$('#loginPage').removeClass('locading')
-            PivotalRocketBackground.popup.$('#loginPage .error_msg').show().text(errorThrown)
-        beforeSend: (jqXHR, settings) ->
-          if PivotalRocketBackground.popup?
-            PivotalRocketBackground.popup.$('#loginPage .error_msg').hide()
-            PivotalRocketBackground.popup.$('#loginPage').addClass('locading')
-          
-      if PivotalRocketBackground.popup.$('#pivotalBaseAuth').is(':visible')
-        params.username = PivotalRocketBackground.popup.$('#loginUsername').val()
-        params.password = PivotalRocketBackground.popup.$('#loginPassword').val()
-        if params.username.length > 0 && params.password.length > 0
-          pivotal_auth_lib = new PivotalAuthLib params
-      else
-        params.token = PivotalRocketBackground.popup.$('#loginToken').val()
-        if params.token.length > 0
-          pivotal_auth_lib = new PivotalAuthLib params 
+    if PivotalRocketBackground.popup.$('#pivotalBaseAuth').is(':visible')
+      params.username = PivotalRocketBackground.popup.$('#loginUsername').val()
+      params.password = PivotalRocketBackground.popup.$('#loginPassword').val()
+      if params.username.length > 0 && params.password.length > 0
+        pivotal_auth_lib = new PivotalAuthLib params
+    else
+      params.token = PivotalRocketBackground.popup.$('#loginToken').val()
+      if params.token.length > 0
+        pivotal_auth_lib = new PivotalAuthLib params 
   # autoupdate for all data
   autoupdate: ->
     if !PivotalRocketBackground.is_loading && PivotalRocketStorage.get_accounts().length > 0
@@ -1077,32 +1076,32 @@ root.PivotalRocketBackground =
     return selected_type_bol
   # toggle project cell in list
   toggle_project_cell: (object) ->
-    if PivotalRocketBackground.popup?
-      project_cell = object.parents("li.project_cell")
-      project_id = project_cell.data('projectId')
-      if project_cell.hasClass('hide-project')
-        PivotalRocketStorage.update_view_options_in_project(PivotalRocketBackground.account, project_id, {hide_project_cell: false})
-        PivotalRocketBackground.popup.$("ul.projects_stories_list").find("li.project_#{project_id}").removeClass('hide-project')
-      else
-        PivotalRocketStorage.update_view_options_in_project(PivotalRocketBackground.account, project_id, {hide_project_cell: true})
-        PivotalRocketBackground.popup.$("ul.projects_stories_list").find("li.project_#{project_id}").addClass('hide-project')
+    return false if !(PivotalRocketBackground.account? && PivotalRocketBackground.popup?)
+    project_cell = object.parents("li.project_cell")
+    project_id = project_cell.data('projectId')
+    if project_cell.hasClass('hide-project')
+      PivotalRocketStorage.update_view_options_in_project(PivotalRocketBackground.account, project_id, {hide_project_cell: false})
+      PivotalRocketBackground.popup.$("ul.projects_stories_list").find("li.project_#{project_id}").removeClass('hide-project')
+    else
+      PivotalRocketStorage.update_view_options_in_project(PivotalRocketBackground.account, project_id, {hide_project_cell: true})
+      PivotalRocketBackground.popup.$("ul.projects_stories_list").find("li.project_#{project_id}").addClass('hide-project')
   # show add story view
   show_add_story_view: ->
-    if PivotalRocketBackground.popup?
-      add_story_object = 
-        # get and sort projects
-        projects: PivotalRocketStorage.get_projects(PivotalRocketBackground.account).sort (a, b) ->
-          if a.name? && b.name?
-            return -1 if (a.name < b.name)
-            return 1 if (a.name > b.name)
-          return 0
-      PivotalRocketBackground.popup.$('#addStoryView').empty().html(PivotalRocketBackground.templates.add_story.render(add_story_object))
-      PivotalRocketBackground.popup.$('#addStoryView .errors_box').hide()
-      PivotalRocketBackground.selected_story = null
-      PivotalRocketBackground.popup.$('#storiesTabs').find('li.story_info').removeClass('active')
-      PivotalRocketBackground.popup.$('#storyInfo, #infoPanel').hide()
-      PivotalRocketBackground.popup.$('#addStoryView').show()
-      PivotalRocketBackground.binding_add_story_view()
+    return false if !(PivotalRocketBackground.account? && PivotalRocketBackground.popup?)
+    add_story_object = 
+      # get and sort projects
+      projects: PivotalRocketStorage.get_projects(PivotalRocketBackground.account).sort (a, b) ->
+        if a.name? && b.name?
+          return -1 if (a.name < b.name)
+          return 1 if (a.name > b.name)
+        return 0
+    PivotalRocketBackground.popup.$('#addStoryView').empty().html(PivotalRocketBackground.templates.add_story.render(add_story_object))
+    PivotalRocketBackground.popup.$('#addStoryView .errors_box').hide()
+    PivotalRocketBackground.selected_story = null
+    PivotalRocketBackground.popup.$('#storiesTabs').find('li.story_info').removeClass('active')
+    PivotalRocketBackground.popup.$('#storyInfo, #infoPanel').hide()
+    PivotalRocketBackground.popup.$('#addStoryView').show()
+    PivotalRocketBackground.binding_add_story_view()
   # binding add story view
   binding_add_story_view: ->
     # set latest selected project
@@ -1144,105 +1143,105 @@ root.PivotalRocketBackground =
         PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_release_date_box').show()
   # add story changed project
   changed_project_in_add_story: ->
-    if PivotalRocketBackground.popup?
-      project_id = PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_project_id').val()
-      if project_id?
-        project = PivotalRocketStorage.find_project(PivotalRocketBackground.account, project_id)
-        if project?
-          # members
-          requester_option_list = []
-          owner_option_list = []
-          owner_option_list.push "<option></option>"
-          # sort members
-          project.memberships = project.memberships.sort (a, b) ->
-            if a.member? && a.member.person? && a.member.person.name? &&
-            b.member? && b.member.person? && b.member.person.name?
-              return -1 if (a.member.person.name < b.member.person.name)
-              return 1 if (a.member.person.name > b.member.person.name)
-            return 0
-          for member in project.memberships
-            if member.member? && member.member.person? && member.member.person.name?
-              person = member.member.person
-              requester_option_list.push "<option value='#{person.id}' data-name='#{person.name}'>#{person.name} (#{person.initials})</option>"
-              owner_option_list.push "<option value='#{person.id}' data-name='#{person.name}'>#{person.name} (#{person.initials})</option>"
-          PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_requester_id, select.add_story_owner_id').empty()
-          if requester_option_list.length > 0
-            PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_requester_id').html(requester_option_list.join(""))
-            PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_owner_id').html(owner_option_list.join(""))
-            PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_requester_id').val(PivotalRocketBackground.account.id.toString())
-            PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_requester_id, select.add_story_owner_id').trigger("liszt:updated")
-          # points
-          if project? && project.point_scale?
-            point_scale = []
-            point_scale.push "<option value='-1'>Unestimated</option>"
-            for point in project.point_scale.split(",")
-              point_scale.push "<option value='#{point}'>#{point} points</option>"
-            if point_scale.length > 0
-              PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_point')
-              .html(point_scale.join("")).trigger("liszt:updated")
+    return false if !(PivotalRocketBackground.account? && PivotalRocketBackground.popup?)
+    project_id = PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_project_id').val()
+    if project_id?
+      project = PivotalRocketStorage.find_project(PivotalRocketBackground.account, project_id)
+      if project?
+        # members
+        requester_option_list = []
+        owner_option_list = []
+        owner_option_list.push "<option></option>"
+        # sort members
+        project.memberships = project.memberships.sort (a, b) ->
+          if a.member? && a.member.person? && a.member.person.name? &&
+          b.member? && b.member.person? && b.member.person.name?
+            return -1 if (a.member.person.name < b.member.person.name)
+            return 1 if (a.member.person.name > b.member.person.name)
+          return 0
+        for member in project.memberships
+          if member.member? && member.member.person? && member.member.person.name?
+            person = member.member.person
+            requester_option_list.push "<option value='#{person.id}' data-name='#{person.name}'>#{person.name} (#{person.initials})</option>"
+            owner_option_list.push "<option value='#{person.id}' data-name='#{person.name}'>#{person.name} (#{person.initials})</option>"
+        PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_requester_id, select.add_story_owner_id').empty()
+        if requester_option_list.length > 0
+          PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_requester_id').html(requester_option_list.join(""))
+          PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_owner_id').html(owner_option_list.join(""))
+          PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_requester_id').val(PivotalRocketBackground.account.id.toString())
+          PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_requester_id, select.add_story_owner_id').trigger("liszt:updated")
+        # points
+        if project? && project.point_scale?
+          point_scale = []
+          point_scale.push "<option value='-1'>Unestimated</option>"
+          for point in project.point_scale.split(",")
+            point_scale.push "<option value='#{point}'>#{point} points</option>"
+          if point_scale.length > 0
+            PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_point')
+            .html(point_scale.join("")).trigger("liszt:updated")
   # save new story
   save_new_story: ->
-    if PivotalRocketBackground.popup?
-      box = PivotalRocketBackground.popup.$('#addStoryView')
-      project_id = box.find('select.add_story_project_id').val()
-      title = box.find('input.add_story_name').val()
-      story_type = box.find('select.add_story_story_type').val()
-      story_point = box.find('select.add_story_point').val() if story_type? && 'feature' == story_type.toLowerCase()
-      story_deadline = box.find('input.add_story_release_date').val() if story_type? && 'release' == story_type.toLowerCase()
-      requester = box.find('select.add_story_requester_id').find(":selected").data('name')
-      owner = box.find('select.add_story_owner_id').find(":selected").data('name')
-      description = box.find('textarea.add_story_description').val()
-      labels = box.find('input.add_story_labels').val()
-      
-      if title? && title.length > 0 && story_type? && project_id?
-        story_data = 
-          name: title
-          story_type: story_type
-          requested_by: requester
-          description: description
-          labels: labels
-        story_data.estimate = story_point if story_point? && story_point.length > 0
-        story_data.owned_by = owner if owner? && owner.length > 0
-        story_data.deadline = story_deadline if story_deadline? && story_deadline.length > 0
-        pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
-        pivotal_lib.add_story
-          project_id: project_id
-          data:
-            story: story_data
-          beforeSend: (jqXHR, settings) ->
-            PivotalRocketBackground.popup.$('#addStoryView').find('div.errors_box').empty()
-            PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_box').addClass('loading')
-          success: (data, textStatus, jqXHR) ->
-            story_data = XML2JSON.parse(data, true)
-            PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_result').empty()
-            .html(PivotalRocketBackground.templates.add_story_result.render(story_data.story))
-            # update stories
-            fcallback_update = -> 
-              project = 
-                id: project_id
-              pivotal_lib.get_stories_for_project
-                project: project
-                beforeSend: (jqXHR, settings) ->
-                  if PivotalRocketBackground.is_loading is false
-                    PivotalRocketBackground.is_loading = true
+    return false if !(PivotalRocketBackground.account? && PivotalRocketBackground.popup?)
+    box = PivotalRocketBackground.popup.$('#addStoryView')
+    project_id = box.find('select.add_story_project_id').val()
+    title = box.find('input.add_story_name').val()
+    story_type = box.find('select.add_story_story_type').val()
+    story_point = box.find('select.add_story_point').val() if story_type? && 'feature' == story_type.toLowerCase()
+    story_deadline = box.find('input.add_story_release_date').val() if story_type? && 'release' == story_type.toLowerCase()
+    requester = box.find('select.add_story_requester_id').find(":selected").data('name')
+    owner = box.find('select.add_story_owner_id').find(":selected").data('name')
+    description = box.find('textarea.add_story_description').val()
+    labels = box.find('input.add_story_labels').val()
+    
+    if title? && title.length > 0 && story_type? && project_id?
+      story_data = 
+        name: title
+        story_type: story_type
+        requested_by: requester
+        description: description
+        labels: labels
+      story_data.estimate = story_point if story_point? && story_point.length > 0
+      story_data.owned_by = owner if owner? && owner.length > 0
+      story_data.deadline = story_deadline if story_deadline? && story_deadline.length > 0
+      pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
+      pivotal_lib.add_story
+        project_id: project_id
+        data:
+          story: story_data
+        beforeSend: (jqXHR, settings) ->
+          PivotalRocketBackground.popup.$('#addStoryView').find('div.errors_box').empty()
+          PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_box').addClass('loading')
+        success: (data, textStatus, jqXHR) ->
+          story_data = XML2JSON.parse(data, true)
+          PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_result').empty()
+          .html(PivotalRocketBackground.templates.add_story_result.render(story_data.story))
+          # update stories
+          fcallback_update = -> 
+            project = 
+              id: project_id
+            pivotal_lib.get_stories_for_project
+              project: project
+              beforeSend: (jqXHR, settings) ->
+                if PivotalRocketBackground.is_loading is false
+                  PivotalRocketBackground.is_loading = true
+                  PivotalRocketBackground.init_spinner()
+              complete: (jqXHR, textStatus) ->
+                pivotal_lib.get_stories_for_project
+                  requester: true
+                  project: project
+                  complete: (jqXHR, textStatus) ->
+                    PivotalRocketBackground.is_loading = false
                     PivotalRocketBackground.init_spinner()
-                complete: (jqXHR, textStatus) ->
-                  pivotal_lib.get_stories_for_project
-                    requester: true
-                    project: project
-                    complete: (jqXHR, textStatus) ->
-                      PivotalRocketBackground.is_loading = false
-                      PivotalRocketBackground.init_spinner()
-                      PivotalRocketBackground.init_list_stories()
-                    success: (data, textStatus, jqXHR, project) ->
-                      PivotalRocketBackground.save_stories_data_by_project(project, data, true)
-                success: (data, textStatus, jqXHR, project) ->
-                  PivotalRocketBackground.save_stories_data_by_project(project, data)
-            # update after 10 sec
-            root.setTimeout(fcallback_update, 10000)
-          error: (jqXHR, textStatus, errorThrown) ->
-            PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_box').removeClass('loading')
-            PivotalRocketBackground.popup.$('#addStoryView').find('.errors_box').show().html(errorThrown)
+                    PivotalRocketBackground.init_list_stories()
+                  success: (data, textStatus, jqXHR, project) ->
+                    PivotalRocketBackground.save_stories_data_by_project(project, data, true)
+              success: (data, textStatus, jqXHR, project) ->
+                PivotalRocketBackground.save_stories_data_by_project(project, data)
+          # update after 10 sec
+          root.setTimeout(fcallback_update, 10000)
+        error: (jqXHR, textStatus, errorThrown) ->
+          PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_box').removeClass('loading')
+          PivotalRocketBackground.popup.$('#addStoryView').find('.errors_box').show().html(errorThrown)
   # register omnibox (for search)
   init_omnibox: ->
     chrome.omnibox.onInputCancelled.addListener ->
