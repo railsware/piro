@@ -244,10 +244,10 @@ root.PivotalRocketBackground =
       return false
     # change of status
     PivotalRocketBackground.popup.$('#storyInfo').on "change", "select.change_story_state", (event) =>
-      PivotalRocketBackground.change_story_state($(event.target))
+      PivotalRocketBackground.change_story_status($(event.target), 'state')
     # change estimate of story
     PivotalRocketBackground.popup.$('#storyInfo').on "change", "select.change_story_estimate", (event) =>
-      PivotalRocketBackground.change_story_estimate($(event.target))
+      PivotalRocketBackground.change_story_status($(event.target), 'estimate')
     # add task in story
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "input.add_task_button", (event) =>
       PivotalRocketBackground.add_task_to_story($(event.target))
@@ -697,29 +697,35 @@ root.PivotalRocketBackground =
           PivotalRocketBackground.init_list_stories()
           PivotalRocketBackground.is_loading = false
           PivotalRocketBackground.init_spinner()
-          if callback_function?
-            callback_function()
+          callback_function() if callback_function?
       error: (jqXHR, textStatus, errorThrown) ->
         # error
         PivotalRocketBackground.is_loading = false
         PivotalRocketBackground.init_spinner()
-  # change story state
-  change_story_state: (object) ->
+  # change story data
+  change_story_status: (object, type = 'state') ->
     return false if !(PivotalRocketBackground.account? && PivotalRocketBackground.popup?)
     selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
-    story_state = object.val()
+    story_val = object.val()
     story_id = object.data('storyId')
     project_id = object.data('projectId')
     pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
+    return false if !(story_val? && story_id? && project_id?)
+    switch type
+      when 'estimate'
+        switcher = 'estimate'
+        data = {estimate: story_val}
+      else
+        switcher = 'state'
+        data = {current_state: story_val}
     pivotal_lib.update_story
       project_id: project_id
       story_id: story_id
       data:
-        story:
-          current_state: story_state
+        story: data
       beforeSend: (jqXHR, settings) ->
         PivotalRocketBackground.popup.$('#storyInfo')
-        .find("select.change_story_state[data-story-id=#{story_id}]")
+        .find("select.change_story_#{switcher}[data-story-id=#{story_id}]")
         .parents('div.change_story_box').addClass('loading')
       success: (data, textStatus, jqXHR) ->
         PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
@@ -727,36 +733,8 @@ root.PivotalRocketBackground =
         story = PivotalRocketStorage.find_story(project_id, story_id, selected_type_bol)
         if story?
           PivotalRocketBackground.popup.$('#storyInfo')
-          .find("select.change_story_state[data-story-id=#{story_id}]")
+          .find("select.change_story_#{switcher}[data-story-id=#{story_id}]")
           .val(story.current_state).parents('div.change_story_box').removeClass('loading')
-        else
-          PivotalRocketBackground.popup.$('#storyInfo').find('div.change_story_box').removeClass('loading')
-  # change story estimate
-  change_story_estimate: (object) ->
-    return false if !(PivotalRocketBackground.account? && PivotalRocketBackground.popup?)
-    selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
-    story_estimate = object.val()
-    story_id = object.data('storyId')
-    project_id = object.data('projectId')
-    pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
-    pivotal_lib.update_story
-      project_id: project_id
-      story_id: story_id
-      data:
-        story:
-          estimate: story_estimate
-      beforeSend: (jqXHR, settings) ->
-        PivotalRocketBackground.popup.$('#storyInfo')
-        .find("select.change_story_estimate[data-story-id=#{story_id}]")
-        .parents('div.change_story_box').addClass('loading')
-      success: (data, textStatus, jqXHR) ->
-        PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
-      error: (jqXHR, textStatus, errorThrown) ->
-        story = PivotalRocketStorage.find_story(project_id, story_id, selected_type_bol)
-        if story?
-          PivotalRocketBackground.popup.$('#storyInfo')
-          .find("select.change_story_estimate[data-story-id=#{story_id}]")
-          .val(story.estimate).parents('div.change_story_box').removeClass('loading')
         else
           PivotalRocketBackground.popup.$('#storyInfo').find('div.change_story_box').removeClass('loading')
   # add task to story
