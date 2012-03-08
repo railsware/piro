@@ -345,72 +345,72 @@ root.PivotalRocketBackground =
       PivotalRocketBackground.show_story_info(story)  
   # show story details
   show_story_info: (story) ->
-    if story?
-      project = PivotalRocketStorage.find_project(PivotalRocketBackground.account, story.project_id)
-      # set points
-      if project? && project.point_scale?
-        story.point_scale = []
-        for point in project.point_scale.split(",")
-          story.point_scale.push
-            point: point
-      # parse labels
-      if story.labels?
-        labels = story.labels.split(",")
-        story.labels_html = {text: ""}
-        if labels.length > 0
-          labels_array = []
-          labels_array.push("<a href='#' class='story_label' data-label='##{label}'>#{label}</a>") for label in labels
-          story.labels_html.text = labels_array.join(", ")
-      # field for story type
-      if story.story_type
-        switch story.story_type
-          when "feature"
-            story.need_estimate = true if story.current_state? && jQuery.inArray(story.current_state, ["unscheduled", "unstarted", "started"]) != -1
-            story.unestimated_feature = true if story.not_estimated? && story.not_estimated is true
-            story.story_type_can_started = true
-            story.story_type_many_statuses = true
-          when "bug"
-            story.story_type_can_started = true
-            story.story_type_many_statuses = true
-          when "chore"
-            story.story_type_can_started = true
-      # attachments, tasks and comments bool
-      story.has_attachments = true if story.attachments? && story.attachments.length > 0
-      story.has_tasks = true if story.tasks? && story.tasks.length > 0
-      if story.comments? && story.comments.length > 0
-        story.has_comments = true
-        story.comments = for comment in story.comments
-          comment.is_owner = true if comment.author? && comment.author.person? && comment.author.person.id? && 
-          parseInt(comment.author.person.id) == parseInt(PivotalRocketBackground.account.id)
-          comment
-      # story open or closed blocks
-      user_options = PivotalRocketStorage.get_user_options()
-      story.opened_task_box = true if user_options.opened_task_box? && user_options.opened_task_box is true
-      story.opened_comment_box = true if user_options.opened_comment_box? && user_options.opened_comment_box is true
-      # generate template
-      block_element = PivotalRocketBackground.popup.$('#storyInfo')
-      block_element.empty().html(PivotalRocketBackground.templates.story.render(story))
-      PivotalRocketBackground.popup.$('#addStoryView, #infoPanel').hide()
-      block_element.show()
-      # select selector for story state
-      PivotalRocketBackground.popup.$('#storyInfo').find('select.change_story_state').val(story.current_state)
-      # select selector for story estimate
-      PivotalRocketBackground.popup.$('#storyInfo').find('select.change_story_estimate').val(story.estimate)
-      # story description and comments
-      PivotalRocketBackground.set_description_links()
-      PivotalRocketBackground.set_comments_links()
-      # set tasks filter
-      if user_options.tasks_filter?
-        PivotalRocketBackground.popup.$('#storyInfo').find('a.filter_tasks').removeClass('active')
-        PivotalRocketBackground.popup.$('#storyInfo').find("a.filter_#{user_options.tasks_filter}_tasks")
-        .addClass('active').trigger('click')
-      # init story bindings
-      PivotalRocketBackground.bindings_story_info(story)
-      # init clippy
-      chrome.extension.sendRequest
-        clippy_for_story:
-          id: story.id
-          url: story.url
+    return false unless story?
+    project = PivotalRocketStorage.find_project(PivotalRocketBackground.account, story.project_id)
+    # set points
+    if project? && project.point_scale?
+      story.point_scale = []
+      for point in project.point_scale.split(",")
+        story.point_scale.push
+          point: point
+    # parse labels
+    if story.labels?
+      labels = story.labels.split(",")
+      story.labels_html = {text: ""}
+      if labels.length > 0
+        labels_array = []
+        labels_array.push("<a href='#' class='story_label' data-label='##{label}'>#{label}</a>") for label in labels
+        story.labels_html.text = labels_array.join(", ")
+    # field for story type
+    if story.story_type
+      switch story.story_type
+        when "feature"
+          story.need_estimate = true if story.current_state? && jQuery.inArray(story.current_state, ["unscheduled", "unstarted", "started"]) != -1
+          story.unestimated_feature = true if story.not_estimated? && story.not_estimated is true
+          story.story_type_can_started = true
+          story.story_type_many_statuses = true
+        when "bug"
+          story.story_type_can_started = true
+          story.story_type_many_statuses = true
+        when "chore"
+          story.story_type_can_started = true
+    # attachments, tasks and comments bool
+    story.has_attachments = true if story.attachments? && story.attachments.length > 0
+    story.has_tasks = true if story.tasks? && story.tasks.length > 0
+    if story.comments? && story.comments.length > 0
+      story.has_comments = true
+      story.comments = for comment in story.comments
+        comment.is_owner = true if comment.author? && comment.author.person? && comment.author.person.id? && 
+        parseInt(comment.author.person.id) == parseInt(PivotalRocketBackground.account.id)
+        comment
+    # story open or closed blocks
+    user_options = PivotalRocketStorage.get_user_options()
+    story.opened_task_box = true if user_options.opened_task_box? && user_options.opened_task_box is true
+    story.opened_comment_box = true if user_options.opened_comment_box? && user_options.opened_comment_box is true
+    # generate template
+    block_element = PivotalRocketBackground.popup.$('#storyInfo')
+    block_element.empty().html(PivotalRocketBackground.templates.story.render(story))
+    PivotalRocketBackground.popup.$('#addStoryView, #infoPanel').hide()
+    block_element.show()
+    # select selector for story state
+    PivotalRocketBackground.popup.$('#storyInfo').find('select.change_story_state').val(story.current_state)
+    # select selector for story estimate
+    PivotalRocketBackground.popup.$('#storyInfo').find('select.change_story_estimate').val(story.estimate)
+    # story description and comments
+    PivotalRocketBackground.set_description_links()
+    PivotalRocketBackground.set_comments_links()
+    # set tasks filter
+    if user_options.tasks_filter?
+      PivotalRocketBackground.popup.$('#storyInfo').find('a.filter_tasks').removeClass('active')
+      PivotalRocketBackground.popup.$('#storyInfo').find("a.filter_#{user_options.tasks_filter}_tasks")
+      .addClass('active').trigger('click')
+    # init story bindings
+    PivotalRocketBackground.bindings_story_info(story)
+    # init clippy
+    chrome.extension.sendRequest
+      clippy_for_story:
+        id: story.id
+        url: story.url
   # set links in description
   set_description_links: ->
     if PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description').length > 0
