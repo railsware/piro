@@ -104,13 +104,21 @@ root.PivotalRocketBackground =
           return true
   # init popup bindings
   init_bindings: ->
+    # main view
+    PivotalRocketBackground.binding_main_view()
+    # login
+    PivotalRocketBackground.binding_login_view()
+    # bindings for story show
+    PivotalRocketBackground.binding_show_story_view()
+  # init bindings for main view
+  binding_main_view: ->
     # tabs
     PivotalRocketBackground.owner_tabs = PivotalRocketBackground.popup.$('#ownerStories').tabs()
     PivotalRocketBackground.requester_tabs = PivotalRocketBackground.popup.$('#requesterStories').tabs()
     # global hotkeys
     PivotalRocketBackground.init_global_hotkeys()
     # fine add block
-    open_fine_edit_block = (object) ->
+    PivotalRocketBackground.open_fine_edit_block = (object) ->
       box = object.parents('.action_block')
       box.removeClass('loading').addClass('adding')
       if box.hasClass('add_task_block')
@@ -120,7 +128,7 @@ root.PivotalRocketBackground =
         box.find('textarea.add_comment_text').focus()
         PivotalRocketStorage.set_opened_by_type('opened_comment_box', true)
       return false
-    close_fine_edit_block = (object) ->
+    PivotalRocketBackground.close_fine_edit_block = (object) ->
       box = object.parents('.action_block')
       box.removeClass('adding')
       if box.hasClass('add_task_block')
@@ -129,9 +137,9 @@ root.PivotalRocketBackground =
         PivotalRocketStorage.set_opened_by_type('opened_comment_box', false)
       return false
     PivotalRocketBackground.popup.$("#storyInfo").on "click", "a.open_add_block", (event) =>
-      open_fine_edit_block($(event.target))
+      PivotalRocketBackground.open_fine_edit_block($(event.target))
     PivotalRocketBackground.popup.$("#storyInfo").on "click", "a.close_add_block", (event) =>
-      close_fine_edit_block($(event.target))
+      PivotalRocketBackground.close_fine_edit_block($(event.target))
     # fine delete
     PivotalRocketBackground.popup.$("#storyInfo").on "click", "a.fine_delete_link", (event) =>
       $(event.target).parents('.fine_delete').addClass('delete_confirm')
@@ -139,26 +147,6 @@ root.PivotalRocketBackground =
     PivotalRocketBackground.popup.$("#storyInfo").on "click", "a.fine_delete_cancel", (event) =>
       $(event.target).parents('.fine_delete').removeClass('delete_confirm')
       return false
-    # login
-    PivotalRocketBackground.popup.$('#pivotalTokenAuthLink').click (event) =>
-      PivotalRocketBackground.popup.$('a.login_switcher_link').removeClass('active')
-      $(event.target).addClass('active')
-      PivotalRocketBackground.popup.$('#pivotalBaseAuth').hide()
-      PivotalRocketBackground.popup.$('#pivotalTokenAuth').show()
-      PivotalRocketBackground.popup.$('#loginToken').focus()
-      return false
-    PivotalRocketBackground.popup.$('#pivotalBaseAuthLink').click (event) =>
-      PivotalRocketBackground.popup.$('a.login_switcher_link').removeClass('active')
-      $(event.target).addClass('active')
-      PivotalRocketBackground.popup.$('#pivotalTokenAuth').hide()
-      PivotalRocketBackground.popup.$('#pivotalBaseAuth').show()
-      PivotalRocketBackground.popup.$('#loginUsername').focus()
-      return false
-    PivotalRocketBackground.popup.$('#loginButton').click (event) =>
-      PivotalRocketBackground.login_by_user()
-      return false
-    PivotalRocketBackground.popup.$('#loginUsername, #loginPassword, #loginToken, #loginCompanyName').keydown (event) =>
-      PivotalRocketBackground.login_by_user() if 13 == event.keyCode
     # update link
     PivotalRocketBackground.popup.$('#mainPage').on "click", "a.update_stories", (event) =>
       PivotalRocketBackground.autoupdate()
@@ -211,7 +199,43 @@ root.PivotalRocketBackground =
     PivotalRocketBackground.popup.$('#addStoryView').on "click", "a.add_more_stories", (event) =>
       PivotalRocketBackground.show_add_story_view()
       return false
-    # bindings for story show
+    # add story save link
+    PivotalRocketBackground.popup.$('#addStoryView').on "click", "input.add_story_button", (event) =>
+      PivotalRocketBackground.save_new_story()
+      return false
+    PivotalRocketBackground.popup.$('#addStoryView').on "keydown", "input.add_story_name, textarea.add_story_description, input.add_story_labels", (event) =>
+      if ((event.metaKey? && event.metaKey is true) || (event.ctrlKey? && event.ctrlKey is true)) && event.keyCode? && 83 == event.keyCode
+        event.preventDefault()
+        PivotalRocketBackground.save_new_story()
+        return false
+    # add story cancel link
+    PivotalRocketBackground.popup.$('#addStoryView').on "click", "a.add_story_close", (event) =>
+      PivotalRocketBackground.popup.$('#storyInfo, #addStoryView').hide()
+      PivotalRocketBackground.popup.$('#infoPanel').show()
+      return false
+  # init bindings for login view
+  binding_login_view: ->
+    PivotalRocketBackground.popup.$('#pivotalTokenAuthLink').click (event) =>
+      PivotalRocketBackground.popup.$('a.login_switcher_link').removeClass('active')
+      $(event.target).addClass('active')
+      PivotalRocketBackground.popup.$('#pivotalBaseAuth').hide()
+      PivotalRocketBackground.popup.$('#pivotalTokenAuth').show()
+      PivotalRocketBackground.popup.$('#loginToken').focus()
+      return false
+    PivotalRocketBackground.popup.$('#pivotalBaseAuthLink').click (event) =>
+      PivotalRocketBackground.popup.$('a.login_switcher_link').removeClass('active')
+      $(event.target).addClass('active')
+      PivotalRocketBackground.popup.$('#pivotalTokenAuth').hide()
+      PivotalRocketBackground.popup.$('#pivotalBaseAuth').show()
+      PivotalRocketBackground.popup.$('#loginUsername').focus()
+      return false
+    PivotalRocketBackground.popup.$('#loginButton').click (event) =>
+      PivotalRocketBackground.login_by_user()
+      return false
+    PivotalRocketBackground.popup.$('#loginUsername, #loginPassword, #loginToken, #loginCompanyName').keydown (event) =>
+      PivotalRocketBackground.login_by_user() if 13 == event.keyCode
+  # init bindings for story show view
+  binding_show_story_view: ->
     # search by labels
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.story_label", (event) =>
       label = $(event.target).data('label')
@@ -235,7 +259,7 @@ root.PivotalRocketBackground =
       else if 27 == event.keyCode
         event.preventDefault()
         close_links = $(event.target).parents('div.add_task_block').find("a.close_add_block")
-        close_fine_edit_block($(close_links[0])) if close_links.length > 0
+        PivotalRocketBackground.close_fine_edit_block($(close_links[0])) if close_links.length > 0
         return false
     # edit task
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.edit_task_link", (event) =>
@@ -284,7 +308,7 @@ root.PivotalRocketBackground =
       else if 27 == event.keyCode
         event.preventDefault()
         close_links = $(event.target).parents('div.add_comment_block').find("a.close_add_block")
-        close_fine_edit_block($(close_links[0])) if close_links.length > 0
+        PivotalRocketBackground.close_fine_edit_block($(close_links[0])) if close_links.length > 0
         return false
     # delete comment from story
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.delete_comment_link", (event) =>
@@ -296,20 +320,6 @@ root.PivotalRocketBackground =
         url: $(event.target).attr('href')
         active: false
       return false
-    # add story save link
-    PivotalRocketBackground.popup.$('#addStoryView').on "click", "input.add_story_button", (event) =>
-      PivotalRocketBackground.save_new_story()
-      return false
-    PivotalRocketBackground.popup.$('#addStoryView').on "keydown", "input.add_story_name, textarea.add_story_description, input.add_story_labels", (event) =>
-      if ((event.metaKey? && event.metaKey is true) || (event.ctrlKey? && event.ctrlKey is true)) && event.keyCode? && 83 == event.keyCode
-        event.preventDefault()
-        PivotalRocketBackground.save_new_story()
-        return false
-    # add story cancel link
-    PivotalRocketBackground.popup.$('#addStoryView').on "click", "a.add_story_close", (event) =>
-      PivotalRocketBackground.popup.$('#storyInfo, #addStoryView').hide()
-      PivotalRocketBackground.popup.$('#infoPanel').show()
-      return false
   # change account
   change_account: ->
     account_id = PivotalRocketBackground.popup.$('#changeAccount').val()
@@ -318,7 +328,7 @@ root.PivotalRocketBackground =
         PivotalRocketBackground.account = account
         PivotalRocketBackground.init_list_stories()
         return true
-    return false
+    return false  
   # change view type
   change_view_type: ->
     if PivotalRocketBackground.popup? && PivotalRocketBackground.account?
