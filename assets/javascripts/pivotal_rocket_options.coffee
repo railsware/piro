@@ -73,6 +73,10 @@ root.PivotalRocketOptions =
     $('#updateOptions').click (event) => 
       PivotalRocketOptions.update_options()
       return false
+    # close alert box
+    $('#mainPage').on "click", "a.close_alert_box", (event) =>
+      $(event.target).parents('div.alert_box').slideUp('show')
+      return false
   init_sort_accounts: ->
     $("#accountList").sortable
       placeholder: "ui-state-highlight"
@@ -111,6 +115,11 @@ root.PivotalRocketOptions =
     PivotalRocketOptions.cleanup_popup()
     # update background timer
     PivotalRocketOptions.background_page.PivotalRocketBackground.updated_options()
+    # show info
+    $('#showAlertBox').slideDown 'show', () ->
+      fcallback = -> 
+        $('#showAlertBox').slideUp('show') if $('#showAlertBox').is(':visible')
+      root.setTimeout(fcallback, 3000)
   # add acoount
   add_account: ->
     params = 

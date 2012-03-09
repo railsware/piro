@@ -11,13 +11,13 @@ class root.PivotalApiLib
       dataType: 'xml'
       headers: 
         "X-TrackerToken": @account.token.guid
-    ajax_params.url = params.url if params.url?
-    ajax_params.type = params.type if params.type?
-    ajax_params.data = params.data if params.data?
-    ajax_params.error = params.error if params.error?
-    ajax_params.success = params.success if params.success?
-    ajax_params.complete = params.complete if params.complete?
-    ajax_params.beforeSend = params.beforeSend if params.beforeSend?
+    ajax_params.url         = params.url if params.url?
+    ajax_params.type        = params.type if params.type?
+    ajax_params.data        = params.data if params.data?
+    ajax_params.error       = params.error if params.error?
+    ajax_params.success     = params.success if params.success?
+    ajax_params.complete    = params.complete if params.complete?
+    ajax_params.beforeSend  = params.beforeSend if params.beforeSend?
     $.ajax ajax_params
   get_projects: (params) =>
     params.url = "#{this.baseUrl}/projects"
@@ -109,5 +109,5 @@ class root.PivotalAuthLib
       ajax_params.password = params.password
     else
       ajax_params.headers = 
-        "X-TrackerToken": (params.token || "")
+        "X-TrackerToken": (params.token || null)
     $.ajax ajax_params
