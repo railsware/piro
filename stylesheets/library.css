@@ -197,6 +197,10 @@ p {
     cursor: pointer;
 }
 
+.story-name {
+    margin: 0 100px 0 25px;
+}
+
 .ui-state-highlight {
     height: 26px;
     margin: 2px;
@@ -280,7 +284,7 @@ p {
     display: inline-block;
     width: 16px;
     height: 16px;
-    background: url(../images/move.png) no-repeat 0 0;
+    background: url(../images/sort-dark.png) no-repeat 0 0;
     cursor: pointer;
 }
 
@@ -288,7 +292,8 @@ p {
     display: inline-block;
     width: 16px;
     height: 16px;
-    text-indent: -9000px;
+    overflow: hidden;
+    text-indent: 9000px;
     margin-top: 1px;
     background: url(../images/edit.png) no-repeat 0 0;
 }
@@ -297,8 +302,9 @@ p {
     background: url(../images/del.png) no-repeat 0 0;
 }
 
-.edit-link:hover, .del-link:hover {
+.edit-link:hover, .del-link:hover, .sort_task:hover {
     background-color: #ddd;
+    border-radius: 3px;
 }
 
 .new-link {
@@ -306,7 +312,6 @@ p {
     background: url(../images/new.png) no-repeat 0 50%;
     color: #333;
 }
-
 
 .new-link span {
     border-bottom: 1px dotted;
@@ -332,7 +337,7 @@ p {
 }
 
 li.account {
-    padding: 10px;
+    padding: 6px 8px;
     border: 1px solid #dedede;
     background-color: #fff;
 }
@@ -350,14 +355,14 @@ li.account {
     display: inline-block;
     width: 16px;
     height: 16px;
-    background: url(../images/sort.png) no-repeat 0 0;
+    background: url(../images/sort2.png) no-repeat 50% 50%;
     cursor: pointer;
 }
 
 .sort_project {
     position: absolute;
     right: 10px;
-    top: 5px;
+    top: 4px;
 }
 
 .sort_task {
@@ -365,7 +370,8 @@ li.account {
     top: 2px;
     vertical-align: -2px;
     margin-right: 3px;
-    background: url(../images/sort-dark.png) no-repeat 0 0;
+    margin-top: -2px;
+    background: url(../images/sort-dark.png) no-repeat 2px 1px;
 }
 
 .project-title {
@@ -479,6 +485,7 @@ li.account {
 }
 
 .switcher {
+    overflow: hidden;
     display: inline-block;
     margin-top: -1px;
 }
@@ -493,7 +500,7 @@ li.account {
     text-align: center;
     padding: 2px 5px;
     text-decoration: none;
-    border: 1px solid #999;
+    border: 1px solid #777;
     border-left: 0;
     background-color: #f5f5f5;
     box-shadow: 0 1px 0 rgba(255,255,255, 0.5);
@@ -510,15 +517,35 @@ li.account {
     box-shadow: 0 1px 1px rgba(0,0,0, 0.4) inset, 0 1px 0 rgba(255,255,255, 0.5);
     background: #666;
     color: #fff;
+    cursor: default;
 }
 
 .switcher a:first-child {
-    border-left: 1px solid #999;
+    border-left: 1px solid #777;
     border-radius: 4px 0 0 4px;
 }
 
 .switcher a:last-child {
     border-radius: 0 4px 4px 0;
+}
+
+.add_story_result {
+    height: 100%;
+    width: 100%;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.add_story_box {
+    display: table;
+    width: 100%;
+    height: 100%;
+}
+
+.done {
+    padding: 10px 0 10px 40px;
+    background: url(../images/checkmark.png) no-repeat 0 3px;
 }
 
 /* leopard added, vasiliy will change by best practice. 
@@ -557,6 +584,10 @@ Vasiliy saw and decided to leave it as is for now :) */
   display:block;
 }
 
+.task_block.editing .edit {
+    padding: 5px 0;
+}
+
 .filter_tasks.active {
   color: #000;
 }
@@ -577,9 +608,9 @@ Vasiliy saw and decided to leave it as is for now :) */
   display: block;
 }
 
-.chosen_selector{
+/* .chosen_selector{
   width: 350px;
-}
+} */
 
 .add_story_box .loader, .add_story_box.loading .main {
   display: none;
@@ -591,11 +622,22 @@ Vasiliy saw and decided to leave it as is for now :) */
 
 .ui-tasks-highlight {
     height: 22px;
-    margin: 3px 0;
+    margin: 0;
     border: 1px dashed rgba(100,100,100, 0.5) !important;
 }
 
-.tasks .ui-sortable-helper {
+.list.tasks li.ui-sortable-helper {
+    padding: 5px !important;
+    margin-left: -5px;
     border: 1px solid rgba(0,0,0, 0.2) !important;
-    background: rgba(255,255,255, 0.7);
+    background: rgba(255,255,255, 0.8);
+    box-shadow: 0 0 5px rgba(0,0,0, 0.2);
 }
+
+.ui-sortable-helper {
+    box-shadow: 0 0 5px rgba(0,0,0, 0.2);
+}
+
+
+
+

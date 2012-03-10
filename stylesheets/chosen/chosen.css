@@ -89,6 +89,7 @@
   margin: 1px;
   white-space: nowrap;
   border-bottom: 1px solid #ccc;
+  background-color: #eee;
   z-index: 1010;
 }
 .chzn-container-single .chzn-search input {

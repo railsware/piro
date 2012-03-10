@@ -39,6 +39,7 @@ textarea {
     display: inline-block;
     width: 100px;
     text-align: left;
+    word-wrap: normal;
 }
 
 .options .label {
@@ -58,16 +59,8 @@ input[type="search"] {
 }
 
 fieldset {
-    border: 1px solid #A4A4A4;
+    border: 1px solid #888;
     box-shadow: 0 0 1px #ccc inset;
-}
-
-legend {
-    margin: -15px 0 0;
-    padding: 0 10px;
-    font-weight: bold;
-    background-color: #f4f4f4;
-    text-shadow: 0 1px 0 #fff;
 }
 
 .editable-textarea textarea {

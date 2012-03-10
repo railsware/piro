@@ -25,7 +25,7 @@
 }
 
 .button.default {
-    border: 1px solid #afafaf;
+    border: 1px solid #777;
     background-color: #f5f5f5;
     color: #3a3a3a;
     box-shadow: 0 1px 0 rgba(255,255,255, 0.9) inset, 0 1px 0 rgba(255,255,255, 0.5);
@@ -58,7 +58,7 @@
 
 .button.default:hover {
     background-color: #fff;
-    border: 1px solid #b0b0b0;
+    border: 1px solid #777;
     color: #333;
 }
 

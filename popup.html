@@ -108,7 +108,7 @@
         </div> <!-- unit -->
         <div class="unit-right size1of5 txt-right">
           <span id="loaderSpinner"></span>
-          <a href="#" class="add-task add_new_story_link"><img src="images/add-light.png" alt="Add Story" /></a>
+          <a href="#" class="add-task add_new_story_link" title="Add New Story"><img src="images/add-light.png" alt="Add Story" /></a>
         </div> <!-- unit -->
       </div>
       <div id="infoPanel" class="data-holder empty txt-center"></div>
@@ -170,18 +170,12 @@
         <span class="sort_project unit-right" title="Drag to sort projects" data-project-id="{{id}}"></span>
       </div>
       
-      <ul data-project-id="{{id}}" {{#is_requested_by_me}}data-requested="true"{{/is_requested_by_me}} class="list">
+      <ul data-project-id="{{id}}" {{#is_requested_by_me}}data-requested="true"{{/is_requested_by_me}} class="list stories">
         {{#stories}}
           <li class="story_info story_{{id}} {{box_class}}-box outer" data-story-id="{{id}}">
             <div class="unit"><span class="{{story_type}}-icon"></span></div>
-            <div class="unit size3of4">
-              <div class="pls">                
-                {{name}}
-              </div>   
-            </div>
-            <div class="unit-right">
-              <span class="status">{{current_state}}</span>
-            </div>      
+            <div class="unit-right"><span class="status">{{current_state}}</span></div>
+            <div class="story-name">{{name}}</div>                  
           </li>
         {{/stories}}
       </ul>
@@ -386,7 +380,7 @@
     <div class="add_story_box">
       <div class="main form">
       <strong class="errors_box error-text negative"></strong>
-        <h1 class="mbm">Add Story</h1>
+        <h1 class="mbm">Add New Story</h1>
         <div class="mbs">
           <label>Project:</label>
           <select class="add_story_project_id chosen_selector">
@@ -444,8 +438,8 @@
           <textarea class="add_story_description"></textarea>
         </div>
         <div class="mbm">
-          <label>Labels:</label>
-          <input class="add_story_labels" type="text" />
+          <label>Labels: (<span class="h4 pale">type labels separated by comma</span>)</label>
+          <input class="add_story_labels" type="text" />          
         </div>
         <div class="mbs">
           <input class="add_story_button button success" type="button" value="Add" />
@@ -460,13 +454,11 @@
   </script>
   
   <script id="add_story_result_template" type="text/x-mustache-template">
-    <div>
-      {{name}}
-      <a href="{{url}}" target="_blank">{{url}}</a>
-    </div>
-    <div>
-      <a class="add_more_stories" href="#">Add more</a> or 
-      <a class="add_story_close h4" href="#">Close</a>
+    <div class="h1 mbm"><span class="done">Story successfully added</span></div>
+    <div class="mbs mhl"><strong>{{name}}</strong></div>
+    <div><a href="{{url}}" target="_blank">{{url}}</a></div>
+    <div class="ptm">
+      <a class="add_more_stories" href="#">Add one more story</a><span class="mhs">or</span><a class="add_story_close" href="#">Close</a>
     </div>
   </script>
   
