@@ -1207,7 +1207,7 @@ root.PivotalRocketBackground =
           PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_box').addClass('loading')
         success: (data, textStatus, jqXHR) ->
           story_data = XML2JSON.parse(data, true)
-          PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_result').empty()
+          PivotalRocketBackground.popup.$('#addStoryView').find('div.add_story_result').empty().removeClass('loader')
           .html(PivotalRocketBackground.templates.add_story_result.render(story_data.story))
           # update stories
           fcallback_update = -> 
