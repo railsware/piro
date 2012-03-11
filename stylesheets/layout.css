@@ -195,6 +195,11 @@ footer {
     background: url(../images/footer-bg.png) repeat-x 0 0;
 }
 
+footer .outer {
+    position: relative;
+    z-index: 2;
+}
+
 footer .wrapper {
     height: 174px;
 }
