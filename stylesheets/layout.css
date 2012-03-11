@@ -55,7 +55,7 @@ h3, .h3 {
 .download-box {
     position: absolute;
     bottom: -55px;
-    z-index: 1;
+    z-index: 3;
 }
 
 .download {
