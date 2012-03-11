@@ -14,6 +14,9 @@ root.PivotalRocketOptions =
     PivotalRocketOptions.templates.account = Hogan.compile($('#account_template').html())
   # init bindings
   init_bindings: ->
+    # tabs switcher
+    $('legend.switcher a.inactive').click (event) ->
+      $('fieldset').toggle()
     # add accounts
     $('#addAccount').click (event) => 
       $('#pivotalAddError').hide()
