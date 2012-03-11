@@ -111,6 +111,7 @@ h3, .h3 {
     position: relative;
 }
 
+/*
 .slides {
     margin-left: -5px;
     width: 637px;
@@ -122,7 +123,6 @@ h3, .h3 {
     margin: 54px 9px 0;
 }
 
-/*
 .slider-nav .left, .slider-nav .right {
     position: absolute;
     top: 219px;
