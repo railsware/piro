@@ -179,11 +179,22 @@ h3, .h3 {
 	font-size: 0;
 }
 
-/* header */
+.gloss {
+    width: 720px;
+    height: 200px;
+    position: absolute;
+    bottom: 0px;
+    right: -20px;
+    background: url(../images/gloss.png) no-repeat 0 100%;
+}
 
 /* footer */
 footer {
     height: 174px;
     color: #7f7f7f;
     background: url(../images/footer-bg.png) repeat-x 0 0;
+}
+
+footer .wrapper {
+    height: 174px;
 }
