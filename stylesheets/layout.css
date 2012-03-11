@@ -122,7 +122,8 @@ h3, .h3 {
     margin: 54px 9px 0;
 }
 
-.next, .prev {
+/*
+.slider-nav .left, .slider-nav .right {
     position: absolute;
     top: 219px;
     width: 30px;
@@ -131,23 +132,23 @@ h3, .h3 {
     background: url(../images/slide-nav.png) no-repeat 0 0;
 }
 
-.next {
+.slider-nav .right {
     right: -26px;
     background-position: -30px 0;
 }
 
-.next:hover {
+.slider-nav .right:hover {
     background-position: -30px -62px;
 }
 
-.prev {
+.slider-nav .left {
     left: -26px;
 }
 
-.prev:hover {
+.slider-nav .left:hover {
     background-position: 0 -62px;
 }
-
+*/
 /* features */
 .features li {
     padding-left: 30px;

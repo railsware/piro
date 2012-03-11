@@ -13,9 +13,7 @@
 	<link rel="stylesheet" href="stylesheets/grids.css">
 	<link rel="stylesheet" href="stylesheets/spaces.css">
 	<link rel="stylesheet" href="stylesheets/layout.css">
-	
-	<!-- <link rel="stylesheet" href="stylesheets/foundation.css">
-	 <link rel="stylesheet" href="stylesheets/app.css"> -->
+	<link rel="stylesheet" href="stylesheets/orbit.css">
 	 
 	<!-- IE Fix for HTML5 Tags -->
 	<!--[if lt IE 9]>
@@ -38,7 +36,7 @@
               <p>Switch between accounts in a moment.</p>
             </li>
             <li>
-              <h2>Your tasks only</h2>
+              <h2>Your stories</h2>
               <p>See all stories owned by you or stories requested by you.</p>
             </li>
             <li>
@@ -47,7 +45,7 @@
             </li>
             <li>
               <h2>Open source</h2>
-              <p>We share PIRO with anyone interested. <a href="#">Check it out</a></p>
+              <p>We share PIRO with anyone interested. <a href="https://github.com/railsware/piro">Check it out</a></p>
             </li>
           </ul>
           <div class="download-box">
@@ -65,8 +63,6 @@
               <img src="images/slide1.jpg" alt="" />
               <img src="images/slide1.jpg" alt="" />
             </div> <!-- slides -->
-            <a href="#" class="next"></a>
-            <a href="#" class="prev"></a>
           </div> <!-- holder -->          
         </div> <!-- unit -->
       </div> <!-- outer -->      
@@ -75,17 +71,17 @@
       <div class="wrapper">
         <div class="outer ptl">
           <div class="unit size1of3">
-            <div class="developers ptl">Brought to you by <a href="http://railsware.com" target="_blank"><img src="images/railsware.png" alt="railsware" /></a></div>
+            <div class="developers ptl">Brought to you by <a href="http://railsware.com/projects" target="_blank"><img src="images/railsware.png" alt="railsware" /></a></div>
           </div> <!-- unit -->
           <div class="unit size1of3">
             <div class="mac mtm">
               <div class="h2">Got a Mac?</div>
-              <div class="h3">Check out <a href="#">Pivotal Booster</a></div>
+              <div class="h3">Check out <a href="http://pivotalbooster.com/">Pivotal Booster</a></div>
             </div> <!-- mac -->
           </div> <!-- unit -->
           <div class="unit-right size1of3 txt-right">
             <div class="mrs">
-              Found a bug? Have a suggestion? <a href="#">GitHub Issues</a>
+              Found a bug? Have a suggestion? <a href="https://github.com/railsware/piro/issues">GitHub Issues</a>
             </div> <!-- mrs -->
           </div> <!-- unit -->
         </div> <!-- ptl -->
@@ -94,26 +90,29 @@
     </footer>
   </section> <!-- page -->
   
-  <a href="#" class="forkme"></a>
+  <a href="https://github.com/railsware/piro" class="forkme"></a>
 
 	<script src="javascripts/jquery.min.js"></script>
-	<script src="javascripts/jquery.cycle.all.js"></script>	
-	
-  <!-- 
-    <script src="javascripts/modernizr.foundation.js"></script>
-  	<script src="javascripts/foundation.js"></script>
-  	<script src="javascripts/app.js"></script>
-   -->
+	<script src="javascripts/jquery.cycle.all.js"></script>
+	<script src="javascripts/jquery.orbit-1.4.0.js"></script>	
   
 
    <script type="text/javascript">
       $(function(){
+        /*
         $('.slides').cycle({ 
             fx:     'fade', 
             speed:  '500', 
             timeout: 0, 
             next:   '.next', 
             prev:   '.prev' 
+        });
+        */
+        $('.slides').orbit({
+          directionalNav: true,
+          captions: false,
+          bullets: true,
+          bulletThumbs: true
         });
       });
    </script>
