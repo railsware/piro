@@ -408,7 +408,7 @@ root.PivotalRocketBackground =
     PivotalRocketBackground.popup.$('#storyInfo').find('select.change_story_estimate').val(story.estimate)
     # story description and comments
     PivotalRocketBackground.set_description_links()
-    PivotalRocketBackground.set_comments_links()
+    PivotalRocketBackground.set_comments_and_tasks_links()
     # set tasks filter
     if user_options.tasks_filter?
       PivotalRocketBackground.popup.$('#storyInfo').find('a.filter_tasks').removeClass('active')
@@ -428,12 +428,18 @@ root.PivotalRocketBackground =
     descr_object = PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description')
     descr_object.html(descr_object.html().replace(exp,"<a class='desc_link' href='$1'>$1</a>"))
   # set links in comments
-  set_comments_links: ->
-    return false unless PivotalRocketBackground.popup.$('#storyInfo').find('div.comment_description').length > 0
+  set_comments_and_tasks_links: ->
     exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig
-    $.each PivotalRocketBackground.popup.$('#storyInfo').find('div.comment_description'), (key, object) ->
-      object = $(object)
-      object.html(object.html().replace(exp,"<a class='desc_link' href='$1'>$1</a>"))
+    # comments
+    if PivotalRocketBackground.popup.$('#storyInfo').find('div.comment_description').length > 0
+      $.each PivotalRocketBackground.popup.$('#storyInfo').find('div.comment_description'), (key, object) ->
+        object = $(object)
+        object.html(object.html().replace(exp,"<a class='desc_link' href='$1'>$1</a>"))
+    # tasks
+    if PivotalRocketBackground.popup.$('#storyInfo').find('label.task_description').length > 0
+      $.each PivotalRocketBackground.popup.$('#storyInfo').find('label.task_description'), (key, object) ->
+        object = $(object)
+        object.html(object.html().replace(exp,"<a class='desc_link' href='$1'>$1</a>"))
   # init show bindings for story
   bindings_story_info: (story) ->
     # story title
