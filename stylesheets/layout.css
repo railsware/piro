@@ -112,8 +112,8 @@ h3, .h3 {
 }
 
 #slides { 
-  width: 688px;
-  height: 500px;
+  width: 940px;
+  height: 450px;
   background: #000 url('../images/orbit/loading.gif') no-repeat center center; 
   overflow: hidden; 
 }
