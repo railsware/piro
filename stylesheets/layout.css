@@ -113,10 +113,9 @@ h3, .h3 {
 
 #slides { 
   width: 688px;
-  height: 500px;
+  height: 500px !important;
   background: #000 url('../images/orbit/loading.gif') no-repeat center center; 
   overflow: hidden; 
-  z-index: 10;
 }
 #slides img, #slides div { 
   display: none;
