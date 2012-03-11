@@ -62,7 +62,7 @@
         </div> <!-- unit -->
         <div class="unit size2of3 pts mbm">
           <div class="holder">
-            <div class="slides">
+            <div id="slides">
               <img src="images/slide1.png" alt="List" />
               <img src="images/slide2.png" alt="Open story" />
             </div> <!-- slides -->
@@ -130,12 +130,11 @@
   
 
    <script type="text/javascript">
-      $(window).load(function() {
-        $('.slides').orbit({
+      $(function(){
+        $('#slides').orbit({
           directionalNav: true,
           captions: false,
-          bullets: true,
-          bulletThumbs: true
+          bullets: true
         });
       });
    </script>

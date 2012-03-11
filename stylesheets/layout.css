@@ -111,6 +111,16 @@ h3, .h3 {
     position: relative;
 }
 
+#slides { 
+  width: 688px;
+  height: 500px;
+  background: #000 url('../images/orbit/loading.gif') no-repeat center center; 
+  overflow: hidden; 
+}
+#slides img, #slides div { 
+  display: none; 
+}
+
 /*
 .slides {
     margin-left: -5px;
