@@ -6,47 +6,117 @@
 <!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8" />
-	<!-- Set the viewport width to device width for mobile -->
 	<meta name="viewport" content="width=device-width" />
 	<title>PIRO - it's a Rocket for your PivotalTracker account(s)</title>
-	<!-- Included CSS Files -->
-	<link rel="stylesheet" href="stylesheets/foundation.css">
-	<link rel="stylesheet" href="stylesheets/app.css">
-	<!--[if lt IE 9]>
-		<link rel="stylesheet" href="stylesheets/ie.css">
-	<![endif]-->
+	
+	<link rel="stylesheet" href="stylesheets/reset.css">
+	<link rel="stylesheet" href="stylesheets/grids.css">
+	<link rel="stylesheet" href="stylesheets/spaces.css">
+	<link rel="stylesheet" href="stylesheets/layout.css">
+	
+	<!-- <link rel="stylesheet" href="stylesheets/foundation.css">
+	 <link rel="stylesheet" href="stylesheets/app.css"> -->
+	 
 	<!-- IE Fix for HTML5 Tags -->
 	<!--[if lt IE 9]>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 </head>
 <body>
-	<!-- container -->
-	<div class="container">
-
-		<div class="row">
-      <div class="four columns">
-        <div class="panel">
-					<h5>My panel is bigger than yours.</h5>
-					<p>Seriously, just look at this sweet panel.</p>
-				</div>
+  
+  <section class="page">
+    <header>
+      <div class="wrapper outer">
+        <div class="unit size1of3 ptl">
+          <div class="logo">
+            <img src="images/logo.png" alt="PIRO" />
+            <h1 class="motto">It's a Rocket for your Pivotal Tracker</h1>
+          </div> <!-- logo -->
+          <ul class="features mvl mrl">
+            <li>
+              <h2>Multilogin</h2>
+              <p>Switch between accounts in a moment.</p>
+            </li>
+            <li>
+              <h2>Your tasks only</h2>
+              <p>See all stories owned by you or stories requested by you.</p>
+            </li>
+            <li>
+              <h2>All projects</h2>
+              <p>Browse stories related to you across all projects without switching.</p>
+            </li>
+            <li>
+              <h2>Open source</h2>
+              <p>We share PIRO with anyone interested. <a href="#">Check it out</a></p>
+            </li>
+          </ul>
+          <div class="download-box">
+            <a href="#" class="download">Download Chrome Extension</a>
+            <div class="version">v 1.0 &ndash; March 20th 2012</div>
+          </div> <!-- download-box -->          
+          <div class="social">
+            <a href="#"><img src="images/twitter.png" alt="twitter" /></a>
+            <a href="#"><img src="images/facebook.png" alt="facebook" /></a>
+          </div> <!-- social -->
+        </div> <!-- unit -->
+        <div class="unit size2of3 pts mbm">
+          <div class="holder">
+            <div class="slides">
+              <img src="images/slide1.jpg" alt="" />
+              <img src="images/slide1.jpg" alt="" />
+            </div> <!-- slides -->
+            <a href="#" class="next"></a>
+            <a href="#" class="prev"></a>
+          </div> <!-- holder -->          
+        </div> <!-- unit -->
+      </div> <!-- outer -->      
+    </header>
+    <footer>
+      <div class="wrapper">
+        <div class="outer ptl">
+          <div class="unit size1of3">
+            <div class="developers ptl">Brought to you by <a href="http://railsware.com" target="_blank"><img src="images/railsware.png" alt="railsware" /></a></div>
+          </div> <!-- unit -->
+          <div class="unit size1of3">
+            <div class="mac mtm">
+              <div class="h2">Got a Mac?</div>
+              <div class="h3">Check out <a href="#">Pivotal Booster</a></div>
+            </div> <!-- mac -->
+          </div> <!-- unit -->
+          <div class="unit-right size1of3 txt-right">
+            <div class="mrs">
+              Found a bug? Have a suggestion? <a href="#">GitHub Issues</a>
+            </div> <!-- mrs -->
+          </div> <!-- unit -->
+        </div> <!-- ptl -->        
       </div>
-      <div class="eight columns">
-        <div class="panel">
-					<h5>My panel is bigger than yours.</h5>
-					<p>Seriously, just look at this sweet panel.</p>
-				</div>				
-      </div>
-		</div>
+    </footer>
+  </section> <!-- page -->
+  
+  <a href="#" class="forkme"></a>
 
-	</div>
-	<!-- container -->
-
-	<!-- Included JS Files -->
 	<script src="javascripts/jquery.min.js"></script>
-	<script src="javascripts/modernizr.foundation.js"></script>
-	<script src="javascripts/foundation.js"></script>
-	<script src="javascripts/app.js"></script>
+	<script src="javascripts/jquery.cycle.all.js"></script>	
+	
+  <!-- 
+    <script src="javascripts/modernizr.foundation.js"></script>
+  	<script src="javascripts/foundation.js"></script>
+  	<script src="javascripts/app.js"></script>
+   -->
+  
+
+   <script type="text/javascript">
+      $(function(){
+        $('.slides').cycle({ 
+            fx:     'fade', 
+            speed:  '500', 
+            timeout: 0, 
+            next:   '.next', 
+            prev:   '.prev' 
+        });
+      });
+   </script>
+	
 
 </body>
 </html>
