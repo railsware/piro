@@ -126,7 +126,7 @@ h3, .h3 {
 }
 
 .slider-nav .next {
-    right: -20px;
+    right: -21px;
     background-position: -30px 0;
 }
 
@@ -135,21 +135,32 @@ h3, .h3 {
 }
 
 .slider-nav .prev {
-    left: -20px;
+    left: -21px;
 }
 
 .slider-nav .prev:hover {
     background-position: 0 -62px;
 }
 
+.pages {
+    padding-top: 10px;
+    text-align: center;
+    position: relative;
+    z-index: 5;
+}
+
 .pages a {
     display: inline-block;
     width: 7px;
     height: 7px;
-    margin: 0 3px;
+    margin: 0 4px;
     text-indent: -9000px;
     background-color: #777;
     border-radius: 8px;
+}
+
+.pages a.activeSlide {
+    background-color: #000;
 }
 
 /* features */
