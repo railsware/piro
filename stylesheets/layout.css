@@ -107,33 +107,16 @@ h3, .h3 {
     margin-left: 5px;
 }
 
-.holder {
+.slides-holder {
     position: relative;
-}
-
-#slides { 
-  width: 688px;
-  height: 450px !important;
-  background: #000 url('../images/orbit/loading.gif') no-repeat center center; 
-  overflow: hidden; 
-}
-#slides img, #slides div { 
-  display: none;
-}
-
-/*
-.slides {
     margin-left: -5px;
-    width: 637px;
-    height: 501px;
+    width: 619px;
+    height: 447px;
+    padding: 54px 9px 0;
     background: url(../images/window.png) no-repeat 0 0;
 }
 
-.slides img {
-    margin: 54px 9px 0;
-}
-
-.slider-nav .left, .slider-nav .right {
+.slider-nav .prev, .slider-nav .next {
     position: absolute;
     top: 219px;
     width: 30px;
@@ -142,23 +125,23 @@ h3, .h3 {
     background: url(../images/slide-nav.png) no-repeat 0 0;
 }
 
-.slider-nav .right {
-    right: -26px;
+.slider-nav .next {
+    right: -20px;
     background-position: -30px 0;
 }
 
-.slider-nav .right:hover {
+.slider-nav .next:hover {
     background-position: -30px -62px;
 }
 
-.slider-nav .left {
-    left: -26px;
+.slider-nav .prev {
+    left: -20px;
 }
 
-.slider-nav .left:hover {
+.slider-nav .prev:hover {
     background-position: 0 -62px;
 }
-*/
+
 /* features */
 .features li {
     padding-left: 30px;

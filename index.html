@@ -76,13 +76,17 @@
           </div> <!-- social -->
         </div> <!-- unit -->
         <div class="unit size2of3 pts mbm">
-          <div class="holder">
-            <div id="slides">
+          <div class="slides-holder">
+            <div class="slides">
               <img src="images/slide1.png" alt="List" />
               <img src="images/slide2.png" alt="Open story" />
               <img src="images/slide3.png" alt="Options" />
             </div> <!-- slides -->
-          </div> <!-- holder -->          
+            <div class="slider-nav">
+              <a href="#" class="prev"></a>
+              <a href="#" class="next"></a>
+            </div> <!-- slider-nav -->            
+          </div> <!-- slides-holder -->          
         </div> <!-- unit -->
       </div> <!-- outer -->      
     </header>
@@ -142,13 +146,17 @@
   <a href="https://github.com/railsware/piro" class="forkme"></a>
 
 	<script src="javascripts/jquery.min.js"></script>
-	<script src="javascripts/jquery.orbit-1.4.0.js"></script>	
+	<script src="javascripts/jquery.cycle.all.js"></script>	
   
 
    <script type="text/javascript">
       $(function(){
-        $('#slides').orbit({
-          animation : "horizontal-push"
+        $('.slides').cycle({ 
+            fx:     'scrollHorz', 
+            speed:  '500',
+            timeout: 0, 
+            next:   '.next', 
+            prev:   '.prev' 
         });
       });
    </script>
