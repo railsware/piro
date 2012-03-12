@@ -155,8 +155,12 @@ h3, .h3 {
     height: 7px;
     margin: 0 4px;
     text-indent: -9000px;
-    background-color: #777;
+    background-color: #bbb;
     border-radius: 8px;
+}
+
+.pages a:hover {
+    background-color: #777;
 }
 
 .pages a.activeSlide {
