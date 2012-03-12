@@ -85,7 +85,8 @@
             <div class="slider-nav">
               <a href="#" class="prev"></a>
               <a href="#" class="next"></a>
-            </div> <!-- slider-nav -->            
+            </div> <!-- slider-nav --> 
+            <div class="pages"></div>
           </div> <!-- slides-holder -->          
         </div> <!-- unit -->
       </div> <!-- outer -->      
@@ -103,17 +104,14 @@
             </div> <!-- mac -->
           </div> <!-- unit -->
           <div class="unit-right size1of3 txt-right">
-            <div class="mrs">
-              Found a bug? Have a suggestion? <a href="https://github.com/railsware/piro/issues">GitHub Issues</a>
-            </div> <!-- mrs -->
-            <div class="mrs">
+            <div class="mbs outer">
               <!-- twitter -->
-              <div>
+              <div class="unit">
                 <a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="railsware">Tweet</a>
                 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
               </div>
               <!-- facebook -->
-              <div>
+              <div class="unit">
                 <div id="fb-root"></div>
                 <script>(function(d, s, id) {
                   var js, fjs = d.getElementsByTagName(s)[0];
@@ -125,7 +123,7 @@
                 <div class="fb-like" data-href="http://piro.railsware.com" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false" data-font="arial"></div>
               </div>
               <!-- google + -->
-              <div>
+              <div class="unit">
                 <g:plusone></g:plusone>
                 <script type="text/javascript">
                   (function() {
@@ -136,6 +134,9 @@
                 </script>
               </div>
             </div>
+            <div>
+              Found a bug? Have a suggestion? <a href="https://github.com/railsware/piro/issues">GitHub Issues</a>
+            </div>            
           </div> <!-- unit -->
         </div> <!-- ptl -->
         <div class="gloss"></div>
@@ -156,7 +157,8 @@
             speed:  '500',
             timeout: 0, 
             next:   '.next', 
-            prev:   '.prev' 
+            prev:   '.prev',
+            pager:  '.pages'
         });
       });
    </script>

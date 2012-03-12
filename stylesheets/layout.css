@@ -142,6 +142,16 @@ h3, .h3 {
     background-position: 0 -62px;
 }
 
+.pages a {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin: 0 3px;
+    text-indent: -9000px;
+    background-color: #777;
+    border-radius: 8px;
+}
+
 /* features */
 .features li {
     padding-left: 30px;
