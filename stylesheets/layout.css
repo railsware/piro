@@ -143,7 +143,7 @@ h3, .h3 {
 }
 
 .pages {
-    padding-top: 10px;
+    padding-top: 20px;
     text-align: center;
     position: relative;
     z-index: 5;
@@ -221,4 +221,5 @@ footer .outer {
 
 footer .wrapper {
     height: 174px;
+    overflow: hidden;
 }
