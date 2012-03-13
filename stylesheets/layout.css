@@ -151,12 +151,12 @@ h3, .h3 {
 
 .pages a {
     display: inline-block;
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
     margin: 0 4px;
     text-indent: -9000px;
     background-color: #bbb;
-    border-radius: 8px;
+    border-radius: 12px;
 }
 
 .pages a:hover {
