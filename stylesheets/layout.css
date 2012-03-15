@@ -118,7 +118,7 @@ body {
     float: left;
 }
 
-.nav li a {
+.nav a {
     display: block;
     height: 29px;
     line-height: 30px;
@@ -146,6 +146,7 @@ body {
 }
 
 .ui-tabs-nav { margin: 0; padding: 0; }
+
 .ui-tabs-selected a {
     color: #000;
     font-weight: bold;
