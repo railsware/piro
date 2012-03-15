@@ -9,8 +9,6 @@ textarea {
     border-radius: 3px;
     border: 1px solid #9c9c9c;
     font-family: arial, sans-serif;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -23,7 +21,7 @@ textarea:focus {
 }
 
 select {
-    padding: 2px;    
+    padding: 2px;
     vertical-align: middle;
 }
 
