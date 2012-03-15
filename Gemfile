@@ -4,6 +4,7 @@ gem "rake"
 gem 'sprockets'
 gem "coffee-script"
 gem "uglifier"
+gem "cssmin"
 gem "therubyracer"
 gem "actionpack"
 gem "activesupport"

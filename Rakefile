@@ -2,6 +2,7 @@
 require 'rake'
 require 'coffee-script'
 require 'uglifier'
+require 'cssmin'
 
 desc 'Default: compress js and css.'
 task :default => :'pack:default'
@@ -12,10 +13,10 @@ task :default => :'pack:default'
 
 namespace :pack do
   desc "do all pack tasks"
-  task :default => [:compile]
+  task :default => [:js_compile, :css_compile]
   
   desc "compile coffee-scripts from ./assets/javascripts to ./javascripts"
-  task :compile do
+  task :js_compile do
     begin
       source = "#{File.dirname(__FILE__)}/assets/javascripts/"
       javascripts = "#{File.dirname(__FILE__)}/javascripts/"
@@ -36,6 +37,29 @@ namespace :pack do
       raise e
     end
   end
+  
+  desc "compile css from ./assets/stylesheets to ./stylesheets"
+  task :css_compile do
+    begin
+      source = "#{File.dirname(__FILE__)}/assets/stylesheets/"
+      stylesheets = "#{File.dirname(__FILE__)}/stylesheets/"
+  
+      Dir.foreach(source) do |cf|
+        unless cf == '.' || cf == '..' 
+          css = CSSMin.minify File.read("#{source}#{cf}")
+          open "#{stylesheets}#{cf}", 'w' do |f|
+            f.puts css
+          end 
+        end 
+      end
+  
+      puts "All css compiled successful!"
+    rescue => e
+      puts "Compilation error: #{e.inspect}"
+      raise e
+    end
+  end
+  
 end
 
 begin
