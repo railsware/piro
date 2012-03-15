@@ -23,6 +23,7 @@
 	<!--[if lt IE 9]>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
+	
 	<!-- GA begin -->
 	<script type="text/javascript">
 
@@ -40,6 +41,7 @@
   <!-- GA end -->
 </head>
 <body>
+  
   <section class="page">
     <header>
       <div class="wrapper outer">
@@ -148,22 +150,19 @@
   <a href="https://github.com/railsware/piro" class="forkme"></a>
 
 	<script src="javascripts/jquery.min.js"></script>
-	<script src="javascripts/jquery.cycle.all.js"></script>	
-  
-
-   <script type="text/javascript">
-      $(function(){
-        $('.slides').cycle({ 
-            fx:     'scrollHorz', 
-            speed:  '500',
-            timeout: 0, 
-            next:   '.next', 
-            prev:   '.prev',
-            pager:  '.pages'
-        });
+	<script src="javascripts/jquery.cycle.all.js"></script>  
+  <script type="text/javascript">
+    $(function(){
+      $('.slides').cycle({ 
+          fx:     'scrollHorz', 
+          speed:  '500',
+          timeout: 0, 
+          next:   '.next', 
+          prev:   '.prev',
+          pager:  '.pages'
       });
-   </script>
-	
+    });
+  </script>
 
 </body>
 </html>
