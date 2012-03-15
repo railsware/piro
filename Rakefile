@@ -53,9 +53,9 @@ namespace :pack do
         end 
       end
   
-      puts "All css compiled successful!"
+      puts "All css minified successful!"
     rescue => e
-      puts "Compilation error: #{e.inspect}"
+      puts "Minified error: #{e.inspect}"
       raise e
     end
   end
