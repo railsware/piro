@@ -1,110 +1,109 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>PiRo</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <link href="stylesheets/reset.css" media="screen" rel="stylesheet" type="text/css" />
-  <link href="stylesheets/grids.css" media="screen" rel="stylesheet" type="text/css" />
-  <link href="stylesheets/spaces.css" media="screen" rel="stylesheet" type="text/css" />  
-  <link href="stylesheets/group-headers.css" media="screen" rel="stylesheet" type="text/css" />
-  <link href="stylesheets/group-buttons.css" media="screen" rel="stylesheet" type="text/css" />
-  <link href="stylesheets/group-forms.css" media="screen" rel="stylesheet" type="text/css" />
-  <link href="stylesheets/layout.css" media="screen" rel="stylesheet" type="text/css" />
-  <link href="stylesheets/library.css" media="screen" rel="stylesheet" type="text/css" />
-  
-  <!-- chosen -->
-  <link href="stylesheets/chosen/chosen.css" media="screen" rel="stylesheet" type="text/css" />
-  <!-- jquery ui datepicker -->
-  <link href="stylesheets/jquery_ui/datepicker.css" media="screen" rel="stylesheet" type="text/css" />
-</head>
+  <head>
+    <title>PiRo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="stylesheets/reset.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="stylesheets/grids.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="stylesheets/spaces.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="stylesheets/group-headers.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="stylesheets/group-buttons.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="stylesheets/group-forms.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="stylesheets/layout.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="stylesheets/library.css" media="screen" rel="stylesheet" type="text/css" />
+
+    <!-- chosen -->
+    <link href="stylesheets/chosen/chosen.css" media="screen" rel="stylesheet" type="text/css" />
+    <!-- jquery ui datepicker -->
+    <link href="stylesheets/jquery_ui/datepicker.css" media="screen" rel="stylesheet" type="text/css" />
+  </head>
 <body>
-  
   <div id="mainPage" class="outer page">
     <!-- main screen -->
     <div id="leftPanel" class="unit size1of2">
-      <!-- panel -->      
-      
+      <!-- panel -->
+
       <div id="storiesTabs">
-      	<div id="ownerStories" class="tabs_content_block">
-      	  <ul class="nav outer">
-        		<li class="owner tab size1of3"><a id="currentTabLabel" href="#currentTab">Current</a></li>
-        		<li class="owner tab size1of3"><a id="doneTabLabel" href="#doneTab">Done</a></li>
-        		<li class="owner tab size1of3"><a id="iceboxTabLabel" href="#iceboxTab">IceBox</a></li>
-        	</ul>
-      	  <!-- tabs content -->
-        	<div id="currentTab" class="tabs_content data-holder">
-        	  <ul id="currentStoriesList" class="projects_stories_list">
-        	  </ul>
-        	</div>
-        	<div id="doneTab" class="tabs_content data-holder">
-        		<ul id="doneStoriesList" class="projects_stories_list">
-        	  </ul>
-        	</div>
-        	<div id="iceboxTab" class="tabs_content data-holder">
-        		<ul id="iceboxStoriesList" class="projects_stories_list">
-        	  </ul>
-        	</div>
-      	</div>	
-      	
-      	<!-- requester tabs content -->
-      	<div id="requesterStories" class="tabs_content_block">
-      	  <ul class="nav outer">
-        		<li class="requester tab size1of3"><a id="currentRequesterTabLabel" href="#currentRequesterTab">Current</a></li>
-        		<li class="requester tab size1of3"><a id="doneRequesterTabLabel" href="#doneRequesterTab">Done</a></li>
-        		<li class="requester tab size1of3"><a id="iceboxRequesterTabLabel" href="#iceboxRequesterTab">IceBox</a></li>
-        	</ul>
-        	<div id="currentRequesterTab" class="tabs_content data-holder">
-        	  <ul id="currentRequesterStoriesList" class="projects_stories_list">
-        	  </ul>
-        	</div>
-        	<div id="doneRequesterTab" class="tabs_content data-holder">
-        		<ul id="doneRequesterStoriesList" class="projects_stories_list">
-        	  </ul>
-        	</div>
-        	<div id="iceboxRequesterTab" class="tabs_content data-holder">
-        		<ul id="iceboxRequesterStoriesList" class="projects_stories_list">
-        	  </ul>
-        	</div>
-      	</div>
-      
+        <div id="ownerStories" class="tabs_content_block">
+          <ul class="nav outer">
+            <li class="owner tab size1of3"><a id="currentTabLabel" href="#currentTab">Current</a></li>
+            <li class="owner tab size1of3"><a id="doneTabLabel" href="#doneTab">Done</a></li>
+            <li class="owner tab size1of3"><a id="iceboxTabLabel" href="#iceboxTab">IceBox</a></li>
+          </ul>
+          <!-- tabs content -->
+          <div id="currentTab" class="tabs_content data-holder">
+            <ul id="currentStoriesList" class="projects_stories_list">
+            </ul>
+          </div>
+          <div id="doneTab" class="tabs_content data-holder">
+            <ul id="doneStoriesList" class="projects_stories_list">
+            </ul>
+          </div>
+          <div id="iceboxTab" class="tabs_content data-holder">
+            <ul id="iceboxStoriesList" class="projects_stories_list">
+            </ul>
+          </div>
+        </div>
+
+        <!-- requester tabs content -->
+        <div id="requesterStories" class="tabs_content_block">
+          <ul class="nav outer">
+            <li class="requester tab size1of3"><a id="currentRequesterTabLabel" href="#currentRequesterTab">Current</a></li>
+            <li class="requester tab size1of3"><a id="doneRequesterTabLabel" href="#doneRequesterTab">Done</a></li>
+            <li class="requester tab size1of3"><a id="iceboxRequesterTabLabel" href="#iceboxRequesterTab">IceBox</a></li>
+          </ul>
+          <div id="currentRequesterTab" class="tabs_content data-holder">
+            <ul id="currentRequesterStoriesList" class="projects_stories_list">
+            </ul>
+          </div>
+          <div id="doneRequesterTab" class="tabs_content data-holder">
+            <ul id="doneRequesterStoriesList" class="projects_stories_list">
+            </ul>
+          </div>
+          <div id="iceboxRequesterTab" class="tabs_content data-holder">
+            <ul id="iceboxRequesterStoriesList" class="projects_stories_list">
+            </ul>
+          </div>
+        </div>
+
         <div class="footer">
           <div class="outer">
             <div class="unit size1of2 ptxs">
               <div id="changeAccountBox" class="unit mls">
                 <!-- <label class="h4">Account:</label> -->
-            	   <select id="changeAccount"></select>
-            	</div>
-            	<div id="selecterStoriesBox" class="unit-right mrs">
-            	  <span class="switcher">
-            	    <a class="selecter_stories_type" href="#" data-value="owner">Owner</a>
-              	  <a class="selecter_stories_type" href="#" data-value="requester">Requester</a>
-            	  </span>            	   
-            	 </div>
+                 <select id="changeAccount"></select>
+              </div>
+              <div id="selecterStoriesBox" class="unit-right mrs">
+                <span class="switcher">
+                  <a class="selecter_stories_type" href="#" data-value="owner">Owner</a>
+                  <a class="selecter_stories_type" href="#" data-value="requester">Requester</a>
+                </span>
+               </div>
             </div> <!-- unit size1of2 -->
             <div class="unit size1of2">
               <div class="footer-sep outer ptxs">
                 <div class="unit mls">
                   <a id="settingsLink" href="#" class="button default tiny settings-btn"><span>Settings</span></a>
-              	</div>
-              	<div class="unit-right mrs">
-              	   <span class="h4 neutral powered">Brought to you by <a href="http://railsware.com/?utm_source=piro.railsware.com&utm_medium=cpc&utm_term=rw%2Bproduct&utm_campaign=piro" target="_blank"><img src="images/rw.png" alt="Railsware" /></a></span>
-              	 </div>
+                </div>
+                <div class="unit-right mrs">
+                   <span class="h4 neutral powered">Brought to you by <a href="http://railsware.com/?utm_source=piro.railsware.com&utm_medium=cpc&utm_term=rw%2Bproduct&utm_campaign=piro" target="_blank"><img src="images/rw.png" alt="Railsware" /></a></span>
+                 </div>
               </div> <!-- empty -->
-              
+
             </div> <!-- unit size1of2 -->
-          </div> <!-- outer -->          
-        </div> <!-- footer -->      	
-      	
+          </div> <!-- outer -->
+        </div> <!-- footer -->
+
       </div>
     </div>
-    
+
     <!-- main story info and notifications -->
     <div id="rightPanel" class="unit size1of2">
       <div class="story-header outer">
         <div class="unit size4of5">
-          <div class="plm">          
+          <div class="plm">
             <input id="searchStories" type="search" placeholder="Search stories" />
-          </div> <!-- plm -->          
+          </div> <!-- plm -->
         </div> <!-- unit -->
         <div class="unit-right size1of5 txt-right">
           <span id="loaderSpinner"></span>
@@ -115,14 +114,14 @@
       <div id="storyInfo" class="data-holder grey-box pam"></div>
       <div id="addStoryView" class="data-holder grey-box pam"></div>
     </div>
-    
+
   </div>
-  
+
   <div id="loginPage" class="pal">
     <div class="txt-center mbm">
       <img id="loginLogo" src="images/logo.png" alt="PiRo" />
     </div> <!-- txt-center -->
-    
+
     <span class="switcher wide mbs">
       <a id="pivotalBaseAuthLink" href="#" class="login_switcher_link active">Login with Email</a>
       <a id="pivotalTokenAuthLink" href="#" class="login_switcher_link">Login with Token</a>
@@ -148,7 +147,7 @@
       </div> <!-- pvs -->
     </div>
   </div>
-  
+
   <!-- templates -->
   <script id="spinner_template" type="text/x-mustache-template">
     {{#is_loading}}
@@ -160,7 +159,7 @@
       </a>
     {{/is_loading}}
   </script>
-  
+
   <script id="project_cell_template" type="text/x-mustache-template">
     <li class="project_{{id}} project_cell{{#view_conditions}}{{#hide_project_cell}} hide-project{{/hide_project_cell}}{{/view_conditions}}" data-project-id="{{id}}">
 
@@ -169,21 +168,21 @@
         <span class="dbclick_toggle_project project-title">({{count_of_stories}}) {{name}}</span> 
         <span class="sort_project unit-right" title="Drag to sort projects" data-project-id="{{id}}"></span>
       </div>
-      
+
       <ul data-project-id="{{id}}" {{#is_requested_by_me}}data-requested="true"{{/is_requested_by_me}} class="list stories">
         {{#stories}}
           <li class="story_info story_{{id}} {{box_class}}-box outer" data-story-id="{{id}}">
             <div class="unit"><span class="{{story_type}}-icon"></span></div>
             <div class="unit-right"><span class="status">{{current_state}}</span></div>
-            <div class="story-name">{{name}}</div>                  
+            <div class="story-name">{{name}}</div>
           </li>
         {{/stories}}
       </ul>
     </li>
   </script>
-  
+
   <script id="story_info_template" type="text/x-mustache-template">
-    
+
     <div class="outer story-details-header">
       <div class="unit size1of2">
         <div class="outer clippy-holder mbxs">
@@ -195,7 +194,7 @@
           <div class="clippy-box"><div id="clippyUrl{{id}}"></div></div>
         </div>
       </div>
-      <div class="unit size1of2 txt-right">        
+      <div class="unit size1of2 txt-right">
         <div class="change_story_box">
           <div class="main options">
           {{#need_estimate}}
@@ -209,13 +208,13 @@
               </select>
             </div>
           {{/need_estimate}}
-          
+
           {{^need_estimate}}
             <div class="mbxs">
               <span class="label">Estimate: </span> <div class="value"><span class="status block txt-center">{{estimate_text}}</span></div>
             </div>
           {{/need_estimate}}
-          
+
           {{^unestimated_feature}}
             <div>
               <span class="label">Status: </span>
@@ -236,13 +235,13 @@
             </div>
 
           {{/unestimated_feature}}
-            
+
           {{#unestimated_feature}}
             <div>
               <span class="label">Status: </span> <div class="value"><span class="status status block txt-center">{{current_state}}</span></div>
             </div>
           {{/unestimated_feature}}
-            
+
           </div>
           <div class="loader">
             <img src="images/spinner3.gif" alt="loading..." title="loading..." />
@@ -251,7 +250,6 @@
       </div>
     </div>
 
-    
     <h1 class="mts mbxs story_title {{story_type}}-icon-title">{{name}}</h1>
     <div class="mbm">
         <div><span class="pale">Requested by:</span> {{requested_by.person.name}}</div>
@@ -260,7 +258,7 @@
           <div><span class="pale">Deadline:</span> {{deadline}}</div>
         {{/deadline}}
     </div>
-    
+
     <h2 class="mbs">Description</h2>
     <div class="story_description prs" data-description="{{description}}">{{description}}</div>
     {{#labels_html}}
@@ -273,7 +271,7 @@
         <a href="#" class="filter_all_tasks filter_tasks active">all</a>
         <a href="#" class="filter_completed_tasks filter_tasks">completed</a>
         <a href="#" class="filter_uncompleted_tasks filter_tasks">uncompleted</a>
-      </span>      
+      </span>
     </h2>
     {{#has_tasks}}
       <ul class="list mbm mrs tasks tasks_list">
@@ -327,7 +325,7 @@
                 <!-- <div class="clippy-box">
                   <div id="attachment_{{id}}" class="attachment_clippy" data-attachment-url="{{url}}"></div>
                 </div> -->
-              </div>              
+              </div>
           </li>
         {{/attachments}}
       </ul>
@@ -375,7 +373,7 @@
       </div>
     </div>
   </script>
-  
+
   <script id="add_story_template" type="text/x-mustache-template">
     <div class="add_story_box">
       <div class="main form">
@@ -416,7 +414,7 @@
             </div>
           </div>
         </div>
-        
+
         <div class="outer mbs">
           <div class="unit size1of2">
             <div class="prs">
@@ -439,7 +437,7 @@
         </div>
         <div class="mbm">
           <label>Labels: (<span class="h4 pale">type labels separated by comma</span>)</label>
-          <input class="add_story_labels" type="text" />          
+          <input class="add_story_labels" type="text" />
         </div>
         <div class="mbs">
           <input class="add_story_button button success" type="button" value="Add" />
@@ -452,7 +450,7 @@
       </div>
     </div>
   </script>
-  
+
   <script id="add_story_result_template" type="text/x-mustache-template">
     <div class="h1 mbm"><span class="done">Story successfully added</span></div>
     <div class="mbs mhl"><strong>{{name}}</strong></div>
@@ -461,7 +459,7 @@
       <a class="add_more_stories button primary" href="#">Add one more story</a><span class="mhs">or</span><a class="add_story_close" href="#">Close</a>
     </div>
   </script>
-  
+
   <!-- vendors scripts -->
   <script src="javascripts/vendors/jquery-1.7.1.min.js" type="text/javascript"></script>
   <script src="javascripts/vendors/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
@@ -475,6 +473,6 @@
   <script src="javascripts/pivotal_rocket_storage.js" type="text/javascript"></script>
   <script src="javascripts/pivotal_api_lib.js" type="text/javascript"></script>
   <script src="javascripts/pivotal_rocket_popup.js" type="text/javascript"></script>
-  
+
 </body>
 </html>

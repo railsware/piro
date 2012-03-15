@@ -21,12 +21,12 @@
 
 /* links */
 a {
-	color: #135785;
-	text-decoration: none;
+    color: #135785;
+    text-decoration: none;
 }
 
 a:hover, a:active {
-	color: #c70000;
+    color: #c70000;
 }
 
 .inline {
@@ -99,7 +99,6 @@ p {
     background-color: #f2f2f2;
     border-left: 1px solid #aaa;
     box-shadow: 0 1px 7px rgba(0,0,0, 0.2) inset;
-    background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(255,255,255,0.7) 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,0.7)));
     background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.7) 100%);
     background: linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.7) 100%);
@@ -108,7 +107,6 @@ p {
 .default-box {
     background-color: #f4f4f4;
     border: 1px solid #A5A5A5;
-/*     box-shadow: 0 2px 10px rgba(0,0,0, 0.2); */
 }
 
 .title {
@@ -122,7 +120,6 @@ p {
     border-bottom: 1px solid rgba(0,0,0, 0.4);
     color: #fff;
     background: rgb(181,186,191);
-    background: -moz-linear-gradient(top,  rgba(181,186,191,1) 0%, rgba(123,133,144,1) 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(181,186,191,1)), color-stop(100%,rgba(123,133,144,1)));
     background: -webkit-linear-gradient(top,  rgba(181,186,191,1) 0%,rgba(123,133,144,1) 100%);
     background: linear-gradient(top,  rgba(181,186,191,1) 0%,rgba(123,133,144,1) 100%);
@@ -637,7 +634,3 @@ Vasiliy saw and decided to leave it as is for now :) */
 .ui-sortable-helper {
     box-shadow: 0 0 5px rgba(0,0,0, 0.2);
 }
-
-
-
-
