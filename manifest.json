@@ -1,6 +1,6 @@
 {
   "name": "PiRo",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "default_locale": "en",
   "description": "__MSG_app_description__",
   "background_page": "background.html",
@@ -15,6 +15,8 @@
   },
   "icons": { 
     "16": "images/icon19.png",
+    "19": "images/icon19.png",
+    "32": "images/icon32.png",
     "48": "images/icon48.png",
     "128": "images/icon128.png"
   },
