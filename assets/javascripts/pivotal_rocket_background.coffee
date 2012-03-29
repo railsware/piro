@@ -1139,40 +1139,62 @@ root.PivotalRocketBackground =
   changed_project_in_add_story: ->
     return false if !(PivotalRocketBackground.account? && PivotalRocketBackground.popup?)
     project_id = PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_project_id').val()
-    if project_id?
-      project = PivotalRocketStorage.find_project(PivotalRocketBackground.account, project_id)
-      if project?
-        # members
-        requester_option_list = []
-        owner_option_list = []
-        owner_option_list.push "<option></option>"
-        # sort members
-        project.memberships = project.memberships.sort (a, b) ->
-          if a.member? && a.member.person? && a.member.person.name? &&
-          b.member? && b.member.person? && b.member.person.name?
-            return -1 if (a.member.person.name < b.member.person.name)
-            return 1 if (a.member.person.name > b.member.person.name)
-          return 0
-        for member in project.memberships
-          if member.member? && member.member.person? && member.member.person.name?
-            person = member.member.person
-            requester_option_list.push "<option value='#{person.id}' data-name='#{person.name}'>#{person.name} (#{person.initials})</option>"
-            owner_option_list.push "<option value='#{person.id}' data-name='#{person.name}'>#{person.name} (#{person.initials})</option>"
-        PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_requester_id, select.add_story_owner_id').empty()
-        if requester_option_list.length > 0
-          PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_requester_id').html(requester_option_list.join(""))
-          PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_owner_id').html(owner_option_list.join(""))
-          PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_requester_id').val(PivotalRocketBackground.account.id.toString())
-          PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_requester_id, select.add_story_owner_id').trigger("liszt:updated")
-        # points
-        if project? && project.point_scale?
-          point_scale = []
-          point_scale.push "<option value='-1'>Unestimated</option>"
-          for point in project.point_scale.split(",")
-            point_scale.push "<option value='#{point}'>#{point} points</option>"
-          if point_scale.length > 0
-            PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_point')
-            .html(point_scale.join("")).trigger("liszt:updated")
+    return false unless project_id?
+    project = PivotalRocketStorage.find_project(PivotalRocketBackground.account, project_id)
+    return false unless project?
+    # members
+    requester_option_list = []
+    owner_option_list = []
+    owner_option_list.push "<option></option>"
+    # sort members
+    project.memberships = project.memberships.sort (a, b) ->
+      if a.member? && a.member.person? && a.member.person.name? &&
+      b.member? && b.member.person? && b.member.person.name?
+        return -1 if (a.member.person.name < b.member.person.name)
+        return 1 if (a.member.person.name > b.member.person.name)
+      return 0
+    for member in project.memberships
+      if member.member? && member.member.person? && member.member.person.name?
+        person = member.member.person
+        requester_option_list.push "<option value='#{person.id}' data-name='#{person.name}'>#{person.name} (#{person.initials})</option>"
+        owner_option_list.push "<option value='#{person.id}' data-name='#{person.name}'>#{person.name} (#{person.initials})</option>"
+    PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_requester_id, select.add_story_owner_id').empty()
+    if requester_option_list.length > 0
+      PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_requester_id').html(requester_option_list.join(""))
+      PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_owner_id').html(owner_option_list.join(""))
+      PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_requester_id').val(PivotalRocketBackground.account.id.toString())
+      PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_requester_id, select.add_story_owner_id').trigger("liszt:updated")
+    # points
+    if project.point_scale?
+      point_scale = []
+      point_scale.push "<option value='-1'>Unestimated</option>"
+      for point in project.point_scale.split(",")
+        point_scale.push "<option value='#{point}'>#{point} points</option>"
+      if point_scale.length > 0
+        PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_point')
+        .html(point_scale.join("")).trigger("liszt:updated")
+    if project.labels?
+      project_labels = []
+      for label in project.labels.split(",")
+        project_labels.push label
+      if project_labels.length > 0
+        PivotalRocketBackground.popup.$('#addStoryView').find('input.add_story_labels').autocomplete
+          minLength: 0
+          source: (request, response) ->
+            term = request.term.split( /,\s*/ ).pop()
+            response($.ui.autocomplete.filter(project_labels, term))
+          focus: ->
+            false
+          select: (event, ui) ->
+            terms = this.value.split( /,\s*/ )
+            terms.pop()
+            terms.push(ui.item.value)
+            terms.push("")
+            this.value = terms.join(", ")
+            false
+        .bind "keydown", (event) ->
+          if event.keyCode == $.ui.keyCode.TAB && $(this).data("autocomplete").menu.active
+            event.preventDefault()
   # save new story
   save_new_story: ->
     return false if !(PivotalRocketBackground.account? && PivotalRocketBackground.popup?)
