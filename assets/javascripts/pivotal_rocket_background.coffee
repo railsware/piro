@@ -100,8 +100,6 @@ root.PivotalRocketBackground =
         when 78
           event.preventDefault()
           PivotalRocketBackground.show_add_story_view()
-        else
-          return true
   # init popup bindings
   init_bindings: ->
     # main view
@@ -1178,7 +1176,12 @@ root.PivotalRocketBackground =
       for label in project.labels.split(",")
         project_labels.push label
       if project_labels.length > 0
-        PivotalRocketBackground.popup.$('#addStoryView').find('input.add_story_labels').autocomplete
+        PivotalRocketBackground.popup.$('#addStoryView').find('input.add_story_labels')
+        .bind "keydown", (event) ->
+          return true unless PivotalRocketBackground.popup?
+          if PivotalRocketBackground.popup.$('#addStoryView').find('input.add_story_labels').data("autocomplete")
+            event.preventDefault() if event.keyCode is $.ui.keyCode.TAB && PivotalRocketBackground.popup.$('#addStoryView').find('input.add_story_labels').data("autocomplete").menu.active
+        .autocomplete
           minLength: 0
           source: (request, response) ->
             term = request.term.split( /,\s*/ ).pop()
@@ -1192,9 +1195,6 @@ root.PivotalRocketBackground =
             terms.push("")
             this.value = terms.join(", ")
             false
-        .bind "keydown", (event) ->
-          if event.keyCode == $.ui.keyCode.TAB && $(this).data("autocomplete").menu.active
-            event.preventDefault()
   # save new story
   save_new_story: ->
     return false if !(PivotalRocketBackground.account? && PivotalRocketBackground.popup?)
