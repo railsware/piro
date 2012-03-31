@@ -1184,8 +1184,12 @@ root.PivotalRocketBackground =
         .autocomplete
           minLength: 0
           source: (request, response) ->
-            term = request.term.split( /,\s*/ ).pop()
-            response($.ui.autocomplete.filter(project_labels, term))
+            terms = request.term.split( /,\s*/ )
+            term = terms.pop()
+            filtered_labels = []
+            for label in project_labels
+              filtered_labels.push(label) if $.inArray(label, terms) is -1
+            response($.ui.autocomplete.filter(filtered_labels, term))
           focus: ->
             false
           select: (event, ui) ->
