@@ -545,9 +545,6 @@ li.account {
     background: url(../images/checkmark.png) no-repeat 0 3px;
 }
 
-/* leopard added, vasiliy will change by best practice. 
-Vasiliy saw and decided to leave it as is for now :) */
-
 .change_story_box .loader, .change_story_box.loading .main {
   display:none;
 }
@@ -604,10 +601,6 @@ Vasiliy saw and decided to leave it as is for now :) */
 .fine_delete.delete_confirm .fine_delete_confirm {
   display: block;
 }
-
-/* .chosen_selector{
-  width: 350px;
-} */
 
 .add_story_box .loader, .add_story_box.loading .main {
   display: none;
