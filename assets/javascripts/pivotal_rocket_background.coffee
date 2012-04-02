@@ -1171,7 +1171,7 @@ root.PivotalRocketBackground =
       if point_scale.length > 0
         PivotalRocketBackground.popup.$('#addStoryView').find('select.add_story_point')
         .html(point_scale.join("")).trigger("liszt:updated")
-    if project.labels?
+    if project.labels? && project.labels.length > 0
       project_labels = []
       for label in project.labels.split(",")
         project_labels.push label
@@ -1199,6 +1199,8 @@ root.PivotalRocketBackground =
             terms.push("")
             this.value = terms.join(", ")
             false
+    else
+      PivotalRocketBackground.popup.$('#addStoryView').find('input.add_story_labels').autocomplete( "destroy" )
   # save new story
   save_new_story: ->
     return false if !(PivotalRocketBackground.account? && PivotalRocketBackground.popup?)
