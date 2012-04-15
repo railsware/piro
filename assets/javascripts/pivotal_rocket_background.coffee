@@ -1214,6 +1214,7 @@ root.PivotalRocketBackground =
     owner = box.find('select.add_story_owner_id').find(":selected").data('name')
     description = box.find('textarea.add_story_description').val()
     labels = box.find('input.add_story_labels').val()
+    labels = $.trim(labels).replace(/,$/i, "")
     
     if title? && title.length > 0 && story_type? && project_id?
       story_data = 
