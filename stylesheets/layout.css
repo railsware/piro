@@ -87,6 +87,7 @@ h3, .h3 {
     width: 141px;
     height: 141px;
     position: absolute;
+    z-index: 10;
     right: 0;
     top: 0;
     background: url(../images/forkme.png) no-repeat 0 0;
@@ -199,6 +200,7 @@ h3, .h3 {
 }
 
 .gloss {
+  display: none;
     width: 720px;
     height: 200px;
     position: absolute;
@@ -211,7 +213,7 @@ h3, .h3 {
 footer {
     height: 174px;
     color: #7f7f7f;
-    background: url(../images/footer-bg.png) repeat-x 0 0;
+    background: url(../images/footer-bg.png) repeat-x 0 -1px;
 }
 
 footer .outer {
@@ -222,4 +224,8 @@ footer .outer {
 footer .wrapper {
    height: 174px;
    /*overflow: hidden;*/
+}
+
+.hf-embed {
+  z-index: 10 !important;
 }
