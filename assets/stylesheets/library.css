@@ -139,7 +139,7 @@ p {
 
 .list.tasks li {
     border-top: 0;
-    padding: 3px 0;
+    padding: 5px 0 4px;
     box-shadow: 0 1px 0 rgba(255,255,255, 0.8);
 }
 
@@ -293,6 +293,13 @@ p {
     text-indent: 9000px;
     margin-top: 1px;
     background: url(../images/edit.png) no-repeat 0 0;
+}
+
+.tasks .edit-link, 
+.tasks .del-link {
+  margin-top: -5px;
+  position: relative;
+  top: 5px;
 }
 
 .del-link {

@@ -82,9 +82,6 @@
             </div> <!-- unit size1of2 -->
             <div class="unit size1of2">
               <div class="footer-sep outer ptxs">
-                <div class="unit mls">
-                  <a id="settingsLink" href="#" class="button default tiny settings-btn"><span>Settings</span></a>
-                </div>
                 <div class="unit-right mrs">
                    <span class="h4 neutral powered">Brought to you by <a href="http://railsware.com/?utm_source=piro.railsware.com&utm_medium=cpc&utm_term=rw%2Bproduct&utm_campaign=piro" target="_blank"><img src="images/rw.png" alt="Railsware" /></a></span>
                  </div>
@@ -102,11 +99,12 @@
       <div class="story-header outer">
         <div class="unit size4of5">
           <div class="plm">
-            <input id="searchStories" type="search" placeholder="Search stories" />
+            <input id="searchStories" type="text" placeholder="Search stories" class="search" />
           </div> <!-- plm -->
         </div> <!-- unit -->
         <div class="unit-right size1of5 txt-right">
-          <span id="loaderSpinner"></span>
+          <a id="settingsLink" href="#" class="settings-btn" title="Settings"><img src="images/settings.png" alt="Settings" /></a>
+          <span id="loaderSpinner"></span>          
           <a href="#" class="add-task add_new_story_link" title="Add New Story"><img src="images/add-light.png" alt="Add Story" /></a>
         </div> <!-- unit -->
       </div>
@@ -250,7 +248,7 @@
       </div>
     </div>
 
-    <h1 class="mts mbxs story_title {{story_type}}-icon-title">{{name}}</h1>
+    <h1 class="mtm mbxs story_title {{story_type}}-icon-title">{{name}}</h1>
     <div class="mbm">
         <div><span class="pale">Requested by:</span> {{requested_by.person.name}}</div>
         <div><span class="pale">Owned by:</span> {{owned_by.person.name}}</div>

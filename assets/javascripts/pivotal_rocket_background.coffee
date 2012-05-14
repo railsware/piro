@@ -465,7 +465,7 @@ root.PivotalRocketBackground =
       return '<img src="images/spinner3.gif" alt="loading..." title="loading..." />'
     ,
       type    : 'text'
-      tooltip : 'Double click to edit...'
+      tooltip : ''
       indicator : '<img src="images/spinner3.gif" alt="loading..." title="loading..." />'
       cssclass  : 'editable-input'
       event   : 'dblclick'
@@ -504,7 +504,7 @@ root.PivotalRocketBackground =
       submit  : '<input class="button success tiny" type="submit" value="Save" />'
       cancel  : '<a class="h4" href="#">Cancel</a>'
       button_separator: '<span class="mhs h4">or</span>'
-      tooltip : 'Double click to edit...'
+      tooltip : ''
       indicator : '<img src="images/spinner3.gif" alt="loading..." title="loading..." />'
       cssclass  : 'editable-textarea'
       event   : 'dblclick'
