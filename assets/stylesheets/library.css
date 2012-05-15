@@ -257,6 +257,19 @@ p {
     background: url(../images/page_attach.png) no-repeat 0 0;
 }
 
+h1 {
+    padding-bottom: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+.feature-icon-title,
+.bug-icon-title,
+.chore-icon-title,
+.release-icon-title {
+    padding-right: 40px;
+    position: relative;    
+}
+
 .feature-icon-title {
     padding-left: 24px;
     background: url(../images/star.png) no-repeat 0 4px;

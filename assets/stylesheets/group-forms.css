@@ -43,8 +43,7 @@ textarea {
 .options .label {
     width: 70px;
     text-align: right;
-    color: #676767;
-    font-size: 11px;
+    color: #999;
 }
 
 option {

@@ -247,8 +247,13 @@
         </div>
       </div>
     </div>
-
-    <h1 class="mtm mbxs story_title {{story_type}}-icon-title">{{name}}</h1>
+    
+    <div class="holder">
+      <h1 class="mtm mbs story_title {{story_type}}-icon-title">{{name}}</h1>
+      <a href="#" title="Edit title" class="edit-link" style="position: absolute; right: 10px; top: 4px;"></a>
+      <a href="#" title="Cancel editing" class="del-link" style="position: absolute; right: 10px; top: 4px; display: none;"></a>
+    </div>
+    
     <div class="mbm">
         <div><span class="pale">Requested by:</span> {{requested_by.person.name}}</div>
         <div><span class="pale">Owned by:</span> {{owned_by.person.name}}</div>
@@ -257,7 +262,7 @@
         {{/deadline}}
     </div>
 
-    <h2 class="mbs">Description</h2>
+    <h2 class="mbs">Description <a href="#" title="Edit description" class="edit-link unit-right"></a></h2>
     <div class="story_description prs" data-description="{{description}}">{{description}}</div>
     {{#labels_html}}
       <div class="mtm tags-box mrs"><span class="tags">Labels:</span> {{& text}} </div>
