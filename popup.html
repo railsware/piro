@@ -171,7 +171,7 @@
         {{#stories}}
           <li class="story_info story_{{id}} {{box_class}}-box outer" data-story-id="{{id}}">
             <div class="unit"><span class="{{story_type}}-icon"></span></div>
-            <div class="unit-right"><span class="status">{{current_state}}</span></div>
+            <div class="unit-right"><span class="status {{current_state}}">{{current_state}}</span></div>
             <div class="story-name">{{name}}</div>
           </li>
         {{/stories}}
@@ -236,7 +236,7 @@
 
           {{#unestimated_feature}}
             <div>
-              <span class="label">Status: </span> <div class="value"><span class="status status block txt-center">{{current_state}}</span></div>
+              <span class="label">Status: </span> <div class="value"><span class="status block txt-center">{{current_state}}</span></div>
             </div>
           {{/unestimated_feature}}
 
@@ -250,8 +250,8 @@
     
     <div class="holder">
       <h1 class="mtm mbs story_title {{story_type}}-icon-title">{{name}}</h1>
-      <a href="#" title="Edit title" class="edit-link" style="position: absolute; right: 10px; top: 4px;"></a>
-      <a href="#" title="Cancel editing" class="del-link" style="position: absolute; right: 10px; top: 4px; display: none;"></a>
+      <a href="#" title="Edit title" class="edit-link to-right"></a>
+      <a href="#" title="Cancel editing" class="del-link to-right" style="display: none;"></a>
     </div>
     
     <div class="mbm">
