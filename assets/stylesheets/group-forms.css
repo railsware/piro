@@ -38,10 +38,12 @@ textarea {
     width: 100px;
     text-align: left;
     word-wrap: normal;
+    line-height: 11px;
 }
 
 .options .label {
     width: 70px;
+    margin-right: 3px;
     text-align: right;
     color: #999;
 }

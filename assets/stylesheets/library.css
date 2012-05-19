@@ -64,7 +64,7 @@ p {
 .status {
     position: relative;
     top: -1px;
-    padding: 2px 5px 2px 16px;
+    padding: 2px 19px 2px 5px;
     font-size: 9px;
     text-transform: uppercase;
     border: 1px solid rgba(0,0,0, 0.3);
@@ -75,13 +75,36 @@ p {
 .status:after {
     content: '';
     display: block;
-    width: 6px;
-    height: 6px;
+    width: 10px;
+    height: 10px;
     position: absolute;
     right: 1px;
     top: 1px;
-    background-color: #000;
-    border-radius: 3px;
+    background-color: rgba(0,0,0, 0.2);
+    border-radius: 2px;
+    box-shadow: 0 1px 0 rgba(255,255,255, 0.5) inset, 0 0 0 2px rgba(0,0,0, 0.1);
+    border: 1px solid rgba(0,0,0, 0.4);
+}
+
+.status.finished:after {
+    background-color: #ef9113;
+}
+
+.status.rejected:after {
+    background-color: #a5243e;
+}
+
+.status.unstarted:after {
+    background-color: #999;
+}
+
+.status.started:after {
+    background-color: #2b4c74;
+}
+
+.status.accepted:after,
+.status.delivered:after {
+    background-color: #6b9a13;
 }
 
 .release-box .status {
@@ -207,7 +230,7 @@ p {
 }
 
 .story-name {
-    margin: 0 100px 0 25px;
+    margin: 0 110px 0 25px;
 }
 
 .ui-state-highlight {
@@ -522,7 +545,7 @@ li.account {
 .switcher {
     overflow: hidden;
     display: inline-block;
-    margin-top: -1px;
+    background: transparent;
 }
 
 .switcher.wide a {
@@ -533,9 +556,9 @@ li.account {
     float: left;
     width: 60px;
     text-align: center;
-    padding: 2px 5px;
+    padding: 1px 5px;
     text-decoration: none;
-    border: 1px solid #777;
+    border: 1px solid rgba(0,0,0, 0.4);
     border-left: 0;
     background-color: #f5f5f5;
     box-shadow: 0 1px 0 rgba(255,255,255, 0.5);
@@ -556,12 +579,12 @@ li.account {
 }
 
 .switcher a:first-child {
-    border-left: 1px solid #777;
-    border-radius: 4px 0 0 4px;
+    border-left: 1px solid rgba(0,0,0, 0.4);
+    border-radius: 2px 0 0 2px;
 }
 
 .switcher a:last-child {
-    border-radius: 0 4px 4px 0;
+    border-radius: 0 2px 2px 0;
 }
 
 .add_story_result {
