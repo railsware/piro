@@ -79,17 +79,32 @@ body {
     position: relative;
     top: 4px;
     margin-right: 10px;
+    opacity: 0.8;
+}
+
+.add-task:hover {
+    opacity: 1;
 }
 
 .settings-btn {
   margin-right: 8px;
   position: relative;
   top: 5px;
+  opacity: 0.8;
+}
+
+.settings-btn:hover {
+    opacity: 1;
 }
 
 #loaderSpinner {
     position: relative;
     top: 6px;
+    opacity: 0.8;
+}
+
+#loaderSpinner:hover {
+    opacity: 1;
 }
 
 .story-header {

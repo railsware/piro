@@ -64,12 +64,24 @@ p {
 .status {
     position: relative;
     top: -1px;
-    padding: 2px 5px;
+    padding: 2px 5px 2px 16px;
     font-size: 9px;
     text-transform: uppercase;
     border: 1px solid rgba(0,0,0, 0.3);
     border-radius: 3px;
     box-shadow: 0 1px 0 rgba(255,255,255, 0.5);
+}
+
+.status:after {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 6px;
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    background-color: #000;
+    border-radius: 3px;
 }
 
 .release-box .status {
@@ -337,6 +349,12 @@ h1 {
 .error-text {
     padding: 4px 0 2px 23px;
     background: url(../images/error.png) no-repeat 0 50%;
+}
+
+.to-right {
+    position: absolute; 
+    right: 10px; 
+    top: 4px;
 }
 
 /* tasks */
