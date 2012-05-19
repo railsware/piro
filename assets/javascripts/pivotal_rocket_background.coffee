@@ -472,6 +472,13 @@ root.PivotalRocketBackground =
       width   : 'none'
       height  : 'none'
       onblur  : 'ignore'
+      onreset : ->
+        PivotalRocketBackground.popup.$('#storyInfo').find('a.edit_story_title').show()
+    PivotalRocketBackground.popup.$('#storyInfo').find('a.edit_story_title').click (event) ->
+      event.preventDefault()
+      $(event.target).hide()
+      PivotalRocketBackground.popup.$('#storyInfo').find('h1.story_title').trigger('dblclick')
+      return false
     # story description
     PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description').editable (value, settings) ->
       selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()

@@ -1,1 +1,1 @@
-rvm ruby-1.9.3-p125@pivotal_rocket_gems --create
+rvm ruby-1.9.3-p194@pivotal_rocket_gems --create
