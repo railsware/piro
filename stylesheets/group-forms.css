@@ -1,1 +1,82 @@
-input[type="text"],input[type="password"],input[type="search"],textarea{width:100%;padding:5px;background-color:#fff;box-shadow:0 1px 1px rgba(0,0,0,0.1) inset,0 1px 0 rgba(255,255,255,0.4);border-radius:3px;border:1px solid #9c9c9c;font-family:arial,sans-serif;box-sizing:border-box;}input[type="text"]:focus,input[type="password"]:focus,input[type="search"]:focus,textarea:focus{box-shadow:0 0 0 2px rgba(6,126,176,0.2),0 1px 1px rgba(0,0,0,0.1) inset;border-color:#067eb0;}select{padding:2px;vertical-align:middle;}textarea{min-height:60px;min-width:100%;max-width:100%;max-height:400px;}.options select,.options .value{display:inline-block;width:100px;text-align:left;word-wrap:normal;line-height:11px;}.options .label{width:70px;margin-right:3px;text-align:right;color:#999;}option{padding:0 3px 0 5px;}input[type="text"].search{border:0;margin-top:5px;padding:3px 4px 3px 20px;background:#fff url(../images/find.png) no-repeat 4px 4px;box-shadow:0 1px 1px rgba(0,0,0,0.3) inset;}input[type="text"].search:focus{border:0;box-shadow:0 1px 1px rgba(0,0,0,0.3) inset;}fieldset{border:1px solid #888;box-shadow:0 0 1px #ccc inset;}.editable-textarea textarea{margin-bottom:10px;}.form label{display:block;margin-bottom:2px;font-size:11px;color:#777;}
+input[type="text"],
+input[type="password"],
+input[type="search"],
+textarea {
+    width: 100%;
+    padding: 5px;
+    background-color: #fff;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1) inset, 0 1px 0 rgba(255,255,255, 0.4);
+    border-radius: 3px;
+    border: 1px solid #9c9c9c;
+    font-family: arial, sans-serif;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+textarea:focus {
+    box-shadow: 0 0 0 2px rgba(6,126,176, 0.2), 0 1px 1px rgba(0,0,0,0.1) inset;
+    border-color: #067eb0;
+}
+
+select {
+    padding: 2px;
+    vertical-align: middle;
+}
+
+textarea {
+    min-height: 60px;
+    min-width: 100%;
+    max-width: 100%;
+    max-height: 400px;
+}
+
+.options select,
+.options .value {
+    display: inline-block;
+    width: 100px;
+    text-align: left;
+    word-wrap: normal;
+    line-height: 11px;
+}
+
+.options .label {
+    width: 70px;
+    margin-right: 3px;
+    text-align: right;
+    color: #999;
+}
+
+option {
+    padding: 0 3px 0 5px;
+}
+
+input[type="text"].search {
+    border: 0;
+    margin-top: 5px;
+    padding: 3px 4px 3px 20px;
+    background: #fff url(../images/find.png) no-repeat 4px 4px;
+    box-shadow: 0 1px 1px rgba(0,0,0, 0.3) inset;
+}
+
+input[type="text"].search:focus {
+    border: 0;
+    box-shadow: 0 1px 1px rgba(0,0,0, 0.3) inset;
+}
+
+fieldset {
+    border: 1px solid #888;
+    box-shadow: 0 0 1px #ccc inset;
+}
+
+.editable-textarea textarea {
+    margin-bottom: 10px;
+}
+
+.form label {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 11px;
+    color: #777;
+}
