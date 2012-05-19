@@ -1,3 +1,4 @@
+# encoding: UTF-8
 #!/usr/bin/env rake
 require 'rake'
 require 'coffee-script'
