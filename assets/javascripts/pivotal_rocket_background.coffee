@@ -472,6 +472,8 @@ root.PivotalRocketBackground =
       width   : 'none'
       height  : 'none'
       onblur  : 'ignore'
+      onsubmit: ->
+        PivotalRocketBackground.popup.$('#storyInfo').find('a.edit_story_title').show()
       onreset : ->
         PivotalRocketBackground.popup.$('#storyInfo').find('a.edit_story_title').show()
     PivotalRocketBackground.popup.$('#storyInfo').find('a.edit_story_title').click (event) ->

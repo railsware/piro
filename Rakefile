@@ -47,7 +47,7 @@ namespace :pack do
   
       Dir.foreach(source) do |cf|
         unless cf == '.' || cf == '..' 
-          css = CSSMin.minify File.read("#{source}#{cf}")
+          #css = CSSMin.minify File.read("#{source}#{cf}")
           open "#{stylesheets}#{cf}", 'w' do |f|
             f.puts css
           end 
