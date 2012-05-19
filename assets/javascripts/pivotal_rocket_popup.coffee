@@ -27,6 +27,7 @@ root.PivotalRocketPopup =
           chrome.tabs.create {url: popup_url, active: true}, (tab) ->
             window.close()
             return false
+        window.close()
         return false
       $('body').addClass('fullscreen')
     #popup
