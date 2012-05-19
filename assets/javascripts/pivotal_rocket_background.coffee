@@ -441,6 +441,12 @@ root.PivotalRocketBackground =
   # init show bindings for story
   bindings_story_info: (story) ->
     # story title
+    editing_story_title = ->
+      PivotalRocketBackground.popup.$('#storyInfo').find('a.edit_story_title_link').hide()
+      PivotalRocketBackground.popup.$('#storyInfo').find('a.cancel_edit_story_title_link').show()
+    cancel_editing_story_title = ->
+      PivotalRocketBackground.popup.$('#storyInfo').find('a.cancel_edit_story_title_link').hide()
+      PivotalRocketBackground.popup.$('#storyInfo').find('a.edit_story_title_link').show()
     PivotalRocketBackground.popup.$('#storyInfo').find('h1.story_title').editable (value, settings) ->
       selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
       pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
@@ -472,16 +478,24 @@ root.PivotalRocketBackground =
       width   : 'none'
       height  : 'none'
       onblur  : 'ignore'
-      onsubmit: ->
-        PivotalRocketBackground.popup.$('#storyInfo').find('a.edit_story_title').show()
-      onreset : ->
-        PivotalRocketBackground.popup.$('#storyInfo').find('a.edit_story_title').show()
-    PivotalRocketBackground.popup.$('#storyInfo').find('a.edit_story_title').click (event) ->
+      onedit  : editing_story_title
+      onsubmit: cancel_editing_story_title
+      onreset : cancel_editing_story_title
+    PivotalRocketBackground.popup.$('#storyInfo').find('a.edit_story_title_link').click (event) ->
       event.preventDefault()
-      $(event.target).hide()
+      editing_story_title()
       PivotalRocketBackground.popup.$('#storyInfo').find('h1.story_title').trigger('dblclick')
       return false
+    PivotalRocketBackground.popup.$('#storyInfo').find('a.cancel_edit_story_title_link').click (event) ->
+      event.preventDefault()
+      cancel_editing_story_title()
+      PivotalRocketBackground.popup.$('#storyInfo').find('h1.story_title').trigger('reset')
+      return false
     # story description
+    editing_story_description = ->
+      PivotalRocketBackground.popup.$('#storyInfo').find('a.edit_story_description_link').hide()
+    cancel_editing_story_description = ->
+      PivotalRocketBackground.popup.$('#storyInfo').find('a.edit_story_description_link').show()
     PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description').editable (value, settings) ->
       selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
       pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
@@ -520,6 +534,14 @@ root.PivotalRocketBackground =
       onblur  : 'ignore'
       data    : (value, settings) ->
         return PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description').data('description')
+      onedit  : editing_story_description
+      onsubmit: cancel_editing_story_description
+      onreset : cancel_editing_story_description
+    PivotalRocketBackground.popup.$('#storyInfo').find('a.edit_story_description_link').click (event) ->
+      event.preventDefault()
+      editing_story_description()
+      PivotalRocketBackground.popup.$('#storyInfo').find('div.story_description').trigger('dblclick')
+      return false
     # init tasks sorting
     PivotalRocketBackground.popup.$('#storyInfo').find("ul.tasks_list").sortable
       handle: 'span.sort_task'

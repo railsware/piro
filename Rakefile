@@ -24,8 +24,12 @@ namespace :pack do
   
       Dir.foreach(source) do |cf|
         unless cf == '.' || cf == '..' 
-          js_compiled = CoffeeScript.compile File.read("#{source}#{cf}")
-          js = Uglifier.compile js_compiled
+          if ENV['RELEASE']
+            js_compiled = CoffeeScript.compile File.read("#{source}#{cf}")
+            js = Uglifier.compile js_compiled
+          else
+            js = File.read("#{source}#{cf}")
+          end
           open "#{javascripts}#{cf.gsub('.coffee', '.js')}", 'w' do |f|
             f.puts js
           end 
@@ -47,8 +51,11 @@ namespace :pack do
   
       Dir.foreach(source) do |cf|
         unless cf == '.' || cf == '..' 
-          css = File.read("#{source}#{cf}")
-          #css = CSSMin.minify File.read("#{source}#{cf}")
+          if ENV['RELEASE']
+            css = CSSMin.minify File.read("#{source}#{cf}")
+          else
+            css = File.read("#{source}#{cf}")
+          end
           open "#{stylesheets}#{cf}", 'w' do |f|
             f.puts css
           end 
