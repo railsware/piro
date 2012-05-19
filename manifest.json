@@ -2,7 +2,7 @@
   "manifest_version": 1,
   "content_security_policy": "default-src 'self' 'unsafe-inline' 'unsafe-eval'; connect-src https://www.pivotaltracker.com http://www.pivotaltracker.com",
   "name": "PiRo",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "default_locale": "en",
   "description": "__MSG_app_description__",
   "background": {
