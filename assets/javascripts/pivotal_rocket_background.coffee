@@ -577,58 +577,6 @@ root.PivotalRocketBackground =
                     error: (jqXHR, textStatus, errorThrown) ->
                       PivotalRocketBackground.init_list_stories()
     .disableSelection()
-    # bind requester and owner
-    PivotalRocketBackground.bindings_story_requester_and_owner(story)
-  bindings_story_requester_and_owner: (story) ->
-    # requester and owner for story
-    return false unless (story.requested_by? && story.requested_by.person?)
-    project = PivotalRocketStorage.find_project(PivotalRocketBackground.account, story.project_id)
-    return false unless project?
-    # members
-    requester_option_list = []
-    owner_option_list = []
-    # sort members
-    project.memberships = project.memberships.sort (a, b) ->
-      if a.member? && a.member.person? && a.member.person.name? &&
-      b.member? && b.member.person? && b.member.person.name?
-        return -1 if (a.member.person.name < b.member.person.name)
-        return 1 if (a.member.person.name > b.member.person.name)
-      return 0
-    for member in project.memberships
-      if member.member? && member.member.person? && member.member.person.name?
-        person = member.member.person
-        requester_option_list.push "<option value='#{person.id}' data-name='#{person.name}'>#{person.name} (#{person.initials})</option>"
-        owner_option_list.push "<option value='#{person.id}' data-name='#{person.name}'>#{person.name} (#{person.initials})</option>"
-    PivotalRocketBackground.popup.$('#storyInfo').find('select.chosen_selector').empty()
-    if requester_option_list.length > 0
-      PivotalRocketBackground.popup.$('#storyInfo').find('select.edit_story_requester_id').html(requester_option_list.join(""))
-      PivotalRocketBackground.popup.$('#storyInfo').find('select.edit_story_requester_id').val(story.requested_by.person.id.toString())
-      PivotalRocketBackground.popup.$('#storyInfo').find('select.edit_story_owner_id').html(owner_option_list.join(""))
-      PivotalRocketBackground.popup.$('#storyInfo').find('select.edit_story_owner_id').val(story.owned_by.person.id.toString()) if story.owned_by? && story.owned_by.person?
-    PivotalRocketBackground.popup.$('#storyInfo').find('select.chosen_selector').chosen().change (event) ->
-      selector = $(event.target)
-      key = selector.data("key")
-      name = selector.find(":selected").data('name')
-      if name? && key?
-        selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()
-        pivotal_lib = new PivotalApiLib(PivotalRocketBackground.account)
-        story_data = {}
-        story_data[key] = name
-        pivotal_lib.update_story
-          project_id: story.project_id
-          story_id: story.id
-          data:
-            story: story_data
-          success: (data, textStatus, jqXHR) ->
-            pivotal_lib.get_story
-              project_id: story.project_id
-              story_id: story.id
-              success: (data, textStatus, jqXHR) ->
-                PivotalRocketBackground.story_changed_with_data(data, selected_type_bol)
-              error: (jqXHR, textStatus, errorThrown) ->
-                PivotalRocketBackground.init_list_stories()
-          error: (jqXHR, textStatus, errorThrown) ->
-            PivotalRocketBackground.init_list_stories()
   # spinner for update stories
   init_spinner: ->
     PivotalRocketBackground.init_icon_status()

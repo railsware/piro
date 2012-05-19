@@ -98,7 +98,7 @@
     <div id="rightPanel" class="unit size1of2">
       <div class="story-header outer">
         <div class="unit size4of5">
-          <div class="plm prs">
+          <div class="plm">
             <input id="searchStories" type="text" placeholder="Search stories" class="search" />
           </div> <!-- plm -->
         </div> <!-- unit -->
@@ -209,7 +209,7 @@
 
           {{^need_estimate}}
             <div class="mbxs">
-              <span class="label">Estimate: </span> <div class="value"><span class="block ">{{estimate_text}}</span></div>
+              <span class="label">Estimate: </span> <div class="value"><span class="status block txt-center">{{estimate_text}}</span></div>
             </div>
           {{/need_estimate}}
 
@@ -255,12 +255,8 @@
     </div>
     
     <div class="mbm">
-        <div><span class="pale">Requested by:</span> 
-          <select class="edit_story_requester_id chosen_selector" data-story-id="{{id}}" data-project-id="{{project_id}}" data-key="requested_by"></select>
-        </div>
-        <div><span class="pale">Owned by:</span>
-         <select class="edit_story_owner_id chosen_selector" data-story-id="{{id}}" data-project-id="{{project_id}}" data-key="owned_by"></select>
-        </div>
+        <div><span class="pale">Requested by:</span> {{requested_by.person.name}}</div>
+        <div><span class="pale">Owned by:</span> {{owned_by.person.name}}</div>
         {{#deadline}}
           <div><span class="pale">Deadline:</span> {{deadline}}</div>
         {{/deadline}}
