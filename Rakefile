@@ -23,12 +23,12 @@ namespace :pack do
       javascripts = "#{File.dirname(__FILE__)}/javascripts/"
   
       Dir.foreach(source) do |cf|
-        unless cf == '.' || cf == '..' 
+        unless cf == '.' || cf == '..'
+          js_compiled = CoffeeScript.compile File.read("#{source}#{cf}") 
           if ENV['RELEASE']
-            js_compiled = CoffeeScript.compile File.read("#{source}#{cf}")
             js = Uglifier.compile js_compiled
           else
-            js = File.read("#{source}#{cf}")
+            js = js_compiled
           end
           open "#{javascripts}#{cf.gsub('.coffee', '.js')}", 'w' do |f|
             f.puts js
