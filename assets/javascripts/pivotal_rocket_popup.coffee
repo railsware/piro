@@ -14,7 +14,7 @@ root.PivotalRocketPopup =
     # fullscreen
     if PivotalRocketStorage.get_fullscreen_mode()
       if document.location.search == '?popup'
-        $('body').css
+        $('html, body').css
           width: 0
           height: 0
           display: 'none'
@@ -26,6 +26,7 @@ root.PivotalRocketPopup =
               self.close()
               return false
           chrome.tabs.create {url: popup_url, active: true}, (tab) ->
+            chrome.tabs.update tab.id, {active: true}
             window.close()
             self.close()
             return false
