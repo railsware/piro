@@ -1,6 +1,6 @@
 root = global ? window
 
-root.PivotalRocketPopup =
+root.PivotalRocketPopup = 
   background_page: chrome.extension.getBackgroundPage()
   # init popup view
   init: ->
@@ -23,15 +23,11 @@ root.PivotalRocketPopup =
             if tab.url.substring(0, popup_url.length) == popup_url
               chrome.tabs.update tab.id, {active: true}
               window.close()
-              self.close()
               return false
           chrome.tabs.create {url: popup_url, active: true}, (tab) ->
             chrome.tabs.update tab.id, {active: true}
             window.close()
-            self.close()
             return false
-        window.close()
-        self.close()
         return false
       $('body').addClass('fullscreen')
     #popup
