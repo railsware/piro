@@ -107,8 +107,8 @@ class root.PivotalAuthLib
     if params.username? && params.password?
       ajax_params.username = params.username
       ajax_params.password = params.password
-      ajax_params.beforeSend = (xhr) ->
-        xhr.setRequestHeader('Authorization', "Basic #{btoa(params.username + ":" + params.password)}")
+      ajax_params.headers = 
+        'Authorization': "Basic #{btoa(params.username + ":" + params.password)}"
     else
       ajax_params.headers = 
         "X-TrackerToken": (params.token || null)
