@@ -70,7 +70,7 @@ root.PivotalRocketBackground =
   # init global hotkeys
   init_global_hotkeys: ->
     $(PivotalRocketBackground.popup).keydown (event) ->
-      return true if !(event.target? && event.target.nodeName? && -1 == jQuery.inArray(event.target.nodeName.toLowerCase(), ["input", "textarea", "select"]))
+      return true if !(event.currentTarget? && event.currentTarget.nodeName? && -1 == jQuery.inArray(event.currentTarget.nodeName.toLowerCase(), ["input", "textarea", "select"]))
       return true if !(event.keyCode? && event.shiftKey? && event.shiftKey is true)
       if PivotalRocketBackground.popup.$('#ownerStories').is(':visible') is true 
         tabs = PivotalRocketBackground.owner_tabs
@@ -135,15 +135,15 @@ root.PivotalRocketBackground =
         PivotalRocketStorage.set_opened_by_type('opened_comment_box', false)
       return false
     PivotalRocketBackground.popup.$("#storyInfo").on "click", "a.open_add_block", (event) =>
-      PivotalRocketBackground.open_fine_edit_block($(event.target))
+      PivotalRocketBackground.open_fine_edit_block($(event.currentTarget))
     PivotalRocketBackground.popup.$("#storyInfo").on "click", "a.close_add_block", (event) =>
-      PivotalRocketBackground.close_fine_edit_block($(event.target))
+      PivotalRocketBackground.close_fine_edit_block($(event.currentTarget))
     # fine delete
     PivotalRocketBackground.popup.$("#storyInfo").on "click", "a.fine_delete_link", (event) =>
-      $(event.target).parents('.fine_delete').addClass('delete_confirm')
+      $(event.currentTarget).parents('.fine_delete').addClass('delete_confirm')
       return false
     PivotalRocketBackground.popup.$("#storyInfo").on "click", "a.fine_delete_cancel", (event) =>
-      $(event.target).parents('.fine_delete').removeClass('delete_confirm')
+      $(event.currentTarget).parents('.fine_delete').removeClass('delete_confirm')
       return false
     # update link
     PivotalRocketBackground.popup.$('#mainPage').on "click", "a.update_stories", (event) =>
@@ -153,7 +153,7 @@ root.PivotalRocketBackground =
       PivotalRocketBackground.change_account()
     # change type list
     PivotalRocketBackground.popup.$('a.selecter_stories_type').click (event) =>
-      PivotalRocketStorage.set_role($(event.target).data('value'))
+      PivotalRocketStorage.set_role($(event.currentTarget).data('value'))
       PivotalRocketBackground.change_view_type()
       return false
     # settings link
@@ -169,7 +169,7 @@ root.PivotalRocketBackground =
       axis: 'y'
       placeholder: 'ui-state-highlight'
       update: (event) ->
-        objects = $(event.target).parents("ul.projects_stories_list").find("li.project_cell")
+        objects = $(event.currentTarget).parents("ul.projects_stories_list").find("li.project_cell")
         object_ids = []
         objects.each (index) ->
           object_ids.push($(this).data('projectId'))
@@ -178,18 +178,18 @@ root.PivotalRocketBackground =
     .disableSelection()
     # projects toggle
     PivotalRocketBackground.popup.$("ul.projects_stories_list").on "click", "span.toggle_project", (event) =>
-      PivotalRocketBackground.toggle_project_cell($(event.target))
+      PivotalRocketBackground.toggle_project_cell($(event.currentTarget))
     PivotalRocketBackground.popup.$("ul.projects_stories_list").on "dblclick", "span.dbclick_toggle_project", (event) =>
-      PivotalRocketBackground.toggle_project_cell($(event.target))
+      PivotalRocketBackground.toggle_project_cell($(event.currentTarget))
     # click on story  
     PivotalRocketBackground.popup.$("#storiesTabs").on "click", "li.story_info", (event) =>
-      element_object = $(event.target)
+      element_object = $(event.currentTarget)
       PivotalRocketBackground.bind_story_cell(element_object)
     # search stories
     PivotalRocketBackground.popup.$('#mainPage').on "keyup", "#searchStories", (event) =>
       PivotalRocketBackground.init_list_stories()
     PivotalRocketBackground.popup.$('#mainPage').on "search", "#searchStories", (event) =>
-      PivotalRocketBackground.init_list_stories() if 0 == $(event.target).val().length
+      PivotalRocketBackground.init_list_stories() if 0 == $(event.currentTarget).val().length
     # open screen for add story
     PivotalRocketBackground.popup.$('a.add_new_story_link').click (event) =>
       PivotalRocketBackground.show_add_story_view()
@@ -215,14 +215,14 @@ root.PivotalRocketBackground =
   binding_login_view: ->
     PivotalRocketBackground.popup.$('#pivotalTokenAuthLink').click (event) =>
       PivotalRocketBackground.popup.$('a.login_switcher_link').removeClass('active')
-      $(event.target).addClass('active')
+      $(event.currentTarget).addClass('active')
       PivotalRocketBackground.popup.$('#pivotalBaseAuth').hide()
       PivotalRocketBackground.popup.$('#pivotalTokenAuth').show()
       PivotalRocketBackground.popup.$('#loginToken').focus()
       return false
     PivotalRocketBackground.popup.$('#pivotalBaseAuthLink').click (event) =>
       PivotalRocketBackground.popup.$('a.login_switcher_link').removeClass('active')
-      $(event.target).addClass('active')
+      $(event.currentTarget).addClass('active')
       PivotalRocketBackground.popup.$('#pivotalTokenAuth').hide()
       PivotalRocketBackground.popup.$('#pivotalBaseAuth').show()
       PivotalRocketBackground.popup.$('#loginUsername').focus()
@@ -236,86 +236,86 @@ root.PivotalRocketBackground =
   binding_show_story_view: ->
     # search by labels
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.story_label", (event) =>
-      label = $(event.target).data('label')
+      label = $(event.currentTarget).data('label')
       if label?
         PivotalRocketBackground.popup.$("#searchStories").val(label).focus().trigger('keyup')
       return false
     # change of status
     PivotalRocketBackground.popup.$('#storyInfo').on "change", "select.change_story_state", (event) =>
-      PivotalRocketBackground.change_story_status($(event.target), 'state')
+      PivotalRocketBackground.change_story_status($(event.currentTarget), 'state')
     # change estimate of story
     PivotalRocketBackground.popup.$('#storyInfo').on "change", "select.change_story_estimate", (event) =>
-      PivotalRocketBackground.change_story_status($(event.target), 'estimate')
+      PivotalRocketBackground.change_story_status($(event.currentTarget), 'estimate')
     # add task in story
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "input.add_task_button", (event) =>
-      PivotalRocketBackground.add_task_to_story($(event.target))
+      PivotalRocketBackground.add_task_to_story($(event.currentTarget))
     PivotalRocketBackground.popup.$('#storyInfo').on "keydown", "input.add_task_text", (event) =>
       if (((event.metaKey? && event.metaKey is true) || (event.ctrlKey? && event.ctrlKey is true)) && event.keyCode? && 83 == event.keyCode) || (13 == event.keyCode)
         event.preventDefault()
-        PivotalRocketBackground.add_task_to_story($(event.target))
+        PivotalRocketBackground.add_task_to_story($(event.currentTarget))
         return false
       else if 27 == event.keyCode
         event.preventDefault()
-        close_links = $(event.target).parents('div.add_task_block').find("a.close_add_block")
+        close_links = $(event.currentTarget).parents('div.add_task_block').find("a.close_add_block")
         PivotalRocketBackground.close_fine_edit_block($(close_links[0])) if close_links.length > 0
         return false
     # edit task
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.edit_task_link", (event) =>
-      $(event.target).parents('li.task_block').addClass('editing').find('input.edit_task_text').focus()
+      $(event.currentTarget).parents('li.task_block').addClass('editing').find('input.edit_task_text').focus()
       return false
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.cancel_task_link", (event) =>
-      $(event.target).parents('li.task_block').removeClass('editing')
+      $(event.currentTarget).parents('li.task_block').removeClass('editing')
       return false
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "input.edit_task_button", (event) =>
-      PivotalRocketBackground.edit_task_in_story($(event.target))
+      PivotalRocketBackground.edit_task_in_story($(event.currentTarget))
     PivotalRocketBackground.popup.$('#storyInfo').on "keydown", "input.edit_task_text", (event) =>
       if (((event.metaKey? && event.metaKey is true) || (event.ctrlKey? && event.ctrlKey is true)) && event.keyCode? && 83 == event.keyCode) || (13 == event.keyCode)
         event.preventDefault()
-        PivotalRocketBackground.edit_task_in_story($(event.target))
+        PivotalRocketBackground.edit_task_in_story($(event.currentTarget))
         return false
       else if 27 == event.keyCode
         event.preventDefault()
-        close_links = $(event.target).parents('li.task_block').removeClass('editing')
+        close_links = $(event.currentTarget).parents('li.task_block').removeClass('editing')
         return false
     # delete task
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.delete_task_link", (event) =>
-      PivotalRocketBackground.delete_task_in_story($(event.target))
+      PivotalRocketBackground.delete_task_in_story($(event.currentTarget))
       return false
     # change task in story (completed/uncompleted)
     PivotalRocketBackground.popup.$('#storyInfo').on "change", "input.task_checkbox", (event) =>
-      PivotalRocketBackground.change_task_status($(event.target))
+      PivotalRocketBackground.change_task_status($(event.currentTarget))
     # filter tasks in story
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.filter_all_tasks", (event) =>
-      PivotalRocketBackground.filter_tasks_by_state($(event.target))
+      PivotalRocketBackground.filter_tasks_by_state($(event.currentTarget))
       return false
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.filter_completed_tasks", (event) =>
-      PivotalRocketBackground.filter_tasks_by_state($(event.target), 'completed')
+      PivotalRocketBackground.filter_tasks_by_state($(event.currentTarget), 'completed')
       return false
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.filter_uncompleted_tasks", (event) =>
-      PivotalRocketBackground.filter_tasks_by_state($(event.target), 'uncompleted')
+      PivotalRocketBackground.filter_tasks_by_state($(event.currentTarget), 'uncompleted')
       return false
     # add comment to story
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "input.add_comment_button", (event) =>
-      PivotalRocketBackground.add_comment_to_story($(event.target))
+      PivotalRocketBackground.add_comment_to_story($(event.currentTarget))
       return false
     PivotalRocketBackground.popup.$('#storyInfo').on "keydown", "textarea.add_comment_text", (event) =>
       if ((event.metaKey? && event.metaKey is true) || (event.ctrlKey? && event.ctrlKey is true)) && event.keyCode? && 83 == event.keyCode
         event.preventDefault()
-        PivotalRocketBackground.add_comment_to_story($(event.target))
+        PivotalRocketBackground.add_comment_to_story($(event.currentTarget))
         return false
       else if 27 == event.keyCode
         event.preventDefault()
-        close_links = $(event.target).parents('div.add_comment_block').find("a.close_add_block")
+        close_links = $(event.currentTarget).parents('div.add_comment_block').find("a.close_add_block")
         PivotalRocketBackground.close_fine_edit_block($(close_links[0])) if close_links.length > 0
         return false
     # delete comment from story
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.delete_comment_link", (event) =>
-      PivotalRocketBackground.delete_comment_from_story($(event.target))
+      PivotalRocketBackground.delete_comment_from_story($(event.currentTarget))
       return false
     # click on links in story description
     PivotalRocketBackground.popup.$('#storyInfo').on "click", "a.desc_link", (event) =>
       chrome.tabs.create
-        url: $(event.target).attr('href')
+        url: $(event.currentTarget).attr('href')
         active: false
       return false
   # change account
@@ -548,7 +548,7 @@ root.PivotalRocketBackground =
       axis: 'y'
       placeholder: 'ui-tasks-highlight'
       update: (event) ->
-        objects = $(event.target).parents("ul.tasks_list").find("input.task_checkbox")
+        objects = $(event.currentTarget).parents("ul.tasks_list").find("input.task_checkbox")
         story_id = objects.data('storyId')
         project_id = objects.data('projectId')
         selected_type_bol = PivotalRocketBackground.get_requester_or_owner_status()

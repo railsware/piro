@@ -32,14 +32,14 @@ root.PivotalRocketOptions =
     # account login
     $('#pivotalTokenAuthLink').click (event) =>
       $('a.login_switcher_link').removeClass('active')
-      $(event.target).addClass('active')
+      $(event.currentTarget).addClass('active')
       $('#pivotalBaseAuth').hide()
       $('#pivotalTokenAuth').show()
       $('#pivotalToken').focus()
       return false
     $('#pivotalBaseAuthLink').click (event) =>
       $('a.login_switcher_link').removeClass('active')
-      $(event.target).addClass('active')
+      $(event.currentTarget).addClass('active')
       $('#pivotalTokenAuth').hide()
       $('#pivotalBaseAuth').show()
       $('#pivotalEmail').focus()
@@ -51,11 +51,11 @@ root.PivotalRocketOptions =
       return false
     # edit account
     $('#accountList').on "click", "a.edit_account", (event) =>
-      $(event.target).parents('li.account').removeClass('deleting').addClass('editing')
-      $(event.target).parents('li.account').find('input.company_name').focus()
+      $(event.currentTarget).parents('li.account').removeClass('deleting').addClass('editing')
+      $(event.currentTarget).parents('li.account').find('input.company_name').focus()
       return false
     $('#accountList').on "click", "a.cancel_edit_account", (event) =>
-      $(event.target).parents('li.account').removeClass('editing')
+      $(event.currentTarget).parents('li.account').removeClass('editing')
       return false
     $('#accountList').on "keydown", "input.company_name", (event) =>
       PivotalRocketOptions.update_account(event) if 13 == event.keyCode
@@ -64,10 +64,10 @@ root.PivotalRocketOptions =
       return false
     # delete account
     $('#accountList').on "click", "a.delete_account", (event) =>
-      $(event.target).parents('li.account').removeClass('editing').addClass('deleting')
+      $(event.currentTarget).parents('li.account').removeClass('editing').addClass('deleting')
       return false
     $('#accountList').on "click", "a.cancel_delete_account", (event) =>
-      $(event.target).parents('li.account').removeClass('deleting')
+      $(event.currentTarget).parents('li.account').removeClass('deleting')
       return false
     $('#accountList').on "click", "a.confirm_delete_account", (event) =>
       PivotalRocketOptions.delete_account(event)
@@ -78,7 +78,7 @@ root.PivotalRocketOptions =
       return false
     # close alert box
     $('#mainPage').on "click", "a.close_alert_box", (event) =>
-      $(event.target).parents('div.alert_box').slideUp('show')
+      $(event.currentTarget).parents('div.alert_box').slideUp('show')
       return false
   init_sort_accounts: ->
     $("#accountList").sortable
@@ -159,7 +159,7 @@ root.PivotalRocketOptions =
         
   # update account
   update_account: (event) ->
-    li_object = $(event.target).parents('li.account')
+    li_object = $(event.currentTarget).parents('li.account')
     account_id = li_object.data("accountId")
     account = PivotalRocketStorage.find_account(account_id)
     if account?
@@ -177,7 +177,7 @@ root.PivotalRocketOptions =
     PivotalRocketOptions.background_page.PivotalRocketBackground.updated_accounts()
   # delete account
   delete_account: (account_id) ->
-    li_object = $(event.target).parents('li.account')
+    li_object = $(event.currentTarget).parents('li.account')
     account_id = li_object.data("accountId")
     PivotalRocketStorage.delete_account(account_id)
     PivotalRocketOptions.account_list()
