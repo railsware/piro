@@ -19,6 +19,13 @@ class root.PivotaltrackerApi
     ajaxParams.complete    = params.complete if params.complete?
     ajaxParams.beforeSend  = params.beforeSend if params.beforeSend?
     $.ajax ajaxParams
+    
+  getProjects: (params) =>
+    successFunction = params.success
+    params.url = "#{this.baseUrl}/projects"
+    params.success = (data, textStatus, jqXHR) =>
+      successFunction(data, textStatus, jqXHR)
+    this.sendPivotalRequest(params)
   
 # pivotal auth lib
 class root.PivotaltrackerAuthLib
@@ -29,7 +36,15 @@ class root.PivotaltrackerAuthLib
       global: false
       dataType: 'xml' 
       url: "#{this.baseUrl}/me"
-      success: params.success
+      success: (data, textStatus, jqXHR) ->
+        template = [ "//person", 
+        { id: "id", email: "email", name: "name", initials: "initials", 
+        "token": {id: "token/id", guid: "token/guid"}, 
+        "time_zone": {name: "time_zone/name", code: "time_zone/code", offset: "time_zone/offset"}
+        }]
+        persons = Jath.parse(template, data)
+        person = if persons? && persons.length > 0 then persons[0] else null
+        params.success(person, textStatus, jqXHR) if params.success?
       error: params.error
       beforeSend: params.beforeSend
     if params.username? && params.password?
