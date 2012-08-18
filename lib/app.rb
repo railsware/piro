@@ -7,6 +7,7 @@ require 'sass'
 require 'compass'
 require 'yui/compressor'
 require 'uglifier'
+require 'execjs'
 require 'base64'
 require 'rack/utils'
 require 'vegas'
@@ -48,25 +49,19 @@ class SHTTilt < Tilt::Template
   attr_reader :namespace
 
   def evaluate(scope, locals, &block)
+    context = ExecJS.compile(Pathname(__FILE__).dirname.join('..','assets', 'javascripts', 'vendors').join('hogan-2.0.0.min.js').read)
+    templateString = context.eval("Hogan.compile(#{data.inspect}, {asString: true})")
     template_key = path_to_key scope
     <<-HoganTemplate
 (function() { 
 #{namespace} || (#{namespace} = {});
-#{namespace}CachedTemplates || (#{namespace}CachedTemplates = {});
-#{namespace}CachedTemplates[#{template_key.inspect}] = Hogan.compile(#{data.inspect});
-#{namespace}[#{template_key.inspect}] = function(object) {
-  if (object == null){
-    return SHTCachedTemplates[#{template_key.inspect}];
-  } else {
-    return SHTCachedTemplates[#{template_key.inspect}].render(object);
-  }
-};
+#{namespace}[#{template_key.inspect}] = new Hogan.Template(#{templateString}, #{data.inspect}, Hogan, {});
 }).call(this);
     HoganTemplate
   end
   
   def path_to_key(scope)
-    path = scope.logical_path.to_s.split('/')
+    path = scope.logical_path.to_s.gsub(/^templates\/(.*)$/i, "\\1").split('/')
     path.last.gsub!(/^_/, '')
     path.join('/')
   end

@@ -1,17 +1,20 @@
-window.PiroPopup = 
+root = global ? window
+
+root.PiroPopup = 
   Models: {}
   Collections: {}
   Views: {}
   Routers: {}
+  bgPage: chrome.extension.getBackgroundPage()
   currentView: null
   init: ->
     # backbone monkey patch
     PiroPopup.monkeyBackboneCleanup()
     # routing
-    #new GPlusAxe.Routers.HangoutAxe
+    new PiroPopup.Routers.Popup
     # init history
-    #Backbone.history.start
-    #  pushState: true
+    Backbone.history.start
+      pushState: true
   # ui container
   mainContainer: ->
     $('#mainContainer')

@@ -16,6 +16,7 @@ gem 'yui-compressor'
 gem 'uglifier'
 gem 'haml'
 gem 'tilt'
+gem 'execjs'
 gem 'compass'
 gem 'vegas'
 

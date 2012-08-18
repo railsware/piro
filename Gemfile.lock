@@ -87,6 +87,7 @@ DEPENDENCIES
   actionpack
   activesupport
   compass
+  execjs
   growl
   guard
   guard-coffeescript
