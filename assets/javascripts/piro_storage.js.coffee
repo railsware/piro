@@ -12,6 +12,8 @@ root.PiroStorage =
   # ACCOUNTS
   getAccounts: ->
     PiroStorage.get(PiroStorage.accountsKey) || []
+  setAccounts: (accounts) ->
+    PiroStorage.set(PiroStorage.accountsKey, accounts)
   findAccount: (accountId) ->
     account = _.find PiroStorage.getAccounts(), (accountItem) ->
       parseInt(accountItem.id) is parseInt(accountId)
@@ -26,8 +28,6 @@ root.PiroStorage =
         if parseInt(accountItem.id) is parseInt(account.id) then account else accountItem
     PiroStorage.setAccounts(accounts)
     account
-  setAccounts: (accounts) ->
-    PiroStorage.set(PiroStorage.accountsKey, accounts)
   sortAccounts: (accountIds) ->
     accounts = _.sortBy PiroStorage.getAccounts(), (account) ->
       _.indexOf accountIds, parseInt(account.id)
