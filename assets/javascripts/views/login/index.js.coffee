@@ -24,7 +24,8 @@ class PiroPopup.Views.LoginIndex extends Backbone.View
     attributes.error = (jqXHR, textStatus, errorThrown) =>
       @$('div.error_text').text(jqXHR.responseText).show()
     attributes.success = (data, textStatus, jqXHR) =>
-      @collection.add(PiroStorage.saveAccount(data))
+      PiroStorage.saveAccount(data)
+      @collection.reset(PiroStorage.getAccounts())
       Backbone.history.navigate("", {trigger: true, replace: true})
     auth = new PivotaltrackerAuthLib(attributes)
   # links
