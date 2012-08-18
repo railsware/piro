@@ -1,45 +1,84 @@
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
+    POpen4 (0.1.4)
+      Platform (>= 0.4.0)
+      open4
+    Platform (0.4.0)
     actionpack (1.4.0)
-    activesupport (3.2.3)
+    activesupport (3.2.8)
       i18n (~> 0.6)
       multi_json (~> 1.0)
+    chunky_png (1.2.6)
     coffee-script (2.2.0)
       coffee-script-source
       execjs
     coffee-script-source (1.3.3)
-    cssmin (1.0.2)
-    execjs (1.3.2)
+    compass (0.12.2)
+      chunky_png (~> 1.2)
+      fssm (>= 0.2.7)
+      sass (~> 3.1)
+    execjs (1.4.0)
       multi_json (~> 1.0)
-    ffi (1.0.11)
+    ffi (1.1.5)
+    fssm (0.2.9)
     growl (1.0.3)
-    guard (1.0.3)
-      ffi (>= 0.5.0)
+    guard (1.3.2)
+      listen (>= 0.4.2)
       thor (>= 0.14.6)
-    guard-shell (0.4.0)
-      guard (>= 0.2.0)
+    guard-coffeescript (1.2.0)
+      coffee-script (>= 2.2.0)
+      guard (>= 1.1.0)
+    guard-rake (0.0.7)
+      guard
+      rake
+    guard-sass (1.0.0)
+      guard (>= 1.1.0)
+      sass (>= 3.1)
+    haml (3.1.7)
     hike (1.2.1)
     i18n (0.6.0)
-    libnotify (0.7.2)
+    libnotify (0.7.3)
     libv8 (3.3.10.4)
-    multi_json (1.3.5)
+    listen (0.4.7)
+      rb-fchange (~> 0.0.5)
+      rb-fsevent (~> 0.9.1)
+      rb-inotify (~> 0.8.8)
+    multi_json (1.3.6)
+    open4 (1.3.0)
     rack (1.4.1)
+    rack-protection (1.2.0)
+      rack
     rake (0.9.2.2)
+    rb-fchange (0.0.5)
+      ffi
+    rb-fsevent (0.9.1)
     rb-inotify (0.8.8)
       ffi (>= 0.5.0)
-    sprockets (2.4.3)
+    sass (3.2.1)
+    sinatra (1.3.2)
+      rack (~> 1.3, >= 1.3.6)
+      rack-protection (~> 1.2)
+      tilt (~> 1.3, >= 1.3.3)
+    sprockets (2.4.5)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    therubyracer (0.10.1)
+    sprockets-sass (0.9.0)
+      sprockets (~> 2.0)
+      tilt (~> 1.1)
+    therubyracer (0.10.2)
       libv8 (~> 3.3.10)
-    thor (0.15.2)
+    thor (0.16.0)
     tilt (1.3.3)
-    uglifier (1.2.4)
+    uglifier (1.2.7)
       execjs (>= 0.3.0)
-      multi_json (>= 1.0.2)
+      multi_json (~> 1.3)
+    vegas (0.1.11)
+      rack (>= 1.0.0)
+    yui-compressor (0.9.6)
+      POpen4 (>= 0.1.4)
 
 PLATFORMS
   ruby
@@ -47,14 +86,20 @@ PLATFORMS
 DEPENDENCIES
   actionpack
   activesupport
-  coffee-script
-  cssmin
+  compass
   growl
   guard
-  guard-shell
+  guard-coffeescript
+  guard-rake
+  guard-sass
+  haml
   libnotify
-  rake
   rb-inotify
+  sinatra
   sprockets
+  sprockets-sass
   therubyracer
+  tilt
   uglifier
+  vegas
+  yui-compressor

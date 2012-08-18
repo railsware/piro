@@ -1,19 +1,27 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
-gem "rake"
-gem 'sprockets'
-gem "coffee-script"
-gem "uglifier"
-gem "cssmin"
-gem "therubyracer"
+ruby "1.9.3" # gem install bundler --pre
+
+gem 'guard'
+gem 'guard-coffeescript'
+gem 'guard-sass'
+gem 'guard-rake'
+gem 'therubyracer'
 gem "actionpack"
 gem "activesupport"
-gem "guard"
-gem "guard-shell"
+gem 'sinatra'
+gem 'sprockets'
+gem 'sprockets-sass'
+gem 'yui-compressor'
+gem 'uglifier'
+gem 'haml'
+gem 'tilt'
+gem 'compass'
+gem 'vegas'
 
 # notify
 group :linux_development do
-  gem "rb-inotify" 
+  gem "rb-inotify"
   gem "libnotify"
 end
 group :mac_development do

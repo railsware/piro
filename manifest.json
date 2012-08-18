@@ -1,8 +1,7 @@
 {
-  "manifest_version": 1,
-  "content_security_policy": "default-src 'self' 'unsafe-inline' 'unsafe-eval'; connect-src https://www.pivotaltracker.com http://www.pivotaltracker.com",
+  "manifest_version": 2,
   "name": "PiRo",
-  "version": "1.2.6",
+  "version": "2.0.0",
   "default_locale": "en",
   "description": "__MSG_app_description__",
   "background": {
@@ -10,19 +9,19 @@
   },
   "options_page": "options.html",
   "browser_action": {
-    "default_title": "PiRo",
-    "default_icon": "images/icon.png",
-    "popup": "popup.html?popup"
+    "default_title": "Piro",
+    "default_icon": "public/images/icon.png",
+    "default_popup": "popup.html?popup"
   },
   "omnibox": { 
     "keyword" : "piro"
   },
   "icons": { 
-    "16": "images/icon19.png",
-    "19": "images/icon19.png",
-    "32": "images/icon32.png",
-    "48": "images/icon48.png",
-    "128": "images/icon128.png"
+    "16": "public/images/icon19.png",
+    "19": "public/images/icon19.png",
+    "32": "public/images/icon32.png",
+    "48": "public/images/icon48.png",
+    "128": "public/images/icon128.png"
   },
   "permissions": [
     "background",
@@ -33,11 +32,9 @@
     "https://*/*"
   ],
   "web_accessible_resources": [
-    "images/icon.png",
-    "images/icon128.png",
-    "images/icon19.png",
-    "images/icon32.png",
-    "images/icon48.png",
-    "images/logo.png"
+    "public/images/icon19.png",
+    "public/images/icon32.png",
+    "public/images/icon48.png",
+    "public/images/icon128.png"
   ]
 }

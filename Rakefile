@@ -1,82 +1,66 @@
-# encoding: utf-8
-#!/usr/bin/env rake
-require 'rake'
-require 'coffee-script'
-require 'uglifier'
-require 'cssmin'
+require 'rubygems'
+require 'bundler'
 
-desc 'Default: compress js and css.'
-task :default => :'pack:default'
+Bundler.require
+require './lib/app'
+require 'erb'
+require 'tilt'
 
-#########################################
-### JS and CSS tasks
-#########################################
+namespace :assets do
+  desc 'compile all data'
+  task :compile => [:compile_js, :compile_css, :compile_html] do
+  end
 
-namespace :pack do
-  desc "do all pack tasks"
-  task :default => [:js_compile, :css_compile]
+  desc 'compile javascript assets'
+  task :compile_js do
+    sprockets = PiroServer.settings.sprockets
+    outpath   = PiroServer.settings.assets_path
+    # 1 stage
+    asset     = sprockets['application.js']
+    outfile   = Pathname.new(outpath).join("application.min.js") # may want to use the digest in the future?
+    FileUtils.mkdir_p outfile.dirname
+    asset.write_to(outfile)
+    # 2 stage
+    asset     = sprockets['background.js']
+    outfile   = Pathname.new(outpath).join("background.min.js") # may want to use the digest in the future?
+    FileUtils.mkdir_p outfile.dirname
+    asset.write_to(outfile)
+    # 3 stage
+    asset     = sprockets['options.js']
+    outfile   = Pathname.new(outpath).join("options.min.js") # may want to use the digest in the future?
+    FileUtils.mkdir_p outfile.dirname
+    asset.write_to(outfile)
+    puts "successfully compiled js assets"
+  end
+
+  desc 'compile css assets'
+  task :compile_css do
+    sprockets = PiroServer.settings.sprockets
+    outpath   = PiroServer.settings.assets_path
+    # 1 stage
+    asset     = sprockets['application.css']
+    outfile   = Pathname.new(outpath).join("application.min.css") # may want to use the digest in the future?
+    FileUtils.mkdir_p outfile.dirname
+    asset.write_to(outfile)
+    puts "successfully compiled css assets"
+  end
   
-  desc "compile coffee-scripts from ./assets/javascripts to ./javascripts"
-  task :js_compile do
-    begin
-      source = "#{File.dirname(__FILE__)}/assets/javascripts/"
-      javascripts = "#{File.dirname(__FILE__)}/javascripts/"
-  
-      Dir.foreach(source) do |cf|
-        unless cf == '.' || cf == '..'
-          js_compiled = CoffeeScript.compile File.read("#{source}#{cf}") 
-          if ENV['RELEASE']
-            js = Uglifier.compile js_compiled
-          else
-            js = js_compiled
-          end
-          open "#{javascripts}#{cf.gsub('.coffee', '.js')}", 'w' do |f|
-            f.puts js
-          end 
-        end 
-      end
-  
-      puts "All coffescripts compiled successful!"
-    rescue => e
-      puts "Compilation error: #{e.inspect}"
-      raise e
+  desc 'compile html assets'
+  task :compile_html do
+    # helpers
+    include AssetHelpers
+    
+    def erb(template, options={}, locals={}, &block)
+      templateEngine = Tilt[:erb].new(File.join(File.dirname(__FILE__), 'lib', 'views', "#{template}.erb"), 1, options)
+      templateEngine.render({}, locals, &block)
     end
+    # HTML
+    outpath   = File.join(File.dirname(__FILE__))
+    # html files
+    File.open(File.join(outpath, 'background.html'), 'w') {|f| f.write(erb('background.html')) }
+    File.open(File.join(outpath, 'options.html'), 'w') {|f| f.write(erb('options.html')) }
+    File.open(File.join(outpath, 'popup.html'), 'w') {|f| f.write(erb('popup.html')) }
+    puts "successfully compiled html assets"
   end
-  
-  desc "compile css from ./assets/stylesheets to ./stylesheets"
-  task :css_compile do
-    begin
-      source = "#{File.dirname(__FILE__)}/assets/stylesheets/"
-      stylesheets = "#{File.dirname(__FILE__)}/stylesheets/"
-  
-      Dir.foreach(source) do |cf|
-        unless cf == '.' || cf == '..' 
-          if ENV['RELEASE']
-            css = CSSMin.minify File.read("#{source}#{cf}")
-          else
-            css = File.read("#{source}#{cf}")
-          end
-          open "#{stylesheets}#{cf}", 'w' do |f|
-            f.puts css
-          end 
-        end 
-      end
-  
-      puts "All css minified successful!"
-    rescue => e
-      puts "Minified error: #{e.inspect}"
-      raise e
-    end
-  end
-  
+  # todo: add :clean_all, :clean_css, :clean_js tasks, invoke before writing new file(s)
 end
-
-begin
-  require 'jasmine'
-  load 'jasmine/tasks/jasmine.rake'
-rescue LoadError
-  task :jasmine do
-    abort "Jasmine is not available. In order to run jasmine, you must: (sudo) gem install jasmine"
-  end
-end
-

@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+require './app'
+
+Vegas::Runner.new(PiroServer, 'piro_server')
