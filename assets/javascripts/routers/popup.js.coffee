@@ -1,9 +1,12 @@
 class PiroPopup.Routers.Popup extends Backbone.Router
   routes:
     ""                        : "index"
+    "login"                   : "login"
     "*a"                      : "index"
   
   initialize: (options) =>
+    @accounts = new PiroPopup.Collections.Accounts
+    @accounts.reset(PiroStorage.getAccounts())
     @on 'all', @beforRouting
 
   beforRouting: (trigger, args) =>
@@ -12,7 +15,12 @@ class PiroPopup.Routers.Popup extends Backbone.Router
         # index
       else
         # else
-        
   index: =>
-    view = new PiroPopup.Views.PopupIndex()
+    return Backbone.history.navigate("login", {trigger: true, replace: true}) if @accounts.length is 0
+    view = new PiroPopup.Views.PopupIndex(collection: @accounts)
+    PiroPopup.updateMainContainer(view)
+    
+  login: =>
+    return Backbone.history.navigate("", {trigger: true, replace: true}) if @accounts.length isnt 0
+    view = new PiroPopup.Views.LoginIndex(collection: @accounts)
     PiroPopup.updateMainContainer(view)

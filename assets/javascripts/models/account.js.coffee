@@ -1,0 +1,1 @@
+class PiroPopup.Models.Account extends Backbone.Model

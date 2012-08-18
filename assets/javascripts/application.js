@@ -7,6 +7,7 @@
 //= require_tree ./templates
 //
 //=require pivotaltracker_api
+//=require piro_storage
 //
 //=require piro_popup
 //
