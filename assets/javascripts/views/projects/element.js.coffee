@@ -13,8 +13,13 @@ class PiroPopup.Views.ProjectsElement extends Backbone.View
     this
     
   renderStories: =>
-    view = new PiroPopup.Views.StoriesIndex(collection: @model.stories)
-    @$('.stories_box').html(view.render().el)
+    @childView = new PiroPopup.Views.StoriesIndex(collection: @model.stories)
+    @$('.stories_box').html(@childView.render().el)
 
   remove: =>
     $(@el).remove()
+    
+  onDestroyView: =>
+    @model.off 'change', @render
+    @model.off 'destroy', @remove
+    @childView.destroyView() if @childView?

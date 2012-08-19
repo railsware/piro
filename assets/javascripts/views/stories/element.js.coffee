@@ -13,3 +13,7 @@ class PiroPopup.Views.StoriesElement extends Backbone.View
 
   remove: =>
     $(@el).remove()
+    
+  onDestroyView: =>
+    @model.off 'change', @render
+    @model.off 'destroy', @remove

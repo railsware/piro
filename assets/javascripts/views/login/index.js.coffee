@@ -38,3 +38,6 @@ class PiroPopup.Views.LoginIndex extends Backbone.View
     e.preventDefault()
     @$('div.email_box').hide()
     @$('div.token_box').show()
+    
+  onDestroyView: =>
+    # empty
