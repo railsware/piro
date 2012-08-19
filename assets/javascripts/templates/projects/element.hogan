@@ -1,0 +1,3 @@
+<div>{{name}}</div>
+
+<ul class="stories_list"></ul>

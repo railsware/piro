@@ -1,0 +1,1 @@
+class PiroPopup.Models.Project extends Backbone.Model

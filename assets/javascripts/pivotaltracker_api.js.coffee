@@ -20,17 +20,25 @@ class root.PivotaltrackerApi
     ajaxParams.beforeSend  = params.beforeSend if params.beforeSend?
     $.ajax ajaxParams
     
-  getProjects: (params) =>
+  getProjects: (params = {}) =>
     successFunction = params.success
     params.url = "#{this.baseUrl}/projects"
     params.success = (data, textStatus, jqXHR) =>
-      successFunction(data, textStatus, jqXHR)
+      template = [ "//project", 
+      { id: "id", name: "name", created_at: "created_at",
+      version: "version", iteration_length: "iteration_length", week_start_day: "week_start_day",
+      point_scale: "point_scale", account: "account", labels: "labels",
+      public: "public", use_https: "use_https", velocity_scheme: "velocity_scheme",
+      initial_velocity: "initial_velocity", current_velocity: "current_velocity", allow_attachments: "allow_attachments"
+      }]
+      projects = Jath.parse(template, data)
+      successFunction(projects, textStatus, jqXHR) if successFunction?
     this.sendPivotalRequest(params)
   
 # pivotal auth lib
 class root.PivotaltrackerAuthLib
   baseUrl: "https://www.pivotaltracker.com/services/v4"
-  constructor: (params) ->
+  constructor: (params = {}) ->
     ajaxParams = 
       cache: false
       global: false

@@ -1,9 +1,18 @@
 root = global ? window
 
 root.PiroStorage =
+  # KEYS
   accountsKey: "accounts"
+  projectsKey: "projects"
+  # STORAGE
   set: (key, data) ->
-    root.localStorage.setItem(key, JSON.stringify(data))
+    try
+      root.localStorage.setItem(key, JSON.stringify(data))
+    catch e
+      if e.name is "QUOTA_EXCEEDED_ERR"
+        root.localStorage.clear()
+      else
+        # localStorage not available
     data
   get: (key) ->
     strData = root.localStorage.getItem(key)
@@ -36,3 +45,12 @@ root.PiroStorage =
     accounts = _.reject PiroStorage.getAccounts(), (accountItem) ->
       parseInt(accountItem.id) is parseInt(accountId)
     PiroStorage.setAccounts(accounts)
+  # PROJECTS
+  getProjects: ->
+    PiroStorage.get(PiroStorage.projectsKey) || []
+  setProjects: (projects) ->
+    PiroStorage.set(PiroStorage.projectsKey, projects)
+  findProject: (projectId) ->
+    project = _.find PiroStorage.getProjects(), (projectItem) ->
+      parseInt(projectItem.id) is parseInt(projectId)
+    project
