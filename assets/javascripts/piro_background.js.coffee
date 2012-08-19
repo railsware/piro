@@ -2,33 +2,38 @@ root = global ? window
 
 root.PiroBackground = 
   pivotalApi: null
+  db: null
   popupEvents: null
   projectsData: null
   init: ->
-    PiroBackground.initAutoupdate()
+    PiroBackground.db = new PiroStorage
+      success: ->
+        PiroBackground.initAutoupdate()
   initPopupView: (events) ->
     PiroBackground.popupEvents = events
     #PiroBackground.initAutoupdate()
   initAutoupdate: ->
-    PiroBackground.updateDataForAccount(PiroStorage.getAccounts()[0])
+    PiroBackground.db.getAccounts
+      success: (accounts) =>
+        PiroBackground.updateDataForAccount(accounts[0]) if accounts.length > 0
     #PiroBackground.popupEvents.trigger "updated:data", {} if PiroBackground.popupEvents?
   updateDataForAccount: (account) ->
     PiroBackground.pivotalApi = new PivotaltrackerApi(account)
     PiroBackground.pivotalApi.getProjects
       success: (data, textStatus, jqXHR) =>
-        PiroBackground.projectsData = data
-        PiroBackground.aggregateAllStories(account)
-  aggregateAllStories: (account) ->
-    projectsCount = PiroBackground.projectsData.length
-    for project in PiroBackground.projectsData
+        PiroBackground.db.setProjects account, data, 
+          success: =>
+            PiroBackground.aggregateAllStories(account, data)
+  aggregateAllStories: (account, projects) ->
+    projectsCount = projects.length
+    for project in projects
       PiroBackground.pivotalApi.getStories project, 
         complete: =>
           projectsCount--
-          PiroBackground.saveAllData(account) if projectsCount <= 0
-        success: (project, data, textStatus, jqXHR) =>
-          _.extend(PiroBackground.projectsData[_.indexOf(PiroBackground.projectsData, project)], {stories: data})
+          #PiroBackground.saveAllData(account) if projectsCount <= 0
+        success: (project, stories, textStatus, jqXHR) =>
+          PiroBackground.db.setStories(stories)
   saveAllData: (account) ->
-    console.log JSON.stringify(PiroBackground.projectsData).length
     PiroStorage.setProjects(account, PiroBackground.projectsData)
 # init
 $ ->

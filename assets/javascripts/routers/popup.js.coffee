@@ -5,8 +5,6 @@ class PiroPopup.Routers.Popup extends Backbone.Router
     "*a"                      : "index"
   
   initialize: (options) =>
-    @accounts = new PiroPopup.Collections.Accounts
-    @accounts.reset(PiroStorage.getAccounts())
     PiroPopup.globalEvents.on "updated:data", @updatedData
     @on 'all', @beforRouting
 
@@ -17,13 +15,12 @@ class PiroPopup.Routers.Popup extends Backbone.Router
       else
         # else
   index: =>
-    return Backbone.history.navigate("login", {trigger: true, replace: false}) if @accounts.length is 0
-    view = new PiroPopup.Views.PopupIndex(collection: @accounts)
+    return Backbone.history.navigate("login", {trigger: true, replace: false}) if PiroPopup.pivotalAccounts.length is 0
+    view = new PiroPopup.Views.PopupIndex(collection: PiroPopup.pivotalAccounts)
     PiroPopup.updateMainContainer(view)
-    
   login: =>
-    return Backbone.history.navigate("", {trigger: true, replace: false}) if @accounts.length isnt 0
-    view = new PiroPopup.Views.LoginIndex(collection: @accounts)
+    return Backbone.history.navigate("", {trigger: true, replace: false}) if PiroPopup.pivotalAccounts.length isnt 0
+    view = new PiroPopup.Views.LoginIndex(collection: PiroPopup.pivotalAccounts)
     PiroPopup.updateMainContainer(view)
     
   updatedData: =>

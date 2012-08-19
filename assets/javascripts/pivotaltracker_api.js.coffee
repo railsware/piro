@@ -32,7 +32,7 @@ class root.PivotaltrackerApi
       initial_velocity: "initial_velocity", current_velocity: "current_velocity", allow_attachments: "allow_attachments"
       }]
       projects = Jath.parse(template, data)
-      successFunction(projects, textStatus, jqXHR) if successFunction?
+      successFunction.call(null, projects, textStatus, jqXHR) if successFunction?
     this.sendPivotalRequest(params)
   getStories: (project, params = {}) =>
     successFunction = params.success
@@ -47,7 +47,7 @@ class root.PivotaltrackerApi
       created_at: "created_at", labels: "labels"
       }]
       stories = Jath.parse(template, data)
-      successFunction(project, stories, textStatus, jqXHR) if successFunction?
+      successFunction.call(null, project, stories, textStatus, jqXHR) if successFunction?
     this.sendPivotalRequest(params)
   
 # pivotal auth lib
@@ -67,7 +67,7 @@ class root.PivotaltrackerAuthLib
         }]
         persons = Jath.parse(template, data)
         person = if persons? && persons.length > 0 then persons[0] else null
-        params.success(person, textStatus, jqXHR) if params.success?
+        params.success.call(null, person, textStatus, jqXHR) if params.success?
       error: params.error
       beforeSend: params.beforeSend
     if params.username? && params.password?

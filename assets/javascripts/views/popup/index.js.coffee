@@ -7,11 +7,10 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
   initialize: ->
     @collection.on 'add', @render
     @collection.on 'reset', @render
-    # projects
-    @currentAccount = @collection.first()
+    #projects 
     @projects = new PiroPopup.Collections.Projects
-    @projects.reset(PiroStorage.getProjects(@currentAccount.toJSON()))
     @projects.on 'reset', @renderProjects
+    @resetProjectsList()
   
   render: =>
     $(@el).html(@template.render(
@@ -19,13 +18,15 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
     ))
     @renderProjects()
     this
-    
   renderProjects: =>
     view = new PiroPopup.Views.ProjectsIndex(collection: @projects)
     @$('#projectsBox').html(view.render().el)
-    
   switchAccount: =>
     currentAccount = @collection.get(parseInt(@$('select.account_switcher').val()))
     return false unless currentAccount?
-    @currentAccount = currentAccount
-    @projects.reset(PiroStorage.getProjects(@currentAccount.toJSON()))
+    PiroPopup.pivotalCurrentAccount = currentAccount
+    @resetProjectsList()
+  resetProjectsList: =>
+    PiroPopup.db.getFullProjects PiroPopup.pivotalCurrentAccount.toJSON(), 
+      success: (projects) =>
+        @projects.reset(projects)

@@ -6,12 +6,24 @@ root.PiroPopup =
   Views: {}
   Routers: {}
   bgPage: chrome.extension.getBackgroundPage()
+  db: null
   currentView: null
   globalEvents: {}
+  # data
+  pivotalAccounts: null
+  pivotalCurrentAccount: null
   init: ->
+    PiroPopup.db = new PiroStorage
+      success: ->
+        PiroPopup.pivotalAccounts = new PiroPopup.Collections.Accounts
+        PiroPopup.db.getAccounts
+          success: (accounts) =>
+            PiroPopup.initUI(accounts)
+  initUI: (accounts) ->
+    PiroPopup.pivotalAccounts.reset(accounts)
+    PiroPopup.pivotalCurrentAccount = PiroPopup.pivotalAccounts.first() if PiroPopup.pivotalAccounts.length > 0
     # global events
     _.extend(PiroPopup.globalEvents, Backbone.Events)
-    # events
     PiroPopup.bgPage.PiroBackground.initPopupView(PiroPopup.globalEvents)
     # backbone monkey patch
     PiroPopup.monkeyBackboneCleanup()

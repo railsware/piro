@@ -17,4 +17,7 @@ class PiroPopup.Views.ProjectsIndex extends Backbone.View
 
   renderAll: =>
     @$('.projects_list').empty()
-    @collection.each @renderOne
+    projects = @collection.filter((project) =>
+      project.stories.length > 0
+    )
+    @renderOne(project) for project in projects

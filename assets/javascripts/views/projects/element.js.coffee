@@ -9,7 +9,12 @@ class PiroPopup.Views.ProjectsElement extends Backbone.View
 
   render: =>
     $(@el).html(@template.render(@model.toJSON()))
+    @renderStories()
     this
+    
+  renderStories: =>
+    view = new PiroPopup.Views.StoriesIndex(collection: @model.stories)
+    @$('.stories_box').html(view.render().el)
 
   remove: =>
     $(@el).remove()
