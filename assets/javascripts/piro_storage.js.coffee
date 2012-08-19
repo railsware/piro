@@ -4,13 +4,18 @@ root.PiroStorage =
   # KEYS
   accountsKey: "accounts"
   projectsKey: "projects"
+  storiesKey: "stories"
   # STORAGE
   set: (key, data) ->
     try
       root.localStorage.setItem(key, JSON.stringify(data))
     catch e
       if e.name is "QUOTA_EXCEEDED_ERR"
-        root.localStorage.clear()
+        #root.localStorage.clear()
+        console.error "QUOTA_EXCEEDED_ERR catch BEGIN"
+        console.error "Key: #{key}"
+        console.error "Data: #{data}"
+        console.error "QUOTA_EXCEEDED_ERR catch END"
       else
         # localStorage not available
     data

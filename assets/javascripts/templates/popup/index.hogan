@@ -2,9 +2,9 @@
 <div id="projectsBox"></div>
 
 <div>
-  <select class="account_shitcher">
+  <select class="account_switcher">
     {{#accounts}}
-      <option value="{{id}}">{{email}}</option>
+      <option value="{{id}}">{{#company}}{{company}}{{/company}}{{^company}}{{email}}{{/company}}</option>
     {{/accounts}}
   </select>
 </div>
