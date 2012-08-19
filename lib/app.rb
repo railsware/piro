@@ -105,7 +105,7 @@ class PiroServer < Sinatra::Application
 
   get '/' do
     content_type 'text/html'
-    erb :"popup.html"
+    erb :"index.html"
     #read_relative_file 'public', 'index.html'
   end
 

@@ -30,6 +30,11 @@ namespace :assets do
     outfile   = Pathname.new(outpath).join("options.min.js") # may want to use the digest in the future?
     FileUtils.mkdir_p outfile.dirname
     asset.write_to(outfile)
+    # 4 stage
+    asset     = sprockets['popup.js']
+    outfile   = Pathname.new(outpath).join("popup.min.js") # may want to use the digest in the future?
+    FileUtils.mkdir_p outfile.dirname
+    asset.write_to(outfile)
     puts "successfully compiled js assets"
   end
 
@@ -57,7 +62,7 @@ namespace :assets do
     # HTML
     outpath   = File.join(File.dirname(__FILE__))
     # html files
-    #File.open(File.join(outpath, 'background.html'), 'w') {|f| f.write(erb('background.html')) }
+    File.open(File.join(outpath, 'index.html'), 'w') {|f| f.write(erb('index.html')) }
     File.open(File.join(outpath, 'options.html'), 'w') {|f| f.write(erb('options.html')) }
     File.open(File.join(outpath, 'popup.html'), 'w') {|f| f.write(erb('popup.html')) }
     puts "successfully compiled html assets"
