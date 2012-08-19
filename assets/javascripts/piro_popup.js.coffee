@@ -7,7 +7,12 @@ root.PiroPopup =
   Routers: {}
   bgPage: chrome.extension.getBackgroundPage()
   currentView: null
+  globalEvents: {}
   init: ->
+    # global events
+    _.extend(PiroPopup.globalEvents, Backbone.Events)
+    # events
+    PiroPopup.bgPage.PiroBackground.initPopupView(PiroPopup.globalEvents)
     # backbone monkey patch
     PiroPopup.monkeyBackboneCleanup()
     # routing

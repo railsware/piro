@@ -1,2 +1,10 @@
 
 <div id="projectsBox"></div>
+
+<div>
+  <select class="account_shitcher">
+    {{#accounts}}
+      <option value="{{id}}">{{email}}</option>
+    {{/accounts}}
+  </select>
+</div>

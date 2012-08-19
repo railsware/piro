@@ -3,4 +3,8 @@
 //=require ./vendors/backbone-min
 //=require ./vendors/jath
 //
+//=require pivotaltracker_api
+//=require piro_storage
+//
 //=require piro_background
+//

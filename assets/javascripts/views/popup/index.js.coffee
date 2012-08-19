@@ -6,16 +6,14 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
     @collection.on 'add', @render
     @collection.on 'reset', @render
     # projects
+    @currentAccount = @collection.first()
     @projects = new PiroPopup.Collections.Projects
-    @projects.reset(PiroStorage.getProjects())
-    # projects
-    api = new PivotaltrackerApi(PiroStorage.getAccounts()[0])
-    api.getProjects
-      success: (data, textStatus, jqXHR) =>
-        console.log data
+    @projects.reset(PiroStorage.getProjects(@currentAccount.toJSON()))
   
   render: =>
-    $(@el).html(@template.render())
+    $(@el).html(@template.render(
+      accounts: @collection.toJSON()
+    ))
     @renderProjects()
     this
     

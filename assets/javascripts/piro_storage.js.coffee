@@ -46,11 +46,11 @@ root.PiroStorage =
       parseInt(accountItem.id) is parseInt(accountId)
     PiroStorage.setAccounts(accounts)
   # PROJECTS
-  getProjects: ->
-    PiroStorage.get(PiroStorage.projectsKey) || []
-  setProjects: (projects) ->
-    PiroStorage.set(PiroStorage.projectsKey, projects)
-  findProject: (projectId) ->
-    project = _.find PiroStorage.getProjects(), (projectItem) ->
+  getProjects: (account) ->
+    PiroStorage.get("#{PiroStorage.projectsKey}_#{account.id}") || []
+  setProjects: (account, projects) ->
+    PiroStorage.set("#{PiroStorage.projectsKey}_#{account.id}", projects)
+  findProject: (account, projectId) ->
+    project = _.find PiroStorage.getProjects(account), (projectItem) ->
       parseInt(projectItem.id) is parseInt(projectId)
     project
