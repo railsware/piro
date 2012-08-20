@@ -4,3 +4,6 @@ class PiroPopup.Models.Project extends Backbone.Model
     if attributes.stories?
       @stories.reset(attributes.stories)
       @unset("stories")
+
+  setStories: (stories) =>
+    @stories.reset(stories)

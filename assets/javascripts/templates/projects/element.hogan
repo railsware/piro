@@ -1,3 +1,1 @@
-<div>{{name}}</div>
-
-<div class="stories_box"></div>
+<a href="#" class="story_element">{{name}}</a>

@@ -2,6 +2,8 @@ class PiroPopup.Views.ProjectsElement extends Backbone.View
   tagName: "li"
   className: "project"
   template: SHT['projects/element']
+  events:
+    "click .story_element"          : "openStory"
   
   initialize: =>
     @model.on 'change', @render
@@ -9,17 +11,15 @@ class PiroPopup.Views.ProjectsElement extends Backbone.View
 
   render: =>
     $(@el).html(@template.render(@model.toJSON()))
-    @renderStories()
     this
-    
-  renderStories: =>
-    @childView = new PiroPopup.Views.StoriesIndex(collection: @model.stories)
-    @$('.stories_box').html(@childView.render().el)
 
   remove: =>
     $(@el).remove()
     
+  openStory: (e) =>
+    e.preventDefault()
+    Backbone.history.loadUrl("project/#{@model.get('id')}")
+    
   onDestroyView: =>
     @model.off 'change', @render
     @model.off 'destroy', @remove
-    @childView.destroyView() if @childView?

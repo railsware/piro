@@ -19,6 +19,7 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
     @renderProjects()
     this
   renderProjects: =>
+    @childView.destroyView() if @childView?
     @childView = new PiroPopup.Views.ProjectsIndex(collection: @projects)
     @$('#projectsBox').html(@childView.render().el)
   switchAccount: =>
@@ -27,10 +28,9 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
     PiroPopup.pivotalCurrentAccount = currentAccount
     @resetProjectsList()
   resetProjectsList: =>
-    PiroPopup.db.getFullProjects PiroPopup.pivotalCurrentAccount.toJSON(), 
+    PiroPopup.db.getProjects PiroPopup.pivotalCurrentAccount.toJSON(), 
       success: (projects) =>
         @projects.reset(projects)
-        
   onDestroyView: =>
     @collection.off 'add', @renderOne
     @collection.off 'reset', @renderAll

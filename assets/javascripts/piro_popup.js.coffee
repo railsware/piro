@@ -7,8 +7,10 @@ root.PiroPopup =
   Routers: {}
   bgPage: chrome.extension.getBackgroundPage()
   db: null
-  currentView: null
   globalEvents: {}
+  # views
+  currentMainView: null
+  currentStoriesView: null
   # data
   pivotalAccounts: null
   pivotalCurrentAccount: null
@@ -47,9 +49,15 @@ root.PiroPopup =
   mainContainer: ->
     $('#mainContainer')
   updateMainContainer: (view) ->
-    PiroPopup.currentView.destroyView() if PiroPopup.currentView? && PiroPopup.currentView.destroyView?
-    PiroPopup.currentView = view
-    PiroPopup.mainContainer().empty().html(PiroPopup.currentView.render().el)
+    PiroPopup.currentMainView.destroyView() if PiroPopup.currentMainView? && PiroPopup.currentMainView.destroyView?
+    PiroPopup.currentMainView = view
+    PiroPopup.mainContainer().empty().html(PiroPopup.currentMainView.render().el)
+  storiesContainer: ->
+    $('#storiesBox')
+  updateStoriesContainer: (view) ->
+    PiroPopup.currentStoriesView.destroyView() if PiroPopup.currentStoriesView? && PiroPopup.currentStoriesView.destroyView?
+    PiroPopup.currentStoriesView = view
+    PiroPopup.storiesContainer().empty().html(PiroPopup.currentStoriesView.render().el)
   # patch backbone cleanup
   monkeyBackboneCleanup: ->
     Backbone.View::destroyView = ->

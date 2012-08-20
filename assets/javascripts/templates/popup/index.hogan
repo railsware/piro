@@ -1,6 +1,3 @@
-
-<div id="projectsBox"></div>
-
 <div>
   <select class="account_switcher">
     {{#accounts}}
@@ -8,3 +5,7 @@
     {{/accounts}}
   </select>
 </div>
+
+<div id="projectsBox" style="width:300px;float:left"></div>
+
+<div id="storiesBox" style="width:500px;float:left"></div>
