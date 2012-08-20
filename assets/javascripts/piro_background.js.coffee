@@ -30,11 +30,14 @@ root.PiroBackground =
       PiroBackground.pivotalApi.getStories project, 
         complete: =>
           projectsCount--
-          #PiroBackground.saveAllData(account) if projectsCount <= 0
+          PiroBackground.saveAllData(account, projects) if projectsCount <= 0
         success: (project, stories, textStatus, jqXHR) =>
+          _.extend(projects[_.indexOf(projects, project)], {stories_count: stories.length})
           PiroBackground.db.setStories(stories)
-  saveAllData: (account) ->
-    PiroStorage.setProjects(account, PiroBackground.projectsData)
+  saveAllData: (account, projects) ->
+    PiroBackground.db.setProjects account, projects, 
+      success: =>
+        console.log "Done"
 # init
 $ ->
   PiroBackground.init()

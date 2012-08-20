@@ -1,1 +1,1 @@
-<a href="#" class="story_element">{{name}}</a>
+<a href="#" class="story_element">{{name}} ({{stories_count}})</a>
