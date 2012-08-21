@@ -21,9 +21,7 @@ root.PiroBackground =
     PiroBackground.pivotalApi = new PivotaltrackerApi(account)
     PiroBackground.pivotalApi.getProjects
       success: (data, textStatus, jqXHR) =>
-        PiroBackground.db.setProjects account, data, 
-          success: =>
-            PiroBackground.aggregateAllStories(account, data)
+        PiroBackground.aggregateAllStories(account, data)
   aggregateAllStories: (account, projects) ->
     projectsCount = projects.length
     for project in projects

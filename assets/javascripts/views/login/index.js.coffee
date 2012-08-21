@@ -26,8 +26,9 @@ class PiroPopup.Views.LoginIndex extends Backbone.View
     attributes.success = (data, textStatus, jqXHR) =>
       PiroPopup.db.saveAccountAndGetAll data, 
         success: (accounts) =>
-          @collection.reset(accounts)
-          Backbone.history.navigate("", {trigger: true, replace: true})
+          PiroPopup.pivotalAccounts.reset(accounts)
+          PiroPopup.pivotalCurrentAccount = PiroPopup.pivotalAccounts.first() if PiroPopup.pivotalAccounts.length > 0
+          Backbone.history.loadUrl("")
     auth = new PivotaltrackerAuthLib(attributes)
   # links
   openEmailBox: (e) =>

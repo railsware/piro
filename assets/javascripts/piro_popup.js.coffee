@@ -11,6 +11,7 @@ root.PiroPopup =
   # views
   currentMainView: null
   currentStoriesView: null
+  currentStoryView: null
   # data
   pivotalAccounts: null
   pivotalCurrentAccount: null
@@ -58,6 +59,12 @@ root.PiroPopup =
     PiroPopup.currentStoriesView.destroyView() if PiroPopup.currentStoriesView? && PiroPopup.currentStoriesView.destroyView?
     PiroPopup.currentStoriesView = view
     PiroPopup.storiesContainer().empty().html(PiroPopup.currentStoriesView.render().el)
+  storyContainer: ->
+    $('#storyBox')
+  updateStoryContainer: (view) ->
+    PiroPopup.currentStoryView.destroyView() if PiroPopup.currentStoryView? && PiroPopup.currentStoryView.destroyView?
+    PiroPopup.currentStoryView = view
+    PiroPopup.storyContainer().empty().html(PiroPopup.currentStoryView.render().el)
   # patch backbone cleanup
   monkeyBackboneCleanup: ->
     Backbone.View::destroyView = ->
