@@ -1,2 +1,5 @@
+<img src="{{icon}}{{^icon}}public/images/icons/workspace.png{{/icon}}" alt="{{name}}" style="width: 100px; height: 100px;" />
+
 <a href="#" class="story_element">{{name}} ({{stories_count}})</a>
 <a href="#" class="project_settings">Settings</a>
+<span class="sort_project">drag</span>

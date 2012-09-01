@@ -10,6 +10,7 @@ class PiroPopup.Views.ProjectsIndex extends Backbone.View
   render: =>
     $(@el).html(@template.render())
     @renderAll()
+    @sortBinding()
     this
     
   renderOne: (project) =>
@@ -21,6 +22,18 @@ class PiroPopup.Views.ProjectsIndex extends Backbone.View
     @$('.projects_list').empty()
     @cleanupChildViews()
     @collection.each @renderOne
+    
+  sortBinding: =>
+    @$(".projects_list").sortable
+      handle: 'span.sort_project'
+      axis: 'y'
+      placeholder: 'ui-state-highlight'
+      update: (e) =>
+        objects = @$("li.project_element")
+        objectIds = []
+        objectIds.push($(object).data('project-id')) for object in objects
+        PiroPopup.db.setSortedProjectsLS(PiroPopup.pivotalCurrentAccount.toJSON(), objectIds) if objectIds.length > 0
+    .disableSelection()
     
   onDestroyView: =>
     @collection.off 'add', @renderOne

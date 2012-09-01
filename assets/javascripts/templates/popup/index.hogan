@@ -1,4 +1,4 @@
-<div id="popupContainer" style="display:none"></div>
+<div id="dialogContainer"></div>
 
 <div>
   <select class="account_switcher">

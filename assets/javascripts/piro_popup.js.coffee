@@ -65,6 +65,8 @@ root.PiroPopup =
     PiroPopup.currentStoryView.destroyView() if PiroPopup.currentStoryView? && PiroPopup.currentStoryView.destroyView?
     PiroPopup.currentStoryView = view
     PiroPopup.storyContainer().empty().html(PiroPopup.currentStoryView.render().el)
+  dialogContainer: ->
+    $('#dialogContainer')
   # patch backbone cleanup
   monkeyBackboneCleanup: ->
     Backbone.View::destroyView = ->

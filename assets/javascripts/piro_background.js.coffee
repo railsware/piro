@@ -35,7 +35,10 @@ root.PiroBackground =
   saveAllData: (account, projects) ->
     PiroBackground.db.setProjects account, projects, 
       success: =>
-        console.log "Done"
+        PiroBackground.cleanupData(account)
+  cleanupData: (account) =>
+    # clean stories, icons
+    console.log "comming soon..."
 # init
 $ ->
   PiroBackground.init()

@@ -1,6 +1,6 @@
 class PiroPopup.Views.ProjectsElement extends Backbone.View
   tagName: "li"
-  className: "project"
+  className: "project_element"
   template: SHT['projects/element']
   events:
     "click .story_element"          : "openStories"
@@ -12,6 +12,7 @@ class PiroPopup.Views.ProjectsElement extends Backbone.View
 
   render: =>
     $(@el).html(@template.render(@model.toJSON()))
+    $(@el).attr("data-project-id", @model.get('id'))
     this
 
   remove: =>
@@ -29,13 +30,15 @@ class PiroPopup.Views.ProjectsElement extends Backbone.View
   openSettings: (e) =>
     e.preventDefault()
     @popupView = new PiroPopup.Views.ProjectsSettings(model: @model)
-    $("#popupContainer").empty().html(@popupView.render().el)
-    $("#popupContainer").dialog
+    PiroPopup.dialogContainer().empty().html(@popupView.render().el)
+    PiroPopup.dialogContainer().dialog
       modal: true
       resizable: false
       draggable: false
+      closeText: null
+      dialogClass: "hide-title-bar"
       close: (event, ui) =>
-        @popupView.onDestroyView() if @popupView? && @popupView.onDestroyView?
+        @popupView.destroyView() if @popupView? && @popupView.destroyView?
     
   onDestroyView: =>
     @model.off 'change', @render

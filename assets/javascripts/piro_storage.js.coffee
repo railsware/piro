@@ -84,7 +84,22 @@ class root.PiroStorage
     request.onerror = @dbError
     request.onsuccess = (e) =>
       data = e.target.result
-      params.success.call(null, data.projects) if params.success?
+      @getProjectIcons
+        success: (icons) =>
+          projects = data.projects
+          # icons for projects
+          for icon in icons
+            project = _.find(projects, (project) ->
+              project.id is icon.id
+            )
+            _.extend(projects[_.indexOf(projects, project)], {icon: icon.icon})
+          # sort projects
+          sortedProjectIds = @getSortedProjectsLS(account)
+          projects = _.sortBy(projects, (project) ->
+            index = _.indexOf(sortedProjectIds, parseInt(project.id))
+            if index is -1 then 99 else index
+          ) if sortedProjectIds.length > 0
+          params.success.call(null, projects) if params.success?
   setProjects: (account, projects, params = {}) =>
     trans = @db.transaction([@projectsKey()], "readwrite")
     store = trans.objectStore(@projectsKey())
@@ -129,10 +144,67 @@ class root.PiroStorage
         cursor.continue()
       else
         params.success.call(null, project, stories) if params.success?
+  # PROJECT ICONS
+  getProjectIcons: (params = {}) =>
+    icons = []
+    trans = @db.transaction([@projectsIconsKey()], "readwrite")
+    store = trans.objectStore(@projectsIconsKey())
+    keyRange = IDBKeyRange.lowerBound(0)
+    cursorRequest = store.openCursor(keyRange)
+    cursorRequest.onerror = @dbError
+    cursorRequest.onsuccess = (e) =>
+      cursor = e.target.result
+      if cursor?
+        icons.push(cursor.value)
+        cursor.continue()
+      else
+        params.success.call(null, icons) if params.success?
+  getProjectIcon: (project, params = {}) =>
+    icon = null
+    trans = @db.transaction([@projectsIconsKey()], "readwrite")
+    store = trans.objectStore(@projectsIconsKey())
+    keyRange = IDBKeyRange.only(project.id.toString())
+    cursorRequest = store.openCursor(keyRange)
+    cursorRequest.onerror = @dbError
+    cursorRequest.onsuccess = (e) =>
+      cursor = e.target.result
+      params.success.call(null, cursor.value) if params.success?
+  saveProjectIcon: (project, icon, params = {}) =>
+    trans = @db.transaction([@projectsIconsKey()], "readwrite")
+    store = trans.objectStore(@projectsIconsKey())
+    request = store.put 
+      id: project.id
+      icon: icon
+    request.onerror = @dbError
+    request.onsuccess = (e) =>
+      params.success.call(null) if params.success?
   # UTILS
   dbError: (e) =>
     console.error "IndexedDB error"
     console.error e
+    
+  # localStorage
+  setLocalStorage: (key, data) ->
+    try
+      root.localStorage.setItem(key, JSON.stringify(data))
+    catch e
+      if e.name is "QUOTA_EXCEEDED_ERR"
+        #root.localStorage.clear()
+        console.error "QUOTA_EXCEEDED_ERR catch BEGIN"
+        console.error "Key: #{key}"
+        console.error "Data: #{data}"
+        console.error "QUOTA_EXCEEDED_ERR catch END"
+      else
+        # localStorage not available
+    data
+  getLocalStorage: (key) ->
+    strData = root.localStorage.getItem(key)
+    jsonData = if strData? then JSON.parse(strData) else null
+    jsonData
+  setSortedProjectsLS: (account, projectIds) =>
+    @setLocalStorage("sorted_projects_#{account.id}", projectIds)
+  getSortedProjectsLS: (account) =>
+    @getLocalStorage("sorted_projects_#{account.id}")
 ###        
   # DB
   

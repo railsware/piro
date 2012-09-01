@@ -1,1 +1,7 @@
+<a href="#" class="close_settings">Done</a>
+
 <h2>{{name}}</h2>
+
+<img class="project_icon" src="{{icon}}{{^icon}}public/images/icons/workspace.png{{/icon}}" alt="{{name}}" style="width: 100px; height: 100px;" />
+
+<input class="project_upload_icon" type="file" />
