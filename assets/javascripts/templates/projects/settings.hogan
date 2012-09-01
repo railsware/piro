@@ -2,6 +2,6 @@
 
 <h2>{{name}}</h2>
 
-<img class="project_icon" src="{{icon}}{{^icon}}public/images/icons/workspace.png{{/icon}}" alt="{{name}}" style="width: 100px; height: 100px;" />
+<img class="project_icon" src="{{icon}}{{^icon}}public/images/icons/workspace.png{{/icon}}" alt="{{name}}" style="width: 50px; height: 50px;" />
 
 <input class="project_upload_icon" type="file" />
