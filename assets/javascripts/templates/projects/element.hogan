@@ -1,1 +1,2 @@
 <a href="#" class="story_element">{{name}} ({{stories_count}})</a>
+<a href="#" class="project_settings">Settings</a>

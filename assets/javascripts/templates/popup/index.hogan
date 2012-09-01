@@ -1,3 +1,5 @@
+<div id="popupContainer" style="display:none"></div>
+
 <div>
   <select class="account_switcher">
     {{#accounts}}

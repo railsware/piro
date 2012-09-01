@@ -23,6 +23,7 @@ gem 'vegas'
 # notify
 group :linux_development do
   gem "rb-inotify"
+  gem 'rb-fsevent', '~> 0.9.1'
   gem "libnotify"
 end
 group :mac_development do

@@ -25,6 +25,10 @@ class root.PiroStorage
           projects = @db.createObjectStore(@projectsKey(),
             keyPath: "account_id"
           )
+          @db.deleteObjectStore @projectsIconsKey() if @db.objectStoreNames.contains(@projectsIconsKey())
+          project_icons = @db.createObjectStore(@projectsIconsKey(),
+            keyPath: "id"
+          )
           @db.deleteObjectStore @storiesKey() if @db.objectStoreNames.contains(@storiesKey())
           stories = @db.createObjectStore(@storiesKey(),
             keyPath: "id"
@@ -41,6 +45,8 @@ class root.PiroStorage
     "projects"
   storiesKey: =>
     "stories"
+  projectsIconsKey: =>
+    "project_icons"
   # ACCOUNTS
   getAccounts: (params = {}) =>
     accounts = []
