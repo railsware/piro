@@ -3,7 +3,7 @@ class PiroPopup.Views.ProjectsElement extends Backbone.View
   className: "project_element"
   template: SHT['projects/element']
   events:
-    "click .story_element"          : "openStories"
+    "click .project_link"           : "openStories"
     "click .project_settings"       : "openSettings"
   
   initialize: =>
@@ -20,12 +20,7 @@ class PiroPopup.Views.ProjectsElement extends Backbone.View
     
   openStories: (e) =>
     e.preventDefault()
-    PiroPopup.db.getStoriesByProject @model.toJSON(), 
-      success: (project, data) =>
-        stories = new PiroPopup.Collections.Stories
-        stories.reset(data)
-        projectView = new PiroPopup.Views.StoriesIndex(collection: stories)
-        PiroPopup.updateStoriesContainer(projectView)
+    Backbone.history.navigate("project/#{@model.get("id")}", {trigger: true, replace: false})
         
   openSettings: (e) =>
     e.preventDefault()

@@ -4,13 +4,11 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
   events:
     'change select.account_switcher'      : 'switchAccount'
   
-  initialize: ->
+  initialize: (options) ->
     @collection.on 'add', @render
     @collection.on 'reset', @render
     #projects 
-    @projects = new PiroPopup.Collections.Projects
-    @projects.on 'reset', @renderProjects
-    @resetProjectsList()
+    @projects = options.projects
   
   render: =>
     $(@el).html(@template.render(
@@ -27,12 +25,7 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
     return false unless currentAccount?
     PiroPopup.pivotalCurrentAccount = currentAccount
     @resetProjectsList()
-  resetProjectsList: =>
-    PiroPopup.db.getProjects PiroPopup.pivotalCurrentAccount.toJSON(), 
-      success: (projects) =>
-        @projects.reset(projects)
   onDestroyView: =>
     @collection.off 'add', @renderOne
     @collection.off 'reset', @renderAll
-    @projects.off 'reset', @renderProjects
     @childView.destroyView() if @childView?

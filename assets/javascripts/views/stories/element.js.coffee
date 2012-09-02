@@ -1,6 +1,6 @@
 class PiroPopup.Views.StoriesElement extends Backbone.View
   tagName: "li"
-  className: "story"
+  className: "story_element"
   template: SHT['stories/element']
   events:
     "click .story_link_info"          : "showStoryInfo"
@@ -11,12 +11,12 @@ class PiroPopup.Views.StoriesElement extends Backbone.View
 
   render: =>
     $(@el).html(@template.render(@model.toJSON()))
+    $(@el).attr("data-story-id", @model.get('id'))
     this
     
   showStoryInfo: (e) =>
     e.preventDefault()
-    view = new PiroPopup.Views.StoriesShow(model: @model)
-    PiroPopup.updateStoryContainer(view)
+    Backbone.history.navigate("story/#{@model.get("id")}", {trigger: true, replace: false})
 
   remove: =>
     $(@el).remove()

@@ -15,13 +15,18 @@ root.PiroPopup =
   # data
   pivotalAccounts: null
   pivotalCurrentAccount: null
+  pivotalProjects: null
   init: ->
     return unless PiroPopup.checkMode()
+    # backbone monkey patch
+    PiroPopup.monkeyBackboneCleanup()
+    # db
     PiroPopup.db = new PiroStorage
       success: ->
         PiroPopup.pivotalAccounts = new PiroPopup.Collections.Accounts
+        PiroPopup.pivotalProjects = new PiroPopup.Collections.Projects
         PiroPopup.db.getAccounts
-          success: (accounts) =>
+          success: (accounts) ->
             PiroPopup.initUI(accounts)
   checkMode: ->
     indexUrl = chrome.extension.getURL('index.html')
@@ -34,18 +39,24 @@ root.PiroPopup =
           return false
     return true
   initUI: (accounts) ->
-    PiroPopup.pivotalAccounts.reset(accounts)
-    PiroPopup.pivotalCurrentAccount = PiroPopup.pivotalAccounts.first() if PiroPopup.pivotalAccounts.length > 0
     # global events
     _.extend(PiroPopup.globalEvents, Backbone.Events)
     PiroPopup.bgPage.PiroBackground.initPopupView(PiroPopup.globalEvents)
-    # backbone monkey patch
-    PiroPopup.monkeyBackboneCleanup()
-    # routing
+    PiroPopup.pivotalAccounts.reset(accounts)
+    if PiroPopup.pivotalAccounts.length > 0
+      PiroPopup.pivotalCurrentAccount = PiroPopup.pivotalAccounts.first()
+      # routing
+      PiroPopup.db.getProjects PiroPopup.pivotalCurrentAccount.toJSON(), 
+        success: (projects) =>
+          PiroPopup.pivotalProjects.reset(projects)
+          PiroPopup.initRouting()
+    else
+      PiroPopup.initRouting()
+  initRouting: ->
     new PiroPopup.Routers.Popup
     # init history
     Backbone.history.start
-      pushState: true
+      pushState: false
   # ui container
   mainContainer: ->
     $('#mainContainer')

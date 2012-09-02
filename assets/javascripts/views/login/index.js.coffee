@@ -28,7 +28,7 @@ class PiroPopup.Views.LoginIndex extends Backbone.View
         success: (accounts) =>
           PiroPopup.pivotalAccounts.reset(accounts)
           PiroPopup.pivotalCurrentAccount = PiroPopup.pivotalAccounts.first() if PiroPopup.pivotalAccounts.length > 0
-          Backbone.history.loadUrl("")
+          Backbone.history.navigate("", {trigger: true, replace: false})
     auth = new PivotaltrackerAuthLib(attributes)
   # links
   openEmailBox: (e) =>

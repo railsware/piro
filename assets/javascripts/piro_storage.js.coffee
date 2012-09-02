@@ -86,7 +86,10 @@ class root.PiroStorage
       data = e.target.result
       @getProjectIcons
         success: (icons) =>
-          projects = data.projects
+          projects = if data.projects? then data.projects else []
+          if projects.length is 0
+            params.success.call(null, projects) if params.success?
+            return false
           # icons for projects
           for icon in icons
             project = _.find(projects, (project) ->
@@ -129,6 +132,14 @@ class root.PiroStorage
     for story in stories
       request = store.put story
       request.onerror = @dbError
+  getStoryById: (storyId, params = {}) =>
+    trans = @db.transaction([@storiesKey()], "readwrite")
+    store = trans.objectStore(@storiesKey())
+    request = store.get(storyId)
+    request.onerror = @dbError
+    request.onsuccess = (e) =>
+      data = e.target.result
+      params.success.call(null, data) if params.success?
   getStoriesByProject: (project, params = {}) =>
     stories = []
     trans = @db.transaction([@storiesKey()], "readwrite")
