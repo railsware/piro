@@ -44,7 +44,12 @@ class root.PivotaltrackerApi
       description: "description", name: "name", 
       requested_by: {id: "requested_by/person/id", name: "requested_by/person/name", initials: "requested_by/person/initials"},
       owned_by: {id: "owned_by/person/id", name: "owned_by/person/name", initials: "owned_by/person/initials"}, 
-      created_at: "created_at", labels: "labels"
+      created_at: "created_at", labels: "labels",
+      comments: ["comments/comment", {id: "id", text: "text", created_at: "created_at", 
+      author: {id: "author/person/id", name: "author/person/name", initials: "author/person/initials"}}],
+      attachments: ["attachments/attachment", {id: "id", filename: "filename", uploaded_at: "uploaded_at", url: "url", 
+      s3_resource: {url: "s3_resource/url", expires: "s3_resource/expires"},
+      uploaded_by: {id: "uploaded_by/person/id", name: "uploaded_by/person/name", initials: "uploaded_by/person/initials"}}]
       }]
       stories = Jath.parse(template, data)
       successFunction.call(null, project, stories, textStatus, jqXHR) if successFunction?
