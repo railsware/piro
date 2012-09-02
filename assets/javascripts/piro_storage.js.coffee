@@ -34,6 +34,9 @@ class root.PiroStorage
             keyPath: "id"
           )
           stories.createIndex("project_id", "project_id", { unique: false })
+          # clear local storage
+          @clearLocalStorage()
+          # done
           e.target.transaction.oncomplete = ->
             params.success.call(null) if params.success?
       else
@@ -50,7 +53,7 @@ class root.PiroStorage
   # ACCOUNTS
   getAccounts: (params = {}) =>
     accounts = []
-    trans = @db.transaction([@accountsKey()], "readwrite")
+    trans = @db.transaction([@accountsKey()], "readonly")
     store = trans.objectStore(@accountsKey())
     keyRange = IDBKeyRange.lowerBound(0)
     cursorRequest = store.openCursor(keyRange)
@@ -78,7 +81,7 @@ class root.PiroStorage
   # PROJECTS
   getProjects: (account, params = {}) =>
     projects = []
-    trans = @db.transaction([@projectsKey()], "readwrite")
+    trans = @db.transaction([@projectsKey()], "readonly")
     store = trans.objectStore(@projectsKey())
     request = store.get(account.id)
     request.onerror = @dbError
@@ -100,7 +103,7 @@ class root.PiroStorage
           sortedProjectIds = @getSortedProjectsLS(account)
           projects = _.sortBy(projects, (project) ->
             index = _.indexOf(sortedProjectIds, parseInt(project.id))
-            if index is -1 then 99 else index
+            if index is -1 then 999 else index
           ) if sortedProjectIds.length > 0
           params.success.call(null, projects) if params.success?
   setProjects: (account, projects, params = {}) =>
@@ -133,7 +136,7 @@ class root.PiroStorage
       request = store.put story
       request.onerror = @dbError
   getStoryById: (storyId, params = {}) =>
-    trans = @db.transaction([@storiesKey()], "readwrite")
+    trans = @db.transaction([@storiesKey()], "readonly")
     store = trans.objectStore(@storiesKey())
     request = store.get(storyId)
     request.onerror = @dbError
@@ -142,7 +145,7 @@ class root.PiroStorage
       params.success.call(null, data) if params.success?
   getStoriesByProject: (project, params = {}) =>
     stories = []
-    trans = @db.transaction([@storiesKey()], "readwrite")
+    trans = @db.transaction([@storiesKey()], "readonly")
     store = trans.objectStore(@storiesKey())
     index = store.index("project_id")
     projectIdVal = IDBKeyRange.only(project.id.toString())
@@ -158,7 +161,7 @@ class root.PiroStorage
   # PROJECT ICONS
   getProjectIcons: (params = {}) =>
     icons = []
-    trans = @db.transaction([@projectsIconsKey()], "readwrite")
+    trans = @db.transaction([@projectsIconsKey()], "readonly")
     store = trans.objectStore(@projectsIconsKey())
     keyRange = IDBKeyRange.lowerBound(0)
     cursorRequest = store.openCursor(keyRange)
@@ -172,7 +175,7 @@ class root.PiroStorage
         params.success.call(null, icons) if params.success?
   getProjectIcon: (project, params = {}) =>
     icon = null
-    trans = @db.transaction([@projectsIconsKey()], "readwrite")
+    trans = @db.transaction([@projectsIconsKey()], "readonly")
     store = trans.objectStore(@projectsIconsKey())
     keyRange = IDBKeyRange.only(project.id.toString())
     cursorRequest = store.openCursor(keyRange)
@@ -195,7 +198,7 @@ class root.PiroStorage
     console.error e
     
   # localStorage
-  setLocalStorage: (key, data) ->
+  setLocalStorage: (key, data) =>
     try
       root.localStorage.setItem(key, JSON.stringify(data))
     catch e
@@ -208,73 +211,13 @@ class root.PiroStorage
       else
         # localStorage not available
     data
-  getLocalStorage: (key) ->
+  getLocalStorage: (key) =>
     strData = root.localStorage.getItem(key)
     jsonData = if strData? then JSON.parse(strData) else null
     jsonData
+  clearLocalStorage: =>
+    root.localStorage.clear()
   setSortedProjectsLS: (account, projectIds) =>
     @setLocalStorage("sorted_projects_#{account.id}", projectIds)
   getSortedProjectsLS: (account) =>
     @getLocalStorage("sorted_projects_#{account.id}")
-###        
-  # DB
-  
-  # KEYS
-  accountsKey: "accounts"
-  projectsKey: "projects"
-  storiesKey: "stories"
-  # STORAGE
-  set: (key, data) ->
-    try
-      root.localStorage.setItem(key, JSON.stringify(data))
-    catch e
-      if e.name is "QUOTA_EXCEEDED_ERR"
-        #root.localStorage.clear()
-        console.error "QUOTA_EXCEEDED_ERR catch BEGIN"
-        console.error "Key: #{key}"
-        console.error "Data: #{data}"
-        console.error "QUOTA_EXCEEDED_ERR catch END"
-      else
-        # localStorage not available
-    data
-  get: (key) ->
-    strData = root.localStorage.getItem(key)
-    jsonData = if strData? then JSON.parse(strData) else null
-    jsonData
-  # ACCOUNTS
-  getAccounts: ->
-    PiroStorage.get(PiroStorage.accountsKey) || []
-  setAccounts: (accounts) ->
-    PiroStorage.set(PiroStorage.accountsKey, accounts)
-  findAccount: (accountId) ->
-    account = _.find PiroStorage.getAccounts(), (accountItem) ->
-      parseInt(accountItem.id) is parseInt(accountId)
-    account
-  saveAccount: (account) ->
-    oldAccount = PiroStorage.findAccount(account.id)
-    unless oldAccount?
-      accounts = PiroStorage.getAccounts()
-      accounts.push(account)
-    else
-      accounts = for accountItem in PiroStorage.getAccounts()
-        if parseInt(accountItem.id) is parseInt(account.id) then account else accountItem
-    PiroStorage.setAccounts(accounts)
-    account
-  sortAccounts: (accountIds) ->
-    accounts = _.sortBy PiroStorage.getAccounts(), (account) ->
-      _.indexOf accountIds, parseInt(account.id)
-    PiroStorage.setAccounts(accounts)
-  deleteAccount: (accountId) ->
-    accounts = _.reject PiroStorage.getAccounts(), (accountItem) ->
-      parseInt(accountItem.id) is parseInt(accountId)
-    PiroStorage.setAccounts(accounts)
-  # PROJECTS
-  getProjects: (account) ->
-    PiroStorage.get("#{PiroStorage.projectsKey}_#{account.id}") || []
-  setProjects: (account, projects) ->
-    PiroStorage.set("#{PiroStorage.projectsKey}_#{account.id}", projects)
-  findProject: (account, projectId) ->
-    project = _.find PiroStorage.getProjects(account), (projectItem) ->
-      parseInt(projectItem.id) is parseInt(projectId)
-    project
-###

@@ -55,6 +55,8 @@ root.PiroBackground =
           mainUrl = "#{indexUrl}#story/#{command[1]}" if command[1]?
         else
           mainUrl = "#{indexUrl}#story/#{command[0]}" if command[0]?
+      chrome.tabs.query {}, (tabs) ->
+        chrome.tabs.remove(tab.id) for tab in tabs when tab.url.substring(0, indexUrl.length) is indexUrl
       chrome.tabs.query {active: true}, (tabs) ->
         for tab in tabs
           chrome.tabs.update tab.id, 

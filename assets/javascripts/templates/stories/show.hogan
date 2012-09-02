@@ -1,3 +1,17 @@
-{{name}}
+<h2>{{name}}</h2>
 <p>{{description}}</p>
+<p>Requested by: {{#requested_by}}{{name}}{{/requested_by}}</p>
+<p>Owned by: {{#owned_by}}{{name}}{{/owned_by}}</p>
+<p>Labels: {{labels}}</p>
+
+<ul>
+  {{#comments}}
+    <li>{{text}} | {{created_at}} | {{#author}}{{name}}{{/author}}</li>
+  {{/comments}}
+</ul>
+<ul>
+  {{#attachments}}
+    <li>{{filename}} | {{url}} | {{uploaded_at}} | {{#uploaded_by}}{{name}}{{/uploaded_by}}</li>
+  {{/attachments}}
+</ul>
 <p>Link: piro {{id}}</p>

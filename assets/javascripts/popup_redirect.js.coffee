@@ -5,7 +5,7 @@ root.PopupRedirect =
     indexUrl = chrome.extension.getURL('index.html')
     chrome.tabs.query {}, (tabs) ->
       for tab in tabs
-        if tab.url.substring(0, indexUrl.length) == indexUrl
+        if tab.url.substring(0, indexUrl.length) is indexUrl
           chrome.tabs.update tab.id, {active: true}
           window.close()
           return false

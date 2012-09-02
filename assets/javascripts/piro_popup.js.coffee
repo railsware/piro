@@ -17,7 +17,7 @@ root.PiroPopup =
   pivotalCurrentAccount: null
   pivotalProjects: null
   init: ->
-    return unless PiroPopup.checkMode()
+    PiroPopup.checkMode()
     # backbone monkey patch
     PiroPopup.monkeyBackboneCleanup()
     # db
@@ -30,14 +30,16 @@ root.PiroPopup =
             PiroPopup.initUI(accounts)
   checkMode: ->
     indexUrl = chrome.extension.getURL('index.html')
-    count = 0
+    appTabs = []
     chrome.tabs.query {}, (tabs) ->
       for tab in tabs
-        count++ if tab.url.substring(0, indexUrl.length) is indexUrl
-        if count > 1
-          window.close()
-          return false
-    return true
+        appTabs.push(tab) if tab.url.substring(0, indexUrl.length) is indexUrl
+      if appTabs.length > 1
+        appTabs.shift()
+        chrome.tabs.remove(tab.id) for tab in appTabs
+        window.close()
+        return false
+      return true
   initUI: (accounts) ->
     # global events
     _.extend(PiroPopup.globalEvents, Backbone.Events)
