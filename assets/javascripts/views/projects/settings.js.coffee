@@ -3,6 +3,9 @@ class PiroPopup.Views.ProjectsSettings extends Backbone.View
   events:
     "click .close_settings"                 : "closeSettings"
     "change .project_upload_icon"           : "uploadIconFile"
+    "dragover #uploadIconZone"              : "dragOverZone"
+    "dragleave #uploadIconZone"             : "dragLeaveZone"
+    "drop #uploadIconZone"                  : "dragDropZone"
   
   initialize: =>
     @model.on 'change', @render
@@ -20,17 +23,36 @@ class PiroPopup.Views.ProjectsSettings extends Backbone.View
     e.preventDefault()
     return false if @$(".project_upload_icon")[0].files.length is 0
     file = @$(".project_upload_icon")[0].files[0]
+    @checkAndUploadFile(file)
+
+  checkAndUploadFile: (file) =>
     return false unless @imgFilter.test(file.type)
     return false if file.size > 307200
     @fileReader.readAsDataURL(file)
-    
+
   fileUploaded: (e) =>
     return false unless e.target? && e.target.result?
     PiroPopup.db.saveProjectIcon @model.toJSON(), e.target.result, 
       success: =>
         @$('.project_icon').attr('src', e.target.result)
         @model.set(icon: e.target.result)
-  
+
+  dragOverZone: (e) =>
+    e.preventDefault()
+    e.stopPropagation()
+    @$('#uploadIconZone').addClass('hover')
+    return false
+  dragLeaveZone: (e) =>
+    e.preventDefault()
+    e.stopPropagation()
+    @$('#uploadIconZone').removeClass('hover')
+    return false
+  dragDropZone: (e) =>
+    e.preventDefault()
+    e.stopPropagation()
+    @$('#uploadIconZone').removeClass('hover').addClass('drop')
+    @checkAndUploadFile(e.dataTransfer.files[0]) if e.dataTransfer? && e.dataTransfer.files? && e.dataTransfer.files.length > 0
+
   closeSettings: (e) =>
     e.preventDefault()
     PiroPopup.dialogContainer().dialog('close')

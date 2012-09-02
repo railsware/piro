@@ -84,6 +84,8 @@ root.PiroPopup =
       @remove()
       @unbind()
       @onDestroyView()  if @onDestroyView
+    # jquery events for html5 api
+    jQuery.event.props.push("dataTransfer")
 # init
 $ ->
   PiroPopup.init()
