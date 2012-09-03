@@ -7,8 +7,8 @@ class root.PiroStorage
     @db = null
     @indexedDB = root.indexedDB || root.webkitIndexedDB || root.mozIndexedDB
     if "webkitIndexedDB" of root
-      window.IDBTransaction = root.webkitIDBTransaction
-      window.IDBKeyRange = root.webkitIDBKeyRange
+      root.IDBTransaction = root.webkitIDBTransaction
+      root.IDBKeyRange = root.webkitIDBKeyRange
     request = @indexedDB.open(@dbName)
     request.onerror = @dbError
     request.onsuccess = (e) =>
