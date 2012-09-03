@@ -104,7 +104,7 @@ class root.PiroStorage
           projects = _.sortBy(projects, (project) ->
             index = _.indexOf(sortedProjectIds, parseInt(project.id))
             if index is -1 then 999 else index
-          ) if sortedProjectIds.length > 0
+          ) if sortedProjectIds? && sortedProjectIds.length > 0
           params.success.call(null, projects) if params.success?
   setProjects: (account, projects, params = {}) =>
     trans = @db.transaction([@projectsKey()], "readwrite")
