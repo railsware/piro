@@ -21,10 +21,11 @@ root.PiroBackground =
     PiroBackground.popupEvents.trigger "update:pivotal:data", 
       updateState: PiroBackground.updateState
     PiroBackground.updateProgress() if PiroBackground.updateState is true
-  updateProgress: ->
+  updateProgress: (progress = null) ->
     return false unless PiroBackground.popupEvents?
+    progress = PiroBackground.updateStateProgress unless progress?
     PiroBackground.popupEvents.trigger "update:pivotal:progress", 
-      progress: PiroBackground.updateStateProgress
+      progress: progress
   initAutoupdate: ->
     return false if PiroBackground.updateState is true
     PiroBackground.updateState = true
@@ -42,12 +43,12 @@ root.PiroBackground =
         PiroBackground.aggregateAllStories(account, data)
   aggregateAllStories: (account, projects) ->
     projectsCount = projects.length
-    percentPerProject = Math.round(PiroBackground.updateStatePerAccount/projectsCount)
+    percentPerProject = Math.floor(PiroBackground.updateStatePerAccount/projectsCount)
     for project in projects
       PiroBackground.pivotalApi[account.id].getStories project, 
         complete: =>
           PiroBackground.updateStateProgress += percentPerProject
-          PiroBackground.updateProgress()
+          PiroBackground.updateProgress(PiroBackground.updateStateProgress)
           projectsCount--
           PiroBackground.saveAllData(account, projects) if projectsCount <= 0
         success: (project, stories, textStatus, jqXHR) =>
@@ -59,7 +60,15 @@ root.PiroBackground =
         PiroBackground.cleanupData(account)
   cleanupData: (account) ->
     # clean stories, icons
-    console.log "comming soon..."
+    PiroBackground.db.getProjects account, 
+      success: (projects) =>
+        projectIds = _.pluck(projects, 'id')
+        PiroBackground.db.getStories
+          success: (stories) =>
+            PiroBackground.db.deleteStoryById(story.id) for story in stories when _.indexOf(projectIds, story.project_id) is -1
+        PiroBackground.db.getProjectIcons
+          success: (icons) =>
+            PiroBackground.db.deleteProjectIcon(icon.id) for icon in icons when _.indexOf(projectIds, icon.id) is -1
     PiroBackground.updateFinished()
   updateFinished: ->
     PiroBackground.updateState = false

@@ -158,6 +158,28 @@ class root.PiroStorage
         cursor.continue()
       else
         params.success.call(null, project, stories) if params.success?
+  getStories: (params = {}) =>
+    stories = []
+    trans = @db.transaction([@storiesKey()], "readonly")
+    store = trans.objectStore(@storiesKey())
+    keyRange = IDBKeyRange.lowerBound(0)
+    cursorRequest = store.openCursor(keyRange)
+    cursorRequest.onerror = @dbError
+    cursorRequest.onsuccess = (e) =>
+      cursor = e.target.result
+      if cursor?
+        stories.push(cursor.value)
+        cursor.continue()
+      else
+        params.success.call(null, stories) if params.success?
+  deleteStoryById: (storyId, params = {}) =>
+    trans = @db.transaction([@storiesKey()], "readwrite")
+    store = trans.objectStore(@storiesKey())
+    request = store.delete(storyId)
+    request.onerror = @dbError
+    request.onsuccess = (e) =>
+      data = e.target.result
+      params.success.call(null, data) if params.success?
   # PROJECT ICONS
   getProjectIcons: (params = {}) =>
     icons = []
@@ -192,6 +214,14 @@ class root.PiroStorage
     request.onerror = @dbError
     request.onsuccess = (e) =>
       params.success.call(null) if params.success?
+  deleteProjectIcon: (projectId, params = {}) =>
+    trans = @db.transaction([@projectsIconsKey()], "readwrite")
+    store = trans.objectStore(@projectsIconsKey())
+    request = store.delete(projectId)
+    request.onerror = @dbError
+    request.onsuccess = (e) =>
+      data = e.target.result
+      params.success.call(null, data) if params.success?
   # UTILS
   dbError: (e) =>
     console.error "IndexedDB error"
