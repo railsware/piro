@@ -196,14 +196,12 @@ class root.PiroStorage
   dbError: (e) =>
     console.error "IndexedDB error"
     console.error e
-    
   # localStorage
   setLocalStorage: (key, data) =>
     try
       root.localStorage.setItem(key, JSON.stringify(data))
     catch e
       if e.name is "QUOTA_EXCEEDED_ERR"
-        #root.localStorage.clear()
         console.error "QUOTA_EXCEEDED_ERR catch BEGIN"
         console.error "Key: #{key}"
         console.error "Data: #{data}"

@@ -41,9 +41,7 @@ root.PiroPopup =
         return false
       return true
   initUI: (accounts) ->
-    # global events
     _.extend(PiroPopup.globalEvents, Backbone.Events)
-    PiroPopup.bgPage.PiroBackground.initPopupView(PiroPopup.globalEvents)
     PiroPopup.pivotalAccounts.reset(accounts)
     if PiroPopup.pivotalAccounts.length > 0
       PiroPopup.pivotalCurrentAccount = PiroPopup.pivotalAccounts.first()
@@ -55,10 +53,19 @@ root.PiroPopup =
     else
       PiroPopup.initRouting()
   initRouting: ->
+    # routes
     new PiroPopup.Routers.Popup
     # init history
     Backbone.history.start
       pushState: false
+    # init favicon loader
+    Piecon.setOptions
+      color: "#ff0084" # Pie chart color
+      background: "#bbb" # Empty pie chart color
+      shadow: "#fff" # Outer ring color
+      fallback: false # Toggles displaying percentage in the title bar (possible values - true, false, 'force')
+    # init bg
+    PiroPopup.bgPage.PiroBackground.initPopupView(PiroPopup.globalEvents)
   # ui container
   mainContainer: ->
     $('#mainContainer')

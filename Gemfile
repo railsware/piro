@@ -20,6 +20,8 @@ gem 'execjs'
 gem 'compass'
 gem 'vegas'
 
+gem 'smartstart'
+
 # notify
 group :linux_development do
   gem "rb-inotify"

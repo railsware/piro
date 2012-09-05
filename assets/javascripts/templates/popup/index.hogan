@@ -8,6 +8,15 @@
   </select>
 </div>
 
+<div id="updateDataBox">
+  <div class="update_box">
+    <a href="#" class="update_data_for_accounts_link">Update data</a>
+  </div>
+  <div class="loading_box">
+    Loading...
+  </div>
+</div>
+
 <div id="projectsBox" style="width:300px;float:left"></div>
 
 <div id="storiesBox" style="width:500px;float:left"></div>

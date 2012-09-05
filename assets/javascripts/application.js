@@ -7,6 +7,8 @@
 //=require ./vendors/hogan-2.0.0.min
 //= require_tree ./templates
 //
+//=require ./vendors/piecon
+//
 //=require pivotaltracker_api
 //=require piro_storage
 //

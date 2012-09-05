@@ -10,6 +10,7 @@ require 'uglifier'
 require 'execjs'
 require 'base64'
 require 'rack/utils'
+require 'smartstart'
 require 'vegas'
 
 Rack::Mime::MIME_TYPES['.template'] = Rack::Mime.mime_type('.html')
@@ -76,6 +77,7 @@ class PiroServer < Sinatra::Application
   set :assets_prefix, 'assets'
   set :assets_path, File.join(root, '..', 'public', assets_prefix)
   set :compass_gem_root, Gem.loaded_specs['compass'].full_gem_path
+  set :smartstart_gem_root, Gem.loaded_specs['smartstart'].full_gem_path
   
   configure do
     sprockets.register_engine ".hogan", SHTTilt
@@ -83,6 +85,7 @@ class PiroServer < Sinatra::Application
     sprockets.append_path File.join(root, '..', 'assets', 'stylesheets')
     sprockets.append_path File.join(compass_gem_root, 'frameworks', 'compass', 'stylesheets')
     sprockets.append_path File.join(compass_gem_root, 'frameworks', 'blueprint', 'stylesheets')
+    sprockets.append_path File.join(smartstart_gem_root, 'vendor', 'assets', 'stylesheets')
     sprockets.append_path File.join(root, '..', 'assets', 'javascripts')
     
     sprockets.css_compressor = YUI::CssCompressor.new

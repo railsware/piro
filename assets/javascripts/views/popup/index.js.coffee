@@ -2,13 +2,17 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
   
   template: SHT['popup/index']
   events:
-    'change select.account_switcher'      : 'switchAccount'
+    'change select.account_switcher'          : 'switchAccount'
+    'click .update_data_for_accounts_link'    : 'updateDataTrigger'
   
   initialize: (options) ->
     @collection.on 'add', @render
     @collection.on 'reset', @render
     #projects 
     @projects = options.projects
+    # global events
+    PiroPopup.globalEvents.on "update:pivotal:data", @updatePivotalState
+    PiroPopup.globalEvents.on "update:pivotal:progress", @updatePivotalUpdateProgress
   
   render: =>
     $(@el).html(@template.render(
@@ -25,7 +29,28 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
     return false unless currentAccount?
     PiroPopup.pivotalCurrentAccount = currentAccount
     @resetProjectsList()
+
+  updateDataTrigger: (e) =>
+    e.preventDefault()
+    PiroPopup.bgPage.PiroBackground.initAutoupdate()
+
+  updatePivotalState: (info) =>
+    return false unless info?
+    if info.updateState is true
+      @$('#updateDataBox').addClass('loading')
+      Piecon.setProgress(0)
+    else
+      @$('#updateDataBox').removeClass('loading')
+      Piecon.reset()
+  updatePivotalUpdateProgress: (info) =>
+    return false unless info?
+    progress = parseInt(info.progress)
+    progress = 100 if progress > 100
+    Piecon.setProgress(progress)
+
   onDestroyView: =>
     @collection.off 'add', @renderOne
     @collection.off 'reset', @renderAll
+    PiroPopup.globalEvents.off "update:pivotal:data", @updatePivotalState
+    PiroPopup.globalEvents.off "update:pivotal:progress", @updatePivotalUpdateProgress
     @childView.destroyView() if @childView?
