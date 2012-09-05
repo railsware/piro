@@ -20,6 +20,7 @@ root.PiroBackground =
     return false unless PiroBackground.popupEvents?
     PiroBackground.popupEvents.trigger "update:pivotal:data", 
       updateState: PiroBackground.updateState
+    PiroBackground.updateProgress() if PiroBackground.updateState is true
   updateProgress: ->
     return false unless PiroBackground.popupEvents?
     PiroBackground.popupEvents.trigger "update:pivotal:progress", 
@@ -27,11 +28,11 @@ root.PiroBackground =
   initAutoupdate: ->
     return false if PiroBackground.updateState is true
     PiroBackground.updateState = true
+    PiroBackground.updateStateProgress = 0
     PiroBackground.checkUpdateState()
     PiroBackground.db.getAccounts
       success: (accounts) =>
         if accounts.length > 0
-          PiroBackground.updateStateProgress = 0
           PiroBackground.updateStatePerAccount = Math.round(100/accounts.length)
           PiroBackground.updateDataForAccount(account) for account in accounts
   updateDataForAccount: (account) ->
