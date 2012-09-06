@@ -3,7 +3,17 @@
 //=require ./vendors/backbone-min
 //=require ./vendors/jath
 //
+//=require ./vendors/hogan-2.0.0.min
+//= require_tree ./templates
+//
+//=require ./vendors/piecon
+//
 //=require pivotaltracker_api
 //=require piro_storage
 //
 //=require piro_options
+//
+//= require_tree ./models
+//= require_tree ./collections
+//= require_tree ./views
+//= require_tree ./routers

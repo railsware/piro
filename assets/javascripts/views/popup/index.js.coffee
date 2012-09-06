@@ -49,8 +49,8 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
     Piecon.setProgress(progress)
 
   onDestroyView: =>
-    @collection.off 'add', @renderOne
-    @collection.off 'reset', @renderAll
+    @collection.off 'add', @render
+    @collection.off 'reset', @render
     PiroPopup.globalEvents.off "update:pivotal:data", @updatePivotalState
     PiroPopup.globalEvents.off "update:pivotal:progress", @updatePivotalUpdateProgress
     @childView.destroyView() if @childView?
