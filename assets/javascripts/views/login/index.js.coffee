@@ -1,8 +1,7 @@
 class PiroPopup.Views.LoginIndex extends Backbone.View
   template: SHT['login/index']
   events:
-    'click a.email_box_tab'               : 'openEmailBox'
-    'click a.token_box_tab'               : 'openTokenBox'
+    "click .account_tab_link"             : 'accountTabBox'
     'submit #loginForm'                   : 'submitAccountForm'
   
   initialize: =>
@@ -31,14 +30,13 @@ class PiroPopup.Views.LoginIndex extends Backbone.View
           Backbone.history.navigate("", {trigger: true, replace: false})
     auth = new PivotaltrackerAuthLib(attributes)
   # links
-  openEmailBox: (e) =>
+  accountTabBox: (e) =>
     e.preventDefault()
-    @$('div.token_box').hide()
-    @$('div.email_box').show()
-  openTokenBox: (e) =>
-    e.preventDefault()
-    @$('div.email_box').hide()
-    @$('div.token_box').show()
+    object = $(e.currentTarget)
+    @$('.account_tab_link').removeClass('active')
+    object.addClass('active')
+    @$('.account_tab_box').removeClass('active')
+    @$(".#{object.data('div-class')}").addClass('active')
     
   onDestroyView: =>
     # empty

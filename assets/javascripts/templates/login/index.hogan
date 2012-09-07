@@ -1,14 +1,14 @@
 <form id="loginForm">
-  <a href="#" class="email_box_tab">With email</a>
-  <a href="#" class="token_box_tab">With token</a>
+  <a href="#" class="account_tab_link active" data-div-class="email_box">With email</a>
+  <a href="#" class="account_tab_link" data-div-class="token_box">With token</a>
   
   <div class="error_text">Error</div>
   
-  <div class="email_box">
+  <div class="account_tab_box email_box active">
     <input type="text" class="email_input" />
     <input type="password" class="password_input" />
   </div>
-  <div class="token_box">
+  <div class="account_tab_box token_box">
     <input type="text" class="token_input" />
   </div>
   <input type="submit" value="Login" />

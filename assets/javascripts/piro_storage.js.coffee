@@ -89,7 +89,7 @@ class root.PiroStorage
       data = e.target.result
       @getProjectIcons
         success: (icons) =>
-          projects = if data.projects? then data.projects else []
+          projects = if data? && data.projects? then data.projects else []
           if projects.length is 0
             params.success.call(null, projects) if params.success?
             return false
