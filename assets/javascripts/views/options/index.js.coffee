@@ -5,6 +5,7 @@ class PiroPopup.Views.OptionsIndex extends Backbone.View
     "click .open_account_link"            : "openAccounBox"
     "click .close_account_link"           : "closeAccounBox"
     "click .account_tab_link"             : "activeTabAction"
+    "submit .add_account_form"            : "addAccount"
   
   initialize: (options) ->
     @collection.on 'add', @renderAccount
@@ -39,6 +40,26 @@ class PiroPopup.Views.OptionsIndex extends Backbone.View
     object.addClass('active')
     @$('.account_tab_box').removeClass('active')
     @$(".#{object.data('div-class')}").addClass('active')
+  
+  addAccount: (e) =>
+    e.preventDefault()
+    if @$('div.account_email_box').is(':visible')
+      attributes = 
+        username: @$('input.account_email').val()
+        password: @$('input.account_password').val()
+    else
+      attributes = 
+        token: @$('input.account_token').val()
+    attributes.beforeSend = =>
+      @$('div.error_text').hide()
+    attributes.error = (jqXHR, textStatus, errorThrown) =>
+      @$('div.error_text').text(jqXHR.responseText).show()
+    attributes.success = (data, textStatus, jqXHR) =>
+      PiroOptions.db.saveAccountAndGetAll data, 
+        success: (accounts) =>
+          @$('.add_account_form')[0].reset()
+          console.log accounts
+    auth = new PivotaltrackerAuthLib(attributes)
 
   onDestroyView: =>
     @collection.off 'add', @renderAccount

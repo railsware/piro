@@ -1,9 +1,10 @@
 <ul class="accounts_list"></ul>
 <a href="#" class="open_account_link">Add account</a>
 <div class="account_box">
-  <form action="#" method="post">
+  <form class="add_account_form" action="#" method="post">
     <a href="#" class="account_tab_link active" data-div-class="account_email_box">By Email</a>
     <a href="#" class="account_tab_link" data-div-class="account_token_box">By Token</a>
+    <div class="error_text"></div>
     <div class="account_tab_box account_email_box active">
       <input type="text" class="account_email" />
       <input type="password" class="account_password" />

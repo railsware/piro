@@ -43,17 +43,22 @@ root.PiroBackground =
         PiroBackground.aggregateAllStories(account, data)
   aggregateAllStories: (account, projects) ->
     projectsCount = projects.length
-    percentPerProject = Math.floor(PiroBackground.updateStatePerAccount/projectsCount)
-    for project in projects
-      PiroBackground.pivotalApi[account.id].getStories project, 
-        complete: =>
-          PiroBackground.updateStateProgress += percentPerProject
-          PiroBackground.updateProgress(PiroBackground.updateStateProgress)
-          projectsCount--
-          PiroBackground.saveAllData(account, projects) if projectsCount <= 0
-        success: (project, stories, textStatus, jqXHR) =>
-          _.extend(projects[_.indexOf(projects, project)], {stories_count: stories.length})
-          PiroBackground.db.setStories(stories)
+    if projectsCount > 0
+      percentPerProject = Math.round(PiroBackground.updateStatePerAccount/projectsCount)
+      for project in projects
+        PiroBackground.pivotalApi[account.id].getStories project, 
+          complete: =>
+            PiroBackground.updateStateProgress += percentPerProject
+            PiroBackground.updateProgress(PiroBackground.updateStateProgress)
+            projectsCount--
+            PiroBackground.saveAllData(account, projects) if projectsCount <= 0
+          success: (project, stories, textStatus, jqXHR) =>
+            _.extend(projects[_.indexOf(projects, project)], {stories_count: stories.length})
+            PiroBackground.db.setStories(stories)
+    else
+      PiroBackground.updateStateProgress += PiroBackground.updateStatePerAccount
+      PiroBackground.updateProgress(PiroBackground.updateStateProgress)
+      PiroBackground.saveAllData(account, projects)
   saveAllData: (account, projects) ->
     PiroBackground.db.setProjects account, projects, 
       success: =>
