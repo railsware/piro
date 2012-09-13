@@ -79,12 +79,18 @@ root.PiroPopup =
     PiroPopup.currentStoriesView.destroyView() if PiroPopup.currentStoriesView? && PiroPopup.currentStoriesView.destroyView?
     PiroPopup.currentStoriesView = view
     PiroPopup.storiesContainer().empty().html(PiroPopup.currentStoriesView.render().el)
+  clearStoriesContainer: ->
+    PiroPopup.currentStoriesView.destroyView() if PiroPopup.currentStoriesView? && PiroPopup.currentStoriesView.destroyView?
+    PiroPopup.storiesContainer().empty()
   storyContainer: ->
     $('#storyBox')
   updateStoryContainer: (view) ->
     PiroPopup.currentStoryView.destroyView() if PiroPopup.currentStoryView? && PiroPopup.currentStoryView.destroyView?
     PiroPopup.currentStoryView = view
     PiroPopup.storyContainer().empty().html(PiroPopup.currentStoryView.render().el)
+  clearStoryContainer: ->
+    PiroPopup.currentStoryView.destroyView() if PiroPopup.currentStoryView? && PiroPopup.currentStoryView.destroyView?
+    PiroPopup.storyContainer().empty()
   dialogContainer: ->
     $('#dialogContainer')
   # patch backbone cleanup

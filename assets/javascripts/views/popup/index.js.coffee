@@ -28,7 +28,10 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
     currentAccount = @collection.get(parseInt(@$('select.account_switcher').val()))
     return false unless currentAccount?
     PiroPopup.pivotalCurrentAccount = currentAccount
-    @resetProjectsList()
+    PiroPopup.db.getProjects PiroPopup.pivotalCurrentAccount.toJSON(), 
+      success: (projects) =>
+        PiroPopup.pivotalProjects.reset(projects)
+        Backbone.history.navigate("", {trigger: true, replace: false})
 
   updateDataTrigger: (e) =>
     e.preventDefault()

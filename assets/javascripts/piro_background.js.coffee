@@ -65,7 +65,7 @@ root.PiroBackground =
         PiroBackground.cleanupData(account)
   cleanupData: (account) ->
     # clean stories, icons
-    PiroBackground.db.getProjects account, 
+    PiroBackground.db.getAllProjects
       success: (projects) =>
         projectIds = _.pluck(projects, 'id')
         PiroBackground.db.getStories
@@ -74,11 +74,10 @@ root.PiroBackground =
         PiroBackground.db.getProjectIcons
           success: (icons) =>
             PiroBackground.db.deleteProjectIcon(icon.id) for icon in icons when _.indexOf(projectIds, icon.id) is -1
-    PiroBackground.updateFinished()
+        PiroBackground.updateFinished()
   updateFinished: ->
     PiroBackground.updateState = false
     PiroBackground.checkUpdateState()
-
   # OMNIBOX  
   initOmnibox: ->
     chrome.omnibox.onInputCancelled.addListener ->

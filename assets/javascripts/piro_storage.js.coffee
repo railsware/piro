@@ -79,6 +79,22 @@ class root.PiroStorage
           success: (accounts) =>
             params.success.call(null, accounts) if params.success?
   # PROJECTS
+  getAllProjects: (params = {}) =>
+    projects = []
+    trans = @db.transaction([@projectsKey()], "readonly")
+    store = trans.objectStore(@projectsKey())
+    keyRange = IDBKeyRange.lowerBound(0)
+    cursorRequest = store.openCursor(keyRange)
+    cursorRequest.onerror = @dbError
+    cursorRequest.onsuccess = (e) =>
+      cursor = e.target.result
+      if cursor?
+        projects.push(cursor.value)
+        cursor.continue()
+      else
+        if params.success?
+          projects = (project.projects for project in projects)
+          params.success.call(null, _.uniq(_.flatten(projects)))
   getProjects: (account, params = {}) =>
     projects = []
     trans = @db.transaction([@projectsKey()], "readonly")

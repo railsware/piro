@@ -20,6 +20,8 @@ class PiroPopup.Routers.Popup extends Backbone.Router
         return Backbone.history.navigate("login", {trigger: true, replace: false}) if PiroPopup.pivotalAccounts.length is 0
   index: =>
     PiroPopup.updateMainContainer(@mainView) unless PiroPopup.currentMainView is @mainView
+    PiroPopup.clearStoriesContainer()
+    PiroPopup.clearStoryContainer()
   project: (id) =>
     @renderProjectStories(id)
   story: (id) =>
