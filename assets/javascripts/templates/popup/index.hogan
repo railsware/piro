@@ -3,7 +3,7 @@
 <div>
   <select class="account_switcher">
     {{#accounts}}
-      <option value="{{id}}">{{#company}}{{company}}{{/company}}{{^company}}{{email}}{{/company}}</option>
+      <option value="{{id}}">{{company}}{{^company}}{{email}}{{/company}}</option>
     {{/accounts}}
   </select>
 </div>

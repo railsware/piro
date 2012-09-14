@@ -12,6 +12,7 @@
     <div class="account_tab_box account_token_box">
       <input type="text" class="account_token" />
     </div>
+    <input class="account_company" type="text" />
     <input type="submit" value="Add" />
   </form>
   <a href="#" class="close_account_link">Close</a>

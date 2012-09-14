@@ -78,6 +78,14 @@ class root.PiroStorage
         @getAccounts
           success: (accounts) =>
             params.success.call(null, accounts) if params.success?
+  deleteAccount: (accountId, params = {}) =>
+    trans = @db.transaction([@accountsKey()], "readwrite")
+    store = trans.objectStore(@accountsKey())
+    request = store.delete(accountId)
+    request.onerror = @dbError
+    request.onsuccess = (e) =>
+      data = e.target.result
+      params.success.call(null, data) if params.success?
   # PROJECTS
   getAllProjects: (params = {}) =>
     projects = []

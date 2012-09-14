@@ -1,1 +1,18 @@
-{{email}} ({{name}})
+<div class="account_item box_item">
+  <div class="main">
+    {{company}}{{^company}}{{email}}{{/company}} ({{name}})
+    <a class="account_edit_link" href="#">Edit</a>
+    <a class="account_delete_link" href="#">Delete</a>
+  </div>
+  <div class="edit">
+    <form class="edit_account_form">
+      <input class="edit_account_company" type="text" value="{{company}}" />
+      <input type="submit" value="Edit" />
+      <a class="cancel_edit_account_link" href="#">Cancel</a>
+    </form>
+  </div>
+  <div class="delete">
+    <a class="confirm_delete_account_link" href="#">Confirm delete</a>
+    <a class="cancel_delete_account_link" href="#">Cancel</a>
+  </div>
+</div>
