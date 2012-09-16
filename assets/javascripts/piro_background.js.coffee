@@ -1,11 +1,13 @@
 root = global ? window
 
 root.PiroBackground = 
-  pivotalApi: {}
+  pivotalApi: null
   db: null
   popupEvents: null
   projectsData: null
   updateState: false
+  pivotalAccounts: []
+  pivotalAccountIterator: 0
   updateStateProgress: 0
   updateStatePerAccount: 0
   init: ->
@@ -30,15 +32,17 @@ root.PiroBackground =
     return false if PiroBackground.updateState is true
     PiroBackground.updateState = true
     PiroBackground.updateStateProgress = 0
+    PiroBackground.pivotalAccountIterator = 0
     PiroBackground.checkUpdateState()
     PiroBackground.db.getAccounts
       success: (accounts) =>
         if accounts.length > 0
+          PiroBackground.pivotalAccounts = accounts
           PiroBackground.updateStatePerAccount = Math.round(100/accounts.length)
-          PiroBackground.updateDataForAccount(account) for account in accounts
+          PiroBackground.updateDataForAccount(PiroBackground.pivotalAccounts[PiroBackground.pivotalAccountIterator])
   updateDataForAccount: (account) ->
-    PiroBackground.pivotalApi[account.id] = new PivotaltrackerApi(account)
-    PiroBackground.pivotalApi[account.id].getProjects
+    PiroBackground.pivotalApi = new PivotaltrackerApi(account)
+    PiroBackground.pivotalApi.getProjects
       success: (data, textStatus, jqXHR) =>
         PiroBackground.aggregateAllStories(account, data)
   aggregateAllStories: (account, projects) ->
@@ -46,7 +50,7 @@ root.PiroBackground =
     if projectsCount > 0
       percentPerProject = Math.round(PiroBackground.updateStatePerAccount/projectsCount)
       for project in projects
-        PiroBackground.pivotalApi[account.id].getStories project, 
+        PiroBackground.pivotalApi.getStories project, 
           complete: =>
             PiroBackground.updateStateProgress += percentPerProject
             PiroBackground.updateProgress(PiroBackground.updateStateProgress)
@@ -62,7 +66,11 @@ root.PiroBackground =
   saveAllData: (account, projects) ->
     PiroBackground.db.setProjects account, projects, 
       success: =>
-        PiroBackground.cleanupData(account)
+        if PiroBackground.pivotalAccountIterator + 1 < PiroBackground.pivotalAccounts.length
+          PiroBackground.pivotalAccountIterator += 1
+          PiroBackground.updateDataForAccount(PiroBackground.pivotalAccounts[PiroBackground.pivotalAccountIterator])
+        else
+          PiroBackground.cleanupData(account)
   cleanupData: (account) ->
     # clean stories, icons
     PiroBackground.db.getAllProjects
