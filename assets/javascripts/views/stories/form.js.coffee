@@ -2,6 +2,7 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
   tagName: "div"
   template: SHT['stories/form']
   events:
+    "change .add_story_project_id"      : "changeProject"
     "submit .add_story_form"            : "submitStory"
   
   initialize: =>
@@ -12,6 +13,9 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
     ))
     @initSelects()
     this
+  
+  changeProject: (e) =>
+    @initSelects()
     
   initSelects: =>
     project = PiroPopup.pivotalProjects.get(@$('.add_story_project_id').val())
@@ -36,8 +40,9 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
       members.push "<option value='#{member.person.id}' data-name='#{member.person.name}'>#{member.person.name} (#{member.person.initials})</option>"
     @$('.add_story_requester_id').html(members.join("")).trigger("liszt:updated")
     members.unshift("<option></option>")
-    @$('.add_story_owner_id').html(members.join("")).chosen
+    @$('.add_story_owner_id').html(members.join("")).chosen(
       allow_single_deselect: true
+    ).trigger("liszt:updated")
     
   submitStory: (e) =>
     e.preventDefault()
