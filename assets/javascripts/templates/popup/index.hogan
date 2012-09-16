@@ -17,6 +17,10 @@
   </div>
 </div>
 
+<div>
+  <a class="add_story_link" href="#">Add story</a>
+</div>
+
 <div id="projectsBox" style="width:300px;float:left"></div>
 
 <div id="storiesBox" style="width:500px;float:left"></div>

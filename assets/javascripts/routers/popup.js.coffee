@@ -3,7 +3,8 @@ class PiroPopup.Routers.Popup extends Backbone.Router
     ""                        : "index"
     "login"                   : "login"
     "project/:id"             : "project"
-    "story/:id"               : "story"
+    "story/new"               : "newStory"
+    "story/:id"               : "showStory"
     "*a"                      : "index"
   
   initialize: (options) =>
@@ -22,9 +23,12 @@ class PiroPopup.Routers.Popup extends Backbone.Router
     PiroPopup.updateMainContainer(@mainView) unless PiroPopup.currentMainView is @mainView
     PiroPopup.clearStoriesContainer()
     PiroPopup.clearStoryContainer()
+  newStory: =>
+    view = new PiroPopup.Views.StoriesForm()
+    PiroPopup.updateStoryContainer(view)
   project: (id) =>
     @renderProjectStories(id)
-  story: (id) =>
+  showStory: (id) =>
     PiroPopup.db.getStoryById id, 
       success: (storyInfo) =>
         return Backbone.history.navigate("", {trigger: true, replace: false}) unless storyInfo?

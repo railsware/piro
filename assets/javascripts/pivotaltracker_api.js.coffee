@@ -7,7 +7,6 @@ class root.PivotaltrackerApi
   sendPivotalRequest: (params) =>
     ajaxParams = 
       timeout: 80000
-      crossDomain: true
       dataType: 'xml'
       headers: 
         "X-TrackerToken": @account.token.guid
@@ -29,7 +28,9 @@ class root.PivotaltrackerApi
       version: "version", iteration_length: "iteration_length", week_start_day: "week_start_day",
       point_scale: "point_scale", account: "account", labels: "labels",
       public: "public", use_https: "use_https", velocity_scheme: "velocity_scheme",
-      initial_velocity: "initial_velocity", current_velocity: "current_velocity", allow_attachments: "allow_attachments"
+      initial_velocity: "initial_velocity", current_velocity: "current_velocity", allow_attachments: "allow_attachments",
+      memberships: ["memberships/membership", {id: "id", role: "role", 
+      person: {id: "member/person/id", email: "member/person/email", name: "member/person/name", initials: "member/person/initials"}}]
       }]
       projects = Jath.parse(template, data)
       successFunction.call(null, projects, textStatus, jqXHR) if successFunction?

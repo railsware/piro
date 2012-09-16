@@ -4,6 +4,7 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
   events:
     'change select.account_switcher'          : 'switchAccount'
     'click .update_data_for_accounts_link'    : 'updateDataTrigger'
+    'click .add_story_link'                   : 'addStoryForm'
   
   initialize: (options) ->
     @collection.on 'add', @render
@@ -36,7 +37,11 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
   updateDataTrigger: (e) =>
     e.preventDefault()
     PiroPopup.bgPage.PiroBackground.initAutoupdate()
-
+    
+  addStoryForm: (e) =>
+    e.preventDefault()
+    Backbone.history.navigate("story/new", {trigger: true, replace: false})
+    
   updatePivotalState: (info) =>
     return false unless info?
     if info.updateState is true
@@ -47,7 +52,6 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
       Piecon.reset()
   updatePivotalUpdateProgress: (info) =>
     return false unless info?
-    console.log info.progress
     progress = parseInt(info.progress)
     progress = 100 if progress > 100
     Piecon.setProgress(progress)
