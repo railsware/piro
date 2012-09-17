@@ -10,6 +10,7 @@ root.PiroBackground =
   pivotalAccountIterator: 0
   updateStateProgress: 0
   updateStatePerAccount: 0
+  alarmName: "pivotalDataUpdate"
   init: ->
     PiroBackground.db = new PiroStorage
       success: ->
@@ -29,6 +30,19 @@ root.PiroBackground =
     PiroBackground.popupEvents.trigger "update:pivotal:progress", 
       progress: progress
   initAutoupdate: ->
+    if chrome.alarms?
+      chrome.alarms.create(PiroBackground.alarmName, {'delayInMinutes': 15})
+      chrome.alarms.onAlarm.addListener(PiroBackground.initDataPeriodicUpdate)
+    else
+      # init setInterval
+      PiroBackground.startDataUpdate()
+  initDataPeriodicUpdate: (alarm) ->
+    switch alarm.name
+      when PiroBackground.alarmName
+        PiroBackground.startDataUpdate()
+      else
+        # nothing
+  startDataUpdate: ->
     return false if PiroBackground.updateState is true
     PiroBackground.updateState = true
     PiroBackground.updateStateProgress = 0
@@ -88,6 +102,7 @@ root.PiroBackground =
     PiroBackground.checkUpdateState()
   # OMNIBOX  
   initOmnibox: ->
+    return false unless chrome.omnibox?
     chrome.omnibox.onInputCancelled.addListener ->
       PiroBackground.defaultOmniboxSuggestion()
     chrome.omnibox.onInputStarted.addListener ->

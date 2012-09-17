@@ -5,7 +5,7 @@ root.PiroPopup =
   Collections: {}
   Views: {}
   Routers: {}
-  bgPage: chrome.extension.getBackgroundPage()
+  bgPage: null
   db: null
   globalEvents: {}
   # views
@@ -17,6 +17,10 @@ root.PiroPopup =
   pivotalCurrentAccount: null
   pivotalProjects: null
   init: ->
+    # bg page
+    chrome.runtime.getBackgroundPage (bgPage) ->
+      PiroPopup.bgPage = bgPage
+    # check mode
     PiroPopup.checkMode()
     # backbone monkey patch
     PiroPopup.monkeyBackboneCleanup()

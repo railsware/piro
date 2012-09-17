@@ -7,11 +7,14 @@ root.PiroPopup =
   Routers: {}
 # main options object
 root.PiroOptions = 
-  bgPage: chrome.extension.getBackgroundPage()
+  bgPage: null
   db: null
   pivotalAccounts: null
   currentMainView: null
   init: ->
+    # bg page
+    chrome.runtime.getBackgroundPage (bgPage) ->
+      PiroOptions.bgPage = bgPage
     # backbone monkey patch
     PiroOptions.monkeyBackboneCleanup()
     # db
