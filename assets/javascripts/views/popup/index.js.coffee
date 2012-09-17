@@ -46,15 +46,24 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
     return false unless info?
     if info.updateState is true
       @$('#updateDataBox').addClass('loading')
-      Piecon.setProgress(0)
+      try
+        Piecon.setProgress(0)
+      catch e
+        # no title
     else
       @$('#updateDataBox').removeClass('loading')
-      Piecon.reset()
+      try
+        Piecon.reset()
+      catch e
+        # no title
   updatePivotalUpdateProgress: (info) =>
     return false unless info?
     progress = parseInt(info.progress)
     progress = 100 if progress > 100
-    Piecon.setProgress(progress)
+    try
+      Piecon.setProgress(progress)
+    catch e
+      # no title
 
   onDestroyView: =>
     @collection.off 'add', @render

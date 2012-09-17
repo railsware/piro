@@ -11,13 +11,13 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
     $(@el).html(@template.render(
       projects: PiroPopup.pivotalProjects.toJSON()
     ))
-    @initSelects()
+    @initControlls()
     this
   
   changeProject: (e) =>
-    @initSelects()
+    @initControlls()
     
-  initSelects: =>
+  initControlls: =>
     project = PiroPopup.pivotalProjects.get(@$('.add_story_project_id').val())
     # chosen
     @$('.chzn-select').chosen()
@@ -43,6 +43,32 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
     @$('.add_story_owner_id').html(members.join("")).chosen(
       allow_single_deselect: true
     ).trigger("liszt:updated")
+    # autocomplete
+    projectLabels = if project.get('labels')? then project.get('labels').split(",") else []
+    projectLabels = _.compact(projectLabels)
+    if projectLabels.length > 0
+      @$('input.add_story_labels').bind "keydown", (e) =>
+        e.preventDefault() if e.keyCode is $.ui.keyCode.TAB && @$('input.add_story_labels').data("autocomplete") && @$('input.add_story_labels').data("autocomplete").menu.active
+      .autocomplete
+        minLength: 0
+        source: (request, response) =>
+          terms = request.term.split( /,\s*/ )
+          term = terms.pop()
+          filteredLabels = []
+          for label in projectLabels
+            filteredLabels.push(label) if _.indexOf(terms, label) is -1
+          response($.ui.autocomplete.filter(filteredLabels, term))
+        focus: =>
+          false
+        select: (event, ui) ->
+          terms = this.value.split( /,\s*/ )
+          terms.pop()
+          terms.push(ui.item.value)
+          terms.push("")
+          this.value = terms.join(", ")
+          false
+    else
+      @$('input.add_story_labels').autocomplete("destroy")
     
   submitStory: (e) =>
     e.preventDefault()
