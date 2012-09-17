@@ -20,6 +20,8 @@
   <select class="add_story_owner_id chzn-de-select" style="width:300px;"></select>
   
   <textarea class="add_story_description"></textarea>
+  
   <input class="add_story_labels" type="text" />
+  
   <input type="submit" value="Add" />
 </form>
