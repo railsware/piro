@@ -13,7 +13,12 @@
     <option value="release">Release</option>
   </select>
   
-  <select class="add_story_point chzn-select" style="width:300px;"></select>
+  <div class="add_story_point_box">
+    <select class="add_story_point chzn-select" style="width:300px;"></select>
+  </div>
+  <div class="add_story_release_date_box">
+    <input class="add_story_release_date" type="text" readonly="readonly" />
+  </div>
   
   <select class="add_story_requester_id chzn-select" style="width:300px;"></select>
   
