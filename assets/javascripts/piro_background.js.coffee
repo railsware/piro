@@ -30,12 +30,8 @@ root.PiroBackground =
     PiroBackground.popupEvents.trigger "update:pivotal:progress", 
       progress: progress
   initAutoupdate: ->
-    if chrome.alarms?
-      chrome.alarms.create(PiroBackground.alarmName, {'delayInMinutes': 15})
-      chrome.alarms.onAlarm.addListener(PiroBackground.initDataPeriodicUpdate)
-    else
-      # init setInterval
-      PiroBackground.startDataUpdate()
+    chrome.alarms.onAlarm.addListener(PiroBackground.initDataPeriodicUpdate)
+    PiroBackground.startDataUpdate()
   initDataPeriodicUpdate: (alarm) ->
     switch alarm.name
       when PiroBackground.alarmName
@@ -100,6 +96,7 @@ root.PiroBackground =
   updateFinished: ->
     PiroBackground.updateState = false
     PiroBackground.checkUpdateState()
+    chrome.alarms.create(PiroBackground.alarmName, {'delayInMinutes': PiroBackground.db.getUpdateIntervalLS()})
   # OMNIBOX  
   initOmnibox: ->
     return false unless chrome.omnibox?

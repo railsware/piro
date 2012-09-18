@@ -273,3 +273,11 @@ class root.PiroStorage
     @setLocalStorage("sorted_projects_#{account.id}", projectIds)
   getSortedProjectsLS: (account) =>
     @getLocalStorage("sorted_projects_#{account.id}")
+    
+  # OPTIONS
+  getUpdateIntervalLS: =>
+    interval = @getLocalStorage("update_interval")
+    interval = 15 if !interval? || (interval? && interval < 15)
+    interval
+  setUpdateIntervalLS: (interval) =>
+    @setLocalStorage("update_interval", interval)
