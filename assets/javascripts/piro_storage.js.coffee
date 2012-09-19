@@ -276,11 +276,37 @@ class root.PiroStorage
     
   # OPTIONS
   getAllOptionsLS: =>
+    storiesTabView = @getStoriesTabViewLS()
+    storiesUserView = @getStoriesUserViewLS()
     options = 
-      update_interval: @getUpdateIntervalLS()
-      stories_user_view: 1
-      stories_tab_view: 1
+      updateInterval: @getUpdateIntervalLS()
+      storiesUserView: storiesUserView
+      storiesTabView: storiesTabView
+    switch storiesTabView
+      when "current"
+        _.extend(options, {currentStoriesTabView: true})
+      when "done"
+        _.extend(options, {doneStoriesTabView: true})
+      when "icebox"
+        _.extend(options, {iceboxStoriesTabView: true})
+      else
+        _.extend(options, {allStoriesTabView: true})
+    switch storiesUserView
+      when "owner"
+        _.extend(options, {ownerStoriesUserView: true})
+      when "requester"
+        _.extend(options, {requesterStoriesUserView: true})
+      else
+        _.extend(options, {allStoriesUserView: true})
     options
+  getStoriesTabViewLS: =>
+    @getLocalStorage("stories_tab_view") || "all"
+  setStoriesTabViewLS: (value) =>
+    @setLocalStorage("stories_tab_view", value)
+  getStoriesUserViewLS: =>
+    @getLocalStorage("stories_user_view") || "all"
+  setStoriesUserViewLS: (value) =>
+    @setLocalStorage("stories_user_view", value)
   getUpdateIntervalLS: =>
     interval = @getLocalStorage("update_interval")
     interval = 15 if !interval? || (interval? && interval < 15)

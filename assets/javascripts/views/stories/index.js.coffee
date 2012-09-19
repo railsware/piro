@@ -1,6 +1,9 @@
 class PiroPopup.Views.StoriesIndex extends Backbone.View
   
   template: SHT['stories/index']
+  events:
+    "click .stories_tab_link"           : "clickStoryTab"
+    "click .stories_user_link"          : "clickStoryUser"
   
   initialize: ->
     @collection.on 'add', @renderOne
@@ -20,8 +23,22 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
   renderAll: =>
     @$('.stories_list').empty()
     @cleanupChildViews()
-    @collection.each @renderOne
+    stories = @collection.getStoriesByFilters
+      account: PiroPopup.pivotalCurrentAccount
+      storiesTabView: PiroPopup.db.getStoriesTabViewLS()
+      storiesUserView: PiroPopup.db.getStoriesUserViewLS()
+    @renderOne(story) for story in stories
+
+  clickStoryTab: (e) =>
+    e.preventDefault()
+    PiroPopup.db.setStoriesTabViewLS($(e.currentTarget).data('key'))
+    @render()
     
+  clickStoryUser: (e) =>
+    e.preventDefault()
+    PiroPopup.db.setStoriesUserViewLS($(e.currentTarget).data('key'))
+    @render()
+
   onDestroyView: =>
     @collection.off 'add', @renderOne
     @collection.off 'reset', @renderAll
