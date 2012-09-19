@@ -11,6 +11,7 @@ root.PiroBackground =
   updateStatePerAccount: 0
   projectsData: null
   projectsCounter: 0
+  storiesIds: []
   percentPerProject: 0
   alarmName: "pivotalDataUpdate"
   init: ->
@@ -43,6 +44,7 @@ root.PiroBackground =
   startDataUpdate: ->
     return false if PiroBackground.updateState is true
     PiroBackground.projectsData = null
+    PiroBackground.storiesIds = []
     PiroBackground.updateState = true
     PiroBackground.updateStateProgress = 0
     PiroBackground.checkUpdateState()
@@ -80,6 +82,7 @@ root.PiroBackground =
           PiroBackground.fetchStoriesForProject()
       success: (project, stories, textStatus, jqXHR) =>
         _.extend(PiroBackground.projectsData[_.indexOf(PiroBackground.projectsData, project)], {stories_count: stories.length})
+        PiroBackground.storiesIds = _.union(PiroBackground.storiesIds, _.pluck(stories, 'id'))
         PiroBackground.db.setStories(stories)
   saveAllData: ->
     PiroBackground.db.setProjects PiroBackground.pivotalAccounts[PiroBackground.pivotalAccountIterator], PiroBackground.projectsData, 
@@ -91,16 +94,17 @@ root.PiroBackground =
           PiroBackground.cleanupData()
   cleanupData: ->
     # clean stories, icons
+    PiroBackground.db.getStories
+      success: (stories) =>
+        PiroBackground.db.deleteStoryById(story.id) for story in stories when _.indexOf(PiroBackground.storiesIds, story.id) is -1
+        PiroBackground.storiesIds = []
     PiroBackground.db.getAllProjects
       success: (projects) =>
         projectIds = _.pluck(projects, 'id')
-        PiroBackground.db.getStories
-          success: (stories) =>
-            PiroBackground.db.deleteStoryById(story.id) for story in stories when _.indexOf(projectIds, story.project_id) is -1
         PiroBackground.db.getProjectIcons
           success: (icons) =>
             PiroBackground.db.deleteProjectIcon(icon.id) for icon in icons when _.indexOf(projectIds, icon.id) is -1
-        PiroBackground.updateFinished()
+    PiroBackground.updateFinished()
   updateFinished: ->
     PiroBackground.updateState = false
     PiroBackground.checkUpdateState()
