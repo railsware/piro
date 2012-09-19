@@ -16,4 +16,4 @@ test/version_tmp
 test/log
 tmp
 .DS_Store
-public/assets/
+public/assets

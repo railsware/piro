@@ -20,18 +20,18 @@ root.PiroPopup =
     # bg page
     chrome.runtime.getBackgroundPage (bgPage) ->
       PiroPopup.bgPage = bgPage
-    # check mode
-    PiroPopup.checkMode()
-    # backbone monkey patch
-    PiroPopup.monkeyBackboneCleanup()
-    # db
-    PiroPopup.db = new PiroStorage
-      success: ->
-        PiroPopup.pivotalAccounts = new PiroPopup.Collections.Accounts
-        PiroPopup.pivotalProjects = new PiroPopup.Collections.Projects
-        PiroPopup.db.getAccounts
-          success: (accounts) ->
-            PiroPopup.initUI(accounts)
+      # check mode
+      PiroPopup.checkMode()
+      # backbone monkey patch
+      PiroPopup.monkeyBackboneCleanup()
+      # db
+      PiroPopup.db = new PiroStorage
+        success: ->
+          PiroPopup.pivotalAccounts = new PiroPopup.Collections.Accounts
+          PiroPopup.pivotalProjects = new PiroPopup.Collections.Projects
+          PiroPopup.db.getAccounts
+            success: (accounts) ->
+              PiroPopup.initUI(accounts)
   checkMode: ->
     indexUrl = chrome.extension.getURL('index.html')
     appTabs = []
