@@ -8,7 +8,7 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
     @childViews = []
   
   render: =>
-    $(@el).html(@template.render())
+    $(@el).html(@template.render(PiroPopup.db.getAllOptionsLS()))
     @renderAll()
     this
 

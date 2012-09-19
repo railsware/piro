@@ -19,6 +19,22 @@ class PiroPopup.Routers.Popup extends Backbone.Router
         return Backbone.history.navigate("", {trigger: true, replace: false}) if PiroPopup.pivotalAccounts.length isnt 0
       else
         return Backbone.history.navigate("login", {trigger: true, replace: false}) if PiroPopup.pivotalAccounts.length is 0
+    # highlight links
+    switch trigger
+      when "route:project"
+        @_highlightProject(args)
+      when "route:showStory"
+        PiroPopup.db.getStoryById args,
+          success: (storyInfo) =>
+            return false unless storyInfo?
+            @_highlightProject(storyInfo.project_id)
+            $('li.story_element').removeClass('active')
+            $("li.story_element[data-story-id='#{storyInfo.id}']").addClass('active')
+      when "route:newStory"
+        $('li.story_element').removeClass('active')
+      else
+        $('li.story_element').removeClass('active')
+        $('li.project_element').removeClass('active')
   index: =>
     PiroPopup.updateMainContainer(@mainView) unless PiroPopup.currentMainView is @mainView
     PiroPopup.clearStoriesContainer()
@@ -56,4 +72,8 @@ class PiroPopup.Routers.Popup extends Backbone.Router
   login: =>
     view = new PiroPopup.Views.LoginIndex(collection: PiroPopup.pivotalAccounts)
     PiroPopup.updateMainContainer(view)
+  # private
+  _highlightProject: (projectId) =>
+    $('li.project_element').removeClass('active')
+    $("li.project_element[data-project-id='#{projectId}']").addClass('active')
       

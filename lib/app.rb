@@ -88,8 +88,8 @@ class PiroServer < Sinatra::Application
     sprockets.append_path File.join(smartstart_gem_root, 'vendor', 'assets', 'stylesheets')
     sprockets.append_path File.join(root, '..', 'assets', 'javascripts')
     
-    sprockets.css_compressor = YUI::CssCompressor.new
-    sprockets.js_compressor  = Uglifier.new(mangle: true)
+    #sprockets.css_compressor = YUI::CssCompressor.new
+    #sprockets.js_compressor  = Uglifier.new(mangle: true)
   end
   
   helpers do

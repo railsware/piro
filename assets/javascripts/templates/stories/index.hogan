@@ -1,2 +1,9 @@
+<ul class="tabs">
+  <li class="tabs_element"><a href="#" data-key="all">All</a></li>
+  <li class="tabs_element"><a href="#" data-key="current">Current</a></li>
+  <li class="tabs_element"><a href="#" data-key="done">Done</a></li>
+  <li class="tabs_element"><a href="#" data-key="icebox">Icebox</a></li>
+</ul>
+
 
 <ul class="stories_list"></ul>
