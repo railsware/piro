@@ -15,15 +15,15 @@ root.PiroOptions =
     # bg page
     chrome.runtime.getBackgroundPage (bgPage) ->
       PiroOptions.bgPage = bgPage
-    # backbone monkey patch
-    PiroOptions.monkeyBackboneCleanup()
-    # db
-    PiroOptions.db = new PiroStorage
-      success: ->
-        PiroOptions.pivotalAccounts = new PiroPopup.Collections.Accounts
-        PiroOptions.db.getAccounts
-          success: (accounts) ->
-            PiroOptions.initUI(accounts)
+      # backbone monkey patch
+      PiroOptions.monkeyBackboneCleanup()
+      # db
+      PiroOptions.db = new PiroStorage
+        success: ->
+          PiroOptions.pivotalAccounts = new PiroPopup.Collections.Accounts
+          PiroOptions.db.getAccounts
+            success: (accounts) ->
+              PiroOptions.initUI(accounts)
   initUI: (accounts) ->
     PiroOptions.pivotalAccounts.reset(accounts)
     # routes
