@@ -35,6 +35,7 @@
     "background",
     "alarms",
     "tabs",
+    "contextMenus",
     "notifications",
     "storage",
     "unlimitedStorage",
