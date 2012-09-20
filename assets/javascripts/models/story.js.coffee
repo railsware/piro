@@ -2,18 +2,15 @@ class PiroPopup.Models.Story extends Backbone.Model
   
   filterByState: (state) =>
     storyState = @get("current_state")
-    if storyState?
-      return switch state
-        when "current"
-          storyState isnt "accepted" and storyState isnt "unscheduled"
-        when "done"
-          storyState is "accepted"
-        when "icebox"
-          storyState is "unscheduled"
-        else
-          true
-    else
-      return true
+    return switch state
+      when "current"
+        storyState isnt "accepted" and storyState isnt "unscheduled"
+      when "done"
+        storyState is "accepted"
+      when "icebox"
+        storyState is "unscheduled"
+      else
+        true
       
   filterByUser: (account, userView) =>
     accountId = parseInt(account.get("id"))
@@ -27,4 +24,4 @@ class PiroPopup.Models.Story extends Backbone.Model
         return false if !requestedBy? or !requestedBy.id?
         return parseInt(requestedBy.id) is accountId
       else
-        true
+        return true
