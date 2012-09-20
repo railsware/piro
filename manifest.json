@@ -2,6 +2,7 @@
   "manifest_version": 2,
   "name": "PiRo",
   "version": "2.0.0",
+  "minimum_chrome_version": "22",
   "default_locale": "en",
   "description": "__MSG_app_description__",
   "background": {
@@ -14,6 +15,12 @@
     "default_icon": "public/images/icon.png",
     "default_popup": "popup.html?popup"
   },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["public/assets/content_scripts.min.js"]
+    }
+  ],
   "omnibox": { 
     "keyword" : "piro"
   },
