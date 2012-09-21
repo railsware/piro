@@ -25,8 +25,8 @@ root.PiroBackground =
   setAlarm: ->
     PiroBackground.db = new PiroStorage
       success: ->
-        chrome.alarms.clearAll()
-        chrome.alarms.create(PiroBackground.alarmName, {'delayInMinutes': PiroBackground.db.getUpdateIntervalLS()})
+        chrome.alarms.get PiroBackground.alarmName, (alarmCallback) ->
+          chrome.alarms.create(PiroBackground.alarmName, {'delayInMinutes': PiroBackground.db.getUpdateIntervalLS()}) if !alarmCallback? || !alarmCallback.scheduledTime?
   initPopupView: (events) ->
     PiroBackground.popupEvents = events
     PiroBackground.checkUpdateState()
