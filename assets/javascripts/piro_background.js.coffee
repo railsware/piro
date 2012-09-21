@@ -23,10 +23,12 @@ root.PiroBackground =
     PiroBackground.setAlarm()
     PiroBackground.initOmniboxListeners()
   setAlarm: ->
-    PiroBackground.db = new PiroStorage
-      success: ->
-        chrome.alarms.get PiroBackground.alarmName, (alarmCallback) ->
-          chrome.alarms.create(PiroBackground.alarmName, {'delayInMinutes': PiroBackground.db.getUpdateIntervalLS()}) if !alarmCallback? || !alarmCallback.scheduledTime?
+    if PiroBackground.db?
+      chrome.alarms.create(PiroBackground.alarmName, {'delayInMinutes': PiroBackground.db.getUpdateIntervalLS()})
+    else
+      PiroBackground.db = new PiroStorage
+        success: ->
+          chrome.alarms.create(PiroBackground.alarmName, {'delayInMinutes': PiroBackground.db.getUpdateIntervalLS()})
   initPopupView: (events) ->
     PiroBackground.popupEvents = events
     PiroBackground.checkUpdateState()
