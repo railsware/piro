@@ -162,11 +162,11 @@ root.PiroBackground =
         chrome.tabs.update tab.id, 
           url: mainUrl
 # init
-chrome.runtime.onInstalled.addListener ->
-  PiroBackground.init()
 if chrome.app? && chrome.app.runtime? && chrome.app.runtime.onLaunched?
   chrome.app.runtime.onLaunched.addListener ->
     PiroBackground.init()
 else
+  chrome.runtime.onInstalled.addListener ->
+    PiroBackground.init()
   $ ->
     PiroBackground.init()
