@@ -17,21 +17,18 @@ root.PiroPopup =
   pivotalCurrentAccount: null
   pivotalProjects: null
   init: ->
-    # bg page
-    chrome.runtime.getBackgroundPage (bgPage) ->
-      PiroPopup.bgPage = bgPage
-      # check mode
-      PiroPopup.checkMode()
-      # backbone monkey patch
-      PiroPopup.monkeyBackboneCleanup()
-      # db
-      PiroPopup.db = new PiroStorage
-        success: ->
-          PiroPopup.pivotalAccounts = new PiroPopup.Collections.Accounts
-          PiroPopup.pivotalProjects = new PiroPopup.Collections.Projects
-          PiroPopup.db.getAccounts
-            success: (accounts) ->
-              PiroPopup.initUI(accounts)
+    # check mode
+    PiroPopup.checkMode()
+    # backbone monkey patch
+    PiroPopup.monkeyBackboneCleanup()
+    # db
+    PiroPopup.db = new PiroStorage
+      success: ->
+        PiroPopup.pivotalAccounts = new PiroPopup.Collections.Accounts
+        PiroPopup.pivotalProjects = new PiroPopup.Collections.Projects
+        PiroPopup.db.getAccounts
+          success: (accounts) ->
+            PiroPopup.initUI(accounts)
   checkMode: ->
     indexUrl = chrome.extension.getURL('index.html')
     appTabs = []
@@ -69,7 +66,9 @@ root.PiroPopup =
       shadow: "#fff" # Outer ring color
       fallback: 'force' # Toggles displaying percentage in the title bar (possible values - true, false, 'force')
     # init bg
-    PiroPopup.bgPage.PiroBackground.initPopupView(PiroPopup.globalEvents)
+    chrome.runtime.getBackgroundPage (bgPage) ->
+      PiroPopup.bgPage = bgPage
+      PiroPopup.bgPage.PiroBackground.initPopupView(PiroPopup.globalEvents)
   # ui container
   mainContainer: ->
     $('#mainContainer')
