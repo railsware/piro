@@ -15,12 +15,6 @@
     "default_icon": "public/images/icon.png",
     "default_popup": "popup.html?popup"
   },
-  "content_scripts": [
-    {
-      "matches": ["*://*/*"],
-      "js": ["public/assets/content_scripts.min.js"]
-    }
-  ],
   "omnibox": { 
     "keyword" : "piro"
   },

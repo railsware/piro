@@ -15,10 +15,9 @@ root.PiroBackground =
   percentPerProject: 0
   alarmName: "pivotalDataUpdate"
   init: ->
-    PiroBackground.db = new PiroStorage
-      success: ->
-        PiroBackground.initAutoupdate()
-        PiroBackground.initOmnibox()
+    PiroBackground.initAutoupdate()
+    PiroBackground.initContextMenu()
+    PiroBackground.initOmnibox()
   initPopupView: (events) ->
     PiroBackground.popupEvents = events
     PiroBackground.checkUpdateState()
@@ -33,7 +32,7 @@ root.PiroBackground =
     PiroBackground.popupEvents.trigger "update:pivotal:progress", 
       progress: progress
   initAutoupdate: ->
-    chrome.alarms.onAlarm.addListener(PiroBackground.initDataPeriodicUpdate)
+    chrome.alarms.onAlarm.addListener(PiroBackground.initDataPeriodicUpdate) unless chrome.alarms.onAlarm.hasListener(PiroBackground.initDataPeriodicUpdate)
     PiroBackground.startDataUpdate()
   initDataPeriodicUpdate: (alarm) ->
     switch alarm.name
@@ -48,13 +47,15 @@ root.PiroBackground =
     PiroBackground.updateState = true
     PiroBackground.updateStateProgress = 0
     PiroBackground.checkUpdateState()
-    PiroBackground.db.getAccounts
-      success: (accounts) =>
-        if accounts.length > 0
-          PiroBackground.pivotalAccounts = accounts
-          PiroBackground.pivotalAccountIterator = 0
-          PiroBackground.updateStatePerAccount = Math.ceil(100/PiroBackground.pivotalAccounts.length)
-          PiroBackground.updateDataForAccount()
+    PiroBackground.db = new PiroStorage
+      success: ->
+        PiroBackground.db.getAccounts
+          success: (accounts) =>
+            if accounts.length > 0
+              PiroBackground.pivotalAccounts = accounts
+              PiroBackground.pivotalAccountIterator = 0
+              PiroBackground.updateStatePerAccount = Math.ceil(100/PiroBackground.pivotalAccounts.length)
+              PiroBackground.updateDataForAccount()
   updateDataForAccount: ->
     PiroBackground.pivotalApi = new PivotaltrackerApi(PiroBackground.pivotalAccounts[PiroBackground.pivotalAccountIterator])
     PiroBackground.pivotalApi.getProjects
@@ -109,11 +110,27 @@ root.PiroBackground =
     PiroBackground.updateState = false
     PiroBackground.checkUpdateState()
     chrome.alarms.create(PiroBackground.alarmName, {'delayInMinutes': PiroBackground.db.getUpdateIntervalLS()})
+  # Context Menu
+  initContextMenu: ->
+    chrome.contextMenus.onClicked.addListener(PiroBackground.clickContextMenu) unless chrome.contextMenus.onClicked.hasListener(PiroBackground.clickContextMenu)
+    chrome.contextMenus.create
+      title: "Go to Project/Story"
+      contexts: ["link"]
+      targetUrlPatterns: ["*://*.pivotaltracker.com/projects/*", "*://*.pivotaltracker.com/story/show/*"]
+      type: "normal"
+      id: "showPivotalStoryContextMenu"
+    chrome.contextMenus.create
+      title: "Create Story with selected Title"
+      contexts: ["selection", "editable"]
+      type: "normal"
+      id: "createPivotalStoryContextMenu"
+  clickContextMenu: (info, tab) ->
+    console.log info
+    console.log tab
   # OMNIBOX  
   initOmnibox: ->
     return false unless chrome.omnibox?
-    chrome.omnibox.onInputCancelled.addListener ->
-      PiroBackground.defaultOmniboxSuggestion()
+    chrome.omnibox.onInputCancelled.addListener(PiroBackground.defaultOmniboxSuggestion)
     chrome.omnibox.onInputStarted.addListener ->
       PiroBackground.setOmniboxSuggestion('')
     chrome.omnibox.onInputChanged.addListener (text, suggest) ->
@@ -145,5 +162,11 @@ root.PiroBackground =
         chrome.tabs.update tab.id, 
           url: mainUrl
 # init
-$ ->
+chrome.runtime.onInstalled.addListener ->
   PiroBackground.init()
+if chrome.app? && chrome.app.runtime? && chrome.app.runtime.onLaunched?
+  chrome.app.runtime.onLaunched.addListener ->
+    PiroBackground.init()
+else
+  $ ->
+    PiroBackground.init()
