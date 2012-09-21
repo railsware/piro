@@ -38,6 +38,7 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
     e.preventDefault()
     chrome.runtime.getBackgroundPage (bgPage) =>
       PiroPopup.bgPage = bgPage
+      PiroPopup.bgPage.PiroBackground.initPopupView(PiroPopup.globalEvents)
       PiroPopup.bgPage.PiroBackground.startDataUpdate()
     
   addStoryForm: (e) =>
