@@ -17,7 +17,16 @@ root.PiroBackground =
   init: ->
     PiroBackground.initAutoupdate()
     PiroBackground.initContextMenu()
-    PiroBackground.initOmnibox()
+  initListeners: ->
+    chrome.contextMenus.onClicked.addListener(PiroBackground.clickContextMenu) unless chrome.contextMenus.onClicked.hasListener(PiroBackground.clickContextMenu)
+    chrome.alarms.onAlarm.addListener(PiroBackground.initDataPeriodicUpdate) unless chrome.alarms.onAlarm.hasListener(PiroBackground.initDataPeriodicUpdate)
+    PiroBackground.setAlarm()
+    PiroBackground.initOmniboxListeners()
+  setAlarm: ->
+    PiroBackground.db = new PiroStorage
+      success: ->
+        chrome.alarms.clearAll()
+        chrome.alarms.create(PiroBackground.alarmName, {'delayInMinutes': PiroBackground.db.getUpdateIntervalLS()})
   initPopupView: (events) ->
     PiroBackground.popupEvents = events
     PiroBackground.checkUpdateState()
@@ -32,7 +41,6 @@ root.PiroBackground =
     PiroBackground.popupEvents.trigger "update:pivotal:progress", 
       progress: progress
   initAutoupdate: ->
-    chrome.alarms.onAlarm.addListener(PiroBackground.initDataPeriodicUpdate) unless chrome.alarms.onAlarm.hasListener(PiroBackground.initDataPeriodicUpdate)
     PiroBackground.startDataUpdate()
   initDataPeriodicUpdate: (alarm) ->
     switch alarm.name
@@ -109,10 +117,9 @@ root.PiroBackground =
   updateFinished: ->
     PiroBackground.updateState = false
     PiroBackground.checkUpdateState()
-    chrome.alarms.create(PiroBackground.alarmName, {'delayInMinutes': PiroBackground.db.getUpdateIntervalLS()})
+    PiroBackground.setAlarm()
   # Context Menu
   initContextMenu: ->
-    chrome.contextMenus.onClicked.addListener(PiroBackground.clickContextMenu) unless chrome.contextMenus.onClicked.hasListener(PiroBackground.clickContextMenu)
     chrome.contextMenus.create
       title: "Go to Project/Story"
       contexts: ["link"]
@@ -128,8 +135,7 @@ root.PiroBackground =
     console.log info
     console.log tab
   # OMNIBOX  
-  initOmnibox: ->
-    return false unless chrome.omnibox?
+  initOmniboxListeners: ->
     chrome.omnibox.onInputCancelled.addListener(PiroBackground.defaultOmniboxSuggestion)
     chrome.omnibox.onInputStarted.addListener ->
       PiroBackground.setOmniboxSuggestion('')
@@ -162,11 +168,6 @@ root.PiroBackground =
         chrome.tabs.update tab.id, 
           url: mainUrl
 # init
-if chrome.app? && chrome.app.runtime? && chrome.app.runtime.onLaunched?
-  chrome.app.runtime.onLaunched.addListener ->
-    PiroBackground.init()
-else
-  chrome.runtime.onInstalled.addListener ->
-    PiroBackground.init()
-  $ ->
-    PiroBackground.init()
+chrome.runtime.onInstalled.addListener ->
+  PiroBackground.init()
+PiroBackground.initListeners()
