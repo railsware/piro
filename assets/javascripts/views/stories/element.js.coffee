@@ -16,7 +16,7 @@ class PiroPopup.Views.StoriesElement extends Backbone.View
     
   showStoryInfo: (e) =>
     e.preventDefault()
-    Backbone.history.navigate("story/#{@model.get("id")}", {trigger: true, replace: false})
+    Backbone.history.navigate("story/#{@model.get("id")}", {trigger: true, replace: true})
 
   remove: =>
     $(@el).remove()

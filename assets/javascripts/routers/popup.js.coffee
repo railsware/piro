@@ -16,9 +16,9 @@ class PiroPopup.Routers.Popup extends Backbone.Router
   beforRouting: (trigger, args) =>
     switch trigger
       when "route:login"
-        return Backbone.history.navigate("", {trigger: true, replace: false}) if PiroPopup.pivotalAccounts.length isnt 0
+        return Backbone.history.navigate("", {trigger: true, replace: true}) if PiroPopup.pivotalAccounts.length isnt 0
       else
-        return Backbone.history.navigate("login", {trigger: true, replace: false}) if PiroPopup.pivotalAccounts.length is 0
+        return Backbone.history.navigate("login", {trigger: true, replace: true}) if PiroPopup.pivotalAccounts.length is 0
     # highlight links
     switch trigger
       when "route:project"
@@ -47,7 +47,7 @@ class PiroPopup.Routers.Popup extends Backbone.Router
   showStory: (id) =>
     PiroPopup.db.getStoryById id, 
       success: (storyInfo) =>
-        return Backbone.history.navigate("", {trigger: true, replace: false}) unless storyInfo?
+        return Backbone.history.navigate("", {trigger: true, replace: true}) unless storyInfo?
         # project
         if @storiesList?
           @renderStory(storyInfo.id)
@@ -57,7 +57,7 @@ class PiroPopup.Routers.Popup extends Backbone.Router
               @renderStory(storyInfo.id)
   renderProjectStories: (projectId, params = {}) =>
     project = PiroPopup.pivotalProjects.get(projectId)
-    return Backbone.history.navigate("", {trigger: true, replace: false}) unless project?
+    return Backbone.history.navigate("", {trigger: true, replace: true}) unless project?
     PiroPopup.db.getStoriesByProject project.toJSON(), 
       success: (project, data) =>
         @storiesList = new PiroPopup.Collections.Stories

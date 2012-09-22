@@ -32,7 +32,7 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
     PiroPopup.db.getProjects PiroPopup.pivotalCurrentAccount.toJSON(), 
       success: (projects) =>
         PiroPopup.pivotalProjects.reset(projects)
-        Backbone.history.navigate("", {trigger: true, replace: false})
+        Backbone.history.navigate("", {trigger: true, replace: true})
 
   updateDataTrigger: (e) =>
     e.preventDefault()
@@ -42,7 +42,7 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
     
   addStoryForm: (e) =>
     e.preventDefault()
-    Backbone.history.navigate("story/new", {trigger: true, replace: false})
+    Backbone.history.navigate("story/new", {trigger: true, replace: true})
     
   updatePivotalState: (info) =>
     return false unless info?

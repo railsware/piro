@@ -20,7 +20,7 @@ class PiroPopup.Views.ProjectsElement extends Backbone.View
     
   openStories: (e) =>
     e.preventDefault()
-    Backbone.history.navigate("project/#{@model.get("id")}", {trigger: true, replace: false})
+    Backbone.history.navigate("project/#{@model.get("id")}", {trigger: true, replace: true})
         
   openSettings: (e) =>
     e.preventDefault()
