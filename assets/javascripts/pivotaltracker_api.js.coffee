@@ -79,6 +79,14 @@ class root.PivotaltrackerApi
       return false unless story.id?
       @_getStoryWithTimeout(story, successFunction, errorFunction, maxIterator)
     this.sendPivotalRequest(params)
+  deleteStory: (story, params = {}) =>
+    successFunction = params.success
+    params.url = "#{@baseUrl}/projects/#{story.project_id}/stories/#{story.id}"
+    params.type = "DELETE"
+    params.success = (data, textStatus, jqXHR) =>
+      successFunction.call(null, data, textStatus, jqXHR) if successFunction?
+    this.sendPivotalRequest(params)
+  # private
   _getStoryWithTimeout: (story, successFunction, errorFunction, maxIterator) =>
     setTimeout(=>
       @getStory story.id, 

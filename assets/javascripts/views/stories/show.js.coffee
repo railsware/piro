@@ -24,6 +24,16 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     @$('.box_item').removeClass('deleting')
   confirmDeleteStory: (e) =>
     e.preventDefault()
+    chrome.runtime.getBackgroundPage (bgPage) =>
+      PiroPopup.bgPage = bgPage
+      PiroPopup.bgPage.PiroBackground.deleteAndSyncStory(
+        PiroPopup.pivotalCurrentAccount.toJSON(),
+        @model.toJSON(),
+        success: (story) =>
+          #projectId = @model.get('project_id')
+          @model.trigger('destroy', @model, @model.collection, {})
+          #Backbone.history.navigate("project/#{projectId}", {trigger: true, replace: true})
+      )
     
   onDestroyView: =>
     @model.off 'change', @render

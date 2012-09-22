@@ -181,11 +181,22 @@ root.PiroBackground =
           data: data
           success: (stories, textStatus, jqXHR) =>
             if stories.length > 0
-              PiroBackground.db.setStory stories[0], 
+              PiroBackground.db.setStory stories[0],
                 success: (story) =>
                   callbackParams.success.call(null, story) if callbackParams.success?
             else
               callbackParams.error.call(null) if callbackParams.error?
+          error: =>
+            callbackParams.error.call(null) if callbackParams.error?
+  deleteAndSyncStory: (account, story, callbackParams = {}) =>
+    PiroBackground.db = new PiroStorage
+      success: =>
+        pivotalApi = new PivotaltrackerApi(account)
+        pivotalApi.deleteStory story,
+          success: =>
+            PiroBackground.db.deleteStoryById story.id,
+              success: =>
+                callbackParams.success.call(null) if callbackParams.success?
           error: =>
             callbackParams.error.call(null) if callbackParams.error?
   # private

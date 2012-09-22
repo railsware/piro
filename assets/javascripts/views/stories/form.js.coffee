@@ -18,11 +18,12 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
     $(@el).html(@template.render(
       projects: projects
     ))
+    # set default project
+    @$('.add_story_project_id').val(PiroPopup.db.getLatestProjectIdLS()).trigger("liszt:updated")
+    # controls
     @initControlls()
     @initStoryType()
     @initCalendar()
-    # set default project
-    @$('.add_story_project_id').val(PiroPopup.db.getLatestProjectIdLS()).trigger("liszt:updated")
     this
   
   changeProject: (e) =>
