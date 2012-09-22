@@ -4,13 +4,19 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
   events:
     "change .add_story_project_id"      : "changeProject"
     "change .add_story_story_type"      : "changeStoryType"
+    "click .story_owner_id_to_me"       : "selectOwnedByMe"
     "submit .add_story_form"            : "submitStory"
   
   initialize: =>
 
   render: =>
+    projects = PiroPopup.pivotalProjects.toJSON().sort (a, b) ->
+      if a.name? && b.name?
+        return -1 if (a.name < b.name)
+        return 1 if (a.name > b.name)
+      return 0
     $(@el).html(@template.render(
-      projects: PiroPopup.pivotalProjects.toJSON()
+      projects: projects
     ))
     @initControlls()
     @initStoryType()
@@ -53,8 +59,8 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
     members = []
     for member in memberships when member? && member.person?
       members.push "<option value='#{member.person.id}' data-name='#{member.person.name}'>#{member.person.name} (#{member.person.initials})</option>"
-    @$('.add_story_requester_id').html(members.join("")).trigger("liszt:updated")
-    members.unshift("<option></option>")
+    @$('.add_story_requester_id').html(members.join("")).val(PiroPopup.pivotalCurrentAccount.get('id')).trigger("liszt:updated")
+    members.unshift("<option data-name=''></option>")
     @$('.add_story_owner_id').html(members.join("")).chosen(
       allow_single_deselect: true
     ).trigger("liszt:updated")
@@ -96,9 +102,39 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
       else
         @$('.add_story_release_date_box').hide()
         @$('.add_story_point_box').hide()
+
+  selectOwnedByMe: (e) =>
+    e.preventDefault()
+    @$('.add_story_owner_id').val(PiroPopup.pivotalCurrentAccount.get('id')).trigger("liszt:updated")
     
   submitStory: (e) =>
     e.preventDefault()
+    storyType = @$('.add_story_story_type').val()
+    attributes =
+      story_type: storyType
+      name: @$('.add_story_name').val()
+      description: @$('.add_story_description').val()
+      requested_by: @$('.add_story_requester_id').find(":selected").data('name')
+      labels: $.trim(@$('.add_story_labels').val()).replace(/,$/i, "")
+    switch storyType
+      when "feature"
+        _.extend(attributes, {estimate: @$('.add_story_point').val()})
+      when "release"
+        _.extend(attributes, {deadline: @$('.add_story_release_date').val()}) if @$('.add_story_release_date').val().length > 0
+    # values
+    _.extend(attributes, {owned_by: @$('.add_story_owner_id').find(":selected").data('name')}) if @$('.add_story_owner_id').find(":selected").data('name').length > 0
+    # create story
+    chrome.runtime.getBackgroundPage (bgPage) =>
+      PiroPopup.bgPage = bgPage
+      PiroPopup.bgPage.PiroBackground.createAndSyncStory(
+        PiroPopup.pivotalCurrentAccount.toJSON(), 
+        @$('.add_story_project_id').val(), 
+        {story: attributes}, 
+        success: =>
+          console.log "done"
+        error: =>
+          console.log "error"
+      )
     
   onDestroyView: =>
     # destroy

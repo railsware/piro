@@ -4,6 +4,7 @@
 //=require ./vendors/backbone-min
 //=require ./vendors/chosen
 //=require ./vendors/jath
+//=require ./vendors/moment
 //
 //=require pivotaltracker_api
 //=require piro_storage

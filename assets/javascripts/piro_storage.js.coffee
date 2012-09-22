@@ -153,6 +153,14 @@ class root.PiroStorage
               if projectsCount <= 0
                 params.success.call(null, allProjects) if params.success?
   # STORIES
+  setStory: (story, params = {}) =>
+    trans = @db.transaction([@storiesKey()], "readwrite")
+    store = trans.objectStore(@storiesKey())
+    request = store.put story
+    request.onerror = @dbError
+    request.onsuccess = (e) =>
+      data = e.target.result
+      params.success.call(null, data) if params.success?
   setStories: (stories, params = {}) =>
     trans = @db.transaction([@storiesKey()], "readwrite")
     store = trans.objectStore(@storiesKey())

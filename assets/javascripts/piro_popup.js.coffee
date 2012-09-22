@@ -19,6 +19,8 @@ root.PiroPopup =
   init: ->
     # check mode
     PiroPopup.checkMode()
+    # register callback for event page
+    PiroPopup.checkEventPageMessages()
     # backbone monkey patch
     PiroPopup.monkeyBackboneCleanup()
     # db
@@ -41,6 +43,14 @@ root.PiroPopup =
         window.close()
         return false
       return true
+  checkEventPageMessages: ->
+    chrome.extension.onMessage.addListener (request, sender, sendResponse) ->
+      switch request.type
+        when "update:pivotal:data"
+          sendResponse
+            events: PiroPopup.globalEvents
+        else
+          # not implemented
   initUI: (accounts) ->
     _.extend(PiroPopup.globalEvents, Backbone.Events)
     PiroPopup.pivotalAccounts.reset(accounts)

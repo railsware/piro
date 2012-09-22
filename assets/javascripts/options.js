@@ -4,6 +4,7 @@
 //=require ./vendors/backbone-min
 //=require ./vendors/chosen
 //=require ./vendors/jath
+//=require ./vendors/moment
 //
 //=require ./vendors/hogan-2.0.0.min
 //= require_tree ./templates

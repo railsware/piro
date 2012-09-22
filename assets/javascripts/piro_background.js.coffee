@@ -33,10 +33,13 @@ root.PiroBackground =
     PiroBackground.popupEvents = events
     PiroBackground.checkUpdateState()
   checkUpdateState: ->
-    return false unless PiroBackground.popupEvents?
-    PiroBackground.popupEvents.trigger "update:pivotal:data", 
-      updateState: PiroBackground.updateState
-    PiroBackground.updateProgress() if PiroBackground.updateState is true
+    if PiroBackground.popupEvents?
+      PiroBackground.popupEvents.trigger "update:pivotal:data",
+        updateState: PiroBackground.updateState
+      PiroBackground.updateProgress() if PiroBackground.updateState is true
+    else
+      chrome.extension.sendMessage {type: "update:pivotal:data"}, (response) ->
+        PiroBackground.initPopupView(response.events) if response? && response.events?
   updateProgress: (progress = null) ->
     return false unless PiroBackground.popupEvents?
     progress = PiroBackground.updateStateProgress unless progress?
@@ -107,7 +110,7 @@ root.PiroBackground =
     # clean stories, icons
     PiroBackground.db.getStories
       success: (stories) =>
-        PiroBackground.db.deleteStoryById(story.id) for story in stories when _.indexOf(PiroBackground.storiesIds, story.id) is -1
+        PiroBackground.db.deleteStoryById(story.id) for story in stories when _.indexOf(PiroBackground.storiesIds, story.id) is -1 and !PiroBackground._recentlyCreatedStory(story)
         PiroBackground.storiesIds = []
     PiroBackground.db.getAllProjects
       success: (projects) =>
@@ -169,6 +172,30 @@ root.PiroBackground =
       for tab in tabs
         chrome.tabs.update tab.id, 
           url: mainUrl
+  # create story
+  createAndSyncStory: (account, projectId, data, callbackParams = {}) =>
+    PiroBackground.db = new PiroStorage
+      success: =>
+        pivotalApi = new PivotaltrackerApi(account)
+        pivotalApi.createStory projectId,
+          data: data
+          success: (stories, textStatus, jqXHR) =>
+            if stories.length > 0
+              PiroBackground.db.setStory stories[0], 
+                success: =>
+                  callbackParams.success.call(null) if callbackParams.success?
+            else
+              callbackParams.error.call(null) if callbackParams.error?
+          error: =>
+            callbackParams.error.call(null) if callbackParams.error?
+  # private
+  _recentlyCreatedStory: (story) =>
+    recentNum = 3 # 3 min
+    createdAt = story.created_at
+    return false unless createdAt?
+    storyCreatedTime = moment(createdAt, "YYYY/MM/DD HH:mm:ss ZZ")
+    return false if isNaN(storyCreatedTime.toDate().getTime())
+    moment().diff(storyCreatedTime, "minutes") - storyCreatedTime.zone() <= recentNum
 # init
 chrome.runtime.onInstalled.addListener ->
   PiroBackground.init()
