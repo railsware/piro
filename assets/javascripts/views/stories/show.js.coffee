@@ -1,5 +1,9 @@
 class PiroPopup.Views.StoriesShow extends Backbone.View
   template: SHT['stories/show']
+  events:
+    "click .story_delete_link"          : "deleteStoryClick"
+    "click .cancel_delete_story_link"   : "cancelDeleteStory"
+    "click .confirm_delete_story_link"  : "confirmDeleteStory"
   
   initialize: =>
     @model.on 'change', @render
@@ -11,6 +15,15 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
 
   remove: =>
     $(@el).remove()
+    
+  deleteStoryClick: (e) =>
+    e.preventDefault()
+    @$('.box_item').addClass('deleting')
+  cancelDeleteStory: (e) =>
+    e.preventDefault()
+    @$('.box_item').removeClass('deleting')
+  confirmDeleteStory: (e) =>
+    e.preventDefault()
     
   onDestroyView: =>
     @model.off 'change', @render

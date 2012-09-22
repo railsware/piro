@@ -182,15 +182,15 @@ root.PiroBackground =
           success: (stories, textStatus, jqXHR) =>
             if stories.length > 0
               PiroBackground.db.setStory stories[0], 
-                success: =>
-                  callbackParams.success.call(null) if callbackParams.success?
+                success: (story) =>
+                  callbackParams.success.call(null, story) if callbackParams.success?
             else
               callbackParams.error.call(null) if callbackParams.error?
           error: =>
             callbackParams.error.call(null) if callbackParams.error?
   # private
   _recentlyCreatedStory: (story) =>
-    recentNum = 3 # 3 min
+    recentNum = 5 # 5 min
     createdAt = story.created_at
     return false unless createdAt?
     storyCreatedTime = moment(createdAt, "YYYY/MM/DD HH:mm:ss ZZ")

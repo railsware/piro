@@ -160,7 +160,7 @@ class root.PiroStorage
     request.onerror = @dbError
     request.onsuccess = (e) =>
       data = e.target.result
-      params.success.call(null, data) if params.success?
+      params.success.call(null, story) if params.success?
   setStories: (stories, params = {}) =>
     trans = @db.transaction([@storiesKey()], "readwrite")
     store = trans.objectStore(@storiesKey())
@@ -322,3 +322,7 @@ class root.PiroStorage
     interval
   setUpdateIntervalLS: (interval) =>
     @setLocalStorage("update_interval", interval)
+  getLatestProjectIdLS: =>
+    @getLocalStorage("latest_project_id") || 0
+  setLatestProjectIdLS: (value) =>
+    @setLocalStorage("latest_project_id", value)

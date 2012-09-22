@@ -1,3 +1,14 @@
+<div class="box_item">
+  <div class="main">
+    <a class="story_delete_link" href="#">Delete</a>
+  </div>
+  <div class="delete">
+    Are you sure want delete {{name}}?
+    <a class="confirm_delete_story_link" href="#">Confirm delete</a>
+    <a class="cancel_delete_story_link" href="#">Cancel</a>
+  </div>
+</div>
+
 <h2>{{name}}</h2>
 <p>{{description}}</p>
 <p>Requested by: {{#requested_by}}{{name}}{{/requested_by}}</p>

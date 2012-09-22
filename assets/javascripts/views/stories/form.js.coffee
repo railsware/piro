@@ -21,6 +21,8 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
     @initControlls()
     @initStoryType()
     @initCalendar()
+    # set default project
+    @$('.add_story_project_id').val(PiroPopup.db.getLatestProjectIdLS()).trigger("liszt:updated")
     this
   
   changeProject: (e) =>
@@ -126,14 +128,16 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
     # create story
     chrome.runtime.getBackgroundPage (bgPage) =>
       PiroPopup.bgPage = bgPage
+      @$('.error_box').empty()
       PiroPopup.bgPage.PiroBackground.createAndSyncStory(
         PiroPopup.pivotalCurrentAccount.toJSON(), 
         @$('.add_story_project_id').val(), 
         {story: attributes}, 
-        success: =>
-          console.log "done"
+        success: (story) =>
+          PiroPopup.db.setLatestProjectIdLS(story.project_id)
+          Backbone.history.navigate("story/#{story.id}", {trigger: true, replace: true})
         error: =>
-          console.log "error"
+          @$('.error_box').text("Error to create story :(")
       )
     
   onDestroyView: =>

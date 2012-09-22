@@ -1,4 +1,6 @@
 <form class="add_story_form" action="#">
+  <div class="error_box"></div>
+  
   <select class="add_story_project_id chzn-select" style="width:300px;">
     {{#projects}}
       <option value="{{id}}">{{name}}</option>

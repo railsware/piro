@@ -49,7 +49,7 @@ class PiroPopup.Routers.Popup extends Backbone.Router
       success: (storyInfo) =>
         return Backbone.history.navigate("", {trigger: true, replace: true}) unless storyInfo?
         # project
-        if @storiesList?
+        if @storiesList? && @storiesList.get(storyInfo.id)?
           @renderStory(storyInfo.id)
         else
           @renderProjectStories storyInfo.project_id, 
