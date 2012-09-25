@@ -30,9 +30,9 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         PiroPopup.pivotalCurrentAccount.toJSON(),
         @model.toJSON(),
         success: (story) =>
-          #projectId = @model.get('project_id')
+          projectId = @model.get('project_id')
           @model.trigger('destroy', @model, @model.collection, {})
-          #Backbone.history.navigate("project/#{projectId}", {trigger: true, replace: true})
+          Backbone.history.navigate("project/#{projectId}", {trigger: true, replace: true})
       )
     
   onDestroyView: =>
