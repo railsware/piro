@@ -1,26 +1,26 @@
-<ul>
-  <li class="{{#allStoriesTabView}} active{{/allStoriesTabView}}">
+<ul class="stories_tabs">
+  <li class="all_stories_tab{{#allStoriesTabView}} active{{/allStoriesTabView}}">
     <a class="stories_tab_link" href="#" data-key="all">All</a>
   </li>
-  <li class="{{#currentStoriesTabView}} active{{/currentStoriesTabView}}">
+  <li class="current_stories_tab{{#currentStoriesTabView}} active{{/currentStoriesTabView}}">
     <a class="stories_tab_link" href="#" data-key="current">Current</a>
   </li>
-  <li class="{{#doneStoriesTabView}} active{{/doneStoriesTabView}}">
+  <li class="done_stories_tab{{#doneStoriesTabView}} active{{/doneStoriesTabView}}">
     <a class="stories_tab_link" href="#" data-key="done">Done</a>
   </li>
-  <li class="{{#iceboxStoriesTabView}} active{{/iceboxStoriesTabView}}">
+  <li class="icebox_stories_tab{{#iceboxStoriesTabView}} active{{/iceboxStoriesTabView}}">
     <a class="stories_tab_link" href="#" data-key="icebox">Icebox</a>
   </li>
 </ul>
 
-<ul>
-  <li class="{{#allStoriesUserView}} active{{/allStoriesUserView}}">
+<ul class="stories_user_tabs">
+  <li class="all_stories_user_tab{{#allStoriesUserView}} active{{/allStoriesUserView}}">
     <a class="stories_user_link" href="#" data-key="all">All</a>
   </li>
-  <li class="{{#ownerStoriesUserView}} active{{/ownerStoriesUserView}}">
+  <li class="owner_stories_user_tab{{#ownerStoriesUserView}} active{{/ownerStoriesUserView}}">
     <a class="stories_user_link" href="#" data-key="owner">Owner</a>
   </li>
-  <li class="{{#requesterStoriesUserView}} active{{/requesterStoriesUserView}}">
+  <li class="requester_stories_user_tab{{#requesterStoriesUserView}} active{{/requesterStoriesUserView}}">
     <a class="stories_user_link" href="#" data-key="requester">Requester</a>
   </li>
 </ul>

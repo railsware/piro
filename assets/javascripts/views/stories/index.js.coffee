@@ -10,16 +10,10 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
     @collection.on 'add', @renderOne
     @collection.on 'reset', @renderAll
     @childViews = []
-    @filterText = ""
   
   render: =>
-    # filter text
-    @filterText = @$('input.stories_filter_input').val()
-    # render
     $(@el).html(@template.render(PiroPopup.db.getAllOptionsLS()))
     @renderAll()
-    # set filter
-    @$('input.stories_filter_input').val(@filterText)
     this
 
   renderOne: (story) =>
@@ -34,22 +28,27 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
       account: PiroPopup.pivotalCurrentAccount
       storiesTabView: PiroPopup.db.getStoriesTabViewLS()
       storiesUserView: PiroPopup.db.getStoriesUserViewLS()
-      filterText: @filterText
+      filterText: @$('input.stories_filter_input').val()
     @renderOne(story) for story in stories
 
   renderWithFilter: (e) =>
-    @filterText = @$('input.stories_filter_input').val()
     @renderAll()
 
   clickStoryTab: (e) =>
     e.preventDefault()
-    PiroPopup.db.setStoriesTabViewLS($(e.currentTarget).data('key'))
-    @render()
+    value = $(e.currentTarget).data('key')
+    PiroPopup.db.setStoriesTabViewLS(value)
+    @$('.stories_tabs li').removeClass('active')
+    @$(".stories_tabs li.#{value}_stories_tab").addClass('active')
+    @renderAll()
     
   clickStoryUser: (e) =>
     e.preventDefault()
-    PiroPopup.db.setStoriesUserViewLS($(e.currentTarget).data('key'))
-    @render()
+    value = $(e.currentTarget).data('key')
+    PiroPopup.db.setStoriesUserViewLS(value)
+    @$('.stories_user_tabs li').removeClass('active')
+    @$(".stories_user_tabs li.#{value}_stories_user_tab").addClass('active')
+    @renderAll()
 
   onDestroyView: =>
     @collection.off 'add', @renderOne
