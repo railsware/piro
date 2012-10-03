@@ -4,15 +4,22 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
   events:
     "click .stories_tab_link"           : "clickStoryTab"
     "click .stories_user_link"          : "clickStoryUser"
+    "keyup .stories_filter_input"       : "renderWithFilter"
   
   initialize: ->
     @collection.on 'add', @renderOne
     @collection.on 'reset', @renderAll
     @childViews = []
+    @filterText = ""
   
   render: =>
+    # filter text
+    @filterText = @$('input.stories_filter_input').val()
+    # render
     $(@el).html(@template.render(PiroPopup.db.getAllOptionsLS()))
     @renderAll()
+    # set filter
+    @$('input.stories_filter_input').val(@filterText)
     this
 
   renderOne: (story) =>
@@ -27,7 +34,12 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
       account: PiroPopup.pivotalCurrentAccount
       storiesTabView: PiroPopup.db.getStoriesTabViewLS()
       storiesUserView: PiroPopup.db.getStoriesUserViewLS()
+      filterText: @filterText
     @renderOne(story) for story in stories
+
+  renderWithFilter: (e) =>
+    @filterText = @$('input.stories_filter_input').val()
+    @renderAll()
 
   clickStoryTab: (e) =>
     e.preventDefault()

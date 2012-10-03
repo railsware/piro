@@ -64,7 +64,10 @@ class PiroPopup.Routers.Popup extends Backbone.Router
         @storiesList.reset(data)
         projectView = new PiroPopup.Views.StoriesIndex(collection: @storiesList)
         PiroPopup.updateStoriesContainer(projectView)
-        params.success.call(null) if params.success?
+        if params.success?
+          params.success.call(null)
+        else
+          $('input.stories_filter_input').focus() if $('input.stories_filter_input').length
   renderStory: (storyId) =>
     story = @storiesList.get(storyId)
     view = new PiroPopup.Views.StoriesShow(model: story)

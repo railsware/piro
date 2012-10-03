@@ -25,5 +25,8 @@
   </li>
 </ul>
 
+<div>
+  <input class="stories_filter_input" type="text" placeholder="Filter stories" />
+</div>
 
 <ul class="stories_list"></ul>

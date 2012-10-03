@@ -3,4 +3,4 @@ class PiroPopup.Collections.Stories extends Backbone.Collection
   
   getStoriesByFilters: (filter) =>
     @filter (story) =>
-      story.filterByState(filter.storiesTabView) and story.filterByUser(filter.account, filter.storiesUserView)
+      story.filterByState(filter.storiesTabView) and story.filterByUser(filter.account, filter.storiesUserView) and story.filterByText(filter.filterText)

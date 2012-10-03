@@ -25,3 +25,23 @@ class PiroPopup.Models.Story extends Backbone.Model
         return parseInt(requestedBy.id) is accountId
       else
         return true
+
+  filterByText: (text) =>
+    return true if !text? or (text? and 0 == text.length)
+    if "#" == text[0]
+      if @has('labels')? && @get('labels').length > 0
+        search = new RegExp(@_filterStrForRegex(text).substr(1), "gi")
+        return (@get('labels').match(search)? and @get('labels').match(search).length > 0)
+      else
+        return false
+    else
+      search = new RegExp(@_filterStrForRegex(text), "gi")
+      return (
+        (@get('id').match(search)? and @get('id').match(search).length > 0) or 
+        (@get('name').match(search)? and @get('name').match(search).length > 0) or 
+        (@get('description').match(search)? and @get('description').match(search).length > 0) or 
+        (@get('current_state').match(search)? and @get('current_state').match(search).length > 0)
+      )
+  
+  _filterStrForRegex: (str) =>
+    str.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1")
