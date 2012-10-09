@@ -275,6 +275,8 @@ class root.PiroStorage
     strData = root.localStorage.getItem(key)
     jsonData = if strData? then JSON.parse(strData) else null
     jsonData
+  deleteLocalStorageKey: (key) =>
+    root.localStorage.removeItem(key)
   clearLocalStorage: =>
     root.localStorage.clear()
   setSortedProjectsLS: (account, projectIds) =>
@@ -311,6 +313,12 @@ class root.PiroStorage
     @getLocalStorage("stories_tab_view") || "all"
   setStoriesTabViewLS: (value) =>
     @setLocalStorage("stories_tab_view", value)
+  getStoryTitleTmpLS: =>
+    storyTitle = @getLocalStorage("tmp_story_title")
+    @deleteLocalStorageKey("tmp_story_title") if storyTitle?
+    storyTitle
+  setStoryTitleTmpLS: (value) =>
+    @setLocalStorage("tmp_story_title", value)
   getStoriesUserViewLS: =>
     @getLocalStorage("stories_user_view") || "all"
   setStoriesUserViewLS: (value) =>

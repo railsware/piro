@@ -112,17 +112,24 @@ root.PiroBackground =
       success: (stories) =>
         PiroBackground.db.deleteStoryById(story.id) for story in stories when _.indexOf(PiroBackground.storiesIds, story.id) is -1 and !PiroBackground._recentlyCreatedStory(story)
         PiroBackground.storiesIds = []
+        PiroBackground.updateFinished()
     PiroBackground.db.getAllProjects
       success: (projects) =>
         projectIds = _.pluck(projects, 'id')
         PiroBackground.db.getProjectIcons
           success: (icons) =>
             PiroBackground.db.deleteProjectIcon(icon.id) for icon in icons when _.indexOf(projectIds, icon.id) is -1
-    PiroBackground.updateFinished()
   updateFinished: ->
     PiroBackground.updateState = false
     PiroBackground.checkUpdateState()
     PiroBackground.setAlarm()
+    PiroBackground.updatePopup()
+  updatePopup: ->
+    if PiroBackground.popupEvents?
+      PiroBackground.popupEvents.trigger "update:data:finished", null
+    else
+      chrome.extension.sendMessage {type: "update:data:finished"}, (response) ->
+        PiroBackground.initPopupView(response.events) if response? && response.events?
   # Context Menu
   initContextMenu: ->
     chrome.contextMenus.create
@@ -137,8 +144,20 @@ root.PiroBackground =
       type: "normal"
       id: "createPivotalStoryContextMenu"
   clickContextMenu: (info, tab) ->
-    console.log info
-    console.log tab
+    indexUrl = chrome.extension.getURL('index.html')
+    switch info.menuItemId
+      when "createPivotalStoryContextMenu"
+        PiroBackground.db.setStoryTitleTmpLS(info.selectionText)
+        PiroBackground.openPopupUrl("#{indexUrl}#story/new", true)
+      when "showPivotalStoryContextMenu"
+        linkProjectRegexp = new RegExp("(.*):\/\/(www\.)?pivotaltracker.com\/projects\/([0-9]+)(.*)?", "i")
+        linkStoryRegexp = new RegExp("(.*):\/\/(www\.)?pivotaltracker.com\/story\/show\/([0-9]+)(.*)?", "i")
+        if info.linkUrl.match(linkProjectRegexp)? && info.linkUrl.match(linkProjectRegexp)[3]?
+          projectId = info.linkUrl.match(linkProjectRegexp)[3]
+          PiroBackground.openPopupUrl("#{indexUrl}#project/#{projectId}", true)
+        else if info.linkUrl.match(linkStoryRegexp)? && info.linkUrl.match(linkStoryRegexp)[3]?
+          storyId = info.linkUrl.match(linkStoryRegexp)[3]
+          PiroBackground.openPopupUrl("#{indexUrl}#story/#{storyId}", true)
   # OMNIBOX  
   initOmniboxListeners: ->
     chrome.omnibox.onInputCancelled.addListener(PiroBackground.defaultOmniboxSuggestion)
@@ -166,12 +185,17 @@ root.PiroBackground =
         mainUrl = "#{indexUrl}#story/#{command[1]}" if command[1]?
       else
         mainUrl = "#{indexUrl}#story/#{command[0]}" if command[0]?
+    PiroBackground.openPopupUrl(mainUrl)
+  openPopupUrl: (url, isNew = false) ->
+    indexUrl = chrome.extension.getURL('index.html')
     chrome.tabs.query {}, (tabs) ->
       chrome.tabs.remove(tab.id) for tab in tabs when tab.url.substring(0, indexUrl.length) is indexUrl and tabs.length > 1
-    chrome.tabs.query {active: true}, (tabs) ->
-      for tab in tabs
-        chrome.tabs.update tab.id, 
-          url: mainUrl
+    if isNew is true
+      chrome.tabs.create {url: url, active: true}, (tab) ->
+        chrome.tabs.update tab.id, {active: true}
+    else
+      chrome.tabs.query {active: true}, (tabs) ->
+        chrome.tabs.update tab.id, {url: url} for tab in tabs
   # create story
   createAndSyncStory: (account, projectId, data, callbackParams = {}) =>
     PiroBackground.db = new PiroStorage

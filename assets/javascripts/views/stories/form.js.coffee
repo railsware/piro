@@ -24,6 +24,7 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
     @initControlls()
     @initStoryType()
     @initCalendar()
+    @setStoryTmpTitle()
     this
   
   changeProject: (e) =>
@@ -140,6 +141,10 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
         error: =>
           @$('.error_box').text("Error to create story :(")
       )
+
+  setStoryTmpTitle: =>
+    storyTitle = PiroPopup.db.getStoryTitleTmpLS()
+    @$('input.add_story_name').val(storyTitle) if storyTitle?
     
   onDestroyView: =>
     # destroy
