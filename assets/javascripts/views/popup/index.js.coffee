@@ -61,7 +61,6 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
   updatePivotalUpdateProgress: (info) =>
     return false unless info?
     progress = parseInt(info.progress)
-    progress = 100 if progress > 100
     try
       Piecon.setProgress(progress)
     catch e

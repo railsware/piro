@@ -33,6 +33,7 @@ root.PiroBackground =
     PiroBackground.popupEvents = events
     PiroBackground.checkUpdateState()
   checkUpdateState: ->
+    PiroBackground.updateBadgeText()
     if PiroBackground.popupEvents?
       PiroBackground.popupEvents.trigger "update:pivotal:data",
         updateState: PiroBackground.updateState
@@ -40,11 +41,23 @@ root.PiroBackground =
     else
       chrome.extension.sendMessage {type: "update:pivotal:data"}, (response) ->
         PiroBackground.initPopupView(response.events) if response? && response.events?
-  updateProgress: (progress = null) ->
+  updateProgress: ->
+    PiroBackground.updateBadgeText()
     return false unless PiroBackground.popupEvents?
-    progress = PiroBackground.updateStateProgress unless progress?
+    progress = PiroBackground.updateStateProgress
+    progress = 100 if progress > 100
     PiroBackground.popupEvents.trigger "update:pivotal:progress", 
       progress: progress
+  updateBadgeText: (params = {}) ->
+    if PiroBackground.updateState is true
+      percent = PiroBackground.updateStateProgress
+      percent = 0 unless percent?
+      percent = 100 if percent > 100
+      chrome.browserAction.setBadgeText({'text': "#{percent}"})
+      chrome.browserAction.setBadgeBackgroundColor({'color': "#666666"})
+    else
+      chrome.browserAction.setBadgeText({'text': ''})
+      chrome.browserAction.setBadgeBackgroundColor({'color': "#FF0000"})
   initAutoupdate: ->
     PiroBackground.startDataUpdate()
   initDataPeriodicUpdate: (alarm) ->
