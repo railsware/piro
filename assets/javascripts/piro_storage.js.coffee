@@ -324,7 +324,7 @@ class root.PiroStorage
   setStoriesUserViewLS: (value) =>
     @setLocalStorage("stories_user_view", value)
   getUpdateIntervalLS: =>
-    defInterval = 15
+    defInterval = 30
     interval = @getLocalStorage("update_interval") || defInterval
     interval = defInterval if interval < defInterval
     interval
