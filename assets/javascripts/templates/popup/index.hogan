@@ -1,28 +1,45 @@
 <div id="dialogContainer"></div>
-
-<div>
-  <select class="account_switcher">
-    {{#accounts}}
-      <option value="{{id}}">{{company}}{{^company}}{{email}}{{/company}}</option>
-    {{/accounts}}
-  </select>
-</div>
-
-<div id="updateDataBox">
-  <div class="update_box">
-    <a href="#" class="update_data_for_accounts_link">Update data</a>
+<header class="header row">
+  <div class="col1of3">
+    <div class="left mrm">
+      <img src="public/images/app_logo.png" alt="" />
+    </div>
+    <div class="last-col">
+      <select class="account_switcher chzn-select">
+        {{#accounts}}
+        <option value="{{id}}">{{company}}{{^company}}{{email}}{{/company}}</option>
+        {{/accounts}}
+      </select>
+    </div>
   </div>
-  <div class="loading_box">
-    Loading...
+  <div class="col1of3">
+    <div id="updateDataBox" >
+      <div class="update_box">
+        <a href="#" class="update_data_for_accounts_link">Reload</a>
+      </div>
+      <div class="loading_box">
+        Loading...
+      </div>
+    </div>
   </div>
-</div>
-
-<div>
-  <a class="add_story_link" href="#">Add story</a>
-</div>
-
-<div id="projectsBox" style="width:300px;float:left"></div>
-
-<div id="storiesBox" style="width:500px;float:left"></div>
-
-<div id="storyBox" style="width:500px;float:left"></div>
+  <div class="col1of3">
+    <a class="add_story_link" href="#">Add story</a>
+  </div>
+</header>
+<section class="body row">
+  <div class="col1of3">
+    <div id="projectsBox" class="container"></div>
+  </div>
+  <div class="col1of3">
+    <div id="storiesBox" class="container"></div>
+  </div>
+  <div class="col1of3">
+    <div id="storyBox" class="container"></div>
+  </div>
+</section>
+<footer class="footer row">
+  <a href="#">FAQ</a>
+  <div class="right">
+    &copy; 2012 <span class="rw-style">P</span>IRO by <span class="rw-style">Railsware</span>
+  </div>
+</footer>

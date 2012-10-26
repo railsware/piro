@@ -14,12 +14,15 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
     # global events
     PiroPopup.globalEvents.on "update:pivotal:data", @updatePivotalState
     PiroPopup.globalEvents.on "update:pivotal:progress", @updatePivotalUpdateProgress
+    $(window).resize =>
+      @recalculateHeight()
   
   render: =>
     $(@el).html(@template.render(
       accounts: @collection.toJSON()
     ))
     @renderProjects()
+    @recalculateHeight()
     this
   renderProjects: =>
     @childView.destroyView() if @childView?
@@ -65,6 +68,9 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
       Piecon.setProgress(progress)
     catch e
       # no title
+      
+  recalculateHeight: =>
+    @$(".container").height($("body").height() - 67)
 
   onDestroyView: =>
     @collection.off 'add', @render
