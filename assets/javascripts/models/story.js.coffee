@@ -45,3 +45,14 @@ class PiroPopup.Models.Story extends Backbone.Model
   
   _filterStrForRegex: (str) =>
     str.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1")
+
+  toJSON: =>
+    attr = _.clone(@attributes)
+    fixedTasks = []
+    for task in attr.tasks
+      newTask = task
+      newTask.complete = (task.complete.toString() is "true")
+      newTask.position = parseInt(task.position)
+      fixedTasks.push(newTask)
+    attr.tasks = _.sortBy(fixedTasks, (task) -> task.position)
+    attr

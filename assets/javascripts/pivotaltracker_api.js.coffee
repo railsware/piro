@@ -22,6 +22,7 @@ class root.PivotaltrackerApi
   created_at: "created_at", labels: "labels",
   comments: ["comments/comment", {id: "id", text: "text", created_at: "created_at", 
   author: {id: "author/person/id", name: "author/person/name", initials: "author/person/initials"}}],
+  tasks: ["tasks/task", {id: "id", description: "description", position: "position", complete: "complete", created_at: "created_at"}],
   attachments: ["attachments/attachment", {id: "id", filename: "filename", uploaded_at: "uploaded_at", url: "url", 
   s3_resource: {url: "s3_resource/url", expires: "s3_resource/expires"},
   uploaded_by: {id: "uploaded_by/person/id", name: "uploaded_by/person/name", initials: "uploaded_by/person/initials"}}]

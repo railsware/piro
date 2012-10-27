@@ -15,11 +15,21 @@
 <p>Owned by: {{#owned_by}}{{name}}{{/owned_by}}</p>
 <p>Labels: {{labels}}</p>
 
+<h3>Tasks</h3>
+<ul>
+  {{#tasks}}
+    <li>{{description}} | {{created_at}} | {{#complete}}Done{{/complete}}{{^complete}}Not done{{/complete}} | {{position}}</li>
+  {{/tasks}}
+</ul>
+
+<h3>Comments</h3>
 <ul>
   {{#comments}}
     <li>{{text}} | {{created_at}} | {{#author}}{{name}}{{/author}}</li>
   {{/comments}}
 </ul>
+
+<h3>Attachments</h3>
 <ul>
   {{#attachments}}
     <li>{{filename}} | {{url}} | {{uploaded_at}} | {{#uploaded_by}}{{name}}{{/uploaded_by}}</li>
