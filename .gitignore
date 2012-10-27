@@ -4,6 +4,7 @@
 .config
 .yardoc
 .project
+.sass-cache
 InstalledFiles
 _yardoc
 coverage

@@ -147,4 +147,4 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
     @$('input.add_story_name').val(storyTitle) if storyTitle?
     
   onDestroyView: =>
-    # destroy
+    # on destroy
