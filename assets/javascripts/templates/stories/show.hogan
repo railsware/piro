@@ -36,10 +36,7 @@
   {{#attachments}}
     <li class="attachment_box" data-id="{{id}}">
       <div>
-        {{filename}} | {{url}} | {{uploaded_at}} | {{#uploaded_by}}{{name}}{{/uploaded_by}} | <a href="#" class="attachment_delete_link">Delete</a>
-      </div>
-      <div>
-        <a href="#" class="confirm_delete_attachment_link" data-id="{{id}}">Confirm delete</a> or <a href="#" class="cancel_delete_attachment_link">Cancel</a>
+        {{filename}} | {{url}} | {{uploaded_at}} | {{#uploaded_by}}{{name}}{{/uploaded_by}}
       </div>
     </li>
   {{/attachments}}
