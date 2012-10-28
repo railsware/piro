@@ -28,6 +28,7 @@
   {{/tasks}}
 </ul>
 
+<h3>Add task</h3>
 <div class="add_task_box">
   <div><a href="#" class="task_open_link">Add task</a></div>
   <div>
@@ -52,6 +53,7 @@
   {{/comments}}
 </ul>
 
+<h3>Add comment</h3>
 <div class="add_comment_box">
   <div><a href="#" class="comment_open_link">Add comment</a></div>
   <div>
