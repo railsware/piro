@@ -18,12 +18,12 @@
 <h3>Tasks</h3>
 <ul>
   {{#tasks}}
-    <li class="task_box">
+    <li class="task_box" data-id="{{id}}">
       <label>
-        <input type="checkbox" class="task_input_{{id}}" {{#complete}}checked="checked"{{/complete}} />
+        <input type="checkbox" class="task_complete_input" data-id="{{id}}" {{#complete}}checked="checked"{{/complete}} />
         {{description}} | {{created_at}}
       </label>
-      <a href="#" class="delete_task_link">Delete</a>
+      <a href="#" class="delete_task_link" data-id="{{id}}">Delete</a>
     </li>
   {{/tasks}}
 </ul>
