@@ -4,6 +4,10 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     "click .story_delete_link"                      : "deleteStoryClick"
     "click .cancel_delete_story_link"               : "cancelDeleteStory"
     "click .confirm_delete_story_link"              : "confirmDeleteStory"
+    # task events
+    "click .task_open_link"                         : "openTaskClick"
+    "click .cancel_open_task_link"                  : "cancelOpenTask"
+    "submit .add_task_form"                         : "addTask"
     # comment events
     "click .comment_open_link"                      : "openCommentClick"
     "click .cancel_open_comment_link"               : "cancelOpenComment"
@@ -51,6 +55,28 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
           projectId = @model.get('project_id')
           @model.trigger('destroy', @model, @model.collection, {})
           Backbone.history.navigate("project/#{projectId}", {trigger: true, replace: true})
+      )
+
+  openTaskClick: (e) =>
+    e.preventDefault()
+    @$(e.currentTarget).parents('.add_task_box').addClass('adding')
+  cancelOpenTask: (e) =>
+    e.preventDefault()
+    @$(e.currentTarget).parents('.add_task_box').removeClass('adding')
+  addTask: (e) =>
+    e.preventDefault()
+    return false unless @$('.add_task_description').val().length > 0
+    attributes = 
+      task:
+        description: @$('.add_task_description').val()
+    chrome.runtime.getBackgroundPage (bgPage) =>
+      PiroPopup.bgPage = bgPage
+      PiroPopup.bgPage.PiroBackground.createTaskAndSyncStory(
+        PiroPopup.pivotalCurrentAccount.toJSON(),
+        @model.toJSON(),
+        attributes,
+        success: (story) =>
+          @model.set(story)
       )
 
   openCommentClick: (e) =>
