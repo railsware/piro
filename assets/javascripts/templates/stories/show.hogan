@@ -25,11 +25,26 @@
 <h3>Comments</h3>
 <ul>
   {{#comments}}
-    {{#text}}
-      <li>{{text}} | {{created_at}} | {{#author}}{{name}}{{/author}}</li>
-    {{/text}}
+    <li class="comment_box" data-id="{{id}}">
+      <div>
+        {{text}} | {{created_at}} | {{#author}}{{name}}{{/author}} | <a href="#" class="comment_delete_link">Delete</a>
+      </div>
+      <div>
+        <a href="#" class="confirm_delete_comment_link" data-id="{{id}}">Confirm delete</a> or <a href="#" class="cancel_delete_comment_link">Cancel</a>
+      </div>
+    </li>
   {{/comments}}
 </ul>
+
+<div class="add_comment_box">
+  <div><a href="#" class="comment_open_link">Add comment</a></div>
+  <div>
+    <form class="add_comment_form" method="POST">
+      <textarea class="add_comment_text" rows="8" cols="20"></textarea>
+      <input type="submit" value="Add" /> or <a class="cancel_open_comment_link" href="#">Cancel</a>
+    </form>
+  </div>
+</div>
 
 <h3>Attachments</h3>
 <ul>

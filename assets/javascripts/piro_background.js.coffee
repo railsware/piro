@@ -236,6 +236,25 @@ root.PiroBackground =
                 callbackParams.success.call(null) if callbackParams.success?
           error: =>
             callbackParams.error.call(null) if callbackParams.error?
+  createCommentAndSyncStory: (account, story, data, callbackParams = {}) =>
+    PiroBackground.db = new PiroStorage
+      success: =>
+        pivotalApi = new PivotaltrackerApi(account)
+        pivotalApi.createComment story,
+          data: data
+          success: (data, textStatus, jqXHR) =>
+            PiroBackground._syncStory(pivotalApi, story, callbackParams)
+          error: =>
+            callbackParams.error.call(null) if callbackParams.error?
+  deleteCommentAndSyncStory: (account, story, commentId, callbackParams = {}) =>
+    PiroBackground.db = new PiroStorage
+      success: =>
+        pivotalApi = new PivotaltrackerApi(account)
+        pivotalApi.deleteComment story, commentId,
+          success: (data, textStatus, jqXHR) =>
+            PiroBackground._syncStory(pivotalApi, story, callbackParams)
+          error: =>
+            callbackParams.error.call(null) if callbackParams.error?
   uploadAttachmentAndSyncStory: (account, story, formdata, callbackParams = {}) =>
     PiroBackground.db = new PiroStorage
       success: =>

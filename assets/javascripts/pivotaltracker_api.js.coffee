@@ -89,6 +89,20 @@ class root.PivotaltrackerApi
     params.success = (data, textStatus, jqXHR) =>
       successFunction.call(null, data, textStatus, jqXHR) if successFunction?
     @sendPivotalRequest(params)
+  createComment: (story, params = {}) =>
+    successFunction = params.success
+    params.url = "#{@baseUrl}/projects/#{story.project_id}/stories/#{story.id}/comments"
+    params.type = "POST"
+    params.success = (data, textStatus, jqXHR) =>
+      successFunction.call(null, data, textStatus, jqXHR) if successFunction?
+    @sendPivotalRequest(params)
+  deleteComment: (story, commentId, params = {}) =>
+    successFunction = params.success
+    params.url = "#{@baseUrl}/projects/#{story.project_id}/stories/#{story.id}/comments/#{commentId}"
+    params.type = "DELETE"
+    params.success = (data, textStatus, jqXHR) =>
+      successFunction.call(null, data, textStatus, jqXHR) if successFunction?
+    @sendPivotalRequest(params)
   uploadAttachment: (story, formdata, params = {}) =>
     successFunction = params.success
     params.url = "#{@baseUrl}/projects/#{story.project_id}/stories/#{story.id}/attachments"
