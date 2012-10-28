@@ -30,8 +30,26 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
 
   render: =>
     $(@el).html(@template.render(@model.toJSON()))
+    @initSortingTasks()
     this
-
+  
+  initSortingTasks: =>
+    @$("ul.tasks_list_box").sortable
+      handle: 'span.sort_task'
+      axis: 'y'
+      placeholder: 'ui-state-highlight'
+      update: (event) =>
+        objects = @$("ul.tasks_list_box").find("li.task_box")
+        objectIds = ($(object).data('id') for object in objects)
+        if objectIds.length > 0
+          chrome.runtime.getBackgroundPage (bgPage) =>
+            PiroPopup.bgPage = bgPage
+            PiroPopup.bgPage.PiroBackground.sortTasksAndSyncStory(
+              PiroPopup.pivotalCurrentAccount.toJSON(),
+              @model.toJSON(),
+              objectIds
+            )
+  
   getStoryAndRender: =>
     PiroPopup.db.getStoryById @model.get('id'),
       success: (storyInfo) =>

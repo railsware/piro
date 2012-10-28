@@ -256,6 +256,11 @@ root.PiroBackground =
             PiroBackground._syncStory(pivotalApi, story, callbackParams)
           error: =>
             callbackParams.error.call(null) if callbackParams.error?
+  sortTasksAndSyncStory: (account, story, sortData, callbackParams = {}) =>
+    PiroBackground.db = new PiroStorage
+      success: =>
+        pivotalApi = new PivotaltrackerApi(account)
+        PiroBackground._sortOneTask(pivotalApi, story, sortData, 0)
   deleteTaskAndSyncStory: (account, story, taskId, callbackParams = {}) =>
     PiroBackground.db = new PiroStorage
       success: =>
@@ -305,6 +310,16 @@ root.PiroBackground =
           error: =>
             callbackParams.error.call(null) if callbackParams.error?
   # private
+  _sortOneTask: (pivotalApi, story, sortData, iterator = 0) =>
+    if sortData[iterator]?
+      pivotalApi.changeTask story, sortData[iterator],
+        data: 
+          task:
+            position: (iterator + 1)
+        complete: =>
+          PiroBackground._sortOneTask(pivotalApi, story, sortData, (iterator + 1))
+    else
+      PiroBackground._syncStory(pivotalApi, story, {})
   _syncStory: (pivotalApi, story, callbackParams = {}) =>
     pivotalApi.getStory story.id,
       success: (stories, textStatus, jqXHR) =>
