@@ -21,8 +21,8 @@ class PiroPopup.Routers.Popup extends Backbone.Router
       else
         return Backbone.history.navigate("login", {trigger: true, replace: true}) if PiroPopup.pivotalAccounts.length is 0
     # highlight links
-    @_hightlightLinks(trigger, args) 
-  
+    @_hightlightLinks(trigger, args)
+
   index: =>
     PiroPopup.updateMainContainer(@mainView) unless PiroPopup.currentMainView is @mainView
     PiroPopup.clearStoriesContainer()
