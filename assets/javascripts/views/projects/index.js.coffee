@@ -18,6 +18,7 @@ class PiroPopup.Views.ProjectsIndex extends Backbone.View
     PiroPopup.db.getProjects PiroPopup.pivotalCurrentAccount.toJSON(),
       success: (projects) =>
         PiroPopup.pivotalProjects.reset(projects)
+        PiroPopup.globalEvents.trigger "route:highlight:links", null
 
   renderOne: (project) =>
     view = new PiroPopup.Views.ProjectsElement(model: project)

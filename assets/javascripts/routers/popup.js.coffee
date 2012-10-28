@@ -9,32 +9,20 @@ class PiroPopup.Routers.Popup extends Backbone.Router
   
   initialize: (options) =>
     @storiesList = null
-    @on 'all', @beforRouting
+    @on 'all', @afterRouting
+    PiroPopup.globalEvents.on "route:highlight:links", @_refreshLinks
     @mainView = new PiroPopup.Views.PopupIndex(collection: PiroPopup.pivotalAccounts, projects: PiroPopup.pivotalProjects)
     PiroPopup.updateMainContainer(@mainView)
 
-  beforRouting: (trigger, args) =>
+  afterRouting: (trigger, args) =>
     switch trigger
       when "route:login"
         return Backbone.history.navigate("", {trigger: true, replace: true}) if PiroPopup.pivotalAccounts.length isnt 0
       else
         return Backbone.history.navigate("login", {trigger: true, replace: true}) if PiroPopup.pivotalAccounts.length is 0
     # highlight links
-    switch trigger
-      when "route:project"
-        @_highlightProject(args)
-      when "route:showStory"
-        PiroPopup.db.getStoryById args,
-          success: (storyInfo) =>
-            return false unless storyInfo?
-            @_highlightProject(storyInfo.project_id)
-            $('li.story_element').removeClass('active')
-            $("li.story_element[data-story-id='#{storyInfo.id}']").addClass('active')
-      when "route:newStory"
-        $('li.story_element').removeClass('active')
-      else
-        $('li.story_element').removeClass('active')
-        $('li.project_element').removeClass('active')
+    @_hightlightLinks(trigger, args) 
+  
   index: =>
     PiroPopup.updateMainContainer(@mainView) unless PiroPopup.currentMainView is @mainView
     PiroPopup.clearStoriesContainer()
@@ -76,7 +64,33 @@ class PiroPopup.Routers.Popup extends Backbone.Router
     view = new PiroPopup.Views.LoginIndex(collection: PiroPopup.pivotalAccounts)
     PiroPopup.updateMainContainer(view)
   # private
+  _refreshLinks: =>
+    return false if !Backbone.history? || !Backbone.history.fragment?
+    for key, route of @routes
+      regRoute = @_routeToRegExp(key)
+      if Backbone.history.fragment.match(regRoute)?
+        args = @_extractParameters(regRoute, Backbone.history.fragment)
+        args = args[0] if args.length is 1
+        return @_hightlightLinks("route:#{route}", args)
+  _hightlightLinks: (trigger, args) =>
+    switch trigger
+      when "route:project"
+        @_highlightProject(args)
+      when "route:showStory"
+        PiroPopup.db.getStoryById args,
+          success: (storyInfo) =>
+            return false unless storyInfo?
+            @_highlightProject(storyInfo.project_id)
+            return false if $("li.story_element[data-story-id='#{storyInfo.id}']").hasClass('active')
+            $('li.story_element').removeClass('active')
+            $("li.story_element[data-story-id='#{storyInfo.id}']").addClass('active')
+      when "route:newStory"
+        $('li.story_element').removeClass('active')
+      else
+        $('li.story_element').removeClass('active')
+        $('li.project_element').removeClass('active')
   _highlightProject: (projectId) =>
+    return false if $("li.project_element[data-project-id='#{projectId}']").hasClass('active')
     $('li.project_element').removeClass('active')
     $("li.project_element[data-project-id='#{projectId}']").addClass('active')
       

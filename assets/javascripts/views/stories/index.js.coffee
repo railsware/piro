@@ -18,11 +18,12 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
     this
 
   getStoriesAndRender: =>
-    projectId = @collection.first.get("project_id")
+    projectId = @collection.at(0).get("project_id") if @collection.length > 0
     return false unless projectId?
     PiroPopup.db.getStoriesByProject {id: projectId},
       success: (project, data) =>
         @collection.reset(data)
+        PiroPopup.globalEvents.trigger "route:highlight:links", null
 
   renderOne: (story) =>
     view = new PiroPopup.Views.StoriesElement(model: story)
