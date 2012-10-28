@@ -8,10 +8,16 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
   initialize: =>
     @model.on 'change', @render
     @model.on 'destroy', @remove
+    PiroPopup.globalEvents.on "update:data:finished", @getStoryAndRender
 
   render: =>
     $(@el).html(@template.render(@model.toJSON()))
     this
+
+  getStoryAndRender: =>
+    PiroPopup.db.getStoryById @model.get('id'),
+      success: (storyInfo) =>
+        @model.set(storyInfo)
 
   remove: =>
     $(@el).remove()
@@ -38,3 +44,4 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
   onDestroyView: =>
     @model.off 'change', @render
     @model.off 'destroy', @remove
+    PiroPopup.globalEvents.off "update:data:finished", @getStoryAndRender

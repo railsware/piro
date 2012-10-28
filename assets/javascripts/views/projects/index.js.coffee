@@ -5,6 +5,7 @@ class PiroPopup.Views.ProjectsIndex extends Backbone.View
   initialize: ->
     @collection.on 'add', @renderOne
     @collection.on 'reset', @renderAll
+    PiroPopup.globalEvents.on "update:data:finished", @getProjectsAndRender
     @childViews = []
   
   render: =>
@@ -12,7 +13,12 @@ class PiroPopup.Views.ProjectsIndex extends Backbone.View
     @renderAll()
     @sortBinding()
     this
-    
+
+  getProjectsAndRender: =>
+    PiroPopup.db.getProjects PiroPopup.pivotalCurrentAccount.toJSON(),
+      success: (projects) =>
+        PiroPopup.pivotalProjects.reset(projects)
+
   renderOne: (project) =>
     view = new PiroPopup.Views.ProjectsElement(model: project)
     @$('.projects_list').append(view.render().el)
@@ -38,6 +44,7 @@ class PiroPopup.Views.ProjectsIndex extends Backbone.View
   onDestroyView: =>
     @collection.off 'add', @renderOne
     @collection.off 'reset', @renderAll
+    PiroPopup.globalEvents.off "update:data:finished", @getProjectsAndRender
     @cleanupChildViews()
   cleanupChildViews: =>
     view.destroyView() for view in @childViews
