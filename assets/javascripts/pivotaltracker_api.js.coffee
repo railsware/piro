@@ -43,6 +43,8 @@ class root.PivotaltrackerApi
     ajaxParams.success     = params.success if params.success?
     ajaxParams.complete    = params.complete if params.complete?
     ajaxParams.beforeSend  = params.beforeSend if params.beforeSend?
+    ajaxParams.processData = params.processData if params.processData?
+    ajaxParams.contentType = params.contentType if params.contentType?
     $.ajax ajaxParams
     
   getProjects: (params = {}) =>
@@ -51,21 +53,21 @@ class root.PivotaltrackerApi
     params.success = (data, textStatus, jqXHR) =>
       projects = Jath.parse(@projectsTemplate, data)
       successFunction.call(null, projects, textStatus, jqXHR) if successFunction?
-    this.sendPivotalRequest(params)
+    @sendPivotalRequest(params)
   getStories: (project, params = {}) =>
     successFunction = params.success
     params.url = "#{@baseUrl}/projects/#{project.id}/stories"
     params.success = (data, textStatus, jqXHR) =>
       stories = Jath.parse(@storiesTemplate, data)
       successFunction.call(null, project, stories, textStatus, jqXHR) if successFunction?
-    this.sendPivotalRequest(params)
+    @sendPivotalRequest(params)
   getStory: (storyId, params = {}) =>
     successFunction = params.success
     params.url = "#{@baseUrl}/stories/#{storyId}"
     params.success = (data, textStatus, jqXHR) =>
       stories = Jath.parse(@storiesTemplate, data)
       successFunction.call(null, stories, textStatus, jqXHR) if successFunction?
-    this.sendPivotalRequest(params)
+    @sendPivotalRequest(params)
   createStory: (projectId, params = {}) =>
     successFunction = params.success
     errorFunction = params.error
@@ -79,14 +81,31 @@ class root.PivotaltrackerApi
       story = stories[0] if stories.length > 0
       return false unless story.id?
       @_getStoryWithTimeout(story, successFunction, errorFunction, maxIterator)
-    this.sendPivotalRequest(params)
+    @sendPivotalRequest(params)
   deleteStory: (story, params = {}) =>
     successFunction = params.success
     params.url = "#{@baseUrl}/projects/#{story.project_id}/stories/#{story.id}"
     params.type = "DELETE"
     params.success = (data, textStatus, jqXHR) =>
       successFunction.call(null, data, textStatus, jqXHR) if successFunction?
-    this.sendPivotalRequest(params)
+    @sendPivotalRequest(params)
+  uploadAttachment: (story, formdata, params = {}) =>
+    successFunction = params.success
+    params.url = "#{@baseUrl}/projects/#{story.project_id}/stories/#{story.id}/attachments"
+    params.type = "POST"
+    params.data = formdata
+    params.processData = false
+    params.contentType = false
+    params.success = (data, textStatus, jqXHR) =>
+      successFunction.call(null, data, textStatus, jqXHR) if successFunction?
+    @sendPivotalRequest(params)
+  deleteAttachment: (story, attachmentId, params = {}) =>
+    successFunction = params.success
+    params.url = "#{@baseUrl}/projects/#{story.project_id}/stories/#{story.id}/attachments/#{attachmentId}"
+    params.type = "DELETE"
+    params.success = (data, textStatus, jqXHR) =>
+      successFunction.call(null, data, textStatus, jqXHR) if successFunction?
+    @sendPivotalRequest(params)
   # private
   _getStoryWithTimeout: (story, successFunction, errorFunction, maxIterator) =>
     setTimeout(=>
@@ -108,7 +127,7 @@ class root.PivotaltrackerAuthLib
       cache: false
       global: false
       dataType: 'xml' 
-      url: "#{this.baseUrl}/me"
+      url: "#{@baseUrl}/me"
       success: (data, textStatus, jqXHR) ->
         template = [ "//person", 
         { id: "id", email: "email", name: "name", initials: "initials", 

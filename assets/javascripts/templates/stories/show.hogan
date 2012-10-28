@@ -25,14 +25,29 @@
 <h3>Comments</h3>
 <ul>
   {{#comments}}
-    <li>{{text}} | {{created_at}} | {{#author}}{{name}}{{/author}}</li>
+    {{#text}}
+      <li>{{text}} | {{created_at}} | {{#author}}{{name}}{{/author}}</li>
+    {{/text}}
   {{/comments}}
 </ul>
 
 <h3>Attachments</h3>
 <ul>
   {{#attachments}}
-    <li>{{filename}} | {{url}} | {{uploaded_at}} | {{#uploaded_by}}{{name}}{{/uploaded_by}}</li>
+    <li class="attachment_box" data-id="{{id}}">
+      <div>
+        {{filename}} | {{url}} | {{uploaded_at}} | {{#uploaded_by}}{{name}}{{/uploaded_by}} | <a href="#" class="attachment_delete_link">Delete</a>
+      </div>
+      <div>
+        <a href="#" class="confirm_delete_attachment_link" data-id="{{id}}">Confirm delete</a> or <a href="#" class="cancel_delete_attachment_link">Cancel</a>
+      </div>
+    </li>
   {{/attachments}}
 </ul>
+
+<h3>Upload file</h3>
+<form id="attachmentForm" method="post" enctype="multipart/form-data">
+  <input type="file" class="fileInput" value="Upload" />
+</form>
+
 <p>Link: piro {{id}}</p>
