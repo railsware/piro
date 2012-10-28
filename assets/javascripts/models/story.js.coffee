@@ -63,6 +63,6 @@ class PiroPopup.Models.Story extends Backbone.Model
     fixedComments = []
     fixedComments = _.map comments, (comment) =>
       newComment = comment
-      newComment.text = false if comment.text.length is 0
+      return null if comment.text.length is 0
       newComment
-    fixedComments
+    _.compact(fixedComments)
