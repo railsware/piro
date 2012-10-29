@@ -15,14 +15,70 @@
 <p>Owned by: {{#owned_by}}{{name}}{{/owned_by}}</p>
 <p>Labels: {{labels}}</p>
 
+<h3>Tasks</h3>
+<ul class="tasks_list_box">
+  {{#tasks}}
+    <li class="task_box" data-id="{{id}}">
+      <span class="sort_task">drag</span>
+      <label>
+        <input type="checkbox" class="task_complete_input" data-id="{{id}}" {{#complete}}checked="checked"{{/complete}} />
+        {{description}} | {{created_at}}
+      </label>
+      <a href="#" class="delete_task_link" data-id="{{id}}">Delete</a>
+    </li>
+  {{/tasks}}
+</ul>
+
+<h3>Add task</h3>
+<div class="add_task_box">
+  <div><a href="#" class="task_open_link">Add task</a></div>
+  <div>
+    <form class="add_task_form" method="POST">
+      <input type="text" class="add_task_description" />
+      <input type="submit" value="Add" /> or <a class="cancel_open_task_link" href="#">Cancel</a>
+    </form>
+  </div>
+</div>
+
+<h3>Comments</h3>
 <ul>
   {{#comments}}
-    <li>{{text}} | {{created_at}} | {{#author}}{{name}}{{/author}}</li>
+    <li class="comment_box" data-id="{{id}}">
+      <div>
+        {{text}} | {{created_at}} | {{#author}}{{name}}{{/author}} | <a href="#" class="comment_delete_link">Delete</a>
+      </div>
+      <div>
+        <a href="#" class="confirm_delete_comment_link" data-id="{{id}}">Confirm delete</a> or <a href="#" class="cancel_delete_comment_link">Cancel</a>
+      </div>
+    </li>
   {{/comments}}
 </ul>
+
+<h3>Add comment</h3>
+<div class="add_comment_box">
+  <div><a href="#" class="comment_open_link">Add comment</a></div>
+  <div>
+    <form class="add_comment_form" method="POST">
+      <textarea class="add_comment_text" rows="8" cols="20"></textarea>
+      <input type="submit" value="Add" /> or <a class="cancel_open_comment_link" href="#">Cancel</a>
+    </form>
+  </div>
+</div>
+
+<h3>Attachments</h3>
 <ul>
   {{#attachments}}
-    <li>{{filename}} | {{url}} | {{uploaded_at}} | {{#uploaded_by}}{{name}}{{/uploaded_by}}</li>
+    <li class="attachment_box" data-id="{{id}}">
+      <div>
+        {{filename}} | {{url}} | {{uploaded_at}} | {{#uploaded_by}}{{name}}{{/uploaded_by}}
+      </div>
+    </li>
   {{/attachments}}
 </ul>
+
+<h3>Upload file</h3>
+<form id="attachmentForm" method="post" enctype="multipart/form-data">
+  <input type="file" class="fileInput" value="Upload" />
+</form>
+
 <p>Link: piro {{id}}</p>

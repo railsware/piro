@@ -49,6 +49,10 @@ root.PiroPopup =
         when "update:pivotal:data"
           sendResponse
             events: PiroPopup.globalEvents
+        when "update:data:finished"
+          PiroPopup.globalEvents.trigger "update:data:finished", null
+          sendResponse
+            events: PiroPopup.globalEvents
         else
           # not implemented
   initUI: (accounts) ->

@@ -9,12 +9,21 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
   initialize: ->
     @collection.on 'add', @renderOne
     @collection.on 'reset', @renderAll
+    PiroPopup.globalEvents.on "update:data:finished", @getStoriesAndRender
     @childViews = []
   
   render: =>
     $(@el).html(@template.render(PiroPopup.db.getAllOptionsLS()))
     @renderAll()
     this
+
+  getStoriesAndRender: =>
+    projectId = @collection.at(0).get("project_id") if @collection.length > 0
+    return false unless projectId?
+    PiroPopup.db.getStoriesByProject {id: projectId},
+      success: (project, data) =>
+        @collection.reset(data)
+        PiroPopup.globalEvents.trigger "route:highlight:links", null
 
   renderOne: (story) =>
     view = new PiroPopup.Views.StoriesElement(model: story)
@@ -53,6 +62,7 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
   onDestroyView: =>
     @collection.off 'add', @renderOne
     @collection.off 'reset', @renderAll
+    PiroPopup.globalEvents.off "update:data:finished", @getStoriesAndRender
     @cleanupChildViews()
   cleanupChildViews: =>
     view.destroyView() for view in @childViews

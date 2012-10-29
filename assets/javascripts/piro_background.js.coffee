@@ -236,7 +236,100 @@ root.PiroBackground =
                 callbackParams.success.call(null) if callbackParams.success?
           error: =>
             callbackParams.error.call(null) if callbackParams.error?
+  createTaskAndSyncStory: (account, story, data, callbackParams = {}) =>
+    PiroBackground.db = new PiroStorage
+      success: =>
+        pivotalApi = new PivotaltrackerApi(account)
+        pivotalApi.createTask story,
+          data: data
+          success: (data, textStatus, jqXHR) =>
+            PiroBackground._syncStory(pivotalApi, story, callbackParams)
+          error: =>
+            callbackParams.error.call(null) if callbackParams.error?
+  changeTaskAndSyncStory: (account, story, taskId, data, callbackParams = {}) =>
+    PiroBackground.db = new PiroStorage
+      success: =>
+        pivotalApi = new PivotaltrackerApi(account)
+        pivotalApi.changeTask story, taskId,
+          data: data
+          success: (data, textStatus, jqXHR) =>
+            PiroBackground._syncStory(pivotalApi, story, callbackParams)
+          error: =>
+            callbackParams.error.call(null) if callbackParams.error?
+  sortTasksAndSyncStory: (account, story, sortData, callbackParams = {}) =>
+    PiroBackground.db = new PiroStorage
+      success: =>
+        pivotalApi = new PivotaltrackerApi(account)
+        PiroBackground._sortOneTask(pivotalApi, story, sortData, 0)
+  deleteTaskAndSyncStory: (account, story, taskId, callbackParams = {}) =>
+    PiroBackground.db = new PiroStorage
+      success: =>
+        pivotalApi = new PivotaltrackerApi(account)
+        pivotalApi.deleteTask story, taskId,
+          success: (data, textStatus, jqXHR) =>
+            PiroBackground._syncStory(pivotalApi, story, callbackParams)
+          error: =>
+            callbackParams.error.call(null) if callbackParams.error?
+  createCommentAndSyncStory: (account, story, data, callbackParams = {}) =>
+    PiroBackground.db = new PiroStorage
+      success: =>
+        pivotalApi = new PivotaltrackerApi(account)
+        pivotalApi.createComment story,
+          data: data
+          success: (data, textStatus, jqXHR) =>
+            PiroBackground._syncStory(pivotalApi, story, callbackParams)
+          error: =>
+            callbackParams.error.call(null) if callbackParams.error?
+  deleteCommentAndSyncStory: (account, story, commentId, callbackParams = {}) =>
+    PiroBackground.db = new PiroStorage
+      success: =>
+        pivotalApi = new PivotaltrackerApi(account)
+        pivotalApi.deleteComment story, commentId,
+          success: (data, textStatus, jqXHR) =>
+            PiroBackground._syncStory(pivotalApi, story, callbackParams)
+          error: =>
+            callbackParams.error.call(null) if callbackParams.error?
+  uploadAttachmentAndSyncStory: (account, story, formdata, callbackParams = {}) =>
+    PiroBackground.db = new PiroStorage
+      success: =>
+        pivotalApi = new PivotaltrackerApi(account)
+        pivotalApi.uploadAttachment story, formdata,
+          success: (data, textStatus, jqXHR) =>
+            setTimeout(=>
+              PiroBackground._syncStory(pivotalApi, story, callbackParams)
+            , 4000)
+          error: =>
+            callbackParams.error.call(null) if callbackParams.error?
+  deleteAttachmentAndSyncStory: (account, story, attachmentId, callbackParams = {}) =>
+    PiroBackground.db = new PiroStorage
+      success: =>
+        pivotalApi = new PivotaltrackerApi(account)
+        pivotalApi.deleteAttachment story, attachmentId,
+          success: (data, textStatus, jqXHR) =>
+            PiroBackground._syncStory(pivotalApi, story, callbackParams)
+          error: =>
+            callbackParams.error.call(null) if callbackParams.error?
   # private
+  _sortOneTask: (pivotalApi, story, sortData, iterator = 0) =>
+    if sortData[iterator]?
+      pivotalApi.changeTask story, sortData[iterator],
+        data: 
+          task:
+            position: (iterator + 1)
+        complete: =>
+          PiroBackground._sortOneTask(pivotalApi, story, sortData, (iterator + 1))
+    else
+      PiroBackground._syncStory(pivotalApi, story, {})
+  _syncStory: (pivotalApi, story, callbackParams = {}) =>
+    pivotalApi.getStory story.id,
+      success: (stories, textStatus, jqXHR) =>
+        PiroBackground.db.setStory stories[0],
+          success: (story) =>
+            callbackParams.success.call(null, story) if callbackParams.success?
+          error: =>
+            callbackParams.error.call(null) if callbackParams.error?
+      error: =>
+        callbackParams.error.call(null) if callbackParams.error?
   _recentlyCreatedStory: (story) =>
     recentNum = 5 # 5 min
     createdAt = story.created_at
