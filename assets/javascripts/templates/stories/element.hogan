@@ -1,1 +1,3 @@
-<a href="#" class="story_link_info">{{name}}</a>
+<div class="story {{current_state}}">
+  <a href="#" class="story_link_info">{{name}}</a>
+</div>

@@ -1,32 +1,35 @@
-<ul class="stories_tabs">
-  <li class="all_stories_tab{{#allStoriesTabView}} active{{/allStoriesTabView}}">
+<div class="row mvs">
+  <div class="col1of2">
+    <ul class="stories_user_tabs user-stories-tabs">
+      <li class="all_stories_user_tab{{#allStoriesUserView}} active{{/allStoriesUserView}}">
+        <a class="stories_user_link" href="#" data-key="all">All</a>
+      </li>
+      <li class="owner_stories_user_tab{{#ownerStoriesUserView}} active{{/ownerStoriesUserView}}">
+        <a class="stories_user_link" href="#" data-key="owner">Owner</a>
+      </li>
+      <li class="requester_stories_user_tab{{#requesterStoriesUserView}} active{{/requesterStoriesUserView}}">
+        <a class="stories_user_link" href="#" data-key="requester">Requester</a>
+      </li>
+    </ul>
+  </div>
+  <div class="col1of2">
+    <input class="stories_filter_input search" type="text" placeholder="Filter stories" />
+  </div>
+</div>
+
+<ul class="stories_tabs stories-tabs row">
+  <li class="all_stories_tab{{#allStoriesTabView}} active{{/allStoriesTabView}} all">
     <a class="stories_tab_link" href="#" data-key="all">All</a>
   </li>
-  <li class="current_stories_tab{{#currentStoriesTabView}} active{{/currentStoriesTabView}}">
+  <li class="current_stories_tab{{#currentStoriesTabView}} active{{/currentStoriesTabView}} current">
     <a class="stories_tab_link" href="#" data-key="current">Current</a>
   </li>
-  <li class="done_stories_tab{{#doneStoriesTabView}} active{{/doneStoriesTabView}}">
+  <li class="done_stories_tab{{#doneStoriesTabView}} active{{/doneStoriesTabView}} done">
     <a class="stories_tab_link" href="#" data-key="done">Done</a>
   </li>
-  <li class="icebox_stories_tab{{#iceboxStoriesTabView}} active{{/iceboxStoriesTabView}}">
+  <li class="icebox_stories_tab{{#iceboxStoriesTabView}} active{{/iceboxStoriesTabView}} icebox">
     <a class="stories_tab_link" href="#" data-key="icebox">Icebox</a>
   </li>
 </ul>
 
-<ul class="stories_user_tabs">
-  <li class="all_stories_user_tab{{#allStoriesUserView}} active{{/allStoriesUserView}}">
-    <a class="stories_user_link" href="#" data-key="all">All</a>
-  </li>
-  <li class="owner_stories_user_tab{{#ownerStoriesUserView}} active{{/ownerStoriesUserView}}">
-    <a class="stories_user_link" href="#" data-key="owner">Owner</a>
-  </li>
-  <li class="requester_stories_user_tab{{#requesterStoriesUserView}} active{{/requesterStoriesUserView}}">
-    <a class="stories_user_link" href="#" data-key="requester">Requester</a>
-  </li>
-</ul>
-
-<div>
-  <input class="stories_filter_input" type="text" placeholder="Filter stories" />
-</div>
-
-<ul class="stories_list"></ul>
+<ul class="stories_list stories-list"></ul>

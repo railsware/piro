@@ -16,8 +16,15 @@ html, body
   background: #d5d1cc
   
 .container
-  overflow-y: auto
+  overflow-y: scroll
   padding: 0 5px
+  &::-webkit-scrollbar 
+    width: 6px
+    background: rgba(255, 255, 255, .2)
+    position: absolute
+  &::-webkit-scrollbar-thumb
+    background-color: rgba(0, 0, 0, 0.2)
+    +border-radius(3px)
   
 .footer
   height: 19px
