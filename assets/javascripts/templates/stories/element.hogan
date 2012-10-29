@@ -1,3 +1,9 @@
 <div class="story {{current_state}}">
-  <a href="#" class="story_link_info">{{name}}</a>
+  <a href="#" class="story_link_info story-title">{{name}}</a>
+  {{#labelsList}}
+    <a href="#" class="label">{{.}}</a>
+  {{/labelsList}}
+  {{#owned_by}}
+    (<a href="#">{{initials}}</a>)
+  {{/owned_by}}
 </div>

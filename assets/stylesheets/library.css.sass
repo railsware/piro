@@ -1,39 +1,67 @@
 .projects-list
-  margin: 5px
+  margin: 5px 10px
   list-style: none
   .project
-    background: #d5d1cc
+    padding: 4px 0
     border-bottom: 1px solid #e6e3e1
     border-top: 1px solid #c0bcb8
-    padding: 4px 0
-    .project_link
-      display: block
-      padding: 5px
+    .project-inner
+      padding: 8px
+      position: relative
       +clearfix
-      .icon
-        float: left
-        margin-right: 10px
+    .project_link
+      padding-top: 5px
+      display: block
+    .icon
+      float: left
+      width: 32px
+      height: 32px
+      margin-right: 10px
+      +border-radius(16px)
+      overflow: hidden
+      img
         width: 32px
         height: 32px
-        +border-radius(16px)
-        overflow: hidden
-        img
-          width: 32px
-          height: 32px
-      .project-name
-        display: inline-block
-        margin-top: 5px
-        font-size: 16px
-        color: #000
-        margin-right: 10px
-    .settings-link, .drag-link
+    .project-name
+      display: inline-block
+      font-size: 16px
+      line-height: 14px
+      color: #000
+      margin-right: 10px
+    .project-velocity
+      font-size: 11px
+      color: #000
+    .project-adds
+      right: 0
+      top: 0
+      height: 20px
+      padding: 14px 10px
+      position: absolute
+    .stories-count
+      display: inline-block
+      font-size: 12px
+      height: 20px
+      color: #777
+    .drag-link, .project-velocity
       display: none
-    &.active .project_link, .project_link:hover 
+    &.active .project-inner, .project-inner:hover 
       background: #596475
       +border-radius(3px)
       +box-shadow(0 2px 2px rgba(0,0,0,.3))
-      .project-name
+      .project-name, .stories-count
         color: #fff
+      .drag-link
+        background: url('/public/images/icons/draggable.png')
+        display: inline-block
+        height: 20px
+        width: 19px
+        margin-right: 5px
+      .project-velocity
+        display: block
+    &.active .project-inner .project-adds
+      right: -14px
+      padding-right: 24px
+      background: url('/public/images/icons/project_arrow.png') no-repeat right 4px
         
 .user-stories-tabs
   list-style: none
@@ -42,7 +70,7 @@
     a
       display: inline-block
       +vertical-gradient(#ececec, #b4b4b4)
-      padding: 1px 6px
+      padding: 2px 6px
       margin-left: -1px
       color: #000
       border: 1px solid #b8b8b8
@@ -64,7 +92,7 @@
     a
       text-align: center
       display: block
-      padding: 2px 0
+      padding: 4px 0
       margin-left: -1px
       color: #000
       border: 1px solid #b4b4b4
@@ -91,13 +119,16 @@
     padding: 5px 10px
     border-bottom: 1px solid #bbb
     border-top: 1px solid #fff
-    a
+    .label
+      color: #009900
+    .story-title
+      word-wrap: break-word
       color: #000
-    &.finished, &.accepted
+    &.accepted
       background: #d9ebce
     &.unstarted
       background: #F4F4F4
-    &.delivered, &.started
+    &.delivered, &.started, &.finished, &.rejected
       background: #f4f4d0
     &.unscheduled
       background: #e5eff8
@@ -107,7 +138,7 @@ input.search
   +border-radius(4px)
   +box-sizing
   +box-shadow(inset 0 1px 2px rgba(0,0,0,.3))
-  padding: 2px 4px
+  padding: 3px 4px
   font-size: 11px
   border: 1px solid #979797
   border-bottom: 1px solid #efeeed
