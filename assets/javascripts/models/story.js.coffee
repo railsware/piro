@@ -48,10 +48,16 @@ class PiroPopup.Models.Story extends Backbone.Model
 
   toJSON: =>
     attr = _.clone(@attributes)
+    attr = @_fixAttributes(attr)
     attr.tasks = @_fixTasks(attr.tasks) if attr.tasks.length > 0
     attr.comments = @_fixComments(attr.comments) if attr.comments.length > 0
     attr
   # private
+  _fixAttributes: (attr = {}) =>
+    attr.owned_by = false if attr.owned_by? and (!attr.owned_by.id? or attr.owned_by.id.length is 0)
+    attr.requested_by = false if attr.requested_by? and (!attr.requested_by.id? or attr.requested_by.id.length is 0)
+    attr.labelsList = attr.labels.split(",") if attr.labels? and attr.labels.length > 0
+    attr
   _fixTasks: (tasks) =>
     fixedTasks = _.map tasks, (task) =>
       newTask = task
