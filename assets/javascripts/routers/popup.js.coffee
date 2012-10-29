@@ -27,6 +27,7 @@ class PiroPopup.Routers.Popup extends Backbone.Router
     PiroPopup.updateMainContainer(@mainView) unless PiroPopup.currentMainView is @mainView
     PiroPopup.clearStoriesContainer()
     PiroPopup.clearStoryContainer()
+
   newStory: =>
     view = new PiroPopup.Views.StoriesForm()
     PiroPopup.updateStoryContainer(view)

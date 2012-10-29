@@ -4,8 +4,8 @@
     <div class="left mrm">
       <img src="public/images/app_logo.png" alt="" />
     </div>
-    <div class="last-col">
-      <select class="account_switcher chzn-select">
+    <div class="last-col pvs">
+      <select class="account_switcher">
         {{#accounts}}
         <option value="{{id}}">{{company}}{{^company}}{{email}}{{/company}}</option>
         {{/accounts}}
@@ -13,17 +13,24 @@
     </div>
   </div>
   <div class="col1of3">
-    <div id="updateDataBox" >
-      <div class="update_box">
-        <a href="#" class="update_data_for_accounts_link">Reload</a>
+    <div class="settings-block">
+      <div id="updateDataBox" class="loading-box">
+        <div class="update_box reload-link">
+          <a href="#" class="update_data_for_accounts_link">Reload</a>
+        </div>
+        <div class="loading_box loading-status">
+          Loading...
+        </div>
       </div>
-      <div class="loading_box">
-        Loading...
+      <div class="settings-box">
+        <a href="">Settings</a>
       </div>
     </div>
   </div>
   <div class="col1of3">
-    <a class="add_story_link" href="#">Add story</a>
+    <div class="mvs">
+      <a class="add_story_link add-story" href="#"><span class="plus">+</span> Add story</a>
+    </div>
   </div>
 </header>
 <section class="body row">

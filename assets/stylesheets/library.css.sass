@@ -5,6 +5,8 @@
     padding: 4px 0
     border-bottom: 1px solid #e6e3e1
     border-top: 1px solid #c0bcb8
+    &:first-child
+      border-top: 0
     .project-inner
       padding: 8px
       position: relative
@@ -22,7 +24,10 @@
       img
         width: 32px
         height: 32px
+    .last-col
+      overflow: hidden
     .project-name
+      white-space: nowrap
       display: inline-block
       font-size: 16px
       line-height: 14px
@@ -36,6 +41,7 @@
       top: 0
       height: 20px
       padding: 14px 10px
+      background: #D5D1CC
       position: absolute
     .stories-count
       display: inline-block
@@ -48,6 +54,8 @@
       background: #596475
       +border-radius(3px)
       +box-shadow(0 2px 2px rgba(0,0,0,.3))
+      .project-adds
+        background: #596475
       .project-name, .stories-count
         color: #fff
       .drag-link
@@ -55,7 +63,7 @@
         display: inline-block
         height: 20px
         width: 19px
-        margin-right: 5px
+        margin: 0 5px
       .project-velocity
         display: block
     &.active .project-inner .project-adds
@@ -116,9 +124,10 @@
 .stories-list
   margin-left: -1px
   .story
-    padding: 5px 10px
+    padding: 7px 10px
     border-bottom: 1px solid #bbb
     border-top: 1px solid #fff
+    +box-shadow(0 0 4px rgba(0,0,0,.2))
     .label
       color: #009900
     .story-title

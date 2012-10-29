@@ -70,7 +70,7 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
       # no title
       
   recalculateHeight: =>
-    @$(".container").height($("body").height() - 67)
+    @$(".container").height($("body").height() - 70)
 
   onDestroyView: =>
     @collection.off 'add', @render
