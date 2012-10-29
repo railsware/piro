@@ -42,6 +42,7 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
 
   renderWithFilter: (e) =>
     @renderAll()
+    @_highlightLinks()
 
   clickStoryTab: (e) =>
     e.preventDefault()
@@ -49,7 +50,7 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
     PiroPopup.db.setStoriesTabViewLS(value)
     @$('.stories_tabs li').removeClass('active')
     @$(".stories_tabs li.#{value}_stories_tab").addClass('active')
-    @renderAll()
+    @renderWithFilter()
     
   clickStoryUser: (e) =>
     e.preventDefault()
@@ -57,7 +58,10 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
     PiroPopup.db.setStoriesUserViewLS(value)
     @$('.stories_user_tabs li').removeClass('active')
     @$(".stories_user_tabs li.#{value}_stories_user_tab").addClass('active')
-    @renderAll()
+    @renderWithFilter()
+    
+  _highlightLinks: =>
+    PiroPopup.globalEvents.trigger "route:highlight:links", null
 
   onDestroyView: =>
     @collection.off 'add', @renderOne
