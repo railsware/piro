@@ -4,6 +4,6 @@
     <a href="#" class="label">{{.}}</a>
   {{/labelsList}}
   {{#owned_by}}
-    (<a href="#">{{initials}}</a>)
+    <span class="muted">(</span><a href="#">{{initials}}</a><span class="muted">)</span>
   {{/owned_by}}
 </div>
