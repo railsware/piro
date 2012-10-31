@@ -1,0 +1,49 @@
+.user-stories-tabs
+  list-style: none
+  li
+    float: left
+    a
+      display: inline-block
+      +vertical-gradient(#ececec, #b4b4b4)
+      padding: 2px 6px
+      margin-left: -1px
+      color: #000
+      border: 1px solid #b8b8b8
+      border-bottom: 1px solid #928f8b
+    &:first-child a
+      +border-radius(4px 0 0 4px)
+    &:last-child a
+      +border-radius(0 4px 4px 0)
+    &.active a
+      background: #666666
+      color: #fff
+      border-color: #444444
+      
+.stories-tabs
+  list-style: none
+  li
+    float: left
+    width: 25%
+    a
+      text-align: center
+      display: block
+      padding: 4px 0
+      margin-left: -1px
+      color: #000
+      border: 1px solid #b4b4b4
+      border-bottom: none
+    &:first-child a
+      +border-radius(3px 0 0 0)
+    &:last-child a
+      +border-radius(0 3px 0 0)
+    &.all a
+      +vertical-gradient(#ececec, #b4b4b4)
+    &.done a
+      +vertical-gradient(#d9ebce, #c5d5bb)
+    &.current a
+      +vertical-gradient(#f4f4d0, #ddddbc)
+    &.icebox a
+      +vertical-gradient(#e5eff8, #cfd9e1)
+    &.active a
+      color: #fff
+      +vertical-gradient(#696f79, #838b97)

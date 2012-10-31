@@ -1,6 +1,6 @@
 class PiroPopup.Views.ProjectsElement extends Backbone.View
   tagName: "li"
-  className: "project project_element"
+  className: "project_element"
   template: SHT['projects/element']
   events:
     "click .project_link"           : "openStories"
