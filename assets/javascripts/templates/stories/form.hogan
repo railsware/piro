@@ -1,36 +1,38 @@
-<form class="add_story_form" action="#">
-  <div class="error_box"></div>
-  
-  <select class="add_story_project_id chzn-select" style="width:300px;">
-    {{#projects}}
+<div class="new-story">
+  <form class="add_story_form" action="#">
+    <div class="error_box"></div>
+
+    <select class="add_story_project_id chzn-select" style="width:300px;">
+      {{#projects}}
       <option value="{{id}}">{{name}}</option>
-    {{/projects}}
-  </select>
-  <input class="add_story_name" type="text" />
-  
-  <select class="add_story_story_type chzn-select" style="width:300px;">
-    <option value="feature">Feature</option>
-    <option value="bug">Bug</option>
-    <option value="chore">Chore</option>
-    <option value="release">Release</option>
-  </select>
-  
-  <div class="add_story_point_box">
-    <select class="add_story_point chzn-select" style="width:300px;"></select>
-  </div>
-  <div class="add_story_release_date_box">
-    <input class="add_story_release_date" type="text" readonly="readonly" />
-  </div>
-  
-  <select class="add_story_requester_id chzn-select" style="width:300px;"></select>
-  
-  <a class="story_owner_id_to_me" href="#">to me</a>
-  
-  <select class="add_story_owner_id chzn-de-select" style="width:300px;"></select>
-  
-  <textarea class="add_story_description" rows="8" cols="30"></textarea>
-  
-  <input class="add_story_labels" type="text" />
-  
-  <input type="submit" value="Add" />
-</form>
+      {{/projects}}
+    </select>
+    <input class="add_story_name" type="text" />
+
+    <select class="add_story_story_type chzn-select" style="width:300px;">
+      <option value="feature">Feature</option>
+      <option value="bug">Bug</option>
+      <option value="chore">Chore</option>
+      <option value="release">Release</option>
+    </select>
+
+    <div class="add_story_point_box">
+      <select class="add_story_point chzn-select" style="width:300px;"></select>
+    </div>
+    <div class="add_story_release_date_box">
+      <input class="add_story_release_date" type="text" readonly="readonly" />
+    </div>
+
+    <select class="add_story_requester_id chzn-select" style="width:300px;"></select>
+
+    <a class="story_owner_id_to_me" href="#">to me</a>
+
+    <select class="add_story_owner_id chzn-de-select" style="width:300px;"></select>
+
+    <textarea class="add_story_description" rows="8" cols="30"></textarea>
+
+    <input class="add_story_labels" type="text" />
+
+    <input type="submit" value="Add" />
+  </form>
+</div>
