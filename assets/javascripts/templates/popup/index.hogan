@@ -28,7 +28,12 @@
     </div>
   </div>
   <div class="col1of3">
-    <a class="add_story_link add-story" href="#"><span class="plus">+</span> Add story</a>
+    <div class="left prm">
+      <a class="add_story_link add-story" href="#"><span class="plus">+</span> Add story</a>
+    </div>
+    <div class="last-col">
+      <input type="text" name="" class="search"/>
+    </div>
   </div>
 </header>
 <section class="body row">

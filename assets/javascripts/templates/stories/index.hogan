@@ -13,7 +13,7 @@
     </ul>
   </div>
   <div class="col1of2">
-    <input class="stories_filter_input search" type="text" placeholder="Filter stories" />
+    <input class="stories_filter_input filter" type="text" placeholder="Filter stories" />
   </div>
 </div>
 
