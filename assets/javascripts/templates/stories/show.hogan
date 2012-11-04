@@ -15,8 +15,10 @@
   
   <div class="mbs">
     <div class="mbs">
-      <select name="" id="">
-        <option value="">{{project_id}}</option>
+      <select class="change_project_id">
+        {{#pivotalProjects}}
+          <option value="{{id}}">{{name}}</option>
+        {{/pivotalProjects}}
       </select>
     </div>
     <input type="text" value="{{name}}" />

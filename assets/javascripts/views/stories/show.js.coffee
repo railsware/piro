@@ -31,9 +31,15 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     PiroPopup.globalEvents.on "update:data:finished", @getStoryAndRender
 
   render: =>
-    $(@el).html(@template.render(@model.toJSON()))
+    $(@el).html(@template.render(_.extend(@model.toJSON(),
+      pivotalProjects: PiroPopup.pivotalProjects.toJSON()
+    )))
+    @initProjectSelector()
     @initSortingTasks()
     this
+    
+  initProjectSelector: =>
+    @$('select.change_project_id').val(@model.get('project_id'))
   
   initSortingTasks: =>
     @$("ul.tasks_list_box").sortable
