@@ -15,6 +15,8 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
   
   render: =>
     $(@el).html(@template.render(PiroPopup.db.getAllOptionsLS()))
+    @$('input.stories_filter_input').clearSearch
+      callback: @renderWithFilter
     @renderAll()
     this
 
@@ -42,7 +44,7 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
     @renderOne(story) for story in stories
   
   eventFilterStories: (text) =>
-    @$('input.stories_filter_input').val(text)
+    @$('input.stories_filter_input').val(text).trigger('change')
     @renderWithFilter()
 
   renderWithFilter: (e) =>

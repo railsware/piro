@@ -5,6 +5,7 @@
 //=require ./vendors/chosen
 //=require ./vendors/jath
 //=require ./vendors/moment
+//=require ./vendors/jquery.clearsearch.js
 //
 //=require pivotaltracker_api
 //=require piro_storage
