@@ -28,7 +28,11 @@
   
   <div class="mbm">
     <p><strong>Labels:</strong></p>
-    <p>{{labels}}</p>
+    <p>
+      {{#labelsList}}
+        <a href="#" class="story_label">{{.}}</a>
+      {{/labelsList}}
+    </p>
   </div>
   
   <div class="mbm">

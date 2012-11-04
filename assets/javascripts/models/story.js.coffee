@@ -28,20 +28,27 @@ class PiroPopup.Models.Story extends Backbone.Model
 
   filterByText: (text) =>
     return true if !text? or (text? and 0 == text.length)
-    if "#" == text[0]
-      if @has('labels')? && @get('labels').length > 0
-        search = new RegExp(@_filterStrForRegex(text).substr(1), "gi")
-        return (@get('labels').match(search)? and @get('labels').match(search).length)
+    switch text[0]
+      when "#"
+        if @has('labels')? && @get('labels').length > 0
+          search = new RegExp(@_filterStrForRegex(text).substr(1), "gi")
+          return (@get('labels').match(search)? and @get('labels').match(search).length)
+        else
+          return false
+      when "@"
+        if @has('owned_by')? && @get("owned_by").initials?
+          return @_filterStrForRegex(text).substr(1) is @get("owned_by").initials
+        else
+          return false
       else
-        return false
-    else
-      search = new RegExp(@_filterStrForRegex(text), "gi")
-      return (
-        (@get('id').match(search)? and @get('id').match(search).length) or 
-        (@get('name').match(search)? and @get('name').match(search).length) or 
-        (@get('description').match(search)? and @get('description').match(search).length) or 
-        (@get('current_state').match(search)? and @get('current_state').match(search).length)
-      )
+        search = new RegExp(@_filterStrForRegex(text), "gi")
+        return (
+          (@get('id').match(search)? and @get('id').match(search).length) or 
+          (@get('name').match(search)? and @get('name').match(search).length) or 
+          (@get('description').match(search)? and @get('description').match(search).length) or 
+          (@get('current_state').match(search)? and @get('current_state').match(search).length)
+        )
+      
   
   _filterStrForRegex: (str) =>
     str.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1")

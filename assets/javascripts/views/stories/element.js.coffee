@@ -4,6 +4,8 @@ class PiroPopup.Views.StoriesElement extends Backbone.View
   template: SHT['stories/element']
   events:
     "click .story_link_info"          : "showStoryInfo"
+    "click .story_label"              : "filterByLabel"
+    "click .story_owned_by"           : "filterByOwner"
   
   initialize: =>
     @model.on 'change', @render
@@ -17,6 +19,14 @@ class PiroPopup.Views.StoriesElement extends Backbone.View
   showStoryInfo: (e) =>
     e.preventDefault()
     Backbone.history.navigate("story/#{@model.get("id")}", {trigger: true, replace: true})
+
+  filterByLabel: (e) =>
+    e.preventDefault()
+    PiroPopup.globalEvents.trigger "filter:stories", "##{$(e.currentTarget).text()}"
+
+  filterByOwner: (e) =>
+    e.preventDefault()
+    PiroPopup.globalEvents.trigger "filter:stories", "@#{$(e.currentTarget).text()}"
 
   remove: =>
     $(@el).remove()

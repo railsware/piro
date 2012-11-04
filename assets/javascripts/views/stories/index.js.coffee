@@ -10,6 +10,7 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
     @collection.on 'add', @renderOne
     @collection.on 'reset', @renderAll
     PiroPopup.globalEvents.on "update:data:finished", @getStoriesAndRender
+    PiroPopup.globalEvents.on "filter:stories", @eventFilterStories
     @childViews = []
   
   render: =>
@@ -39,6 +40,10 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
       storiesUserView: PiroPopup.db.getStoriesUserViewLS()
       filterText: @$('input.stories_filter_input').val()
     @renderOne(story) for story in stories
+  
+  eventFilterStories: (text) =>
+    @$('input.stories_filter_input').val(text)
+    @renderWithFilter()
 
   renderWithFilter: (e) =>
     @renderAll()

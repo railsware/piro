@@ -1,6 +1,8 @@
 class PiroPopup.Views.StoriesShow extends Backbone.View
   template: SHT['stories/show']
   events:
+    "click .story_label"                            : "filterByLabel"
+    # delete story
     "click .story_delete_link"                      : "deleteStoryClick"
     "click .cancel_delete_story_link"               : "cancelDeleteStory"
     "click .confirm_delete_story_link"              : "confirmDeleteStory"
@@ -57,6 +59,10 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
 
   remove: =>
     $(@el).remove()
+
+  filterByLabel: (e) =>
+    e.preventDefault()
+    PiroPopup.globalEvents.trigger "filter:stories", "##{$(e.currentTarget).text()}"
     
   deleteStoryClick: (e) =>
     e.preventDefault()
