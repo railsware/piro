@@ -11,6 +11,9 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     "click .cancel_open_task_link"                  : "cancelOpenTask"
     "submit .add_task_form"                         : "addTask"
     "change .task_complete_input"                   : "changeCompleteOfTask"
+    "click .open_edit_task"                         : "openEditTask"
+    "submit .edit_task_form"                        : "editTask"
+    "click .close_edit_task_link"                   : "closeEditTask"
     "click .delete_task_link"                       : "deleteTask"
     # comment events
     "click .comment_open_link"                      : "openCommentClick"
@@ -125,6 +128,31 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         attributes,
         success: (story) =>
           # success
+        error: =>
+          # error
+      )
+  openEditTask: (e) =>
+    e.preventDefault()
+    $(e.currentTarget).parents('.task_box').addClass('editing')
+  closeEditTask: (e) =>
+    e.preventDefault()
+    $(e.currentTarget).parents('.task_box').removeClass('editing')
+  editTask: (e) =>
+    e.preventDefault()
+    taskId = @$(e.currentTarget).parents('.task_box').data('id')
+    return false unless taskId?
+    attributes = 
+      task:
+        description: @$(e.currentTarget).find('.task_description_input').val()
+    chrome.runtime.getBackgroundPage (bgPage) =>
+      PiroPopup.bgPage = bgPage
+      PiroPopup.bgPage.PiroBackground.changeTaskAndSyncStory(
+        PiroPopup.pivotalCurrentAccount.toJSON(), 
+        @model.toJSON(),
+        taskId,
+        attributes,
+        success: (story) =>
+          @model.set(story)
         error: =>
           # error
       )

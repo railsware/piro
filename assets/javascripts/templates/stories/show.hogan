@@ -42,12 +42,21 @@
     <ul class="tasks_list_box mbs">
       {{#tasks}}
       <li class="task_box story-task" data-id="{{id}}">
-        <span class="sort_task">drag</span>
-        <label>
-          <input type="checkbox" class="task_complete_input" data-id="{{id}}" {{#complete}}checked="checked"{{/complete}} />
-          {{description}} | {{created_at}}
-        </label>
-        <a href="#" class="delete_task_link close-link" data-id="{{id}}"></a>
+        <div>
+          <span class="sort_task">drag</span>
+          <label class="task_element_label">
+            <input type="checkbox" class="task_complete_input" data-id="{{id}}" {{#complete}}checked="checked"{{/complete}} />
+            {{description}} | {{created_at}}
+          </label>
+          <a href="#" class="open_edit_task">Edit</a>
+          <a href="#" class="delete_task_link close-link" data-id="{{id}}"></a>
+        </div>
+        <div>
+          <form class="edit_task_form">
+            <input type="text" class="task_description_input" data-id="{{id}}" value="{{description}}" />
+            <input type="submit" value="Edit" /> or <a href="#" class="close_edit_task_link">Cancel</a>
+          </form>
+        </div>
       </li>
       {{/tasks}}
     </ul>
