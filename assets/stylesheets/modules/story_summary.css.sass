@@ -1,60 +1,44 @@
-.story-summary
+.story
   padding: 15px
   +border-radius(4px)
   +box-shadow(0 0 4px rgba(0,0,0,.2))
-  p
-    margin-bottom: 5px
+  .switchable-block
+    .switched-state
+      display: none
+    &.adding, &.deleting
+      .switched-state
+        display: block
+      .initial-state
+        display: none
   ul
     list-style: none
-  .story-type, .story-state, .story-points
-    text-transform: capitalize
-    text-align: right
-
-.story-description
-  word-wrap: break-word
-  
-.add-task-box, .add-comment-box
-  .task-form, .comment-form
-    display: none
-  &.adding
-    .task-form, .comment-form
+  .story-summary
+    .item
+      +clearfix
+      line-height: 18px
+      margin-bottom: 8px
+    .story-link
       display: block
-    .task-button, .comment-button 
-      display: none
-  
-.comment-item
-  background: #faf6f2
-  padding: 10px 30px 10px 10px
-  margin-bottom: 10px
-  position: relative
-  +border-radius(5px)
-  +box-shadow(1px 2px 2px rgba(0,0,0,.2))
-  word-wrap: break-word
-  .delete-confirmation
-    display: none
-  &.deleting .delete-confirmation
-    display: block
-.close-link
-  display: inline-block
-  position: absolute
-  width: 9px
-  height: 9px
-  background: url('/public/images/icons/close-icon.png')
-  top: 8px
-  right: 8px
-  
-.attachment-item
-  word-wrap: break-word
+      float: left
+      width: 20px
+      height: 18px
+      margin-right: 5px
+      background: url('/public/images/icons/link_icon.png')
+    .story-id
+      float: left
+      height: 18px
+    .story-type, .story-points, .story-state
+      float: right
+      text-transform: capitalize
+  .story-form
+    margin-bottom: 20px
+  .story-tasks
+    margin-bottom: 20px
+  .story-comments
+    margin-bottom: 20px
+  .story-attachments
+    margin-bottom: 20px
+  .story-deleting    
+    margin-bottom: 20px
       
-.story, .story-summary
-  &.accepted
-    background: #d9ebce
-  &.unstarted
-    background: #F4F4F4
-  &.delivered, &.started, &.finished, &.rejected
-    background: #f4f4d0
-  &.unscheduled
-    background: #e5eff8
-
-.story-task
-  position: relative
+      

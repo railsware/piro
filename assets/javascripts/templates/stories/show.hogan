@@ -1,19 +1,32 @@
-<div class="story-summary {{current_state}} mvs">
+<div class="story {{current_state}} mvs">
   
-  <div class="row mbm">
+  <div class="story-summary">
     <div class="col1of2">
-      <p><img src="/public/images/icons/link_icon.png" alt="" /> <span class="muted">ID:</span> <a href="#">{{id}}</a></p>
-      <p><span class="muted">Requester:</span> {{#requested_by}}{{name}}{{/requested_by}}</p>
-      <p><span class="muted">Owner:</span> {{#owned_by}}{{name}}{{/owned_by}}</p>
+      <div class="item">
+        <a href="#" class="story-link"></a>
+        <div class="story-id"><span class="muted">ID: </span><a href="#">{{id}}</a></div>
+      </div>
+      <div class="item">
+        <span class="muted">Requester:</span> {{#requested_by}}{{name}}{{/requested_by}}
+      </div>
+      <div class="item">
+        <span class="muted">Owner:</span> {{#owned_by}}{{name}}{{/owned_by}}
+      </div>
     </div>
     <div class="col1of2">
-      <p class="story-type">{{story_type}}</p>
-      <p class="story-points">{{estimate}} points</p>
-      <p class="story-state">{{current_state}}</p>
+      <div class="item">
+        <div class="story-type">{{story_type}}</div>
+      </div>
+      <div class="item">
+        <div class="story-points">{{estimate}} points</div>
+      </div>
+      <div class="item">
+        <div class="story-state">{{current_state}}</div>
+      </div>
     </div>
   </div>
   
-  <div class="mbs">
+  <div class="story-form">
     <div class="mbs">
       <select class="change_project_id">
         {{#pivotalProjects}}
@@ -24,11 +37,11 @@
     <input type="text" value="{{name}}" />
   </div>
   
-  <div class="story-description mbm">
+  <div class="story-description mbs">
     <p><em class="muted">{{description}}</em></p>
   </div>
   
-  <div class="mbm">
+  <div class="mbs">
     <p><strong>Labels:</strong></p>
     <p>
       {{#labelsList}}
@@ -37,7 +50,7 @@
     </p>
   </div>
   
-  <div class="mbm">
+  <div class="story-tasks">
     <p><strong>Tasks:</strong></p>
     <ul class="tasks_list_box mbs">
       {{#tasks}}
@@ -61,10 +74,9 @@
       {{/tasks}}
     </ul>
 
-
-    <div class="add_task_box add-task-box">
-      <div class="task-button"><a href="#" class="task_open_link button">Add task..</a></div>
-      <div class="task-form">
+    <div class="add_task_box switchable-block">
+      <div class="initial-state"><a href="#" class="task_open_link button">Add task..</a></div>
+      <div class="switched-state">
         <form class="add_task_form" method="POST">
           <input type="text" class="add_task_description" />
           <input type="submit" value="Add" /> or <a class="cancel_open_task_link" href="#">Cancel</a>
@@ -73,11 +85,11 @@
     </div>
   </div>
 
-  <div class="mbm">
+  <div class="story-comments">
     <p><strong>Comments</strong></p>
     <ul class="mbs">
       {{#comments}}
-      <li class="comment_box comment-item" data-id="{{id}}">
+      <li class="comment_box switchable-block" data-id="{{id}}">
         <div>
           <div class="row mbs">
             <div class="left">{{#author}}<em class="muted">{{name}}{{/author}}</em></div>
@@ -86,20 +98,20 @@
           <div class="mbs">
             {{text}}
           </div>
-          <a href="#" class="comment_delete_link close-link"></a>
+          <a href="#" class="comment_delete_link close-link">z</a>
         </div>
-        <div class="delete-confirmation">
+        <div class="switched-state">
           <a href="#" class="confirm_delete_comment_link" data-id="{{id}}">Confirm delete</a> or <a href="#" class="cancel_delete_comment_link">Cancel</a>
         </div>
       </li>
       {{/comments}}
     </ul>
 
-    <div class="add_comment_box add-comment-box">
-      <div class="comment-button">
+    <div class="add_comment_box switchable-block">
+      <div class="initial-state">
         <a href="#" class="comment_open_link button">Add comment..</a>
       </div>
-      <div class="comment-form">
+      <div class="switched-state">
         <form class="add_comment_form" method="POST">
           <p>
             <textarea class="add_comment_text" rows="3" cols="20"></textarea>
@@ -110,7 +122,7 @@
     </div>
   </div>
   
-  <div class="mbm">
+  <div class="story-attachments">
     <p><strong>Attachments</strong></p>
     <ul>
       {{#attachments}}
@@ -128,11 +140,11 @@
     </form>
   </div>
   
-  <div class="box_item hidden">
-    <div class="main">
+  <div class="box_item switchable-block">
+    <div class="initial-state">
       <a class="story_delete_link" href="#">Delete</a>
     </div>
-    <div class="delete">
+    <div class="switched-state">
       Are you sure want delete {{name}}?
       <a class="confirm_delete_story_link" href="#">Confirm delete</a>
       <a class="cancel_delete_story_link" href="#">Cancel</a>
