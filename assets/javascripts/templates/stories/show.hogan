@@ -136,13 +136,16 @@
   </div>
   
   <div class="story-attachments">
-    <p><strong>Attachments</strong></p>
+    <h2 class="mbs">Attachments</h2>
     <ul>
       {{#attachments}}
-      <li class="attachment_box attachment-item mbs" data-id="{{id}}">
-        <div>{{filename}}</div>
-        <div><a href="{{url}}" target="_blank">{{url}}</a></div> 
-        <div>{{uploaded_at}} {{#uploaded_by}} <em class="muted">{{name}}</em>{{/uploaded_by}}</div>
+      <li class="attachment_box attachment-item mbm" data-id="{{id}}">
+        <div class="attachment-block">
+          <div><a href="{{url}}" target="_blank">{{filename}}</a></div> 
+          <div>{{#uploaded_by}} <strong>{{name}}</strong>{{/uploaded_by}} 
+            <em class="muted">{{uploaded_at}}</em>
+          </div>
+        </div>
       </li>
       {{/attachments}}
     </ul>
