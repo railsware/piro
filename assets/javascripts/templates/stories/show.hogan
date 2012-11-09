@@ -34,41 +34,53 @@
         {{/pivotalProjects}}
       </select>
     </div>
-    <input type="text" value="{{name}}" />
-  </div>
-  
-  <div class="story-description mbs">
-    <p><em class="muted">{{description}}</em></p>
-  </div>
-  
-  <div class="mbs">
-    <p><strong>Labels:</strong></p>
-    <p>
-      {{#labelsList}}
-        <a href="#" class="story_label">{{.}}</a>
-      {{/labelsList}}
-    </p>
+    <div class="mbs">
+      <input type="text" value="{{name}}" />
+    </div>
+    <div class="story-description mbs">
+      <p><em class="muted">{{description}}</em></p>
+    </div>
+
+    <div class="mbs">
+      <p><strong>Labels:</strong></p>
+      <p>
+        {{#labelsList}}
+          <a href="#" class="story_label">{{.}}</a>
+        {{/labelsList}}
+      </p>
+    </div>
+    
   </div>
   
   <div class="story-tasks">
-    <p><strong>Tasks:</strong></p>
+    <div class="row mbs">
+      <div class="left">
+        <h2>Tasks:</strong></h2>
+      </div>
+      <div class="right">
+        <strong class="mrs">All</strong>
+        <a href="#" class="mrs">Completed</a>
+        <a href="#">Uncompleted</a>
+      </div>
+    </div>
     <ul class="tasks_list_box mbs">
       {{#tasks}}
-      <li class="task_box story-task" data-id="{{id}}">
-        <div>
-          <span class="sort_task">drag</span>
-          <label class="task_element_label">
-            <input type="checkbox" class="task_complete_input" data-id="{{id}}" {{#complete}}checked="checked"{{/complete}} />
-            {{description}} | {{created_at}}
-          </label>
-          <a href="#" class="open_edit_task">Edit</a>
-          <a href="#" class="delete_task_link close-link" data-id="{{id}}"></a>
-        </div>
-        <div>
-          <form class="edit_task_form">
-            <input type="text" class="task_description_input" data-id="{{id}}" value="{{description}}" />
-            <input type="submit" value="Edit" /> or <a href="#" class="close_edit_task_link">Cancel</a>
-          </form>
+      <li class="task_box story-task switchable-block" data-id="{{id}}">
+        <div class="task-block sort_task">
+          <div class="initial-state">
+            <label class="task_element_label">
+              <input type="checkbox" class="task_complete_input" data-id="{{id}}" {{#complete}}checked="checked"{{/complete}} />
+              {{description}}
+            </label>
+            <a href="#" class="open_edit_task">Edit</a>
+            <a href="#" class="delete_task_link close-link" data-id="{{id}}"></a>
+          </div>
+          <div class="switched-state">
+            <form class="edit_task_form">
+              <input type="text" class="task_description_input mbs" data-id="{{id}}" value="{{description}}" />
+              <input type="submit" value="Save" /> or <a href="#" class="close_edit_task_link">Cancel</a>
+            </form>
+          </div>
         </div>
       </li>
       {{/tasks}}
@@ -78,7 +90,7 @@
       <div class="initial-state"><a href="#" class="task_open_link button">Add task..</a></div>
       <div class="switched-state">
         <form class="add_task_form" method="POST">
-          <input type="text" class="add_task_description" />
+          <input type="text" class="add_task_description mbs" />
           <input type="submit" value="Add" /> or <a class="cancel_open_task_link" href="#">Cancel</a>
         </form>
       </div>
@@ -86,22 +98,23 @@
   </div>
 
   <div class="story-comments">
-    <p><strong>Comments</strong></p>
+    <h2 class="mbs">Comments</h2>
     <ul class="mbs">
       {{#comments}}
       <li class="comment_box switchable-block" data-id="{{id}}">
-        <div>
-          <div class="row mbs">
-            <div class="left">{{#author}}<em class="muted">{{name}}{{/author}}</em></div>
-            <div class="right">{{created_at}}</div>
-          </div>
-          <div class="mbs">
+        <div class="comment-block">
+          <div class="initial-state">
             {{text}}
+            <a href="#" class="comment_delete_link close-link"></a>
           </div>
-          <a href="#" class="comment_delete_link close-link">z</a>
+          <div class="switched-state">
+            Are you sure?
+            <a href="#" class="confirm_delete_comment_link" data-id="{{id}}">Delete</a> or <a href="#" class="cancel_delete_comment_link">Cancel</a>
+          </div>
         </div>
-        <div class="switched-state">
-          <a href="#" class="confirm_delete_comment_link" data-id="{{id}}">Confirm delete</a> or <a href="#" class="cancel_delete_comment_link">Cancel</a>
+        <div class="row mbm">
+          <div class="left">{{#author}}<em class="muted">{{name}}{{/author}}</em></div>
+          <div class="right">{{created_at}}</div>
         </div>
       </li>
       {{/comments}}

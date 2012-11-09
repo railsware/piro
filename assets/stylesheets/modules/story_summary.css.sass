@@ -5,7 +5,7 @@
   .switchable-block
     .switched-state
       display: none
-    &.adding, &.deleting
+    &.adding, &.deleting, &.editing
       .switched-state
         display: block
       .initial-state
@@ -34,11 +34,32 @@
     margin-bottom: 20px
   .story-tasks
     margin-bottom: 20px
+    .task-block
+      position: relative
+      margin-bottom: 5px
+      padding: 5px
+      +border-radius(5px)
+      $shadow: 1px 2px 2px rgba(0,0,0,.2), -1px -1px 3px rgba(0,0,0,.1)
+      +box-shadow($shadow)
   .story-comments
     margin-bottom: 20px
+    .comment-block
+      position: relative
+      background: #faf6f2
+      padding: 10px
+      margin-bottom: 5px
+      +border-radius(5px)
+      +box-shadow(1px 2px 2px rgba(0,0,0,.2))
   .story-attachments
     margin-bottom: 20px
   .story-deleting    
     margin-bottom: 20px
+  .close-link
+    position: absolute
+    width: 9px
+    height: 9px
+    top: 5px 
+    right: 8px
+    background: url('/public/images/icons/close-icon.png')
       
       

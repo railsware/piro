@@ -46,7 +46,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
   
   initSortingTasks: =>
     @$("ul.tasks_list_box").sortable
-      handle: 'span.sort_task'
+      handle: '.sort_task'
       axis: 'y'
       placeholder: 'ui-state-highlight'
       update: (event) =>
