@@ -4,7 +4,9 @@
       <div class="col1of2">
         <div class="item">
           <a href="#" class="story-link"></a>
-          <div class="story-id"><span class="muted">ID: </span>{{id}}</div>
+          <div class="story-id"><span class="muted">ID: </span>
+            <a href="https://www.pivotaltracker.com/story/show/{{id}}" target="_blank">{{id}}</a>
+          </div>
         </div>
         <div class="item">
           <span class="muted">Requester:</span> {{#requested_by}}{{name}}{{/requested_by}}
