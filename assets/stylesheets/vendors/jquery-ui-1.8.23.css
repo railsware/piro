@@ -57,7 +57,6 @@
 .ui-widget .ui-widget { font-size: 1em; }
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: segoe ui, Arial, sans-serif; font-size: 1em; }
 .ui-widget-content { border: 1px solid #aaaaaa; background: #eeeeee url(images/ui-bg_inset-hard_100_eeeeee_1x100.png) 50% bottom repeat-x; color: #222222; }
-.ui-widget-content a { color: #222222; }
 .ui-widget-header { border: 1px solid #cccccc; background: #f9f9f9 url(images/ui-bg_highlight-soft_100_f9f9f9_1x100.png) 50% 50% repeat-x; color: #e69700; font-weight: bold; }
 .ui-widget-header a { color: #e69700; }
 
@@ -283,7 +282,7 @@
 .ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br { -moz-border-radius-bottomright: 3px; -webkit-border-bottom-right-radius: 3px; -khtml-border-bottom-right-radius: 3px; border-bottom-right-radius: 3px; }
 
 /* Overlays */
-.ui-widget-overlay { background: #e6b900 url(images/ui-bg_flat_0_e6b900_40x100.png) 50% 50% repeat-x; opacity: .30;filter:Alpha(Opacity=30); }
+.ui-widget-overlay { background: #000 url(images/ui-bg_flat_0_e6b900_40x100.png) 50% 50% repeat-x; opacity: .40;filter:Alpha(Opacity=40); }
 .ui-widget-shadow { margin: 6px 0 0 6px; padding: 0px; background: #e69700 url(images/ui-bg_flat_0_e69700_40x100.png) 50% 50% repeat-x; opacity: .20;filter:Alpha(Opacity=20); -moz-border-radius: 3px; -khtml-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px; }/*!
  * jQuery UI Resizable 1.8.23
  *

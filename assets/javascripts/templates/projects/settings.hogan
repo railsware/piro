@@ -1,11 +1,10 @@
-<a href="#" class="close_settings">Done</a>
+<a href="#" class="close_settings close-link"></a>
+<div class="by-center">
+  <h2 class="mbm">{{name}}</h2>
+  <div id="uploadIconZone" class="droppable-zone mbm pvm">
+    <img class="project_icon preview" src="{{icon}}{{^icon}}public/images/icons/workspace.png{{/icon}}" alt="{{name}}" />
 
-<h2>{{name}}</h2>
-
-<div id="uploadIconZone" style="border: 1px solid #000; margin: 10px">
-
-<img class="project_icon" src="{{icon}}{{^icon}}public/images/icons/workspace.png{{/icon}}" alt="{{name}}" style="width: 50px; height: 50px;" />
-
-<input class="project_upload_icon" type="file" />
-
+    <input class="project_upload_icon" type="file" />
+  </div>
+  <a href="#" class="delete-link">Delete image</a>
 </div>
