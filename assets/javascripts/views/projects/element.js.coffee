@@ -34,6 +34,9 @@ class PiroPopup.Views.ProjectsElement extends Backbone.View
       dialogClass: "hide-title-bar"
       close: (event, ui) =>
         @popupView.destroyView() if @popupView? && @popupView.destroyView?
+      open: (event, ui) =>
+        $('.ui-widget-overlay').on 'click', -> 
+          PiroPopup.dialogContainer().dialog('close')
     
   onDestroyView: =>
     @model.off 'change', @render
