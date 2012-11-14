@@ -104,17 +104,17 @@
       <ul class="mbs">
         {{#comments}}
         <li class="comment_box switchable-block" data-id="{{id}}">
-          <div class="comment-block">
-            <div class="initial-state">
+          <div class="initial-state">
+            <div class="comment-block">
               {{text}}
               <a href="#" class="comment_delete_link close-link"></a>
             </div>
-            <div class="switched-state">
-              Are you sure?
-              <a href="#" class="confirm_delete_comment_link" data-id="{{id}}">Delete</a> or <a href="#" class="cancel_delete_comment_link">Cancel</a>
-            </div>
           </div>
-          <div class="row mbm">
+          <div class="switched-state delete-confirmation">
+              Are you sure?
+              <a href="#" class="confirm_delete_comment_link button" data-id="{{id}}">Delete</a> or <a href="#" class="cancel_delete_comment_link">Cancel</a>
+          </div>
+          <div class="row mbm mts">
             <div class="left">{{#author}}<em class="muted">{{name}}{{/author}}</em></div>
             <div class="right">{{created_at}}</div>
           </div>
