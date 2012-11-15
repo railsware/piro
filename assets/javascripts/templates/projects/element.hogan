@@ -3,7 +3,12 @@
     <div class="project-name">{{name}}</div>
     <div class="project-velocity">velocity: {{current_velocity}}</div>
   </div>
-  <img src="{{icon}}{{^icon}}public/images/icons/workspace.png{{/icon}}" alt="{{name}}" class="project_settings icon" />
+  {{#icon}}
+    <img src="{{icon}}" alt="{{name}}" class="project_settings icon" />
+  {{/icon}}
+  {{^icon}}
+    <div class="project_settings icon-placeholder"></div>
+  {{/icon}}
   <div class="project-adds">
     <span class="sort_project drag-link">&nbsp;</span>
     <span class="stories-count">{{stories_count}}</span>

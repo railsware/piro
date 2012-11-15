@@ -10,13 +10,16 @@
     height: 32px
     padding: 8px 0
     cursor: pointer
-    .icon
+    .icon, .icon-placeholder
       position: absolute
       width: 32px
       height: 32px
       top: 7px
       left: 8px
       +border-radius(16px)
+    .icon-placeholder
+      background: #424c5c
+      display: none
     .project-name
       font-size: 16px
       padding-left: 48px
@@ -47,7 +50,7 @@
   +border-radius(4px)
   .project-name
     color: #fff
-  .project-velocity
+  .project-velocity, .icon-placeholder
     display: inline
   .project-adds
     background: #596475
@@ -67,4 +70,4 @@
     width: 50px
     height: 50px
     +border-radius(25px)
-    margin-bottom: 20px
+    margin-bottom: 20px   
