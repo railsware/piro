@@ -17,7 +17,19 @@
       </div>
       <div class="col1of2">
         <div class="item">
-          <div class="story-type">{{story_type}}</div>
+          <div class="story-type">
+            <div class="pselect-container">
+              <a href="" class="chosen-option">{{story_type}}</a>
+              <div class="pselect-dropdown">
+                <ul class="pselect-options">
+                  <li class="pselect-option">Feature</li>
+                  <li class="pselect-option">Bug</li>
+                  <li class="pselect-option">Chore</li>
+                  <li class="pselect-option">Release</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="item">
           <div class="story-points">{{estimate}} points</div>
@@ -112,7 +124,10 @@
           </div>
           <div class="switched-state delete-confirmation">
               Are you sure?
-              <a href="#" class="confirm_delete_comment_link button" data-id="{{id}}">Delete</a> or <a href="#" class="cancel_delete_comment_link">Cancel</a>
+              <div class="right">
+                <a href="#" class="confirm_delete_comment_link button" data-id="{{id}}">Delete</a> or 
+                <a href="#" class="cancel_delete_comment_link">Cancel</a>
+              </div>
           </div>
           <div class="row mbm mts">
             <div class="left">{{#author}}<em class="muted">{{name}}{{/author}}</em></div>
@@ -165,9 +180,11 @@
     </div>
     <div class="switched-state">
       <div class="delete-confirmation">
-        <span class="mrs">Are you sure want delete {{name}}?</span>
-        <a class="confirm_delete_story_link button mrs" href="#">Delete</a>
-        <a class="cancel_delete_story_link" href="#">Cancel</a>
+        <span class="mrs">Are you sure?</span>
+        <div class="right">
+          <a class="confirm_delete_story_link button mrs" href="#">Delete</a>
+          <a class="cancel_delete_story_link" href="#">Cancel</a>
+        </div>
       </div>
     </div>
   </div>
