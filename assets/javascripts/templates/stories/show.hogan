@@ -9,33 +9,61 @@
           </div>
         </div>
         <div class="item">
-          <span class="muted">Requester:</span> {{#requested_by}}{{name}}{{/requested_by}}
+          <div class="left">
+            <span class="muted">Requester: </span> 
+          </div>
+          <div class="last-col">
+            <select name="" id="">
+              {{#requested_by}}
+                <option value="">{{name}}</option>
+              {{/requested_by}}
+              {{^requested_by}}
+                <option value="">none</option>
+              {{/requested_by}}
+            </select>
+          </div>
         </div>
         <div class="item">
-          <span class="muted">Owner:</span> {{#owned_by}}{{name}}{{/owned_by}}
+          <div class="left">
+            <span class="muted">Owner: </span> 
+          </div>
+          <div class="last-col">
+            <select name="" id="">
+              {{#owned_by}}
+                <option value="">{{name}}</option>
+              {{/owned_by}}
+              {{^owned_by}}
+                <option value="">none</option>
+              {{/owned_by}}
+            </select>
+          </div>
         </div>
       </div>
       <div class="col1of2">
         <div class="item">
           <div class="story-type">
-            <div class="pselect-container">
-              <a href="" class="chosen-option">{{story_type}}</a>
-              <div class="pselect-dropdown">
-                <ul class="pselect-options">
-                  <li class="pselect-option">Feature</li>
-                  <li class="pselect-option">Bug</li>
-                  <li class="pselect-option">Chore</li>
-                  <li class="pselect-option">Release</li>
-                </ul>
-              </div>
-            </div>
+            <select name="" id="">
+              <option value="">{{story_type}}</option>
+              <option value="">Feature</option>
+              <option value="">Bug</option>
+              <option value="">Chore</option>
+              <option value="">Release</option>
+            </select>
           </div>
         </div>
         <div class="item">
-          <div class="story-points">{{estimate}} points</div>
+          <div class="story-points">
+            <select name="" id="">
+              <option value="">{{estimate}} points</option>
+            </select>
+          </div>
         </div>
         <div class="item">
-          <div class="story-state">{{current_state}}</div>
+          <div class="story-state">
+            <select name="" id="">
+              <option value="">{{current_state}}</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
