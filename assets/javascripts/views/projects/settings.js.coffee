@@ -2,6 +2,7 @@ class PiroPopup.Views.ProjectsSettings extends Backbone.View
   template: SHT['projects/settings']
   events:
     "click .close_settings"                 : "closeSettings"
+    "click .delete_icon"                    : "deleteIcon"
     "change .project_upload_icon"           : "uploadIconFile"
     "dragover #uploadIconZone"              : "dragOverZone"
     "dragleave #uploadIconZone"             : "dragLeaveZone"
@@ -36,6 +37,13 @@ class PiroPopup.Views.ProjectsSettings extends Backbone.View
       success: =>
         @$('.project_icon').attr('src', e.target.result)
         @model.set(icon: e.target.result)
+
+  deleteIcon: (e) =>
+    e.preventDefault()
+    PiroPopup.db.deleteProjectIcon @model.get('id'),
+      success: =>
+        @$('.project_icon').attr('src', "public/images/icons/workspace.png")
+        @model.unset("icon")
 
   dragOverZone: (e) =>
     e.preventDefault()

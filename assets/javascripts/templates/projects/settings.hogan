@@ -6,5 +6,5 @@
 
     <input class="project_upload_icon" type="file" />
   </div>
-  <a href="#" class="delete-link">Delete image</a>
+  <a href="#" class="delete_icon delete-link {{^icon}}hidden{{/icon}}">Delete image</a>
 </div>

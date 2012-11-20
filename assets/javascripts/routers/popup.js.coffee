@@ -11,6 +11,7 @@ class PiroPopup.Routers.Popup extends Backbone.Router
     @storiesList = null
     @on 'all', @afterRouting
     PiroPopup.globalEvents.on "route:highlight:links", @_refreshLinks
+    PiroPopup.globalEvents.on "update:data:finished", @_refreshView
     @mainView = new PiroPopup.Views.PopupIndex(collection: PiroPopup.pivotalAccounts, projects: PiroPopup.pivotalProjects)
     PiroPopup.updateMainContainer(@mainView)
 
@@ -65,6 +66,8 @@ class PiroPopup.Routers.Popup extends Backbone.Router
     view = new PiroPopup.Views.LoginIndex(collection: PiroPopup.pivotalAccounts)
     PiroPopup.updateMainContainer(view)
   # private
+  _refreshView: =>
+    Backbone.history.navigate("", {trigger: true, replace: true}) if $('#projectsBox').length is 0 || $('#projectsBox').children().length is 0
   _refreshLinks: =>
     return false if !Backbone.history? || !Backbone.history.fragment?
     for key, route of @routes

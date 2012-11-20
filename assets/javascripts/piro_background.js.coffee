@@ -82,6 +82,9 @@ root.PiroBackground =
               PiroBackground.pivotalAccountIterator = 0
               PiroBackground.updateStatePerAccount = Math.ceil(100/PiroBackground.pivotalAccounts.length)
               PiroBackground.updateDataForAccount()
+            else
+              PiroBackground.updateState = false
+              PiroBackground.checkUpdateState()
   updateDataForAccount: ->
     PiroBackground.pivotalApi = new PivotaltrackerApi(PiroBackground.pivotalAccounts[PiroBackground.pivotalAccountIterator])
     PiroBackground.pivotalApi.getProjects
