@@ -8,15 +8,19 @@ class root.PiroStorage
     @indexedDB = root.indexedDB || root.webkitIndexedDB || root.mozIndexedDB
     root.IDBTransaction ||= root.webkitIDBTransaction
     root.IDBKeyRange ||= root.webkitIDBKeyRange
+    @transactionPermitions = 
+      READ_WRITE : "readwrite"
+      READ_ONLY : "readonly"
     request = @indexedDB.open(@dbName, @dbVersion)
-    request.onerror = @dbError
+    request.onerror = @_dbError
     request.onupgradeneeded = (e) =>
-      @db = e.target.result
-      @_migrateDb()
-      params.success.call(null) if params.success?
+      @_initDbFinished(e, params, true)
     request.onsuccess = (e) =>
-      @db = e.target.result
-      params.success.call(null) if params.success?
+      @_initDbFinished(e, params)
+  _initDbFinished: (e, params, isMigrate = false) =>
+    @db = e.target.result
+    @_migrateDb() if isMigrate is true
+    params.success.call(null) if params.success?
   _migrateDb: =>
     @db.deleteObjectStore @accountsKey() if @db.objectStoreNames.contains(@accountsKey())
     accounts = @db.createObjectStore(@accountsKey(),
@@ -49,11 +53,11 @@ class root.PiroStorage
   # ACCOUNTS
   getAccounts: (params = {}) =>
     accounts = []
-    trans = @db.transaction([@accountsKey()], "readonly")
+    trans = @db.transaction([@accountsKey()], @transactionPermitions.READ_ONLY)
     store = trans.objectStore(@accountsKey())
     keyRange = IDBKeyRange.lowerBound(0)
     cursorRequest = store.openCursor(keyRange)
-    cursorRequest.onerror = @dbError
+    cursorRequest.onerror = @_dbError
     cursorRequest.onsuccess = (e) =>
       cursor = e.target.result
       if cursor?
@@ -62,10 +66,10 @@ class root.PiroStorage
       else
         params.success.call(null, accounts) if params.success?
   saveAccount: (account, params = {}) =>
-    trans = @db.transaction([@accountsKey()], "readwrite")
+    trans = @db.transaction([@accountsKey()], @transactionPermitions.READ_WRITE)
     store = trans.objectStore(@accountsKey())
     request = store.put account
-    request.onerror = @dbError
+    request.onerror = @_dbError
     request.onsuccess = (e) =>
       params.success.call(null) if params.success?
   saveAccountAndGetAll: (account, params = {}) =>
@@ -75,21 +79,21 @@ class root.PiroStorage
           success: (accounts) =>
             params.success.call(null, accounts) if params.success?
   deleteAccount: (accountId, params = {}) =>
-    trans = @db.transaction([@accountsKey()], "readwrite")
+    trans = @db.transaction([@accountsKey()], @transactionPermitions.READ_WRITE)
     store = trans.objectStore(@accountsKey())
     request = store.delete(accountId)
-    request.onerror = @dbError
+    request.onerror = @_dbError
     request.onsuccess = (e) =>
       data = e.target.result
       params.success.call(null, data) if params.success?
   # PROJECTS
   getAllProjects: (params = {}) =>
     projects = []
-    trans = @db.transaction([@projectsKey()], "readonly")
+    trans = @db.transaction([@projectsKey()], @transactionPermitions.READ_ONLY)
     store = trans.objectStore(@projectsKey())
     keyRange = IDBKeyRange.lowerBound(0)
     cursorRequest = store.openCursor(keyRange)
-    cursorRequest.onerror = @dbError
+    cursorRequest.onerror = @_dbError
     cursorRequest.onsuccess = (e) =>
       cursor = e.target.result
       if cursor?
@@ -101,10 +105,10 @@ class root.PiroStorage
           params.success.call(null, _.uniq(_.flatten(projects)))
   getProjects: (account, params = {}) =>
     projects = []
-    trans = @db.transaction([@projectsKey()], "readonly")
+    trans = @db.transaction([@projectsKey()], @transactionPermitions.READ_ONLY)
     store = trans.objectStore(@projectsKey())
     request = store.get(account.id)
-    request.onerror = @dbError
+    request.onerror = @_dbError
     request.onsuccess = (e) =>
       data = e.target.result
       @getProjectIcons
@@ -127,13 +131,13 @@ class root.PiroStorage
           ) if sortedProjectIds? && sortedProjectIds.length > 0
           params.success.call(null, projects) if params.success?
   setProjects: (account, projects, params = {}) =>
-    trans = @db.transaction([@projectsKey()], "readwrite")
+    trans = @db.transaction([@projectsKey()], @transactionPermitions.READ_WRITE)
     store = trans.objectStore(@projectsKey())
     data = 
       account_id: account.id
       projects: projects
     request = store.put data
-    request.onerror = @dbError
+    request.onerror = @_dbError
     request.onsuccess = (e) =>
       params.success.call(null) if params.success?
   getFullProjects: (account, params = {}) =>
@@ -150,35 +154,35 @@ class root.PiroStorage
                 params.success.call(null, allProjects) if params.success?
   # STORIES
   setStory: (story, params = {}) =>
-    trans = @db.transaction([@storiesKey()], "readwrite")
+    trans = @db.transaction([@storiesKey()], @transactionPermitions.READ_WRITE)
     store = trans.objectStore(@storiesKey())
     request = store.put story
-    request.onerror = @dbError
+    request.onerror = @_dbError
     request.onsuccess = (e) =>
       data = e.target.result
       params.success.call(null, story) if params.success?
   setStories: (stories, params = {}) =>
-    trans = @db.transaction([@storiesKey()], "readwrite")
+    trans = @db.transaction([@storiesKey()], @transactionPermitions.READ_WRITE)
     store = trans.objectStore(@storiesKey())
     for story in stories
       request = store.put story
-      request.onerror = @dbError
+      request.onerror = @_dbError
   getStoryById: (storyId, params = {}) =>
-    trans = @db.transaction([@storiesKey()], "readonly")
+    trans = @db.transaction([@storiesKey()], @transactionPermitions.READ_ONLY)
     store = trans.objectStore(@storiesKey())
     request = store.get(storyId)
-    request.onerror = @dbError
+    request.onerror = @_dbError
     request.onsuccess = (e) =>
       data = e.target.result
       params.success.call(null, data) if params.success?
   getStoriesByProject: (project, params = {}) =>
     stories = []
-    trans = @db.transaction([@storiesKey()], "readonly")
+    trans = @db.transaction([@storiesKey()], @transactionPermitions.READ_ONLY)
     store = trans.objectStore(@storiesKey())
     index = store.index("project_id")
     projectIdVal = IDBKeyRange.only(project.id.toString())
     cursorRequest = index.openCursor(projectIdVal)
-    cursorRequest.onerror = @dbError
+    cursorRequest.onerror = @_dbError
     cursorRequest.onsuccess = (e) =>
       cursor = e.target.result
       if cursor?
@@ -188,11 +192,11 @@ class root.PiroStorage
         params.success.call(null, project, stories) if params.success?
   getStories: (params = {}) =>
     stories = []
-    trans = @db.transaction([@storiesKey()], "readonly")
+    trans = @db.transaction([@storiesKey()], @transactionPermitions.READ_ONLY)
     store = trans.objectStore(@storiesKey())
     keyRange = IDBKeyRange.lowerBound(0)
     cursorRequest = store.openCursor(keyRange)
-    cursorRequest.onerror = @dbError
+    cursorRequest.onerror = @_dbError
     cursorRequest.onsuccess = (e) =>
       cursor = e.target.result
       if cursor?
@@ -201,21 +205,21 @@ class root.PiroStorage
       else
         params.success.call(null, stories) if params.success?
   deleteStoryById: (storyId, params = {}) =>
-    trans = @db.transaction([@storiesKey()], "readwrite")
+    trans = @db.transaction([@storiesKey()], @transactionPermitions.READ_WRITE)
     store = trans.objectStore(@storiesKey())
     request = store.delete(storyId)
-    request.onerror = @dbError
+    request.onerror = @_dbError
     request.onsuccess = (e) =>
       data = e.target.result
       params.success.call(null, data) if params.success?
   # PROJECT ICONS
   getProjectIcons: (params = {}) =>
     icons = []
-    trans = @db.transaction([@projectsIconsKey()], "readonly")
+    trans = @db.transaction([@projectsIconsKey()], @transactionPermitions.READ_ONLY)
     store = trans.objectStore(@projectsIconsKey())
     keyRange = IDBKeyRange.lowerBound(0)
     cursorRequest = store.openCursor(keyRange)
-    cursorRequest.onerror = @dbError
+    cursorRequest.onerror = @_dbError
     cursorRequest.onsuccess = (e) =>
       cursor = e.target.result
       if cursor?
@@ -225,35 +229,37 @@ class root.PiroStorage
         params.success.call(null, icons) if params.success?
   getProjectIcon: (project, params = {}) =>
     icon = null
-    trans = @db.transaction([@projectsIconsKey()], "readonly")
+    trans = @db.transaction([@projectsIconsKey()], @transactionPermitions.READ_ONLY)
     store = trans.objectStore(@projectsIconsKey())
     keyRange = IDBKeyRange.only(project.id.toString())
     cursorRequest = store.openCursor(keyRange)
-    cursorRequest.onerror = @dbError
+    cursorRequest.onerror = @_dbError
     cursorRequest.onsuccess = (e) =>
       cursor = e.target.result
       params.success.call(null, cursor.value) if params.success?
   saveProjectIcon: (project, icon, params = {}) =>
-    trans = @db.transaction([@projectsIconsKey()], "readwrite")
+    trans = @db.transaction([@projectsIconsKey()], @transactionPermitions.READ_WRITE)
     store = trans.objectStore(@projectsIconsKey())
     request = store.put 
       id: project.id
       icon: icon
-    request.onerror = @dbError
+    request.onerror = @_dbError
     request.onsuccess = (e) =>
       params.success.call(null) if params.success?
   deleteProjectIcon: (projectId, params = {}) =>
-    trans = @db.transaction([@projectsIconsKey()], "readwrite")
+    trans = @db.transaction([@projectsIconsKey()], @transactionPermitions.READ_WRITE)
     store = trans.objectStore(@projectsIconsKey())
     request = store.delete(projectId)
-    request.onerror = @dbError
+    request.onerror = @_dbError
     request.onsuccess = (e) =>
       data = e.target.result
       params.success.call(null, data) if params.success?
   # UTILS
-  dbError: (e) =>
-    console.error "IndexedDB error"
+  _dbError: (e) =>
+    console.error "IndexedDB error begin"
     console.error e
+    console.error "Error code: #{e.target.errorCode}"
+    console.error "IndexedDB error end"
   # localStorage
   setLocalStorage: (key, data) =>
     try
