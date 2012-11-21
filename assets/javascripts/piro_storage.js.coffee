@@ -6,41 +6,37 @@ class root.PiroStorage
     @dbVersion = "1"
     @db = null
     @indexedDB = root.indexedDB || root.webkitIndexedDB || root.mozIndexedDB
-    if "webkitIndexedDB" of root
-      root.IDBTransaction = root.webkitIDBTransaction
-      root.IDBKeyRange = root.webkitIDBKeyRange
-    request = @indexedDB.open(@dbName)
+    root.IDBTransaction ||= root.webkitIDBTransaction
+    root.IDBKeyRange ||= root.webkitIDBKeyRange
+    request = @indexedDB.open(@dbName, @dbVersion)
     request.onerror = @dbError
+    request.onupgradeneeded = (e) =>
+      @db = e.target.result
+      @_migrateDb()
+      params.success.call(null) if params.success?
     request.onsuccess = (e) =>
       @db = e.target.result
-      unless @dbVersion is @db.version
-        setVrequest = @db.setVersion(@dbVersion)
-        setVrequest.onerror = @dbError
-        setVrequest.onsuccess = (e) =>
-          @db.deleteObjectStore @accountsKey() if @db.objectStoreNames.contains(@accountsKey())
-          accounts = @db.createObjectStore(@accountsKey(),
-            keyPath: "id"
-          )
-          @db.deleteObjectStore @projectsKey() if @db.objectStoreNames.contains(@projectsKey())
-          projects = @db.createObjectStore(@projectsKey(),
-            keyPath: "account_id"
-          )
-          @db.deleteObjectStore @projectsIconsKey() if @db.objectStoreNames.contains(@projectsIconsKey())
-          project_icons = @db.createObjectStore(@projectsIconsKey(),
-            keyPath: "id"
-          )
-          @db.deleteObjectStore @storiesKey() if @db.objectStoreNames.contains(@storiesKey())
-          stories = @db.createObjectStore(@storiesKey(),
-            keyPath: "id"
-          )
-          stories.createIndex("project_id", "project_id", { unique: false })
-          # clear local storage
-          @clearLocalStorage()
-          # done
-          e.target.transaction.oncomplete = ->
-            params.success.call(null) if params.success?
-      else
-        params.success.call(null) if params.success?
+      params.success.call(null) if params.success?
+  _migrateDb: =>
+    @db.deleteObjectStore @accountsKey() if @db.objectStoreNames.contains(@accountsKey())
+    accounts = @db.createObjectStore(@accountsKey(),
+      keyPath: "id"
+    )
+    @db.deleteObjectStore @projectsKey() if @db.objectStoreNames.contains(@projectsKey())
+    projects = @db.createObjectStore(@projectsKey(),
+      keyPath: "account_id"
+    )
+    @db.deleteObjectStore @projectsIconsKey() if @db.objectStoreNames.contains(@projectsIconsKey())
+    project_icons = @db.createObjectStore(@projectsIconsKey(),
+      keyPath: "id"
+    )
+    @db.deleteObjectStore @storiesKey() if @db.objectStoreNames.contains(@storiesKey())
+    stories = @db.createObjectStore(@storiesKey(),
+      keyPath: "id"
+    )
+    stories.createIndex("project_id", "project_id", { unique: false })
+    # clear local storage
+    @clearLocalStorage()
   # KEYS
   accountsKey: =>
     "accounts"
