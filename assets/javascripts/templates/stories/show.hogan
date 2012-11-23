@@ -87,7 +87,7 @@
         <p><strong>Labels:</strong></p>
         <p>
           {{#labelsList}}
-          <a href="#" class="story_label">{{.}}</a>
+            <a href="#" class="story_label">{{.}}</a>
           {{/labelsList}}
         </p>
       </div>

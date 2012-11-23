@@ -95,6 +95,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
   openTaskClick: (e) =>
     e.preventDefault()
     @$(e.currentTarget).parents('.add_task_box').addClass('adding')
+    @$('input.add_task_description').focus()
   cancelOpenTask: (e) =>
     e.preventDefault()
     @$(e.currentTarget).parents('.add_task_box').removeClass('adding')
@@ -133,7 +134,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
       )
   openEditTask: (e) =>
     e.preventDefault()
-    $(e.currentTarget).parents('.task_box').addClass('editing')
+    $(e.currentTarget).parents('.task_box').addClass('editing').find('input.task_description_input').focus()
   closeEditTask: (e) =>
     e.preventDefault()
     $(e.currentTarget).parents('.task_box').removeClass('editing')
@@ -175,6 +176,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
   openCommentClick: (e) =>
     e.preventDefault()
     @$(e.currentTarget).parents('.add_comment_box').addClass('adding')
+    @$('textarea.add_comment_text').focus()
   cancelOpenComment: (e) =>
     e.preventDefault()
     @$(e.currentTarget).parents('.add_comment_box').removeClass('adding')
