@@ -4,6 +4,9 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     "click .story_label"                            : "filterByLabel"
     # update story
     "keydown .story_name"                           : "updateStoryName"
+    "dblclick .open_story_description"              : "openStoryDescription"
+    "click .cancel_edit_story_description"          : "closeStoryDescription"
+    "submit .edit_story_description_form"           : "updateStoryDescription"
     # delete story
     "click .story_delete_link"                      : "deleteStoryClick"
     "click .cancel_delete_story_link"               : "cancelDeleteStory"
@@ -71,8 +74,31 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
   remove: =>
     $(@el).remove()
 
+  openStoryDescription: (e) =>
+    e.preventDefault()
+    @$(e.currentTarget).parents('.story_description_box').addClass('editing')
+    @$('textarea.story_description').focus()
+  closeStoryDescription: (e) =>
+    e.preventDefault()
+    @$(e.currentTarget).parents('.story_description_box').removeClass('editing')
+  updateStoryDescription: (e) =>
+    e.preventDefault()
+    attributes = 
+      story:
+        description: @$('textarea.story_description').val()
+    chrome.runtime.getBackgroundPage (bgPage) =>
+      PiroPopup.bgPage = bgPage
+      PiroPopup.bgPage.PiroBackground.updateAndSyncStory(
+        PiroPopup.pivotalCurrentAccount.toJSON(),
+        @model.toJSON(),
+        attributes,
+        success: (story) =>
+          @model.set(story)
+      )
+
   updateStoryName: (e) =>
     return false unless e.keyCode?
+    return false if $(e.currentTarget).val().length is 0
     switch parseInt(e.keyCode)
       when 13 # Enter
         e.preventDefault()
@@ -90,7 +116,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
           )
       when 27 # esc
         e.preventDefault()
-        @$('input.story_name').val(@model.get('name'))
+        $(e.currentTarget).val(@model.get('name'))
       else
        return true
 

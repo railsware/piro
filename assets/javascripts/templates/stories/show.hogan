@@ -79,8 +79,16 @@
       <div class="mbs">
         <input class="story_name" type="text" value="{{name}}" />
       </div>
-      <div class="story-description mbs">
-        <p><em class="muted">{{description}}</em></p>
+      <div class="story_description_box story-description mbs">
+        <div class="open_story_description">
+          <p><em class="muted">{{{descriptionHtml}}}</em></p>
+        </div>
+        <div>
+          <form class="edit_story_description_form"  method="POST">
+            <textarea class="story_description" rows="3" cols="20">{{description}}</textarea>
+            <input type="submit" value="Edit" /> or <a class="cancel_edit_story_description" href="#">Cancel</a>
+          </form>
+        </div>
       </div>
 
       <div class="mbs">
