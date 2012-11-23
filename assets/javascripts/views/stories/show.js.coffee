@@ -7,6 +7,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     "dblclick .open_story_description"              : "openStoryDescription"
     "click .cancel_edit_story_description"          : "closeStoryDescription"
     "submit .edit_story_description_form"           : "updateStoryDescription"
+    "webkitspeechchange .story_description_speech"  : "changeStoryDescription"
     # change project id
     "change .change_project_id_selector"            : "changeProjectId"
     "click .cancel_change_project_link"             : "cancelChangeProjectId"
@@ -99,6 +100,9 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         success: (story) =>
           @model.set(story)
       )
+  changeStoryDescription: (e) =>
+    @$('textarea.story_description').val "#{@$('textarea.story_description').val()} #{@$('.story_description_speech').val()}"
+    @$('.story_description_speech').val('')
 
   updateStoryName: (e) =>
     return false unless e.keyCode?
