@@ -89,7 +89,7 @@
         <div>
           <form class="edit_story_description_form"  method="POST">
             <textarea class="story_description" rows="3" cols="20">{{description}}</textarea>
-            <input type="submit" value="Edit" /> or <a class="cancel_edit_story_description" href="#">Cancel</a>
+            <input type="submit" value="Save" /> or <a class="cancel_edit_story_description" href="#">Cancel</a>
           </form>
         </div>
       </div>
