@@ -72,12 +72,12 @@
       <div class="mbs">
         <select class="change_project_id">
           {{#pivotalProjects}}
-          <option value="{{id}}">{{name}}</option>
+            <option value="{{id}}">{{name}}</option>
           {{/pivotalProjects}}
         </select>
       </div>
       <div class="mbs">
-        <input type="text" value="{{name}}" />
+        <input class="story_name" type="text" value="{{name}}" />
       </div>
       <div class="story-description mbs">
         <p><em class="muted">{{description}}</em></p>

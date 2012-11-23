@@ -228,6 +228,18 @@ root.PiroBackground =
               callbackParams.error.call(null) if callbackParams.error?
           error: =>
             callbackParams.error.call(null) if callbackParams.error?
+  updateAndSyncStory: (account, story, attributes, callbackParams = {}) =>
+    PiroBackground.db = new PiroStorage
+      success: =>
+        pivotalApi = new PivotaltrackerApi(account)
+        pivotalApi.updateStory story,
+          data: attributes
+          success: (storyInfo) =>
+            PiroBackground.db.setStory storyInfo,
+              success: =>
+                callbackParams.success.call(null, storyInfo) if callbackParams.success?
+          error: =>
+            callbackParams.error.call(null) if callbackParams.error?
   deleteAndSyncStory: (account, story, callbackParams = {}) =>
     PiroBackground.db = new PiroStorage
       success: =>

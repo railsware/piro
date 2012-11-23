@@ -2,6 +2,8 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
   template: SHT['stories/show']
   events:
     "click .story_label"                            : "filterByLabel"
+    # update story
+    "keydown .story_name"                           : "updateStoryName"
     # delete story
     "click .story_delete_link"                      : "deleteStoryClick"
     "click .cancel_delete_story_link"               : "cancelDeleteStory"
@@ -68,6 +70,29 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
 
   remove: =>
     $(@el).remove()
+
+  updateStoryName: (e) =>
+    return false unless e.keyCode?
+    switch parseInt(e.keyCode)
+      when 13 # Enter
+        e.preventDefault()
+        attributes = 
+          story:
+            name: $(e.currentTarget).val()
+        chrome.runtime.getBackgroundPage (bgPage) =>
+          PiroPopup.bgPage = bgPage
+          PiroPopup.bgPage.PiroBackground.updateAndSyncStory(
+            PiroPopup.pivotalCurrentAccount.toJSON(),
+            @model.toJSON(),
+            attributes,
+            success: (story) =>
+              @model.set(story)
+          )
+      when 27 # esc
+        e.preventDefault()
+        @$('input.story_name').val(@model.get('name'))
+      else
+       return true
 
   filterByLabel: (e) =>
     e.preventDefault()
