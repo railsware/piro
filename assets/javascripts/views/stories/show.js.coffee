@@ -48,12 +48,14 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
       pivotalProjects: PiroPopup.pivotalProjects.toJSON()
     )))
     @initProjectSelector()
+    @initStoryTypeSelector()
     @initSortingTasks()
     this
     
   initProjectSelector: =>
     @$('select.change_project_id_selector').val(@model.get('project_id'))
-  
+  initStoryTypeSelector: =>
+    @$('select.story_type_selector').val(@model.get('story_type').toLowerCase())
   initSortingTasks: =>
     @$("ul.tasks_list_box").sortable
       handle: '.sort_task'

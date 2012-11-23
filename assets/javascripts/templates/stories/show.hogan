@@ -42,12 +42,11 @@
       <div class="col1of2">
         <div class="item">
           <div class="story-type">
-            <select name="" id="">
-              <option value="">{{story_type}}</option>
-              <option value="">Feature</option>
-              <option value="">Bug</option>
-              <option value="">Chore</option>
-              <option value="">Release</option>
+            <select class="story_type_selector">
+              <option value="feature">Feature</option>
+              <option value="bug">Bug</option>
+              <option value="chore">Chore</option>
+              <option value="release">Release</option>
             </select>
           </div>
         </div>
