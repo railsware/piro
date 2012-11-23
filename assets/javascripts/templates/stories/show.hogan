@@ -70,11 +70,14 @@
 
     <div class="story-form">
       <div class="mbs">
-        <select class="change_project_id">
+        <select class="change_project_id_selector">
           {{#pivotalProjects}}
             <option value="{{id}}">{{name}}</option>
           {{/pivotalProjects}}
         </select>
+        <div class="change_project_box hidden">
+          <a class="confirm_change_project_link" href="#">Change project</a> or <a class="cancel_change_project_link" href="#">Cancel</a>
+        </div>
       </div>
       <div class="mbs">
         <input class="story_name" type="text" value="{{name}}" />

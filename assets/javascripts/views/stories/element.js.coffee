@@ -9,6 +9,7 @@ class PiroPopup.Views.StoriesElement extends Backbone.View
   
   initialize: =>
     @model.on 'change', @render
+    @model.on 'change:project_id', @remove
     @model.on 'destroy', @remove
 
   render: =>

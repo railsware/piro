@@ -7,6 +7,10 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     "dblclick .open_story_description"              : "openStoryDescription"
     "click .cancel_edit_story_description"          : "closeStoryDescription"
     "submit .edit_story_description_form"           : "updateStoryDescription"
+    # change project id
+    "change .change_project_id_selector"            : "changeProjectId"
+    "click .cancel_change_project_link"             : "cancelChangeProjectId"
+    "click .confirm_change_project_link"            : "confirmChangeProjectId"
     # delete story
     "click .story_delete_link"                      : "deleteStoryClick"
     "click .cancel_delete_story_link"               : "cancelDeleteStory"
@@ -47,7 +51,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     this
     
   initProjectSelector: =>
-    @$('select.change_project_id').val(@model.get('project_id'))
+    @$('select.change_project_id_selector').val(@model.get('project_id'))
   
   initSortingTasks: =>
     @$("ul.tasks_list_box").sortable
@@ -119,6 +123,30 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         $(e.currentTarget).val(@model.get('name'))
       else
        return true
+
+  changeProjectId: (e) =>
+    if parseInt($(e.currentTarget).val()) isnt parseInt(@model.get('project_id'))
+      @$('.change_project_box').removeClass('hidden')
+    else
+      @$('.change_project_box').addClass('hidden') unless @$('.change_project_box').hasClass('hidden')
+  cancelChangeProjectId: (e) =>
+    e.preventDefault()
+    @$('.change_project_id_selector').val(@model.get('project_id'))
+    @$('.change_project_box').addClass('hidden') unless @$('.change_project_box').hasClass('hidden')
+  confirmChangeProjectId: (e) =>
+    e.preventDefault()
+    attributes = 
+      story:
+        project_id: @$('.change_project_id_selector').val()
+    chrome.runtime.getBackgroundPage (bgPage) =>
+      PiroPopup.bgPage = bgPage
+      PiroPopup.bgPage.PiroBackground.updateAndSyncStory(
+        PiroPopup.pivotalCurrentAccount.toJSON(),
+        @model.toJSON(),
+        attributes,
+        success: (story) =>
+          @model.set(story)
+      )
 
   filterByLabel: (e) =>
     e.preventDefault()
