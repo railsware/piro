@@ -248,7 +248,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         PiroPopup.pivotalCurrentAccount.toJSON(),
         @model.toJSON(),
         beforeSend: =>
-          @$('.story_delete_box').html(PiroPopup.ajaxLoader)
+          @$('.story_delete_control_box').html(PiroPopup.ajaxLoader)
         success: (story) =>
           projectId = @model.get('project_id')
           @model.trigger('destroy', @model, @model.collection, {})

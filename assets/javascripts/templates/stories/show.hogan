@@ -256,7 +256,7 @@
     </div>
   </div>
   
-  <div class="story_delete_box box_item switchable-block">
+  <div class="box_item switchable-block">
     <div class="initial-state">
       <div class="inner row">
         <a class="story_delete_link delete-link" href="#">Delete</a>
@@ -265,7 +265,7 @@
     <div class="switched-state">
       <div class="delete-confirmation">
         <span class="mrs">Are you sure?</span>
-        <div class="right">
+        <div class="story_delete_control_box right">
           <a class="confirm_delete_story_link button mrs" href="#">Delete</a>
           <a class="cancel_delete_story_link" href="#">Cancel</a>
         </div>
