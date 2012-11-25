@@ -68,7 +68,7 @@
     </div>
 
     <div class="story-form">
-      <div class="mbs">
+      <div class="story_project_id_box mbs">
         <select class="change_project_id_selector">
           {{#pivotalProjects}}
             <option value="{{id}}">{{name}}</option>
@@ -119,7 +119,7 @@
       <ul class="tasks_list_box mbs">
         {{#tasks}}
         <li class="task_box story-task switchable-block" data-id="{{id}}">
-          <div class="task-block sort_task">
+          <div class="task_box_div task-block sort_task">
             <div class="initial-state">
               <label class="task_element_label">
                 <input type="checkbox" class="task_complete_input" data-id="{{id}}" {{#complete}}checked="checked"{{/complete}} />

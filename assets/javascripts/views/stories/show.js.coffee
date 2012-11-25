@@ -8,6 +8,8 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     "click .cancel_edit_story_description"          : "closeStoryDescription"
     "submit .edit_story_description_form"           : "updateStoryDescription"
     "webkitspeechchange .story_description_speech"  : "changeStoryDescription"
+    # change story type
+    "change .story_type_selector"                   : "changeStoryType"
     # change project id
     "change .change_project_id_selector"            : "changeProjectId"
     "click .cancel_change_project_link"             : "cancelChangeProjectId"
@@ -53,7 +55,8 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     this
     
   initProjectSelector: =>
-    @$('select.change_project_id_selector').val(@model.get('project_id'))
+    @$('select.change_project_id_selector').val(@model.get('project_id'))#.chosen
+    #  container_class: "test"
   initStoryTypeSelector: =>
     @$('select.story_type_selector').val(@model.get('story_type').toLowerCase())
   initSortingTasks: =>
@@ -99,12 +102,32 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         PiroPopup.pivotalCurrentAccount.toJSON(),
         @model.toJSON(),
         attributes,
+        beforeSend: =>
+          @$('.story_description_box').replaceWith(PiroPopup.ajaxLoader)
         success: (story) =>
           @model.set(story)
+        error: @render
       )
   changeStoryDescription: (e) =>
     @$('textarea.story_description').val "#{@$('textarea.story_description').val()} #{@$('.story_description_speech').val()}"
     @$('.story_description_speech').val('')
+
+  changeStoryType: (e) =>
+    attributes = 
+      story:
+        story_type: @$('.story_type_selector').val()
+    chrome.runtime.getBackgroundPage (bgPage) =>
+      PiroPopup.bgPage = bgPage
+      PiroPopup.bgPage.PiroBackground.updateAndSyncStory(
+        PiroPopup.pivotalCurrentAccount.toJSON(),
+        @model.toJSON(),
+        attributes,
+        beforeSend: =>
+          @$('.story_type_selector').replaceWith(PiroPopup.ajaxLoader)
+        success: (story) =>
+          @model.set(story)
+        error: @render
+      )
 
   updateStoryName: (e) =>
     return false unless e.keyCode?
@@ -123,6 +146,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
             attributes,
             success: (story) =>
               @model.set(story)
+            error: @render
           )
       when 27 # esc
         e.preventDefault()
@@ -150,8 +174,11 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         PiroPopup.pivotalCurrentAccount.toJSON(),
         @model.toJSON(),
         attributes,
+        beforeSend: =>
+          @$('.story_project_id_box').replaceWith(PiroPopup.ajaxLoader)
         success: (story) =>
           @model.set(story)
+        error: @render
       )
 
   filterByLabel: (e) =>
@@ -196,8 +223,11 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         PiroPopup.pivotalCurrentAccount.toJSON(),
         @model.toJSON(),
         attributes,
+        beforeSend: =>
+          @$('.add_task_box').replaceWith(PiroPopup.ajaxLoader)
         success: (story) =>
           @model.set(story)
+        error: @render
       )
   changeCompleteOfTask: (e) =>
     taskId = @$(e.currentTarget).data('id')
@@ -214,8 +244,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         attributes,
         success: (story) =>
           # success
-        error: =>
-          # error
+        error: @render
       )
   openEditTask: (e) =>
     e.preventDefault()
@@ -237,10 +266,11 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         @model.toJSON(),
         taskId,
         attributes,
+        beforeSend: =>
+          @$(e.currentTarget).parents('.task_box_div').replaceWith(PiroPopup.ajaxLoader)
         success: (story) =>
           @model.set(story)
-        error: =>
-          # error
+        error: @render
       )
   deleteTask: (e) =>
     e.preventDefault()
@@ -254,8 +284,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         taskId,
         success: (story) =>
           @$(".task_box[data-id='#{taskId}']").remove()
-        error: =>
-          # error
+        error: @render
       )
 
   openCommentClick: (e) =>
@@ -277,8 +306,11 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         PiroPopup.pivotalCurrentAccount.toJSON(),
         @model.toJSON(),
         attributes,
+        beforeSend: =>
+          @$('.add_comment_box').replaceWith(PiroPopup.ajaxLoader)
         success: (story) =>
           @model.set(story)
+        error: @render
       )
 
   deleteCommentClick: (e) =>
@@ -299,8 +331,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         commentId,
         success: (story) =>
           @$(".comment_box[data-id='#{commentId}']").remove()
-        error: =>
-          # error
+        error: @render
       )
 
   uploadAttachment: (e) =>
@@ -317,6 +348,8 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         PiroPopup.pivotalCurrentAccount.toJSON(), 
         @model.toJSON(), 
         formdata, 
+        beforeSend: =>
+          @$('#attachmentForm').replaceWith(PiroPopup.ajaxLoader)
         success: (story) =>
           @$('#attachmentForm').removeClass('loading')
           @model.set(story)
@@ -342,8 +375,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         attachmentId, 
         success: (story) =>
           @$(".attachment_box[data-id='#{attachmentId}']").remove()
-        error: =>
-          # error
+        error: @render
       )
     
   onDestroyView: =>

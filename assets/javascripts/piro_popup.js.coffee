@@ -8,6 +8,8 @@ root.PiroPopup =
   bgPage: null
   db: null
   globalEvents: {}
+  # ajax
+  ajaxLoader: "<img src='public/images/ajax-loader.gif' />"
   # views
   currentMainView: null
   currentStoriesView: null

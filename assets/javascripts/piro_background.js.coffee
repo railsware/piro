@@ -219,6 +219,7 @@ root.PiroBackground =
         pivotalApi = new PivotaltrackerApi(account)
         pivotalApi.createStory projectId,
           data: data
+          beforeSend: callbackParams.beforeSend
           success: (stories, textStatus, jqXHR) =>
             if stories.length > 0
               PiroBackground.db.setStory stories[0],
@@ -234,6 +235,7 @@ root.PiroBackground =
         pivotalApi = new PivotaltrackerApi(account)
         pivotalApi.updateStory story,
           data: attributes
+          beforeSend: callbackParams.beforeSend
           success: (storyInfo) =>
             PiroBackground.db.setStory storyInfo,
               success: =>
@@ -245,6 +247,7 @@ root.PiroBackground =
       success: =>
         pivotalApi = new PivotaltrackerApi(account)
         pivotalApi.deleteStory story,
+          beforeSend: callbackParams.beforeSend
           success: =>
             PiroBackground.db.deleteStoryById story.id,
               success: =>
@@ -257,6 +260,7 @@ root.PiroBackground =
         pivotalApi = new PivotaltrackerApi(account)
         pivotalApi.createTask story,
           data: data
+          beforeSend: callbackParams.beforeSend
           success: (data, textStatus, jqXHR) =>
             PiroBackground._syncStory(pivotalApi, story, callbackParams)
           error: =>
@@ -267,6 +271,7 @@ root.PiroBackground =
         pivotalApi = new PivotaltrackerApi(account)
         pivotalApi.changeTask story, taskId,
           data: data
+          beforeSend: callbackParams.beforeSend
           success: (data, textStatus, jqXHR) =>
             PiroBackground._syncStory(pivotalApi, story, callbackParams)
           error: =>
@@ -281,6 +286,7 @@ root.PiroBackground =
       success: =>
         pivotalApi = new PivotaltrackerApi(account)
         pivotalApi.deleteTask story, taskId,
+          beforeSend: callbackParams.beforeSend
           success: (data, textStatus, jqXHR) =>
             PiroBackground._syncStory(pivotalApi, story, callbackParams)
           error: =>
@@ -291,6 +297,7 @@ root.PiroBackground =
         pivotalApi = new PivotaltrackerApi(account)
         pivotalApi.createComment story,
           data: data
+          beforeSend: callbackParams.beforeSend
           success: (data, textStatus, jqXHR) =>
             PiroBackground._syncStory(pivotalApi, story, callbackParams)
           error: =>
@@ -300,6 +307,7 @@ root.PiroBackground =
       success: =>
         pivotalApi = new PivotaltrackerApi(account)
         pivotalApi.deleteComment story, commentId,
+          beforeSend: callbackParams.beforeSend
           success: (data, textStatus, jqXHR) =>
             PiroBackground._syncStory(pivotalApi, story, callbackParams)
           error: =>
@@ -309,6 +317,7 @@ root.PiroBackground =
       success: =>
         pivotalApi = new PivotaltrackerApi(account)
         pivotalApi.uploadAttachment story, formdata,
+          beforeSend: callbackParams.beforeSend
           success: (data, textStatus, jqXHR) =>
             setTimeout(=>
               PiroBackground._syncStory(pivotalApi, story, callbackParams)
@@ -320,6 +329,7 @@ root.PiroBackground =
       success: =>
         pivotalApi = new PivotaltrackerApi(account)
         pivotalApi.deleteAttachment story, attachmentId,
+          beforeSend: callbackParams.beforeSend
           success: (data, textStatus, jqXHR) =>
             PiroBackground._syncStory(pivotalApi, story, callbackParams)
           error: =>
