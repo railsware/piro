@@ -69,6 +69,18 @@ class PiroPopup.Models.Story extends Backbone.Model
     switch @get('story_type').toLowerCase()
       when "feature"
         attr.isFeature = true
+        attr.isFullStatus = true
+        attr.isNeedEstimate = true if parseInt(attr.story_estimate_selector) is -1
+        switch @get("current_state").toLowerCase()
+          when "unscheduled"
+            attr.isUnscheduled = true
+          else
+            # none
+      when "bug"
+        attr.isBug = true
+        attr.isFullStatus = true
+      when "chore"
+        attr.isChore = true
       when "release"
         attr.isRelease = true
       else

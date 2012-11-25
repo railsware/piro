@@ -7,3 +7,8 @@ class PiroPopup.Models.Project extends Backbone.Model
 
   setStories: (stories) =>
     @stories.reset(stories)
+    
+  toJSON: =>
+    attr = _.clone(@attributes)
+    attr.pointScaleArray = attr.point_scale.split(",") if attr.point_scale?
+    attr

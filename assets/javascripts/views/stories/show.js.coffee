@@ -48,20 +48,27 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
 
   render: =>
     $(@el).html(@template.render(_.extend(@model.toJSON(),
-      pivotalProjects: PiroPopup.pivotalProjects.toJSON()
+      pivotalProjects: PiroPopup.pivotalProjects.toJSON(),
+      project:  PiroPopup.pivotalProjects.get(@model.get('project_id')).toJSON()
     )))
-    @initProjectSelector()
-    @initStoryTypeSelector()
+    @initStorySelectors()
     @initByStoryTypeView()
     @initSortingTasks()
     this
     
-  initProjectSelector: =>
+  initStorySelectors: =>
     @$('select.change_project_id_selector').val(@model.get('project_id'))#.chosen
     #  container_class: "test"
-  initStoryTypeSelector: =>
+    @$('select.story_estimate_selector').val(@model.get('estimate'))
     @$('select.story_type_selector').val(@model.get('story_type').toLowerCase())
+    @$('select.story_state_selector').val(@model.get('current_state').toLowerCase())
+    @$('select.story_requested_by').val(@model.get('requested_by').id) if @model.get('requested_by')?
+    if @model.get('owned_by')?
+      @$('select.story_owned_by').val(@model.get('owned_by').id)
+    else
+      @$('select.story_owned_by').val("")
   initByStoryTypeView: =>
+    return false unless @$(".story_release_date").length
     @$(".story_release_date").datepicker
       showOn: "button"
       buttonImage: "public/images/calendar.gif"

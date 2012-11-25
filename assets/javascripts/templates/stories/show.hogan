@@ -13,13 +13,14 @@
             <span class="muted">Requester: </span> 
           </div>
           <div class="last-col">
-            <select name="" id="">
-              {{#requested_by}}
-                <option value="">{{name}}</option>
-              {{/requested_by}}
-              {{^requested_by}}
-                <option value="">none</option>
-              {{/requested_by}}
+            <select class="story_requested_by">
+              {{#project}}
+                {{#memberships}}
+                  {{#person}}
+                    <option value="{{id}}">{{name}} ({{initials}})</option>
+                  {{/person}}
+                {{/memberships}}
+              {{/project}}
             </select>
           </div>
         </div>
@@ -28,13 +29,15 @@
             <span class="muted">Owner: </span> 
           </div>
           <div class="last-col">
-            <select name="" id="">
-              {{#owned_by}}
-                <option value="">{{name}}</option>
-              {{/owned_by}}
-              {{^owned_by}}
-                <option value="">none</option>
-              {{/owned_by}}
+            <select class="story_owned_by">
+              <option value="">None</option>
+              {{#project}}
+                {{#memberships}}
+                  {{#person}}
+                    <option value="{{id}}">{{name}} ({{initials}})</option>
+                  {{/person}}
+                {{/memberships}}
+              {{/project}}
             </select>
           </div>
         </div>
@@ -53,8 +56,13 @@
         <div class="item">
           {{#isFeature}}
             <div class="story-points">
-              <select name="" id="">
-                <option value="">{{estimate}} points</option>
+              <select class="story_estimate_selector">
+                <option value="-1">Unestimated</option>
+                {{#project}}
+                  {{#pointScaleArray}}
+                    <option value="{{.}}">{{.}} points</option>
+                  {{/pointScaleArray}}
+                {{/project}}
               </select>
             </div>
           {{/isFeature}}
@@ -67,11 +75,37 @@
           {{/isRelease}}
         </div>
         <div class="item">
-          <div class="story-state">
-            <select name="" id="">
-              <option value="">{{current_state}}</option>
-            </select>
-          </div>
+          {{#isFullStatus}}
+            {{^isNeedEstimate}}
+              <div class="story-state">
+                <select class="story_state_selector">
+                  <option value="unstarted">Not Yet Started</option>
+                  <option value="started">Started</option>
+                  <option value="finished">Finished</option>
+                  <option value="delivered">Delivered</option>
+                  <option value="accepted">Accepted</option>
+                  <option value="rejected">Rejected</option>
+                </select>
+              </div>
+            {{/isNeedEstimate}}
+          {{/isFullStatus}}
+          {{#isChore}}
+            <div class="story-state">
+              <select class="story_state_selector">
+                <option value="unstarted">Not Yet Started</option>
+                <option value="started">Started</option>
+                <option value="accepted">Accepted</option>
+              </select>
+            </div>
+          {{/isChore}}
+          {{#isRelease}}
+            <div class="story-state">
+              <select class="story_state_selector">
+                <option value="unstarted">Not Yet Started</option>
+                <option value="accepted">Accepted</option>
+              </select>
+            </div>
+          {{/isRelease}}
         </div>
       </div>
     </div>
