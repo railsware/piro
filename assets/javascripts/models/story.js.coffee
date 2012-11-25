@@ -70,7 +70,7 @@ class PiroPopup.Models.Story extends Backbone.Model
       when "feature"
         attr.isFeature = true
         attr.isFullStatus = true
-        attr.isNeedEstimate = true if parseInt(attr.story_estimate_selector) is -1
+        attr.isNeedEstimate = true if parseInt(attr.estimate) is -1
         switch @get("current_state").toLowerCase()
           when "unscheduled"
             attr.isUnscheduled = true

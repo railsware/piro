@@ -247,6 +247,8 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
       PiroPopup.bgPage.PiroBackground.deleteAndSyncStory(
         PiroPopup.pivotalCurrentAccount.toJSON(),
         @model.toJSON(),
+        beforeSend: =>
+          @$('.story_delete_box').html(PiroPopup.ajaxLoader)
         success: (story) =>
           projectId = @model.get('project_id')
           @model.trigger('destroy', @model, @model.collection, {})
@@ -331,6 +333,8 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         PiroPopup.pivotalCurrentAccount.toJSON(), 
         @model.toJSON(),
         taskId,
+        beforeSend: =>
+          @$(e.currentTarget).parents('.task_control_box').replaceWith(PiroPopup.ajaxLoader)
         success: (story) =>
           @$(".task_box[data-id='#{taskId}']").remove()
         error: @render
@@ -378,6 +382,8 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         PiroPopup.pivotalCurrentAccount.toJSON(), 
         @model.toJSON(),
         commentId,
+        beforeSend: =>
+          @$(e.currentTarget).parents('.delete_comment_control_box').html(PiroPopup.ajaxLoader)
         success: (story) =>
           @$(".comment_box[data-id='#{commentId}']").remove()
         error: @render

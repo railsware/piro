@@ -168,8 +168,10 @@
                 <input type="checkbox" class="task_complete_input" data-id="{{id}}" {{#complete}}checked="checked"{{/complete}} />
                 {{description}}
               </label>
-              <a href="#" class="open_edit_task">Edit</a>
-              <a href="#" class="delete_task_link close-link" data-id="{{id}}"></a>
+              <div class="task_control_box">
+                <a href="#" class="open_edit_task">Edit</a>
+                <a href="#" class="delete_task_link close-link" data-id="{{id}}"></a>
+              </div>
             </div>
             <div class="switched-state">
               <form class="edit_task_form">
@@ -206,7 +208,7 @@
           </div>
           <div class="switched-state delete-confirmation">
               Are you sure?
-              <div class="right">
+              <div class="delete_comment_control_box right">
                 <a href="#" class="confirm_delete_comment_link button" data-id="{{id}}">Delete</a> or 
                 <a href="#" class="cancel_delete_comment_link">Cancel</a>
               </div>
@@ -254,7 +256,7 @@
     </div>
   </div>
   
-  <div class="box_item switchable-block">
+  <div class="story_delete_box box_item switchable-block">
     <div class="initial-state">
       <div class="inner row">
         <a class="story_delete_link delete-link" href="#">Delete</a>
