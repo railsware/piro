@@ -214,6 +214,7 @@ root.PiroBackground =
         chrome.tabs.update tab.id, {url: url} for tab in tabs
   # create story
   createAndSyncStory: (account, projectId, data, callbackParams = {}) =>
+    callbackParams.beforeSend ||= -> true
     PiroBackground.db = new PiroStorage
       success: =>
         pivotalApi = new PivotaltrackerApi(account)
@@ -230,6 +231,7 @@ root.PiroBackground =
           error: =>
             callbackParams.error.call(null) if callbackParams.error?
   updateAndSyncStory: (account, story, attributes, callbackParams = {}) =>
+    callbackParams.beforeSend ||= -> true
     PiroBackground.db = new PiroStorage
       success: =>
         pivotalApi = new PivotaltrackerApi(account)
@@ -243,6 +245,7 @@ root.PiroBackground =
           error: =>
             callbackParams.error.call(null) if callbackParams.error?
   deleteAndSyncStory: (account, story, callbackParams = {}) =>
+    callbackParams.beforeSend ||= -> true
     PiroBackground.db = new PiroStorage
       success: =>
         pivotalApi = new PivotaltrackerApi(account)
@@ -255,6 +258,7 @@ root.PiroBackground =
           error: =>
             callbackParams.error.call(null) if callbackParams.error?
   createTaskAndSyncStory: (account, story, data, callbackParams = {}) =>
+    callbackParams.beforeSend ||= -> true
     PiroBackground.db = new PiroStorage
       success: =>
         pivotalApi = new PivotaltrackerApi(account)
@@ -266,6 +270,7 @@ root.PiroBackground =
           error: =>
             callbackParams.error.call(null) if callbackParams.error?
   changeTaskAndSyncStory: (account, story, taskId, data, callbackParams = {}) =>
+    callbackParams.beforeSend ||= -> true
     PiroBackground.db = new PiroStorage
       success: =>
         pivotalApi = new PivotaltrackerApi(account)
@@ -282,6 +287,7 @@ root.PiroBackground =
         pivotalApi = new PivotaltrackerApi(account)
         PiroBackground._sortOneTask(pivotalApi, story, sortData, 0)
   deleteTaskAndSyncStory: (account, story, taskId, callbackParams = {}) =>
+    callbackParams.beforeSend ||= -> true
     PiroBackground.db = new PiroStorage
       success: =>
         pivotalApi = new PivotaltrackerApi(account)
@@ -292,6 +298,7 @@ root.PiroBackground =
           error: =>
             callbackParams.error.call(null) if callbackParams.error?
   createCommentAndSyncStory: (account, story, data, callbackParams = {}) =>
+    callbackParams.beforeSend ||= -> true
     PiroBackground.db = new PiroStorage
       success: =>
         pivotalApi = new PivotaltrackerApi(account)
@@ -303,6 +310,7 @@ root.PiroBackground =
           error: =>
             callbackParams.error.call(null) if callbackParams.error?
   deleteCommentAndSyncStory: (account, story, commentId, callbackParams = {}) =>
+    callbackParams.beforeSend ||= -> true
     PiroBackground.db = new PiroStorage
       success: =>
         pivotalApi = new PivotaltrackerApi(account)
@@ -313,6 +321,7 @@ root.PiroBackground =
           error: =>
             callbackParams.error.call(null) if callbackParams.error?
   uploadAttachmentAndSyncStory: (account, story, formdata, callbackParams = {}) =>
+    callbackParams.beforeSend ||= -> true
     PiroBackground.db = new PiroStorage
       success: =>
         pivotalApi = new PivotaltrackerApi(account)
@@ -325,6 +334,7 @@ root.PiroBackground =
           error: =>
             callbackParams.error.call(null) if callbackParams.error?
   deleteAttachmentAndSyncStory: (account, story, attachmentId, callbackParams = {}) =>
+    callbackParams.beforeSend ||= -> true
     PiroBackground.db = new PiroStorage
       success: =>
         pivotalApi = new PivotaltrackerApi(account)

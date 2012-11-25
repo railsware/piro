@@ -19,7 +19,7 @@ class root.PivotaltrackerApi
   description: "description", name: "name", 
   requested_by: {id: "requested_by/person/id", name: "requested_by/person/name", initials: "requested_by/person/initials"},
   owned_by: {id: "owned_by/person/id", name: "owned_by/person/name", initials: "owned_by/person/initials"}, 
-  created_at: "created_at", labels: "labels",
+  created_at: "created_at", labels: "labels", deadline: "deadline",
   comments: ["comments/comment", {id: "id", text: "text", created_at: "created_at", 
   author: {id: "author/person/id", name: "author/person/name", initials: "author/person/initials"}}],
   tasks: ["tasks/task", {id: "id", description: "description", position: "position", complete: "complete", created_at: "created_at"}],

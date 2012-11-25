@@ -51,11 +51,20 @@
           </div>
         </div>
         <div class="item">
-          <div class="story-points">
-            <select name="" id="">
-              <option value="">{{estimate}} points</option>
-            </select>
-          </div>
+          {{#isFeature}}
+            <div class="story-points">
+              <select name="" id="">
+                <option value="">{{estimate}} points</option>
+              </select>
+            </div>
+          {{/isFeature}}
+          {{#isRelease}}
+            <div class="story-release-date">
+              {{#deadline}}<a class="clear_deadline_story_link" href="#">Clear</a>{{/deadline}}
+              <input readonly="readonly" type="text" class="story_release_date" style="display: none;" />
+              <div class="story_release_date_text">{{deadline}}{{^deadline}}None{{/deadline}}</div>
+            </div>
+          {{/isRelease}}
         </div>
         <div class="item">
           <div class="story-state">

@@ -10,6 +10,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     "webkitspeechchange .story_description_speech"  : "changeStoryDescription"
     # change story type
     "change .story_type_selector"                   : "changeStoryType"
+    "click .clear_deadline_story_link"              : "clearStoryDeadline"
     # change project id
     "change .change_project_id_selector"            : "changeProjectId"
     "click .cancel_change_project_link"             : "cancelChangeProjectId"
@@ -51,6 +52,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     )))
     @initProjectSelector()
     @initStoryTypeSelector()
+    @initByStoryTypeView()
     @initSortingTasks()
     this
     
@@ -59,6 +61,46 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     #  container_class: "test"
   initStoryTypeSelector: =>
     @$('select.story_type_selector').val(@model.get('story_type').toLowerCase())
+  initByStoryTypeView: =>
+    @$(".story_release_date").datepicker
+      showOn: "button"
+      buttonImage: "public/images/calendar.gif"
+      buttonImageOnly: true
+      changeMonth: true
+      changeYear: true
+      minDate: 1
+      dateFormat: "mm/dd/yy"
+      showOtherMonths: true
+      selectOtherMonths: true
+      onSelect: (dateText, inst) =>
+        attributes = 
+          story:
+            deadline: dateText
+        chrome.runtime.getBackgroundPage (bgPage) =>
+          PiroPopup.bgPage = bgPage
+          PiroPopup.bgPage.PiroBackground.updateAndSyncStory(
+            PiroPopup.pivotalCurrentAccount.toJSON(),
+            @model.toJSON(),
+            attributes,
+            success: (story) =>
+              @model.set(story)
+            error: @render
+          )
+  clearStoryDeadline: (e) =>
+    e.preventDefault()
+    attributes = 
+      story:
+        deadline: ""
+    chrome.runtime.getBackgroundPage (bgPage) =>
+      PiroPopup.bgPage = bgPage
+      PiroPopup.bgPage.PiroBackground.updateAndSyncStory(
+        PiroPopup.pivotalCurrentAccount.toJSON(),
+        @model.toJSON(),
+        attributes,
+        success: (story) =>
+          @model.set(story)
+        error: @render
+      )
   initSortingTasks: =>
     @$("ul.tasks_list_box").sortable
       handle: '.sort_task'
