@@ -11,6 +11,8 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     # change story type
     "change .story_type_selector"                   : "changeStoryType"
     "click .clear_deadline_story_link"              : "clearStoryDeadline"
+    # change story estimate
+    "change .story_estimate_selector"               : "changeStoryEstimate"
     # change project id
     "change .change_project_id_selector"            : "changeProjectId"
     "click .cancel_change_project_link"             : "cancelChangeProjectId"
@@ -177,6 +179,9 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
           @model.set(story)
         error: @render
       )
+
+  changeStoryEstimate: (e) =>
+    
 
   updateStoryName: (e) =>
     return false unless e.keyCode?
