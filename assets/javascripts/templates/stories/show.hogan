@@ -17,7 +17,7 @@
               {{#project}}
                 {{#memberships}}
                   {{#person}}
-                    <option value="{{id}}">{{name}} ({{initials}})</option>
+                    <option value="{{id}}" data-name="{{name}}">{{name}} ({{initials}})</option>
                   {{/person}}
                 {{/memberships}}
               {{/project}}
@@ -34,7 +34,7 @@
               {{#project}}
                 {{#memberships}}
                   {{#person}}
-                    <option value="{{id}}">{{name}} ({{initials}})</option>
+                    <option value="{{id}}" data-name="{{name}}">{{name}} ({{initials}})</option>
                   {{/person}}
                 {{/memberships}}
               {{/project}}

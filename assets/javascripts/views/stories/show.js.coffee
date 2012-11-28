@@ -13,6 +13,12 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     "click .clear_deadline_story_link"              : "clearStoryDeadline"
     # change story estimate
     "change .story_estimate_selector"               : "changeStoryEstimate"
+    # change story state
+    "change .story_state_selector"                  : "changeStoryState"
+    # change requested by
+    "change .story_requested_by"                    : "changeStoryRequestedBy"
+    # change owned by
+    "change .story_owned_by"                        : "changeStoryOwnedBy"
     # change project id
     "change .change_project_id_selector"            : "changeProjectId"
     "click .cancel_change_project_link"             : "cancelChangeProjectId"
@@ -65,7 +71,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     @$('select.story_type_selector').val(@model.get('story_type').toLowerCase())
     @$('select.story_state_selector').val(@model.get('current_state').toLowerCase())
     @$('select.story_requested_by').val(@model.get('requested_by').id) if @model.get('requested_by')?
-    if @model.get('owned_by')?
+    if @model.get('owned_by')? and @model.get('owned_by').id?
       @$('select.story_owned_by').val(@model.get('owned_by').id)
     else
       @$('select.story_owned_by').val("")
@@ -85,31 +91,13 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         attributes = 
           story:
             deadline: dateText
-        chrome.runtime.getBackgroundPage (bgPage) =>
-          PiroPopup.bgPage = bgPage
-          PiroPopup.bgPage.PiroBackground.updateAndSyncStory(
-            PiroPopup.pivotalCurrentAccount.toJSON(),
-            @model.toJSON(),
-            attributes,
-            success: (story) =>
-              @model.set(story)
-            error: @render
-          )
+        @_changeStoryAttributes(attributes)
   clearStoryDeadline: (e) =>
     e.preventDefault()
     attributes = 
       story:
         deadline: ""
-    chrome.runtime.getBackgroundPage (bgPage) =>
-      PiroPopup.bgPage = bgPage
-      PiroPopup.bgPage.PiroBackground.updateAndSyncStory(
-        PiroPopup.pivotalCurrentAccount.toJSON(),
-        @model.toJSON(),
-        attributes,
-        success: (story) =>
-          @model.set(story)
-        error: @render
-      )
+    @_changeStoryAttributes(attributes)
   initSortingTasks: =>
     @$("ul.tasks_list_box").sortable
       handle: '.sort_task'
@@ -147,18 +135,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     attributes = 
       story:
         description: @$('textarea.story_description').val()
-    chrome.runtime.getBackgroundPage (bgPage) =>
-      PiroPopup.bgPage = bgPage
-      PiroPopup.bgPage.PiroBackground.updateAndSyncStory(
-        PiroPopup.pivotalCurrentAccount.toJSON(),
-        @model.toJSON(),
-        attributes,
-        beforeSend: =>
-          @$('.story_description_box').replaceWith(PiroPopup.ajaxLoader)
-        success: (story) =>
-          @model.set(story)
-        error: @render
-      )
+    @_changeStoryAttributes(attributes, (=> @$('.story_description_box').replaceWith(PiroPopup.ajaxLoader)))
   changeStoryDescription: (e) =>
     @$('textarea.story_description').val "#{@$('textarea.story_description').val()} #{@$('.story_description_speech').val()}"
     @$('.story_description_speech').val('')
@@ -167,21 +144,31 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     attributes = 
       story:
         story_type: @$('.story_type_selector').val()
-    chrome.runtime.getBackgroundPage (bgPage) =>
-      PiroPopup.bgPage = bgPage
-      PiroPopup.bgPage.PiroBackground.updateAndSyncStory(
-        PiroPopup.pivotalCurrentAccount.toJSON(),
-        @model.toJSON(),
-        attributes,
-        beforeSend: =>
-          @$('.story_type_selector').replaceWith(PiroPopup.ajaxLoader)
-        success: (story) =>
-          @model.set(story)
-        error: @render
-      )
+    @_changeStoryAttributes(attributes, (=> @$('.story_type_selector').replaceWith(PiroPopup.ajaxLoader)))
 
   changeStoryEstimate: (e) =>
-    
+    attributes = 
+      story:
+        estimate: $(e.currentTarget).val()
+    @_changeStoryAttributes(attributes, (=> @$('.story_estimate_selector').replaceWith(PiroPopup.ajaxLoader)))
+
+  changeStoryState: (e) =>
+    attributes = 
+      story:
+        current_state: $(e.currentTarget).val()
+    @_changeStoryAttributes(attributes, (=> @$('.story_state_selector').replaceWith(PiroPopup.ajaxLoader)))
+
+  changeStoryRequestedBy: (e) =>
+    attributes = 
+      story:
+        requested_by: $(e.currentTarget).find(":selected").data("name")
+    @_changeStoryAttributes(attributes, (=> @$('.story_requested_by').replaceWith(PiroPopup.ajaxLoader)))
+
+  changeStoryOwnedBy: (e) =>
+    attributes = 
+      story:
+        owned_by: $(e.currentTarget).find(":selected").data("name")
+    @_changeStoryAttributes(attributes, (=> @$('.story_owned_by').replaceWith(PiroPopup.ajaxLoader)))
 
   updateStoryName: (e) =>
     return false unless e.keyCode?
@@ -192,16 +179,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         attributes = 
           story:
             name: $(e.currentTarget).val()
-        chrome.runtime.getBackgroundPage (bgPage) =>
-          PiroPopup.bgPage = bgPage
-          PiroPopup.bgPage.PiroBackground.updateAndSyncStory(
-            PiroPopup.pivotalCurrentAccount.toJSON(),
-            @model.toJSON(),
-            attributes,
-            success: (story) =>
-              @model.set(story)
-            error: @render
-          )
+        @_changeStoryAttributes(attributes)
       when 27 # esc
         e.preventDefault()
         $(e.currentTarget).val(@model.get('name'))
@@ -222,18 +200,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     attributes = 
       story:
         project_id: @$('.change_project_id_selector').val()
-    chrome.runtime.getBackgroundPage (bgPage) =>
-      PiroPopup.bgPage = bgPage
-      PiroPopup.bgPage.PiroBackground.updateAndSyncStory(
-        PiroPopup.pivotalCurrentAccount.toJSON(),
-        @model.toJSON(),
-        attributes,
-        beforeSend: =>
-          @$('.story_project_id_box').replaceWith(PiroPopup.ajaxLoader)
-        success: (story) =>
-          @model.set(story)
-        error: @render
-      )
+    @_changeStoryAttributes(attributes, (=> @$('.story_project_id_box').replaceWith(PiroPopup.ajaxLoader)))
 
   filterByLabel: (e) =>
     e.preventDefault()
@@ -435,6 +402,19 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         attachmentId, 
         success: (story) =>
           @$(".attachment_box[data-id='#{attachmentId}']").remove()
+        error: @render
+      )
+
+  _changeStoryAttributes: (attributes, beforeSend = (-> true)) =>
+    chrome.runtime.getBackgroundPage (bgPage) =>
+      PiroPopup.bgPage = bgPage
+      PiroPopup.bgPage.PiroBackground.updateAndSyncStory(
+        PiroPopup.pivotalCurrentAccount.toJSON(),
+        @model.toJSON(),
+        attributes,
+        beforeSend: beforeSend
+        success: (story) =>
+          @model.set(story)
         error: @render
       )
     
