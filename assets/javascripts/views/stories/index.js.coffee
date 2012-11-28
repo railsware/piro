@@ -11,6 +11,7 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
     @collection.on 'reset', @renderAll
     PiroPopup.globalEvents.on "update:data:finished", @getStoriesAndRender
     PiroPopup.globalEvents.on "filter:stories", @eventFilterStories
+    PiroPopup.globalEvents.on "story::change::attributes", @changeStoryTriggered
     @childViews = []
   
   render: =>
@@ -51,6 +52,9 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
     @renderAll()
     @_highlightLinks()
 
+  changeStoryTriggered: (model) =>
+    @renderWithFilter()
+
   clickStoryTab: (e) =>
     e.preventDefault()
     value = $(e.currentTarget).data('key')
@@ -74,6 +78,8 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
     @collection.off 'add', @renderOne
     @collection.off 'reset', @renderAll
     PiroPopup.globalEvents.off "update:data:finished", @getStoriesAndRender
+    PiroPopup.globalEvents.off "filter:stories", @eventFilterStories
+    PiroPopup.globalEvents.off "story::change::attributes", @changeStoryTriggered
     @cleanupChildViews()
   cleanupChildViews: =>
     view.destroyView() for view in @childViews

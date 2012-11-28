@@ -415,6 +415,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         beforeSend: beforeSend
         success: (story) =>
           @model.set(story)
+          PiroPopup.globalEvents.trigger "story::change::attributes", @model
         error: @render
       )
     
