@@ -26,11 +26,13 @@ root.PiroBackground =
     PiroBackground.initOmniboxListeners()
   setAlarm: ->
     if PiroBackground.db?
-      chrome.alarms.create(PiroBackground.alarmName, {'delayInMinutes': PiroBackground.db.getUpdateIntervalLS()})
+      PiroBackground._initAlarm()
     else
       PiroBackground.db = new PiroStorage
         success: ->
-          chrome.alarms.create(PiroBackground.alarmName, {'delayInMinutes': PiroBackground.db.getUpdateIntervalLS()})
+          PiroBackground._initAlarm()
+  _initAlarm: ->
+    chrome.alarms.create(PiroBackground.alarmName, {'delayInMinutes': PiroBackground.db.getUpdateIntervalLS()})
   initPopupView: (events) ->
     PiroBackground.popupEvents = events
     PiroBackground.checkUpdateState()
@@ -180,8 +182,10 @@ root.PiroBackground =
   initOmniboxListeners: ->
     chrome.omnibox.onInputCancelled.addListener(PiroBackground.defaultOmniboxSuggestion)
     chrome.omnibox.onInputStarted.addListener ->
-      PiroBackground.db.getStories
-        success: (stories) -> PiroBackground.omniboxStories = stories
+      PiroBackground.db = new PiroStorage
+        success: ->
+          PiroBackground.db.getStories
+            success: (stories) -> PiroBackground.omniboxStories = stories
       PiroBackground.setOmniboxSuggestion('')
     chrome.omnibox.onInputChanged.addListener(PiroBackground.searchWithSuggestion)
     chrome.omnibox.onInputEntered.addListener(PiroBackground.enterOmniboxData)
