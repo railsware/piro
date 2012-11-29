@@ -52,14 +52,7 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
     points.push "<option value='#{point}'>#{point} points</option>" for point in project.get('point_scale').split(",")
     @$('.add_story_point').html(points.join("")).trigger("liszt:updated")
     # memberships
-    memberships = project.get('memberships')
-    memberships = [] unless memberships?
-    memberships = memberships.sort (a, b) =>
-      if a.person? && a.person.name? &&
-      b.person? && b.person.name?
-        return -1 if (a.person.name < b.person.name)
-        return 1 if (a.person.name > b.person.name)
-      return 0
+    memberships = project.sortedMemberships()
     members = []
     for member in memberships when member? && member.person?
       members.push "<option value='#{member.person.id}' data-name='#{member.person.name}'>#{member.person.name} (#{member.person.initials})</option>"
@@ -135,10 +128,13 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
         PiroPopup.pivotalCurrentAccount.toJSON(), 
         @$('.add_story_project_id').val(), 
         {story: attributes}, 
+        beforeSend: =>
+          @$('.story_submit_controls').addClass('loading')
         success: (story) =>
           PiroPopup.db.setLatestProjectIdLS(story.project_id)
           Backbone.history.navigate("story/#{story.id}", {trigger: true, replace: true})
         error: =>
+          @$('.story_submit_controls').removeClass('loading')
           @$('.error_box').text("Error to create story :(")
       )
 

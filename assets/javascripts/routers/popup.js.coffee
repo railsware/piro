@@ -5,6 +5,7 @@ class PiroPopup.Routers.Popup extends Backbone.Router
     "project/:id"             : "project"
     "story/new"               : "newStory"
     "story/:id"               : "showStory"
+    "story/:id/omnibox"       : "showStory"
     "*a"                      : "index"
   
   initialize: (options) =>

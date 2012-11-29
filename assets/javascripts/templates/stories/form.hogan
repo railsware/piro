@@ -32,7 +32,8 @@
     <textarea class="add_story_description" rows="8" cols="30"></textarea>
 
     <input class="add_story_labels" type="text" />
-
-    <input type="submit" value="Add" />
+    <div class="story_submit_controls">
+      <input type="submit" value="Add" />
+    </div>
   </form>
 </div>

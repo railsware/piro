@@ -14,6 +14,8 @@ root.PiroBackground =
   storiesIds: []
   percentPerProject: 0
   alarmName: "pivotalDataUpdate"
+  # omnibox search stories
+  omniboxStories: []
   init: ->
     PiroBackground.initAutoupdate()
     PiroBackground.initContextMenu()
@@ -178,34 +180,45 @@ root.PiroBackground =
   initOmniboxListeners: ->
     chrome.omnibox.onInputCancelled.addListener(PiroBackground.defaultOmniboxSuggestion)
     chrome.omnibox.onInputStarted.addListener ->
+      PiroBackground.db.getStories
+        success: (stories) -> PiroBackground.omniboxStories = stories
       PiroBackground.setOmniboxSuggestion('')
-    chrome.omnibox.onInputChanged.addListener (text, suggest) ->
-      PiroBackground.setOmniboxSuggestion(text)
-    chrome.omnibox.onInputEntered.addListener (text) ->
-      PiroBackground.enterOmniboxData(text)
+    chrome.omnibox.onInputChanged.addListener(PiroBackground.searchWithSuggestion)
+    chrome.omnibox.onInputEntered.addListener(PiroBackground.enterOmniboxData)
   # default omnibox text
   defaultOmniboxSuggestion: ->
     chrome.omnibox.setDefaultSuggestion
-      description: '<url><match>piro:</match></url> Go by PivotalTracker ID'
+      description: '<url><match>piro:</match></url> Search Pivotaltracker stories'
   # default omnibox text
+  searchWithSuggestion: (text, suggest) ->
+    results = []
+    PiroBackground.setOmniboxSuggestion(text)
+    return suggest(results) if text.length < 2
+    searchReg = new RegExp(text.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1"), "gi")
+    resStories = _.filter PiroBackground.omniboxStories, (story) ->
+      story.id.match(searchReg)? or story.name.match(searchReg)? or story.description.match(searchReg)?
+    for story in resStories
+      description = story.name.replace(/<(?:.|\n)*?>/gm, '')
+      description = description.replace(/&/g, '&amp;')
+      description = description.replace(/[\n\t]/g, ' ')
+      description = description.replace(RegExp(" {2,}", "g"), " ")
+      description = description.replace(/<\/?pre>/g, '')
+      description = description.replace(searchReg, "<match>#{text}</match>")
+      results.push({ content: story.id, description: description})
+    suggest(results)
   setOmniboxSuggestion: (text) ->
     defDescr = "<match><url>piro</url></match> "
-    defDescr += if text.length > 0 then "<match>#{text}</match>" else "pivotal story id"
+    defDescr += if text.length > 0 then "<match>#{text}</match>" else "pivotal story name"
     chrome.omnibox.setDefaultSuggestion
       description: defDescr
   enterOmniboxData: (text) ->
-    command = text.split(" ")
     indexUrl = chrome.extension.getURL('index.html')
-    switch command[0]
-      when "s"
-        mainUrl = "#{indexUrl}#story/#{command[1]}" if command[1]?
-      else
-        mainUrl = "#{indexUrl}#story/#{command[0]}" if command[0]?
+    mainUrl = "#{indexUrl}#story/#{text}/omnibox"
     PiroBackground.openPopupUrl(mainUrl)
   openPopupUrl: (url, isNew = false) ->
     indexUrl = chrome.extension.getURL('index.html')
     chrome.tabs.query {}, (tabs) ->
-      chrome.tabs.remove(tab.id) for tab in tabs when tab.url.substring(0, indexUrl.length) is indexUrl and tabs.length > 1
+      chrome.tabs.remove(tab.id) for tab in tabs when tab.url.substring(0, indexUrl.length) is indexUrl and tabs.length > 1 and tab.active is false
     if isNew is true
       chrome.tabs.create {url: url, active: true}, (tab) ->
         chrome.tabs.update tab.id, {active: true}

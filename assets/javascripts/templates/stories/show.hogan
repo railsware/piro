@@ -15,11 +15,11 @@
           <div class="last-col">
             <select class="story_requested_by">
               {{#project}}
-                {{#memberships}}
+                {{#sortedMemberships}}
                   {{#person}}
                     <option value="{{id}}" data-name="{{name}}">{{name}} ({{initials}})</option>
                   {{/person}}
-                {{/memberships}}
+                {{/sortedMemberships}}
               {{/project}}
             </select>
           </div>
@@ -32,11 +32,11 @@
             <select class="story_owned_by">
               <option value="">None</option>
               {{#project}}
-                {{#memberships}}
+                {{#sortedMemberships}}
                   {{#person}}
                     <option value="{{id}}" data-name="{{name}}">{{name}} ({{initials}})</option>
                   {{/person}}
-                {{/memberships}}
+                {{/sortedMemberships}}
               {{/project}}
             </select>
           </div>
