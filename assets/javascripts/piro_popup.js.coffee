@@ -9,7 +9,7 @@ root.PiroPopup =
   db: null
   globalEvents: {}
   # ajax
-  ajaxLoader: "<img src='public/images/ajax-loader.gif' />"
+  ajaxLoader: "<img alt='loading...' title='loading...' src='public/images/ajax-loader.gif' />"
   # views
   currentMainView: null
   currentStoriesView: null

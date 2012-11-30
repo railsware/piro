@@ -53,6 +53,13 @@ class PiroPopup.Models.Story extends Backbone.Model
   _filterStrForRegex: (str) =>
     str.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1")
 
+  toFullJSON: (account) =>
+    attr = @toJSON()
+    attr.comments = for comment in attr.comments
+      comment.isOwnComment = true if account? and account.id? and comment.author? and comment.author.id? and parseInt(account.id) is parseInt(comment.author.id)
+      comment
+    attr
+
   toJSON: =>
     attr = _.clone(@attributes)
     attr = @_fixAttributes(attr)

@@ -55,7 +55,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     PiroPopup.globalEvents.on "update:data:finished", @getStoryAndRender
 
   render: =>
-    $(@el).html(@template.render(_.extend(@model.toJSON(),
+    $(@el).html(@template.render(_.extend(@model.toFullJSON(PiroPopup.pivotalCurrentAccount.toJSON()),
       pivotalProjects: PiroPopup.pivotalProjects.toJSON(),
       project:  PiroPopup.pivotalProjects.get(@model.get('project_id')).toJSON()
     )))

@@ -208,16 +208,20 @@
           <div class="initial-state">
             <div class="comment-block">
               {{text}}
-              <a href="#" class="comment_delete_link close-link"></a>
+              {{#isOwnComment}}
+                <a href="#" class="comment_delete_link close-link"></a>
+              {{/isOwnComment}}
             </div>
           </div>
-          <div class="switched-state delete-confirmation">
-              Are you sure?
-              <div class="delete_comment_control_box right">
-                <a href="#" class="confirm_delete_comment_link button" data-id="{{id}}">Delete</a> or 
-                <a href="#" class="cancel_delete_comment_link">Cancel</a>
-              </div>
-          </div>
+          {{#isOwnComment}}
+            <div class="switched-state delete-confirmation">
+                Are you sure?
+                <div class="delete_comment_control_box right">
+                  <a href="#" class="confirm_delete_comment_link button" data-id="{{id}}">Delete</a> or 
+                  <a href="#" class="cancel_delete_comment_link">Cancel</a>
+                </div>
+            </div>
+          {{/isOwnComment}}
           <div class="row mbm  mts">
             <div class="left">{{#author}}<em class="muted">{{name}}{{/author}}</em></div>
             <div class="right"><em class="muted">{{created_at}}</em></div>
