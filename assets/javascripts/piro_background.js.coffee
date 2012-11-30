@@ -232,72 +232,72 @@ root.PiroBackground =
   # create story
   createAndSyncStory: (account, projectId, data, callbackParams = {}) =>
     callbackParams.beforeSend ||= -> true
-    PiroBackground.db = new PiroStorage
-      success: =>
-        pivotalApi = new PivotaltrackerApi(account)
-        pivotalApi.createStory projectId,
-          data: data
-          beforeSend: callbackParams.beforeSend
-          success: (stories, textStatus, jqXHR) =>
-            if stories.length > 0
+    pivotalApi = new PivotaltrackerApi(account)
+    pivotalApi.createStory projectId,
+      data: data
+      beforeSend: callbackParams.beforeSend
+      success: (stories, textStatus, jqXHR) =>
+        if stories.length > 0
+          PiroBackground.db = new PiroStorage
+            success: =>
               PiroBackground.db.setStory stories[0],
                 success: (story) =>
                   callbackParams.success.call(null, story) if callbackParams.success?
-            else
-              callbackParams.error.call(null) if callbackParams.error?
-          error: =>
-            callbackParams.error.call(null) if callbackParams.error?
+        else
+          callbackParams.error.call(null) if callbackParams.error?
+      error: =>
+        callbackParams.error.call(null) if callbackParams.error?
   updateAndSyncStory: (account, story, attributes, callbackParams = {}) =>
     callbackParams.beforeSend ||= -> true
-    PiroBackground.db = new PiroStorage
-      success: =>
-        pivotalApi = new PivotaltrackerApi(account)
-        pivotalApi.updateStory story,
-          data: attributes
-          beforeSend: callbackParams.beforeSend
-          success: (storyInfo) =>
+    pivotalApi = new PivotaltrackerApi(account)
+    pivotalApi.updateStory story,
+      data: attributes
+      beforeSend: callbackParams.beforeSend
+      success: (storyInfo) =>
+        PiroBackground.db = new PiroStorage
+          success: =>
             PiroBackground.db.setStory storyInfo,
               success: =>
                 callbackParams.success.call(null, storyInfo) if callbackParams.success?
-          error: =>
-            callbackParams.error.call(null) if callbackParams.error?
+      error: =>
+        callbackParams.error.call(null) if callbackParams.error?
   deleteAndSyncStory: (account, story, callbackParams = {}) =>
     callbackParams.beforeSend ||= -> true
-    PiroBackground.db = new PiroStorage
+    pivotalApi = new PivotaltrackerApi(account)
+    pivotalApi.deleteStory story,
+      beforeSend: callbackParams.beforeSend
       success: =>
-        pivotalApi = new PivotaltrackerApi(account)
-        pivotalApi.deleteStory story,
-          beforeSend: callbackParams.beforeSend
+        PiroBackground.db = new PiroStorage
           success: =>
             PiroBackground.db.deleteStoryById story.id,
               success: =>
                 callbackParams.success.call(null) if callbackParams.success?
-          error: =>
-            callbackParams.error.call(null) if callbackParams.error?
+      error: =>
+        callbackParams.error.call(null) if callbackParams.error?
   createTaskAndSyncStory: (account, story, data, callbackParams = {}) =>
     callbackParams.beforeSend ||= -> true
-    PiroBackground.db = new PiroStorage
-      success: =>
-        pivotalApi = new PivotaltrackerApi(account)
-        pivotalApi.createTask story,
-          data: data
-          beforeSend: callbackParams.beforeSend
-          success: (data, textStatus, jqXHR) =>
+    pivotalApi = new PivotaltrackerApi(account)
+    pivotalApi.createTask story,
+      data: data
+      beforeSend: callbackParams.beforeSend
+      success: (data, textStatus, jqXHR) =>
+        PiroBackground.db = new PiroStorage
+          success: =>
             PiroBackground._syncStory(pivotalApi, story, callbackParams)
-          error: =>
-            callbackParams.error.call(null) if callbackParams.error?
+      error: =>
+        callbackParams.error.call(null) if callbackParams.error?
   changeTaskAndSyncStory: (account, story, taskId, data, callbackParams = {}) =>
     callbackParams.beforeSend ||= -> true
-    PiroBackground.db = new PiroStorage
-      success: =>
-        pivotalApi = new PivotaltrackerApi(account)
-        pivotalApi.changeTask story, taskId,
-          data: data
-          beforeSend: callbackParams.beforeSend
-          success: (data, textStatus, jqXHR) =>
+    pivotalApi = new PivotaltrackerApi(account)
+    pivotalApi.changeTask story, taskId,
+      data: data
+      beforeSend: callbackParams.beforeSend
+      success: (data, textStatus, jqXHR) =>
+        PiroBackground.db = new PiroStorage
+          success: =>
             PiroBackground._syncStory(pivotalApi, story, callbackParams)
-          error: =>
-            callbackParams.error.call(null) if callbackParams.error?
+      error: =>
+        callbackParams.error.call(null) if callbackParams.error?
   sortTasksAndSyncStory: (account, story, sortData, callbackParams = {}) =>
     PiroBackground.db = new PiroStorage
       success: =>
@@ -305,62 +305,62 @@ root.PiroBackground =
         PiroBackground._sortOneTask(pivotalApi, story, sortData, 0)
   deleteTaskAndSyncStory: (account, story, taskId, callbackParams = {}) =>
     callbackParams.beforeSend ||= -> true
-    PiroBackground.db = new PiroStorage
-      success: =>
-        pivotalApi = new PivotaltrackerApi(account)
-        pivotalApi.deleteTask story, taskId,
-          beforeSend: callbackParams.beforeSend
-          success: (data, textStatus, jqXHR) =>
+    pivotalApi = new PivotaltrackerApi(account)
+    pivotalApi.deleteTask story, taskId,
+      beforeSend: callbackParams.beforeSend
+      success: (data, textStatus, jqXHR) =>
+        PiroBackground.db = new PiroStorage
+          success: =>
             PiroBackground._syncStory(pivotalApi, story, callbackParams)
-          error: =>
-            callbackParams.error.call(null) if callbackParams.error?
+      error: =>
+        callbackParams.error.call(null) if callbackParams.error?
   createCommentAndSyncStory: (account, story, data, callbackParams = {}) =>
     callbackParams.beforeSend ||= -> true
-    PiroBackground.db = new PiroStorage
-      success: =>
-        pivotalApi = new PivotaltrackerApi(account)
-        pivotalApi.createComment story,
-          data: data
-          beforeSend: callbackParams.beforeSend
-          success: (data, textStatus, jqXHR) =>
+    pivotalApi = new PivotaltrackerApi(account)
+    pivotalApi.createComment story,
+      data: data
+      beforeSend: callbackParams.beforeSend
+      success: (data, textStatus, jqXHR) =>
+        PiroBackground.db = new PiroStorage
+          success: =>
             PiroBackground._syncStory(pivotalApi, story, callbackParams)
-          error: =>
-            callbackParams.error.call(null) if callbackParams.error?
+      error: =>
+        callbackParams.error.call(null) if callbackParams.error?
   deleteCommentAndSyncStory: (account, story, commentId, callbackParams = {}) =>
     callbackParams.beforeSend ||= -> true
-    PiroBackground.db = new PiroStorage
-      success: =>
-        pivotalApi = new PivotaltrackerApi(account)
-        pivotalApi.deleteComment story, commentId,
-          beforeSend: callbackParams.beforeSend
-          success: (data, textStatus, jqXHR) =>
+    pivotalApi = new PivotaltrackerApi(account)
+    pivotalApi.deleteComment story, commentId,
+      beforeSend: callbackParams.beforeSend
+      success: (data, textStatus, jqXHR) =>
+        PiroBackground.db = new PiroStorage
+          success: =>
             PiroBackground._syncStory(pivotalApi, story, callbackParams)
-          error: =>
-            callbackParams.error.call(null) if callbackParams.error?
+      error: =>
+        callbackParams.error.call(null) if callbackParams.error?
   uploadAttachmentAndSyncStory: (account, story, formdata, callbackParams = {}) =>
     callbackParams.beforeSend ||= -> true
-    PiroBackground.db = new PiroStorage
-      success: =>
-        pivotalApi = new PivotaltrackerApi(account)
-        pivotalApi.uploadAttachment story, formdata,
-          beforeSend: callbackParams.beforeSend
-          success: (data, textStatus, jqXHR) =>
-            setTimeout(=>
+    pivotalApi = new PivotaltrackerApi(account)
+    pivotalApi.uploadAttachment story, formdata,
+      beforeSend: callbackParams.beforeSend
+      success: (data, textStatus, jqXHR) =>
+        setTimeout(=>
+          PiroBackground.db = new PiroStorage
+            success: =>
               PiroBackground._syncStory(pivotalApi, story, callbackParams)
-            , 4000)
-          error: =>
-            callbackParams.error.call(null) if callbackParams.error?
+        , 4000)
+      error: =>
+        callbackParams.error.call(null) if callbackParams.error?
   deleteAttachmentAndSyncStory: (account, story, attachmentId, callbackParams = {}) =>
-    callbackParams.beforeSend ||= -> true
-    PiroBackground.db = new PiroStorage
-      success: =>
-        pivotalApi = new PivotaltrackerApi(account)
-        pivotalApi.deleteAttachment story, attachmentId,
-          beforeSend: callbackParams.beforeSend
-          success: (data, textStatus, jqXHR) =>
+    callbackParams.beforeSend ||= -> true    
+    pivotalApi = new PivotaltrackerApi(account)
+    pivotalApi.deleteAttachment story, attachmentId,
+      beforeSend: callbackParams.beforeSend
+      success: (data, textStatus, jqXHR) =>
+        PiroBackground.db = new PiroStorage
+          success: =>
             PiroBackground._syncStory(pivotalApi, story, callbackParams)
-          error: =>
-            callbackParams.error.call(null) if callbackParams.error?
+      error: =>
+        callbackParams.error.call(null) if callbackParams.error?
   # private
   _sortOneTask: (pivotalApi, story, sortData, iterator = 0) =>
     if sortData[iterator]?

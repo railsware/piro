@@ -132,6 +132,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     @$(e.currentTarget).parents('.story_description_box').removeClass('editing')
   updateStoryDescription: (e) =>
     e.preventDefault()
+    return false if @$('textarea.story_description').val() is @model.get('description')
     attributes = 
       story:
         description: @$('textarea.story_description').val()
@@ -176,6 +177,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     switch parseInt(e.keyCode)
       when 13 # Enter
         e.preventDefault()
+        return false if $(e.currentTarget).val() is @model.get('name')
         attributes = 
           story:
             name: $(e.currentTarget).val()
