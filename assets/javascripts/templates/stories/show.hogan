@@ -218,9 +218,9 @@
                 <a href="#" class="cancel_delete_comment_link">Cancel</a>
               </div>
           </div>
-          <div class="row mbm mts">
+          <div class="row mbm  mts">
             <div class="left">{{#author}}<em class="muted">{{name}}{{/author}}</em></div>
-            <div class="right">{{created_at}}</div>
+            <div class="right"><em class="muted">{{created_at}}</em></div>
           </div>
         </li>
         {{/comments}}
