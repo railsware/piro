@@ -13,6 +13,7 @@
     </ul>
     <div>
       <a href="#" class="moscow_sort {{#sortMoscow}}on{{/sortMoscow}}">MoScoW</a>
+      <a href="http://en.wikipedia.org/wiki/MoSCoW_Method" target="_blank">?</a>
     </div>
   </div>
   <div class="col1of2">
