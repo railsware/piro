@@ -12,7 +12,7 @@
           <div class="left">
             <span class="muted">Requester: </span> 
           </div>
-          <div class="last-col">
+          <div class="story_requested_by_box last-col">
             <select class="story_requested_by">
               {{#project}}
                 {{#sortedMemberships}}
@@ -28,7 +28,7 @@
           <div class="left">
             <span class="muted">Owner: </span> 
           </div>
-          <div class="last-col">
+          <div class="story_owned_by_box last-col">
             <select class="story_owned_by">
               <option value="">None</option>
               {{#project}}
@@ -44,7 +44,7 @@
       </div>
       <div class="col1of2">
         <div class="item">
-          <div class="story-type">
+          <div class="story_type_selector_box story-type">
             <select class="story_type_selector">
               <option value="feature">Feature</option>
               <option value="bug">Bug</option>
@@ -55,7 +55,7 @@
         </div>
         <div class="item">
           {{#isFeature}}
-            <div class="story-points">
+            <div class="story_estimate_selector_box story-points">
               <select class="story_estimate_selector">
                 <option value="-1">Unestimated</option>
                 {{#project}}
@@ -77,7 +77,7 @@
         <div class="item">
           {{#isFullStatus}}
             {{^isNeedEstimate}}
-              <div class="story-state">
+              <div class="story_state_selector_box story-state">
                 <select class="story_state_selector">
                   <option value="unstarted">Not Yet Started</option>
                   <option value="started">Started</option>

@@ -65,16 +65,18 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     this
     
   initStorySelectors: =>
-    @$('select.change_project_id_selector').val(@model.get('project_id'))#.chosen
-    #  container_class: "test"
-    @$('select.story_estimate_selector').val(@model.get('estimate'))
-    @$('select.story_type_selector').val(@model.get('story_type').toLowerCase())
-    @$('select.story_state_selector').val(@model.get('current_state').toLowerCase())
-    @$('select.story_requested_by').val(@model.get('requested_by').id) if @model.get('requested_by')?
+    chosenAttr = 
+      container_class: "selector-chosen"
+    @$('select.change_project_id_selector').val(@model.get('project_id')).chosen(chosenAttr)
+    @$('select.story_estimate_selector').val(@model.get('estimate')).chosen(chosenAttr)
+    @$('select.story_type_selector').val(@model.get('story_type').toLowerCase()).chosen(chosenAttr)
+    @$('select.story_state_selector').val(@model.get('current_state').toLowerCase()).chosen(chosenAttr)
+    @$('select.story_requested_by').val(@model.get('requested_by').id).chosen(chosenAttr) if @model.get('requested_by')?
     if @model.get('owned_by')? and @model.get('owned_by').id?
       @$('select.story_owned_by').val(@model.get('owned_by').id)
     else
       @$('select.story_owned_by').val("")
+    @$('select.story_owned_by').chosen(chosenAttr)
   initByStoryTypeView: =>
     return false unless @$(".story_release_date").length
     @$(".story_release_date").datepicker
@@ -145,31 +147,31 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     attributes = 
       story:
         story_type: @$('.story_type_selector').val()
-    @_changeStoryAttributes(attributes, (=> @$('.story_type_selector').replaceWith(PiroPopup.ajaxLoader)))
+    @_changeStoryAttributes(attributes, (=> @$('.story_type_selector_box').replaceWith(PiroPopup.ajaxLoader)))
 
   changeStoryEstimate: (e) =>
     attributes = 
       story:
         estimate: $(e.currentTarget).val()
-    @_changeStoryAttributes(attributes, (=> @$('.story_estimate_selector').replaceWith(PiroPopup.ajaxLoader)))
+    @_changeStoryAttributes(attributes, (=> @$('.story_estimate_selector_box').replaceWith(PiroPopup.ajaxLoader)))
 
   changeStoryState: (e) =>
     attributes = 
       story:
         current_state: $(e.currentTarget).val()
-    @_changeStoryAttributes(attributes, (=> @$('.story_state_selector').replaceWith(PiroPopup.ajaxLoader)))
+    @_changeStoryAttributes(attributes, (=> @$('.story_state_selector_box').replaceWith(PiroPopup.ajaxLoader)))
 
   changeStoryRequestedBy: (e) =>
     attributes = 
       story:
         requested_by: $(e.currentTarget).find(":selected").data("name")
-    @_changeStoryAttributes(attributes, (=> @$('.story_requested_by').replaceWith(PiroPopup.ajaxLoader)))
+    @_changeStoryAttributes(attributes, (=> @$('.story_requested_by_box').html(PiroPopup.ajaxLoader)))
 
   changeStoryOwnedBy: (e) =>
     attributes = 
       story:
         owned_by: $(e.currentTarget).find(":selected").data("name")
-    @_changeStoryAttributes(attributes, (=> @$('.story_owned_by').replaceWith(PiroPopup.ajaxLoader)))
+    @_changeStoryAttributes(attributes, (=> @$('.story_owned_by_box').html(PiroPopup.ajaxLoader)))
 
   updateStoryName: (e) =>
     return false unless e.keyCode?
@@ -195,7 +197,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
       @$('.change_project_box').addClass('hidden') unless @$('.change_project_box').hasClass('hidden')
   cancelChangeProjectId: (e) =>
     e.preventDefault()
-    @$('.change_project_id_selector').val(@model.get('project_id'))
+    @$('.change_project_id_selector').val(@model.get('project_id')).trigger("liszt:updated")
     @$('.change_project_box').addClass('hidden') unless @$('.change_project_box').hasClass('hidden')
   confirmChangeProjectId: (e) =>
     e.preventDefault()
