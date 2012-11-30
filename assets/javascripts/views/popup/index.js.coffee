@@ -63,6 +63,7 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
         # no title
   updatePivotalUpdateProgress: (info) =>
     return false unless info?
+    @$('#updateDataBox').addClass('loading') unless @$('#updateDataBox').hasClass('loading')
     progress = parseInt(info.progress)
     try
       Piecon.setProgress(progress)
