@@ -124,21 +124,26 @@
       <div class="mbs">
         <input class="story_name" type="text" value="{{name}}" x-webkit-speech="x-webkit-speech" />
       </div>
-      <div class="story_description_box story-description mbs">
-        <div class="open_story_description">
-          <p><em class="muted">{{{descriptionHtml}}}</em></p>
+      <div class="story_description_box story-description switchable-block mbs">
+        <div class="open_story_description initial-state">
+          {{#descriptionHtml}}
+            <p>{{{descriptionHtml}}}</p>
+          {{/descriptionHtml}}
+          {{^descriptionHtml}}
+            <p><em class="muted">Description</em></p>
+          {{/descriptionHtml}}
         </div>
-        <div>
+        <div class="switched-state">
           <form class="edit_story_description_form"  method="POST">
             <input class="story_description_speech" x-webkit-speech="x-webkit-speech" style="font-size: 25px;width: 25px;height: 25px;cursor:pointer;border: none;outline: none;background: transparent; float:right" />
-            <textarea class="story_description" rows="3" cols="20">{{description}}</textarea>
+            <textarea class="story_description mbs" rows="3" cols="20">{{description}}</textarea>
             <input type="submit" value="Save" /> or <a class="cancel_edit_story_description" href="#">Cancel</a>
           </form>
         </div>
       </div>
 
       <div class="mbs">
-        <p><strong>Labels:</strong></p>
+        <h2>Labels</h2>
         <p>
           {{#labelsList}}
             <a href="#" class="story_label">{{.}}</a>
@@ -151,7 +156,7 @@
     <div class="story-tasks">
       <div class="row mbs">
         <div class="left">
-          <h2>Tasks:</strong></h2>
+          <h2>Tasks</h2>
         </div>
         <div class="right">
           <strong class="mrs">All</strong>
@@ -241,7 +246,7 @@
         <li class="attachment_box attachment-item mbm" data-id="{{id}}">
           <div class="attachment-block">
             <div><a href="{{url}}" target="_blank">{{filename}}</a></div> 
-            <div>{{#uploaded_by}} <strong>{{name}}</strong>{{/uploaded_by}} 
+            <div>{{#uploaded_by}} <em>{{name}}</em>{{/uploaded_by}} 
               <em class="muted">{{uploaded_at}}</em>
             </div>
           </div>

@@ -65,7 +65,10 @@ class PiroPopup.Models.Story extends Backbone.Model
     attr.requested_by = null if attr.requested_by? and (!attr.requested_by.id? or attr.requested_by.id.length is 0)
     attr.labelsList = attr.labels.split(",") if attr.labels? and attr.labels.length > 0
     attr.deadline = null if !attr.deadline? || attr.deadline.length is 0
-    attr.descriptionHtml = attr.description.replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, "<a class='description_link' target='_blank' href='$1'>$1</a>")
+    attr.descriptionHtml = if attr.description.length
+      attr.description.replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, "<a class='description_link' target='_blank' href='$1'>$1</a>")
+    else
+      null
     switch @get('story_type').toLowerCase()
       when "feature"
         attr.isFeature = true
