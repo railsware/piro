@@ -57,7 +57,9 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
   render: =>
     $(@el).html(@template.render(_.extend(@model.toFullJSON(PiroPopup.pivotalCurrentAccount.toJSON()),
       pivotalProjects: PiroPopup.pivotalProjects.toJSON(),
-      project:  PiroPopup.pivotalProjects.get(@model.get('project_id')).toJSON()
+      project:  PiroPopup.pivotalProjects.get(@model.get('project_id')).toJSON(),
+      isCommentOpen: PiroPopup.db.getIsCommentOpenLS(),
+      isTaskOpen: PiroPopup.db.getIsTaskOpenLS()
     )))
     @initStorySelectors()
     @initByStoryTypeView()
@@ -235,9 +237,11 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     e.preventDefault()
     @$(e.currentTarget).parents('.add_task_box').addClass('adding')
     @$('input.add_task_description').focus()
+    PiroPopup.db.setIsTaskOpenLS(true)
   cancelOpenTask: (e) =>
     e.preventDefault()
     @$(e.currentTarget).parents('.add_task_box').removeClass('adding')
+    PiroPopup.db.setIsTaskOpenLS(false)
   addTask: (e) =>
     e.preventDefault()
     return false unless @$('.add_task_description').val().length > 0
@@ -320,9 +324,11 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     e.preventDefault()
     @$(e.currentTarget).parents('.add_comment_box').addClass('adding')
     @$('textarea.add_comment_text').focus()
+    PiroPopup.db.setIsCommentOpenLS(true)
   cancelOpenComment: (e) =>
     e.preventDefault()
     @$(e.currentTarget).parents('.add_comment_box').removeClass('adding')
+    PiroPopup.db.setIsCommentOpenLS(false)
   addComment: (e) =>
     e.preventDefault()
     return false unless @$('.add_comment_text').val().length > 0

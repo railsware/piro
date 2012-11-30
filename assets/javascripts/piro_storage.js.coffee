@@ -336,3 +336,11 @@ class root.PiroStorage
     @getLocalStorage("latest_project_id") || 0
   setLatestProjectIdLS: (value) =>
     @setLocalStorage("latest_project_id", value)
+  getIsCommentOpenLS: =>
+    @getLocalStorage("is_comment_open") || false
+  setIsCommentOpenLS: (value) =>
+    @setLocalStorage("is_comment_open", value)
+  getIsTaskOpenLS: =>
+    @getLocalStorage("is_task_open") || false
+  setIsTaskOpenLS: (value) =>
+    @setLocalStorage("is_task_open", value)
