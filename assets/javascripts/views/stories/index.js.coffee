@@ -4,6 +4,7 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
   events:
     "click .stories_tab_link"           : "clickStoryTab"
     "click .stories_user_link"          : "clickStoryUser"
+    "click .moscow_sort"                : "sortMoscowStories"
     "keyup .stories_filter_input"       : "renderWithFilter"
   
   initialize: ->
@@ -41,6 +42,7 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
       account: PiroPopup.pivotalCurrentAccount
       storiesTabView: PiroPopup.db.getStoriesTabViewLS()
       storiesUserView: PiroPopup.db.getStoriesUserViewLS()
+      sortMoscow: PiroPopup.db.getMoscowSortLS()
       filterText: @$('input.stories_filter_input').val()
     @renderOne(story) for story in stories
   
@@ -71,6 +73,11 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
     @$(".stories_user_tabs li.#{value}_stories_user_tab").addClass('active')
     @renderWithFilter()
     
+  sortMoscowStories: (e) =>
+    e.preventDefault()
+    PiroPopup.db.setMoscowSortLS(!PiroPopup.db.getMoscowSortLS())
+    @renderWithFilter()
+
   _highlightLinks: =>
     PiroPopup.globalEvents.trigger "route:highlight:links", null
 

@@ -294,6 +294,7 @@ class root.PiroStorage
       updateInterval: @getUpdateIntervalLS()
       storiesUserView: storiesUserView
       storiesTabView: storiesTabView
+      sortMoscow: @getMoscowSortLS()
     switch storiesTabView
       when "current"
         _.extend(options, {currentStoriesTabView: true})
@@ -325,6 +326,10 @@ class root.PiroStorage
     @getLocalStorage("stories_user_view") || "all"
   setStoriesUserViewLS: (value) =>
     @setLocalStorage("stories_user_view", value)
+  getMoscowSortLS: =>
+    @getLocalStorage("sort_stories_moscow") || false
+  setMoscowSortLS: (value) =>
+    @setLocalStorage("sort_stories_moscow", value)
   getUpdateIntervalLS: =>
     defInterval = 30
     interval = @getLocalStorage("update_interval") || defInterval
