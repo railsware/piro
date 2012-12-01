@@ -7,6 +7,7 @@
           <div class="story-id"><span class="muted">ID: </span>
             <a href="https://www.pivotaltracker.com/story/show/{{id}}" target="_blank">{{id}}</a>
           </div>
+          <br />
           <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
                   width="110"
                   height="14"
