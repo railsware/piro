@@ -64,6 +64,7 @@ class PiroPopup.Models.Story extends Backbone.Model
     attr = _.clone(@attributes)
     attr = @_fixAttributes(attr)
     attr.tasks = @_fixTasks(attr.tasks) if attr.tasks.length > 0
+    attr.isHaveTasks = true if attr.tasks.length
     attr.comments = @_fixComments(attr.comments) if attr.comments.length > 0
     attr
   # private

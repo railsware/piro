@@ -28,6 +28,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     "click .cancel_delete_story_link"               : "cancelDeleteStory"
     "click .confirm_delete_story_link"              : "confirmDeleteStory"
     # task events
+    "click .filter_tasks_box > a"                   : "filterTasks"
     "click .task_open_link"                         : "openTaskClick"
     "click .cancel_open_task_link"                  : "cancelOpenTask"
     "submit .add_task_form"                         : "addTask"
@@ -233,6 +234,12 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
           Backbone.history.navigate("project/#{projectId}", {trigger: true, replace: true})
       )
 
+  filterTasks: (e) =>
+    e.preventDefault()
+    @$('.filter_tasks_box > a').removeClass('active')
+    className = $(e.currentTarget).addClass('active').data('class')
+    @$('.tasks_list_box').removeClass('completed uncompleted')
+    @$('.tasks_list_box').addClass(className) if className.length
   openTaskClick: (e) =>
     e.preventDefault()
     @$(e.currentTarget).parents('.add_task_box').addClass('adding')
@@ -317,6 +324,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
           @$(e.currentTarget).parents('.task_control_box').replaceWith(PiroPopup.ajaxLoader)
         success: (story) =>
           @$(".task_box[data-id='#{taskId}']").remove()
+          @$('.filter_tasks_box').addClass('hidden') unless story.tasks.length
         error: @render
       )
 
