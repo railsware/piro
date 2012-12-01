@@ -7,6 +7,28 @@
           <div class="story-id"><span class="muted">ID: </span>
             <a href="https://www.pivotaltracker.com/story/show/{{id}}" target="_blank">{{id}}</a>
           </div>
+          <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
+                  width="110"
+                  height="14"
+                  id="clippy" >
+            <param name="movie" value="public/images/clippy/clippy.swf"/>
+            <param name="allowScriptAccess" value="always" />
+            <param name="quality" value="high" />
+            <param name="scale" value="noscale" />
+            <param NAME="FlashVars" value="text={{id}}">
+            <param name="bgcolor" value="#FFFFFF">
+            <embed src="public/images/clippy/clippy.swf"
+                   width="110"
+                   height="14"
+                   name="clippy"
+                   quality="high"
+                   allowScriptAccess="always"
+                   type="application/x-shockwave-flash"
+                   pluginspage="http://www.macromedia.com/go/getflashplayer"
+                   FlashVars="text={{id}}"
+                   bgcolor="#FFFFFF"
+            />
+          </object>
         </div>
         <div class="item">
           <div class="left">
