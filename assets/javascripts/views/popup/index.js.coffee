@@ -99,8 +99,7 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
 
   _getFilterSearchResultes: (term) =>
     data = []
-    term = term.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1")
-    search = new RegExp(term, "gi")
+    search = new RegExp($.ui.autocomplete.escapeRegex(term), "gi")
     for story in @_allStoriesInProjects
       if (story.name.match(search)? and story.name.match(search).length) or (story.description.match(search)? and story.description.match(search).length)
         data.push
