@@ -32,7 +32,7 @@
       <a class="add_story_link add-story" href="#"><span class="plus">+</span> Add story</a>
     </div>
     <div class="last-col">
-      <input type="text" name="" class="search"/>
+      <input type="text" class="search_stories_input search" />
     </div>
   </div>
 </header>

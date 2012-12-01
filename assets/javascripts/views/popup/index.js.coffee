@@ -14,16 +14,19 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
     # global events
     PiroPopup.globalEvents.on "update:pivotal:data", @updatePivotalState
     PiroPopup.globalEvents.on "update:pivotal:progress", @updatePivotalUpdateProgress
-    $(window).resize =>
-      @recalculateHeight()
+    PiroPopup.globalEvents.on "update:data:finished", @_getAllStoriesForAccount
+    $(window).resize => @_recalculateHeight()
+    @_allStoriesInProjects = []
   
   render: =>
     $(@el).html(@template.render(
       accounts: @collection.toJSON()
     ))
     @renderProjects()
-    @recalculateHeight()
+    @_bindSearchStories()
+    @_recalculateHeight()
     this
+
   renderProjects: =>
     @childView.destroyView() if @childView?
     @childView = new PiroPopup.Views.ProjectsIndex(collection: @projects)
@@ -69,9 +72,44 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
       Piecon.setProgress(progress)
     catch e
       # no title
-      
-  recalculateHeight: =>
+
+  _bindSearchStories: =>
+    @_getAllStoriesForAccount()
+    @$(".search_stories_input").autocomplete(
+      minLength: 2
+      source: (request, response) =>
+        response(@_getFilterSearchResultes(request.term))
+      select: (event, ui) =>
+        Backbone.history.navigate("story/#{ui.item.id}", {trigger: true, replace: true})
+        @$(".search_stories_input").val('')
+        false
+    ).data("autocomplete")._renderItem = (ul, item) =>
+      $("<li>").data("item.autocomplete", item).append("<a>#{item.label}<br />#{item.story_type}</a>").appendTo(ul)
+
+  _getAllStoriesForAccount: =>
+    PiroPopup.db.getProjects PiroPopup.pivotalCurrentAccount.toJSON(),
+      success: (allProjects) =>
+        allProjectsIds = _.pluck(allProjects, 'id')
+        PiroPopup.db.getStories
+          success: (allStories) =>
+            @_allStoriesInProjects = _.filter allStories, (story) => _.indexOf(allProjectsIds, story.project_id) isnt -1
+
+  _recalculateHeight: =>
     @$(".container").height($("body").height() - 70)
+
+  _getFilterSearchResultes: (term) =>
+    data = []
+    term = term.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1")
+    search = new RegExp(term, "gi")
+    for story in @_allStoriesInProjects
+      if (story.name.match(search)? and story.name.match(search).length) or (story.description.match(search)? and story.description.match(search).length)
+        data.push
+          id: story.id
+          value: story.name
+          label: story.name
+          story_type: story.story_type
+        return data if data.length > 9
+    return data
 
   onDestroyView: =>
     @collection.off 'add', @render
