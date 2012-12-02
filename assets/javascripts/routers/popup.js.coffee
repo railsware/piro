@@ -5,7 +5,7 @@ class PiroPopup.Routers.Popup extends Backbone.Router
     "project/:id"             : "project"
     "story/new"               : "newStory"
     "story/:id"               : "showStory"
-    "story/:id/omnibox"       : "showStory"
+    "story/:id/omnibox"       : "showOmniboxStory"
     "*a"                      : "index"
   
   initialize: (options) =>
@@ -37,15 +37,24 @@ class PiroPopup.Routers.Popup extends Backbone.Router
     @renderProjectStories(id)
   showStory: (id) =>
     PiroPopup.db.getStoryById id, 
+      success: @_showStory
+  showOmniboxStory: (id) =>
+    PiroPopup.db.getStoryById id, 
       success: (storyInfo) =>
         return Backbone.history.navigate("", {trigger: true, replace: true}) unless storyInfo?
-        # project
-        if @storiesList? && @storiesList.get(storyInfo.id)?
-          @renderStory(storyInfo.id)
-        else
-          @renderProjectStories storyInfo.project_id, 
-            success: =>
-              @renderStory(storyInfo.id)
+        PiroPopup.db.getAllRawProjects
+          success: (accountProjects) =>
+            for accountProject in accountProjects
+              if _.indexOf(_.pluck(accountProject.projects, 'id'), storyInfo.project_id) isnt -1
+                if parseInt(PiroPopup.pivotalCurrentAccount.get('id')) isnt parseInt(accountProject.account_id)
+                  PiroPopup.pivotalCurrentAccount = PiroPopup.pivotalAccounts.get(accountProject.account_id)
+                  $('select.account_switcher').val(accountProject.account_id)
+                  return PiroPopup.db.getProjects PiroPopup.pivotalCurrentAccount.toJSON(), 
+                    success: (projects) =>
+                      PiroPopup.pivotalProjects.reset(projects)
+                      Backbone.history.navigate("story/#{id}", {trigger: true, replace: true})
+                else
+                  return Backbone.history.navigate("story/#{id}", {trigger: true, replace: true})
   renderProjectStories: (projectId, params = {}) =>
     project = PiroPopup.pivotalProjects.get(projectId)
     return Backbone.history.navigate("", {trigger: true, replace: true}) unless project?
@@ -67,6 +76,15 @@ class PiroPopup.Routers.Popup extends Backbone.Router
     view = new PiroPopup.Views.LoginIndex(collection: PiroPopup.pivotalAccounts)
     PiroPopup.updateMainContainer(view)
   # private
+  _showStory: (story) =>
+    return Backbone.history.navigate("", {trigger: true, replace: true}) unless story?
+    # project
+    if @storiesList? && @storiesList.get(story.id)?
+      @renderStory(story.id)
+    else
+      @renderProjectStories story.project_id, 
+        success: =>
+          @renderStory(story.id)
   _refreshView: =>
     Backbone.history.navigate("", {trigger: true, replace: true}) if $('#projectsBox').length is 0 || $('#projectsBox').children().length is 0
   _refreshLinks: =>

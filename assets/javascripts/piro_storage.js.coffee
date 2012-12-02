@@ -87,6 +87,20 @@ class root.PiroStorage
       data = e.target.result
       params.success.call(null, data) if params.success?
   # PROJECTS
+  getAllRawProjects: (params = {}) =>
+    projects = []
+    trans = @db.transaction([@projectsKey()], @transactionPermitions.READ_ONLY)
+    store = trans.objectStore(@projectsKey())
+    keyRange = IDBKeyRange.lowerBound(0)
+    cursorRequest = store.openCursor(keyRange)
+    cursorRequest.onerror = @_dbError
+    cursorRequest.onsuccess = (e) =>
+      cursor = e.target.result
+      if cursor?
+        projects.push(cursor.value)
+        cursor.continue()
+      else
+        params.success.call(null, projects) if params.success?
   getAllProjects: (params = {}) =>
     projects = []
     trans = @db.transaction([@projectsKey()], @transactionPermitions.READ_ONLY)
@@ -122,7 +136,7 @@ class root.PiroStorage
             project = _.find(projects, (project) ->
               project.id is icon.id
             )
-            _.extend(projects[_.indexOf(projects, project)], {icon: icon.icon})
+            _.extend(projects[_.indexOf(projects, project)], {icon: icon.icon}) if project? and icon.icon?
           # sort projects
           sortedProjectIds = @getSortedProjectsLS(account)
           projects = _.sortBy(projects, (project) ->
