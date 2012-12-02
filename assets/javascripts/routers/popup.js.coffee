@@ -52,6 +52,7 @@ class PiroPopup.Routers.Popup extends Backbone.Router
                   return PiroPopup.db.getProjects PiroPopup.pivotalCurrentAccount.toJSON(), 
                     success: (projects) =>
                       PiroPopup.pivotalProjects.reset(projects)
+                      PiroPopup.globalEvents.trigger "account:switched"
                       Backbone.history.navigate("story/#{id}", {trigger: true, replace: true})
                 else
                   return Backbone.history.navigate("story/#{id}", {trigger: true, replace: true})

@@ -17,6 +17,7 @@ root.PiroBackground =
   # omnibox search stories
   omniboxStories: []
   init: ->
+    PiroBackground._storiesForOmnibox()
     PiroBackground.initAutoupdate()
     PiroBackground.initContextMenu()
   initListeners: ->
@@ -144,6 +145,7 @@ root.PiroBackground =
     PiroBackground.checkUpdateState()
     PiroBackground.setAlarm()
     PiroBackground.updatePopup()
+    PiroBackground._storiesForOmnibox()
   updatePopup: ->
     if PiroBackground.popupEvents?
       PiroBackground.popupEvents.trigger "update:data:finished", null
@@ -182,10 +184,6 @@ root.PiroBackground =
   initOmniboxListeners: ->
     chrome.omnibox.onInputCancelled.addListener(PiroBackground.defaultOmniboxSuggestion)
     chrome.omnibox.onInputStarted.addListener ->
-      PiroBackground.db = new PiroStorage
-        success: ->
-          PiroBackground.db.getStories
-            success: (stories) -> PiroBackground.omniboxStories = stories
       PiroBackground.setOmniboxSuggestion('')
     chrome.omnibox.onInputChanged.addListener(PiroBackground.searchWithSuggestion)
     chrome.omnibox.onInputEntered.addListener(PiroBackground.enterOmniboxData)
@@ -362,6 +360,13 @@ root.PiroBackground =
       error: =>
         callbackParams.error.call(null) if callbackParams.error?
   # private
+  _storiesForOmnibox: =>
+    omniboxDb = new PiroStorage
+      success: ->
+        omniboxDb.getStories
+          success: (stories) ->
+            PiroBackground.omniboxStories = stories
+            omniboxDb = null
   _sortOneTask: (pivotalApi, story, sortData, iterator = 0) =>
     if sortData[iterator]?
       pivotalApi.changeTask story, sortData[iterator],

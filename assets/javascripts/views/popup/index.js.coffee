@@ -15,6 +15,7 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
     PiroPopup.globalEvents.on "update:pivotal:data", @updatePivotalState
     PiroPopup.globalEvents.on "update:pivotal:progress", @updatePivotalUpdateProgress
     PiroPopup.globalEvents.on "update:data:finished", @_getAllStoriesForAccount
+    PiroPopup.globalEvents.on "account:switched", @_getAllStoriesForAccount
     $(window).resize => @_recalculateHeight()
     @_allStoriesInProjects = []
   
@@ -38,6 +39,7 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
     PiroPopup.db.getProjects PiroPopup.pivotalCurrentAccount.toJSON(), 
       success: (projects) =>
         PiroPopup.pivotalProjects.reset(projects)
+        PiroPopup.globalEvents.trigger "account:switched"
         Backbone.history.navigate("", {trigger: true, replace: true})
 
   updateDataTrigger: (e) =>
@@ -115,4 +117,6 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
     @collection.off 'reset', @render
     PiroPopup.globalEvents.off "update:pivotal:data", @updatePivotalState
     PiroPopup.globalEvents.off "update:pivotal:progress", @updatePivotalUpdateProgress
+    PiroPopup.globalEvents.off "update:data:finished", @_getAllStoriesForAccount
+    PiroPopup.globalEvents.off "account:switched", @_getAllStoriesForAccount
     @childView.destroyView() if @childView?
