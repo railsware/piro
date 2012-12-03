@@ -12,7 +12,7 @@
             <param name="allowScriptAccess" value="always" />
             <param name="quality" value="high" />
             <param name="scale" value="noscale" />
-            <param NAME="FlashVars" value="text={{id}}">
+            <param NAME="FlashVars" value="text=https://www.pivotaltracker.com/story/show/{{id}}">
             <param name="bgcolor" value="#FFFFFF">
             <embed src="public/images/clippy/clippy.swf"
                    width="20"
@@ -23,7 +23,7 @@
                    allowScriptAccess="always"
                    type="application/x-shockwave-flash"
                    pluginspage="http://www.macromedia.com/go/getflashplayer"
-                   FlashVars="text={{id}}"
+                   FlashVars="text=https://www.pivotaltracker.com/story/show/{{id}}"
                    bgcolor="#FFFFFF"
             />
           </object>
