@@ -89,6 +89,7 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
       $("<li>").data("item.autocomplete", item).append("<a>#{item.label}<br />#{item.story_type}</a>").appendTo(ul)
 
   _getAllStoriesForAccount: =>
+    return false unless PiroPopup.pivotalCurrentAccount?
     PiroPopup.db.getProjects PiroPopup.pivotalCurrentAccount.toJSON(),
       success: (allProjects) =>
         allProjectsIds = _.pluck(allProjects, 'id')
