@@ -77,9 +77,9 @@
           </div>
         </div>
         <div class="item">
-          {{#isFeature}}
+          {{^isRelease}}
             <div class="story_estimate_selector_box story-points">
-              <select class="story_estimate_selector">
+              <select class="story_estimate_selector" {{^isFeature}}disabled="disabled"{{/isFeature}}>
                 <option value="-1">Unestimated</option>
                 {{#project}}
                   {{#pointScaleArray}}
@@ -88,7 +88,7 @@
                 {{/project}}
               </select>
             </div>
-          {{/isFeature}}
+          {{/isRelease}}
           {{#isRelease}}
             <div class="story-release-date">
               {{#deadline}}<a class="clear_deadline_story_link" href="#">Clear</a>{{/deadline}}
