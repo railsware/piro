@@ -69,8 +69,10 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     
   initStorySelectors: =>
     chosenAttr = 
-      container_class: "selector-chosen"
+      container_class: "dropdown"
     @$('select.change_project_id_selector').val(@model.get('project_id')).chosen(chosenAttr)
+    chosenAttr = 
+      container_class: "selector"
     @$('select.story_estimate_selector').val(@model.get('estimate')).chosen(chosenAttr)
     @$('select.story_type_selector').val(@model.get('story_type').toLowerCase()).chosen(chosenAttr)
     @$('select.story_state_selector').val(@model.get('current_state').toLowerCase()).chosen(chosenAttr)
