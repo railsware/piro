@@ -3,11 +3,8 @@
     <div class="story-summary row">
       <div class="col3of5">
         <div class="item">
-          <a href="#" class="story-link"></a>
-          <div class="story-id"><span class="muted">ID: </span>
-            <a href="https://www.pivotaltracker.com/story/show/{{id}}" target="_blank">{{id}}</a>
-          </div>
           <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
+                  class="story-link"
                   width="20"
                   height="18"
                   id="clippyStoryId">
@@ -30,6 +27,9 @@
                    bgcolor="#FFFFFF"
             />
           </object>
+          <div class="story-id"><span class="muted">ID: </span>
+            <a href="https://www.pivotaltracker.com/story/show/{{id}}" target="_blank">{{id}}</a>
+          </div>
         </div>
         <div class="item">
           <div class="left">
