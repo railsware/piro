@@ -68,20 +68,16 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     this
     
   initStorySelectors: =>
-    chosenAttr = 
-      container_class: "dropdown"
-    @$('select.change_project_id_selector').val(@model.get('project_id')).chosen(chosenAttr)
-    chosenAttr = 
-      container_class: "selector"
-    @$('select.story_estimate_selector').val(@model.get('estimate')).chosen(chosenAttr)
-    @$('select.story_type_selector').val(@model.get('story_type').toLowerCase()).chosen(chosenAttr)
-    @$('select.story_state_selector').val(@model.get('current_state').toLowerCase()).chosen(chosenAttr)
-    @$('select.story_requested_by').val(@model.get('requested_by').id).chosen(chosenAttr) if @model.get('requested_by')?
+    @$('select.change_project_id_selector').val(@model.get('project_id')).chosen({container_class: "dropdown"})
+    @$('select.story_estimate_selector').val(@model.get('estimate')).chosen({container_class: "selector estimate"})
+    @$('select.story_type_selector').val(@model.get('story_type').toLowerCase()).chosen({container_class: "selector type"})
+    @$('select.story_state_selector').val(@model.get('current_state').toLowerCase()).chosen({container_class: "selector state"})
+    @$('select.story_requested_by').val(@model.get('requested_by').id).chosen({container_class: "selector"}) if @model.get('requested_by')?
     if @model.get('owned_by')? and @model.get('owned_by').id?
       @$('select.story_owned_by').val(@model.get('owned_by').id)
     else
       @$('select.story_owned_by').val("")
-    @$('select.story_owned_by').chosen(chosenAttr)
+    @$('select.story_owned_by').chosen({container_class: "selector"})
   initByStoryTypeView: =>
     return false unless @$(".story_release_date").length
     @$(".story_release_date").datepicker

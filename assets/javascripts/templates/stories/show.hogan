@@ -197,7 +197,7 @@
                 {{description}}
               </label>
               <div class="task_control_box">
-                <a href="#" class="open_edit_task">Edit</a>
+                <a href="#" class="open_edit_task edit-link"></a>
                 <a href="#" class="delete_task_link close-link" data-id="{{id}}"></a>
               </div>
             </div>

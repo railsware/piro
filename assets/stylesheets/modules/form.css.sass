@@ -26,11 +26,22 @@ input[type='text'], textarea
 select
   width: 100%
   
-.selector
+.selector.chzn-container
   width: 140px
-  display: inline-block
   .chzn-drop
     width: 180px
+  &.type
+    width: 69px
+    .chzn-drop
+      width: 67px
+  &.estimate
+    width: 95px
+    .chzn-drop
+      width: 93px
+  &.state
+    width: 109px
+    .chzn-drop
+      width: 107px
 
 .button
   color: #000
