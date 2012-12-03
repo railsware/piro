@@ -45,7 +45,7 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
   initControlls: =>
     project = PiroPopup.pivotalProjects.get(@$('.add_story_project_id').val())
     # chosen
-    @$('.chzn-select').chosen()
+    @$('.chzn-select').chosen({container_class: "dropdown"})
     # story points
     points = []
     points.push "<option value='-1'>Unestimated</option>"
