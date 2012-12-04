@@ -99,18 +99,16 @@
         </div>
         <div class="item">
           {{#isFullStatus}}
-            {{^isNeedEstimate}}
-              <div class="story_state_selector_box story-state">
-                <select class="story_state_selector">
-                  <option value="unstarted">Not Yet Started</option>
-                  <option value="started">Started</option>
-                  <option value="finished">Finished</option>
-                  <option value="delivered">Delivered</option>
-                  <option value="accepted">Accepted</option>
-                  <option value="rejected">Rejected</option>
-                </select>
-              </div>
-            {{/isNeedEstimate}}
+            <div class="story_state_selector_box story-state">
+              <select class="story_state_selector" {{#isNeedEstimate}}disabled="disabled"{{/isNeedEstimate}}>
+                <option value="unstarted">Not Yet Started</option>
+                <option value="started">Started</option>
+                <option value="finished">Finished</option>
+                <option value="delivered">Delivered</option>
+                <option value="accepted">Accepted</option>
+                <option value="rejected">Rejected</option>
+              </select>
+            </div>
           {{/isFullStatus}}
           {{#isChore}}
             <div class="story-state">
