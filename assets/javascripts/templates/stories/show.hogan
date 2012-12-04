@@ -32,9 +32,7 @@
           </div>
         </div>
         <div class="item">
-          <div class="left">
-            <small class="muted">Requester: </small> 
-          </div>
+          <small class="muted">Requester: </small>
           <div class="story_requested_by_box last-col">
             <select class="story_requested_by">
               {{#project}}
@@ -48,9 +46,7 @@
           </div>
         </div>
         <div class="item">
-          <div class="left">
-            <small class="muted">Owner: </small> 
-          </div>
+          <small class="muted">Owner: </small>
           <div class="story_owned_by_box last-col">
             <select class="story_owned_by">
               <option value="">None</option>
@@ -69,16 +65,17 @@
         <div class="item">
           <div class="story_type_selector_box story-type">
             <select class="story_type_selector">
-              <option value="feature">Feature</option>
-              <option value="bug">Bug</option>
-              <option value="chore">Chore</option>
-              <option value="release">Release</option>
+              <option value="feature" class="feature">Feature</option>
+              <option value="bug" class="bug">Bug</option>
+              <option value="chore" class="chore">Chore</option>
+              <option value="release" class="release">Release</option>
             </select>
           </div>
         </div>
         <div class="item">
           {{^isRelease}}
             <div class="story_estimate_selector_box story-points">
+              <small class="muted">Points:</small><br />
               <select class="story_estimate_selector" {{^isFeature}}disabled="disabled"{{/isFeature}}>
                 <option value="-1">Unestimated</option>
                 {{#project}}
@@ -98,6 +95,7 @@
           {{/isRelease}}
         </div>
         <div class="item">
+          <small class="muted">Status:</small><br />
           {{#isFullStatus}}
             <div class="story_state_selector_box story-state">
               <select class="story_state_selector" {{#isNeedEstimate}}disabled="disabled"{{/isNeedEstimate}}>
@@ -241,7 +239,7 @@
             <div class="switched-state delete-confirmation">
                 Are you sure?
                 <div class="delete_comment_control_box right">
-                  <a href="#" class="confirm_delete_comment_link button" data-id="{{id}}">Delete</a> or 
+                  <a href="#" class="confirm_delete_comment_link button" data-id="{{id}}">Delete</a> or
                   <a href="#" class="cancel_delete_comment_link">Cancel</a>
                 </div>
             </div>
@@ -273,8 +271,8 @@
         {{#attachments}}
         <li class="attachment_box attachment-item mbm" data-id="{{id}}">
           <div class="attachment-block">
-            <div><a href="{{url}}" target="_blank">{{filename}}</a></div> 
-            <div>{{#uploaded_by}} <em>{{name}}</em>{{/uploaded_by}} 
+            <div><a href="{{url}}" target="_blank">{{filename}}</a></div>
+            <div>{{#uploaded_by}} <em>{{name}}</em>{{/uploaded_by}}
               <em class="muted">{{uploaded_at}}</em>
             </div>
           </div>
@@ -288,7 +286,7 @@
       </form>
     </div>
   </div>
-  
+
   <div class="box_item switchable-block">
     <div class="initial-state">
       <div class="inner row">
