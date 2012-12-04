@@ -156,8 +156,10 @@
         </div>
         <div class="switched-state">
           <form class="edit_story_description_form"  method="POST">
-            <input class="story_description_speech" x-webkit-speech="x-webkit-speech" style="font-size: 25px;width: 25px;height: 25px;cursor:pointer;border: none;outline: none;background: transparent; float:right" />
-            <textarea class="story_description mbs" rows="3" cols="20">{{description}}</textarea>
+            <div class="relative">
+              <input class="story_description_speech speech-icon" x-webkit-speech="x-webkit-speech" />
+              <textarea class="story_description mbs" rows="3" cols="20">{{description}}</textarea>
+            </div>
             <input type="submit" value="Save" /> or <a class="cancel_edit_story_description" href="#">Cancel</a>
           </form>
         </div>

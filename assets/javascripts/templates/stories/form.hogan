@@ -9,6 +9,9 @@
       </select>
     </div>
     <div class="mbs">
+      <input class="add_story_name" type="text" />
+    </div>
+    <div class="mbs">
       <span class="muted">Requester:</span>
       <select class="add_story_requester_id chzn-select"></select>
     </div>
@@ -31,9 +34,6 @@
     </div>
     <div class="add_story_release_date_box mbs">
       <input class="add_story_release_date" type="text" readonly="readonly" />
-    </div>
-    <div class="mbs">
-      <input class="add_story_name" type="text" />
     </div>
     <div class="mbs">
       <textarea class="add_story_description" rows="4" cols="30"></textarea>
