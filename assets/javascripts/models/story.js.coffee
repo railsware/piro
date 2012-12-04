@@ -129,7 +129,7 @@ class PiroPopup.Models.Story extends Backbone.Model
       when "feature"
         attr.isFeature = true
         attr.isFullStatus = true
-        attr.isNeedEstimate = true if parseInt(attr.estimate) is -1 and @get("current_state").toLowerCase() is "unscheduled"
+        attr.isNeedEstimate = @_isNeedEstimate()
       when "bug"
         attr.isBug = true
         attr.isFullStatus = true
@@ -154,6 +154,10 @@ class PiroPopup.Models.Story extends Backbone.Model
       return null if comment.text.length is 0
       newComment
     _.compact(fixedComments)
+  _isNeedEstimate: =>
+    return true if parseInt(@get("estimate")) is -1 and @get("current_state").toLowerCase() is "unscheduled"
+    return true if parseInt(@get("estimate")) is -1 and @get('story_type').toLowerCase() is "feature" and _.indexOf(["unscheduled", "unstarted"], @get("current_state").toLowerCase()) isnt -1
+    return false
   _buildStoryButtons: =>
-    return [] if parseInt(@get("estimate")) is -1 and @get("current_state").toLowerCase() is "unscheduled"
+    return [] if @_isNeedEstimate() is true
     @_buttonMatrix[@get('story_type').toLowerCase()][@get('current_state').toLowerCase()]
