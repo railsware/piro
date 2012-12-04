@@ -4,8 +4,10 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
   events:
     "change .add_story_project_id"      : "changeProject"
     "change .add_story_story_type"      : "changeStoryType"
+    "change .add_story_owner_id"        : "changeStoryOwner"
     "click .story_owner_id_to_me"       : "selectOwnedByMe"
     "submit .add_story_form"            : "submitStory"
+    "click .close_story_form"           : "closeStoryBox"
   
   initialize: =>
 
@@ -98,16 +100,25 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
       when "feature"
         @$('.add_story_release_date_box').hide()
         @$('.add_story_point_box').show()
+        @$('.add_story_point').removeAttr('disabled').trigger("liszt:updated")
       when "release"
         @$('.add_story_point_box').hide()
         @$('.add_story_release_date_box').show()
       else
         @$('.add_story_release_date_box').hide()
-        @$('.add_story_point_box').hide()
+        @$('.add_story_point_box').show()
+        @$('.add_story_point').attr('disabled', 'disabled').trigger("liszt:updated")
 
   selectOwnedByMe: (e) =>
     e.preventDefault()
     @$('.add_story_owner_id').val(PiroPopup.pivotalCurrentAccount.get('id')).trigger("liszt:updated")
+    @$('.story_owner_id_to_me').addClass('hidden')
+
+  changeStoryOwner: (e) =>
+    if parseInt(@$('.add_story_owner_id').val()) is parseInt(PiroPopup.pivotalCurrentAccount.get('id'))
+      @$('.story_owner_id_to_me').addClass('hidden')
+    else
+      @$('.story_owner_id_to_me').removeClass('hidden')
     
   submitStory: (e) =>
     e.preventDefault()
@@ -146,6 +157,10 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
   setStoryTmpTitle: =>
     storyTitle = PiroPopup.db.getStoryTitleTmpLS()
     @$('input.add_story_name').val(storyTitle) if storyTitle?
+
+  closeStoryBox: (e) =>
+    e.preventDefault()
+    Backbone.history.navigate("", {trigger: true, replace: true})
     
   onDestroyView: =>
     # on destroy

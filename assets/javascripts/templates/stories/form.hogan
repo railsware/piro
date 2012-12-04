@@ -44,7 +44,7 @@
     </div>
     <div class="story_submit_controls">
       <input type="submit" value="Save" class="save-button" />
-      <a href="#">Cancel</a>
+      <a href="#" class="close_story_form">Cancel</a>
     </div>
   </form>
 </div>
