@@ -133,7 +133,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     @$('textarea.story_description').focus()
   closeStoryDescription: (e) =>
     e.preventDefault()
-    @$(e.currentTarget).parents('.story_description_box').removeClass('editing')
+    @$('.story_description_box').removeClass('editing')
   updateStoryDescription: (e) =>
     e.preventDefault()
     return false if @$('textarea.story_description').val() is @model.get('description')
@@ -177,18 +177,19 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
 
   updateStoryName: (e) =>
     return false unless e.keyCode?
-    return false if $(e.currentTarget).val().length is 0
+    storyName = @$(e.currentTarget).val()
+    return false if storyName.length is 0
     switch parseInt(e.keyCode)
       when 13 # Enter
         e.preventDefault()
-        return false if $(e.currentTarget).val() is @model.get('name')
+        return false if storyName is @model.get('name')
         attributes =
           story:
-            name: $(e.currentTarget).val()
+            name: storyName
         @_changeStoryAttributes(attributes)
       when 27 # esc
         e.preventDefault()
-        $(e.currentTarget).val(@model.get('name'))
+        @$(e.currentTarget).val(@model.get('name'))
       else
        return true
 

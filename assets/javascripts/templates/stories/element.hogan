@@ -8,4 +8,9 @@
   {{#owned_by}}
     <span class="muted">(</span><a href="#" class="story_owned_by">{{initials}}</a><span class="muted">)</span>
   {{/owned_by}}
+  <div>
+    {{#storyButtons}}
+      <button class="change_status_button {{current_state}}" data-status="{{status}}">{{name}}</button>
+    {{/storyButtons}}
+  </div>
 </div>

@@ -1,4 +1,47 @@
 class PiroPopup.Models.Story extends Backbone.Model
+  initialize: (attributes) ->
+    @_buttonMatrix = 
+      feature:
+        unstarted: [
+          status: "started"
+          name: "Start"
+        ]
+        started: [
+          status: "finished"
+          name: "Finish"
+        ]
+        finished: [
+          status: "delivered"
+          name: "Deliver"
+        ]
+        delivered: [
+          {status: "accepted"
+          name: "Accept"},
+          {status: "rejected"
+          name: "Reject"}
+        ]
+        accepted: []
+        rejected: [
+          status: "started"
+          name: "Restart"
+        ]
+      chore:
+        unstarted: [
+          status: "started"
+          name: "Start"
+        ]
+        started: [
+          status: "accepted"
+          name: "Finish"
+        ]
+        accepted: []
+      release:
+        unstarted: [
+          status: "accepted"
+          name: "Finish"
+        ]
+        accepted: []
+    @_buttonMatrix.bug = _.clone(@_buttonMatrix.feature)
   
   filterByState: (state) =>
     storyState = @get("current_state")
@@ -66,6 +109,7 @@ class PiroPopup.Models.Story extends Backbone.Model
     attr.tasks = @_fixTasks(attr.tasks) if attr.tasks.length > 0
     attr.isHaveTasks = true if attr.tasks.length
     attr.comments = @_fixComments(attr.comments) if attr.comments.length > 0
+    attr.storyButtons = @_buildStoryButtons()
     attr
   # private
   _fixAttributes: (attr = {}) =>
@@ -106,3 +150,6 @@ class PiroPopup.Models.Story extends Backbone.Model
       return null if comment.text.length is 0
       newComment
     _.compact(fixedComments)
+  _buildStoryButtons: =>
+    return [] if parseInt(@get("estimate")) is -1 and @get("current_state").toLowerCase() is "unscheduled"
+    @_buttonMatrix[@get('story_type').toLowerCase()][@get('current_state').toLowerCase()]

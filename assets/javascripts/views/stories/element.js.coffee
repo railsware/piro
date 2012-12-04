@@ -6,6 +6,7 @@ class PiroPopup.Views.StoriesElement extends Backbone.View
     "click .story_link_info"          : "showStoryInfo"
     "click .story_label"              : "filterByLabel"
     "click .story_owned_by"           : "filterByOwner"
+    "click .change_status_button"     : "changeStoryStatus"
   
   initialize: =>
     @model.on 'change', @render
@@ -27,6 +28,26 @@ class PiroPopup.Views.StoriesElement extends Backbone.View
   filterByOwner: (e) =>
     e.preventDefault()
     PiroPopup.globalEvents.trigger "filter:stories", "@#{$(e.currentTarget).text()}"
+
+  changeStoryStatus: (e) =>
+    e.preventDefault()
+    newStatus = @$(e.currentTarget).data('status')
+    attributes = 
+      story:
+        current_state: newStatus
+    chrome.runtime.getBackgroundPage (bgPage) =>
+      PiroPopup.bgPage = bgPage
+      PiroPopup.bgPage.PiroBackground.updateAndSyncStory(
+        PiroPopup.pivotalCurrentAccount.toJSON(),
+        @model.toJSON(),
+        attributes,
+        beforeSend: =>
+          @$(e.currentTarget).attr('disabled', 'disabled')
+        success: (story) =>
+          @model.set(story)
+          PiroPopup.globalEvents.trigger "story::change::attributes", @model
+        error: @render
+      )
 
   remove: =>
     $(@el).remove()
