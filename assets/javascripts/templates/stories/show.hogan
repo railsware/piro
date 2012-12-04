@@ -180,13 +180,13 @@
         <div class="left">
           <h2>Tasks</h2>
         </div>
-        <div class="filter_tasks_box right{{^isHaveTasks}} hidden{{/isHaveTasks}}">
+        <div class="filter_tasks_box task-filter right{{^isHaveTasks}} hidden{{/isHaveTasks}}">
           <a href="#" class="filter_all_tasks mrs active" data-class="">All</a>
           <a href="#" class="filter_completed_tasks mrs" data-class="completed">Completed</a>
           <a href="#" class="filter_uncompleted_tasks" data-class="uncompleted">Uncompleted</a>
         </div>
       </div>
-      <ul class="tasks_list_box mbs">
+      <ul class="tasks_list_box task-list mbs">
         {{#tasks}}
         <li class="task_box story-task switchable-block{{#complete}} completed-task{{/complete}}" data-id="{{id}}">
           <div class="task_box_div task-block sort_task">

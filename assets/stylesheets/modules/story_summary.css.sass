@@ -60,6 +60,21 @@
       padding-left: 30px
   .story-deleting
     margin-bottom: 20px
+
+  .task-filter .active
+    color: #000
+    cursor: text
+.task-list
+  &.completed
+    .story-task
+      display: none
+      &.completed-task
+        display: block
+
+  &.uncompleted
+    .story-task.completed-task
+      display: none
+
 .close-link
   position: absolute
   width: 9px

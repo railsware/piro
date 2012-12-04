@@ -49,7 +49,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     "click .attachment_delete_link"                 : "deleteAttachmentClick"
     "click .cancel_delete_attachment_link"          : "cancelDeleteAttachment"
     "click .confirm_delete_attachment_link"         : "confirmDeleteAttachment"
-  
+
   initialize: =>
     @model.on 'change', @render
     @model.on 'destroy', @remove
@@ -66,7 +66,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     @initByStoryTypeView()
     @initSortingTasks()
     this
-    
+
   initStorySelectors: =>
     @$('select.change_project_id_selector').val(@model.get('project_id')).chosen({container_class: "dropdown"})
     @$('select.story_estimate_selector').val(@model.get('estimate')).chosen({container_class: "selector estimate"})
@@ -91,13 +91,13 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
       showOtherMonths: true
       selectOtherMonths: true
       onSelect: (dateText, inst) =>
-        attributes = 
+        attributes =
           story:
             deadline: dateText
         @_changeStoryAttributes(attributes)
   clearStoryDeadline: (e) =>
     e.preventDefault()
-    attributes = 
+    attributes =
       story:
         deadline: ""
     @_changeStoryAttributes(attributes)
@@ -117,7 +117,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
               @model.toJSON(),
               objectIds
             )
-  
+
   getStoryAndRender: =>
     PiroPopup.db.getStoryById @model.get('id'),
       success: (storyInfo) =>
@@ -136,7 +136,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
   updateStoryDescription: (e) =>
     e.preventDefault()
     return false if @$('textarea.story_description').val() is @model.get('description')
-    attributes = 
+    attributes =
       story:
         description: @$('textarea.story_description').val()
     @_changeStoryAttributes(attributes, (=> @$('.story_description_box').replaceWith(PiroPopup.ajaxLoader)))
@@ -145,34 +145,34 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     @$('.story_description_speech').val('')
 
   changeStoryType: (e) =>
-    attributes = 
+    attributes =
       story:
         story_type: @$('.story_type_selector').val()
-    @_changeStoryAttributes(attributes, (=> @$('.story_type_selector_box').replaceWith(PiroPopup.ajaxLoader)))
+    @_changeStoryAttributes(attributes)
 
   changeStoryEstimate: (e) =>
-    attributes = 
+    attributes =
       story:
         estimate: $(e.currentTarget).val()
-    @_changeStoryAttributes(attributes, (=> @$('.story_estimate_selector_box').replaceWith(PiroPopup.ajaxLoader)))
+    @_changeStoryAttributes(attributes)
 
   changeStoryState: (e) =>
-    attributes = 
+    attributes =
       story:
         current_state: $(e.currentTarget).val()
-    @_changeStoryAttributes(attributes, (=> @$('.story_state_selector_box').replaceWith(PiroPopup.ajaxLoader)))
+    @_changeStoryAttributes(attributes)
 
   changeStoryRequestedBy: (e) =>
-    attributes = 
+    attributes =
       story:
         requested_by: $(e.currentTarget).find(":selected").data("name")
-    @_changeStoryAttributes(attributes, (=> @$('.story_requested_by_box').html(PiroPopup.ajaxLoader)))
+    @_changeStoryAttributes(attributes)
 
   changeStoryOwnedBy: (e) =>
-    attributes = 
+    attributes =
       story:
         owned_by: $(e.currentTarget).find(":selected").data("name")
-    @_changeStoryAttributes(attributes, (=> @$('.story_owned_by_box').html(PiroPopup.ajaxLoader)))
+    @_changeStoryAttributes(attributes)
 
   updateStoryName: (e) =>
     return false unless e.keyCode?
@@ -181,7 +181,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
       when 13 # Enter
         e.preventDefault()
         return false if $(e.currentTarget).val() is @model.get('name')
-        attributes = 
+        attributes =
           story:
             name: $(e.currentTarget).val()
         @_changeStoryAttributes(attributes)
@@ -202,7 +202,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     @$('.change_project_box').addClass('hidden') unless @$('.change_project_box').hasClass('hidden')
   confirmChangeProjectId: (e) =>
     e.preventDefault()
-    attributes = 
+    attributes =
       story:
         project_id: @$('.change_project_id_selector').val()
     @_changeStoryAttributes(attributes, (=> @$('.story_project_id_box').replaceWith(PiroPopup.ajaxLoader)))
@@ -210,7 +210,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
   filterByLabel: (e) =>
     e.preventDefault()
     PiroPopup.globalEvents.trigger "filter:stories", "##{$(e.currentTarget).text()}"
-    
+
   deleteStoryClick: (e) =>
     e.preventDefault()
     @$('.box_item').addClass('deleting')
@@ -250,7 +250,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
   addTask: (e) =>
     e.preventDefault()
     return false unless @$('.add_task_description').val().length > 0
-    attributes = 
+    attributes =
       task:
         description: @$('.add_task_description').val()
     chrome.runtime.getBackgroundPage (bgPage) =>
@@ -268,13 +268,13 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
   changeCompleteOfTask: (e) =>
     taskId = @$(e.currentTarget).data('id')
     return false unless taskId?
-    attributes = 
+    attributes =
       task:
         complete: @$(e.currentTarget).is(':checked')
     chrome.runtime.getBackgroundPage (bgPage) =>
       PiroPopup.bgPage = bgPage
       PiroPopup.bgPage.PiroBackground.changeTaskAndSyncStory(
-        PiroPopup.pivotalCurrentAccount.toJSON(), 
+        PiroPopup.pivotalCurrentAccount.toJSON(),
         @model.toJSON(),
         taskId,
         attributes,
@@ -292,13 +292,13 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     e.preventDefault()
     taskId = @$(e.currentTarget).parents('.task_box').data('id')
     return false unless taskId?
-    attributes = 
+    attributes =
       task:
         description: @$(e.currentTarget).find('.task_description_input').val()
     chrome.runtime.getBackgroundPage (bgPage) =>
       PiroPopup.bgPage = bgPage
       PiroPopup.bgPage.PiroBackground.changeTaskAndSyncStory(
-        PiroPopup.pivotalCurrentAccount.toJSON(), 
+        PiroPopup.pivotalCurrentAccount.toJSON(),
         @model.toJSON(),
         taskId,
         attributes,
@@ -315,7 +315,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     chrome.runtime.getBackgroundPage (bgPage) =>
       PiroPopup.bgPage = bgPage
       PiroPopup.bgPage.PiroBackground.deleteTaskAndSyncStory(
-        PiroPopup.pivotalCurrentAccount.toJSON(), 
+        PiroPopup.pivotalCurrentAccount.toJSON(),
         @model.toJSON(),
         taskId,
         beforeSend: =>
@@ -338,7 +338,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
   addComment: (e) =>
     e.preventDefault()
     return false unless @$('.add_comment_text').val().length > 0
-    attributes = 
+    attributes =
       comment:
         text: @$('.add_comment_text').val()
     chrome.runtime.getBackgroundPage (bgPage) =>
@@ -367,7 +367,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     chrome.runtime.getBackgroundPage (bgPage) =>
       PiroPopup.bgPage = bgPage
       PiroPopup.bgPage.PiroBackground.deleteCommentAndSyncStory(
-        PiroPopup.pivotalCurrentAccount.toJSON(), 
+        PiroPopup.pivotalCurrentAccount.toJSON(),
         @model.toJSON(),
         commentId,
         beforeSend: =>
@@ -388,9 +388,9 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     chrome.runtime.getBackgroundPage (bgPage) =>
       PiroPopup.bgPage = bgPage
       PiroPopup.bgPage.PiroBackground.uploadAttachmentAndSyncStory(
-        PiroPopup.pivotalCurrentAccount.toJSON(), 
-        @model.toJSON(), 
-        formdata, 
+        PiroPopup.pivotalCurrentAccount.toJSON(),
+        @model.toJSON(),
+        formdata,
         beforeSend: =>
           @$('#attachmentForm').replaceWith(PiroPopup.ajaxLoader)
         success: (story) =>
@@ -413,9 +413,9 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     chrome.runtime.getBackgroundPage (bgPage) =>
       PiroPopup.bgPage = bgPage
       PiroPopup.bgPage.PiroBackground.deleteAttachmentAndSyncStory(
-        PiroPopup.pivotalCurrentAccount.toJSON(), 
-        @model.toJSON(), 
-        attachmentId, 
+        PiroPopup.pivotalCurrentAccount.toJSON(),
+        @model.toJSON(),
+        attachmentId,
         success: (story) =>
           @$(".attachment_box[data-id='#{attachmentId}']").remove()
         error: @render
@@ -434,7 +434,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
           PiroPopup.globalEvents.trigger "story::change::attributes", @model
         error: @render
       )
-    
+
   onDestroyView: =>
     @model.off 'change', @render
     @model.off 'destroy', @remove
