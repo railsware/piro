@@ -145,6 +145,7 @@
       <div class="mbs">
         <input class="story_name" type="text" value="{{name}}" x-webkit-speech="x-webkit-speech" />
       </div>
+      <h2 class="story-header">Description</h2>
       <div class="story_description_box story-description switchable-block mbs">
         <div class="open_story_description initial-state">
           {{#descriptionHtml}}
@@ -166,7 +167,7 @@
       </div>
 
       <div class="mbs">
-        <h2>Labels</h2>
+        <h2 class="story-header">Labels</h2>
         <p>
           {{#labelsList}}
             <a href="#" class="story_label">{{.}}</a>
@@ -177,7 +178,7 @@
     </div>
 
     <div class="story-tasks">
-      <div class="row mbs">
+      <div class="row mbs story-header">
         <div class="left">
           <h2>Tasks</h2>
         </div>
@@ -224,7 +225,7 @@
     </div>
 
     <div class="story-comments">
-      <h2 class="mbs">Comments</h2>
+      <h2 class="story-header mbs">Comments</h2>
       <ul class="mbs">
         {{#comments}}
         <li class="comment_box switchable-block" data-id="{{id}}">
@@ -267,7 +268,7 @@
     </div>
 
     <div class="story-attachments">
-      <h2 class="mbs">Attachments</h2>
+      <h2 class="story-header mbs">Attachments</h2>
       <ul>
         {{#attachments}}
         <li class="attachment_box attachment-item mbm" data-id="{{id}}">
