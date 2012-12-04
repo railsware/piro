@@ -9,7 +9,7 @@
       </select>
     </div>
     <div class="mbs">
-      <input class="add_story_name" type="text" />
+      <input class="add_story_name" type="text" x-webkit-speech="true" />
     </div>
     <div class="mbs">
       <span class="muted">Requester:</span>

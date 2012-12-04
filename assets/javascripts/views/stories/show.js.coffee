@@ -5,6 +5,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     # update story
     "keydown .story_name"                           : "updateStoryName"
     "dblclick .open_story_description"              : "openStoryDescription"
+    "click .edit_description_link"                  : "openStoryDescription"
     "click .cancel_edit_story_description"          : "closeStoryDescription"
     "submit .edit_story_description_form"           : "updateStoryDescription"
     "webkitspeechchange .story_description_speech"  : "changeStoryDescription"
@@ -128,7 +129,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
 
   openStoryDescription: (e) =>
     e.preventDefault()
-    @$(e.currentTarget).parents('.story_description_box').addClass('editing')
+    @$('.story_description_box').addClass('editing')
     @$('textarea.story_description').focus()
   closeStoryDescription: (e) =>
     e.preventDefault()

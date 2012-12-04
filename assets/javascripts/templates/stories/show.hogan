@@ -141,9 +141,16 @@
         </div>
       </div>
       <div class="mbs">
-        <input class="story_name" type="text" value="{{name}}" x-webkit-speech="x-webkit-speech" />
+        <input class="story_name" type="text" value="{{name}}" x-webkit-speech="true" />
       </div>
-      <h2 class="story-header">Description</h2>
+      <div class="row mbs story-header">
+        <div class="left">
+          <h2>Description</h2>
+        </div>
+        <div class="edit_description_box right">
+          <a href="#" class="edit_description_link">Edit</a>
+        </div>
+      </div>
       <div class="story_description_box story-description switchable-block mbs">
         <div class="open_story_description initial-state">
           {{#descriptionHtml}}
@@ -156,7 +163,7 @@
         <div class="switched-state">
           <form class="edit_story_description_form"  method="POST">
             <div class="relative">
-              <input class="story_description_speech speech-icon" x-webkit-speech="x-webkit-speech" />
+              <input class="story_description_speech speech-icon" x-webkit-speech="true" />
               <textarea class="story_description mbs" rows="3" cols="20">{{description}}</textarea>
             </div>
             <input type="submit" value="Save" /> or <a class="cancel_edit_story_description" href="#">Cancel</a>
