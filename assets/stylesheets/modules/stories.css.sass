@@ -3,7 +3,7 @@
   margin-bottom: 20px
   margin-left: -1px
   .story
-    padding: 7px 10px
+    padding: 7px 10px 7px 24px
     border-bottom: 1px solid #bbb
     border-top: 1px solid #fff
     +box-shadow(0 0 4px rgba(0,0,0,.2))
@@ -13,38 +13,26 @@
       word-wrap: break-word
       color: #000
   .active .story
-    background: #dddfc5
-    
+    background-color: #dddfc5
+
 .story
   &.accepted
-    background: #d9ebce
+    background-color: #d9ebce
   &.unstarted
-    background: #F4F4F4
+    background-color: #F4F4F4
   &.delivered, &.started, &.finished, &.rejected
-    background: #f4f4d0
+    background-color: #f4f4d0
   &.unscheduled
-    background: #e5eff8
-    
+    background-color: #e5eff8
+
 .feature-icon
-  display: inline-block
-  width: 14px
-  height: 14px
-  background: url('/public/images/story/feature.png') no-repeat 0 0
-  
+  background: url('/public/images/story/feature.png') no-repeat 5px 7px
+
 .bug-icon
-  display: inline-block
-  width: 14px
-  height: 14px
-  background: url('/public/images/story/bug.png') no-repeat 0 0
-  
+  background: url('/public/images/story/bug.png') no-repeat 5px 7px
+
 .chore-icon
-  display: inline-block
-  width: 14px
-  height: 14px
-  background: url('/public/images/story/chore.png') no-repeat 0 0
-  
+  background: url('/public/images/story/chore.png') no-repeat 5px 7px
+
 .release-icon
-  display: inline-block
-  width: 14px
-  height: 14px
-  background: url('/public/images/story/release.png') no-repeat 0 0
+  background: url('/public/images/story/release.png') no-repeat 5px 7px
