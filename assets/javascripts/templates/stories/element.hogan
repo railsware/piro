@@ -1,5 +1,10 @@
 <div class="story {{current_state}}">
-  <a href="#" class="story_link_info story-title">{{name}}</a>
+  <a href="#" class="story_link_info story-title">
+    <div>
+      <span class="{{story_type}}-icon"></span>
+    </div>
+    {{name}}
+  </a>
   {{#labelsList}}
     <a href="#" class="story_label label">{{.}}</a>
   {{/labelsList}}
