@@ -2,6 +2,10 @@ class PiroPopup.Models.Story extends Backbone.Model
   initialize: (attributes) ->
     @_buttonMatrix = 
       feature:
+        unscheduled: [
+          status: "started"
+          name: "Start"
+        ]
         unstarted: [
           status: "started"
           name: "Start"
