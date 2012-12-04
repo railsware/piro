@@ -45,7 +45,11 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
   initControlls: =>
     project = PiroPopup.pivotalProjects.get(@$('.add_story_project_id').val())
     # chosen
-    @$('.chzn-select').chosen({container_class: "dropdown"})
+    @$('.add_story_project_id').chosen({container_class: "dropdown"})
+    @$('.add_story_story_type').chosen({container_class: "selector type"})
+    @$('.add_story_requester_id').chosen({container_class: "selector"})
+    @$('.add_story_owner_id').chosen({container_class: "selector"})
+    @$('.add_story_point').chosen({container_class: "selector estimate"})
     # story points
     points = []
     points.push "<option value='-1'>Unestimated</option>"
@@ -60,6 +64,7 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
     members.unshift("<option data-name=''></option>")
     @$('.add_story_owner_id').html(members.join("")).chosen(
       allow_single_deselect: true
+      container_class: "dropdown"
     ).trigger("liszt:updated")
     # autocomplete
     projectLabels = if project.get('labels')? then project.get('labels').split(",") else []
