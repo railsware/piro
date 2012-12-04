@@ -267,10 +267,11 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
       )
   changeCompleteOfTask: (e) =>
     taskId = @$(e.currentTarget).data('id')
+    completed = @$(e.currentTarget).is(':checked')
     return false unless taskId?
     attributes =
       task:
-        complete: @$(e.currentTarget).is(':checked')
+        complete: completed
     chrome.runtime.getBackgroundPage (bgPage) =>
       PiroPopup.bgPage = bgPage
       PiroPopup.bgPage.PiroBackground.changeTaskAndSyncStory(
@@ -279,7 +280,10 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         taskId,
         attributes,
         success: (story) =>
-          # success
+          if completed is true
+            @$(e.currentTarget).parents('.task_box').addClass('completed-task')
+          else
+            @$(e.currentTarget).parents('.task_box').removeClass('completed-task')
         error: @render
       )
   openEditTask: (e) =>
