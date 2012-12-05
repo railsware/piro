@@ -36,6 +36,8 @@
     margin-bottom: 30px
   .story-tasks
     margin-bottom: 30px
+    li
+      margin-bottom: 3px
     .task-block
       position: relative
       padding: 5px
@@ -75,12 +77,21 @@
       display: none
 
 .close-link
-  position: absolute
+  display: inline-block
   width: 9px
   height: 9px
-  top: 5px
-  right: 8px
   background: url('/public/images/icons/close-icon.png')
+  
+.edit-link
+  display: inline-block
+  width: 9px
+  height: 9px
+  background: url('/public/images/icons/edit-icon.gif')
+  
+.entry-controlls
+  position: absolute
+  top: 5px
+  right: 10px
 
 .story-header
   border-bottom: 1px solid rgba(100,100,100,.1)
