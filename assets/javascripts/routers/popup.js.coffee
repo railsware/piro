@@ -6,6 +6,8 @@ class PiroPopup.Routers.Popup extends Backbone.Router
     "story/new"               : "newStory"
     "story/:id"               : "showStory"
     "story/:id/omnibox"       : "showOmniboxStory"
+    "requester_mode"          : "requesterMode"
+    "owner_mode"              : "ownerMode"
     "*a"                      : "index"
   
   initialize: (options) =>
@@ -15,7 +17,6 @@ class PiroPopup.Routers.Popup extends Backbone.Router
     PiroPopup.globalEvents.on "update:data:finished", @_refreshView
     @mainView = new PiroPopup.Views.PopupIndex(collection: PiroPopup.pivotalAccounts, projects: PiroPopup.pivotalProjects)
     PiroPopup.updateMainContainer(@mainView)
-
   afterRouting: (trigger, args) =>
     switch trigger
       when "route:login"
@@ -24,17 +25,15 @@ class PiroPopup.Routers.Popup extends Backbone.Router
         return Backbone.history.navigate("login", {trigger: true, replace: true}) if PiroPopup.pivotalAccounts.length is 0
     # highlight links
     @_hightlightLinks(trigger, args)
-
   index: =>
     PiroPopup.updateMainContainer(@mainView) unless PiroPopup.currentMainView is @mainView
     PiroPopup.clearStoriesContainer()
     PiroPopup.clearStoryContainer()
-
   newStory: =>
     view = new PiroPopup.Views.StoriesForm()
     PiroPopup.updateStoryContainer(view)
   project: (id) =>
-    @renderProjectStories(id)
+    @_renderProjectStories(id)
   showStory: (id) =>
     PiroPopup.db.getStoryById id, 
       success: @_showStory
@@ -56,7 +55,19 @@ class PiroPopup.Routers.Popup extends Backbone.Router
                       Backbone.history.navigate("story/#{id}", {trigger: true, replace: true})
                 else
                   return Backbone.history.navigate("story/#{id}", {trigger: true, replace: true})
-  renderProjectStories: (projectId, params = {}) =>
+  renderStory: (storyId) =>
+    story = @storiesList.get(storyId)
+    view = new PiroPopup.Views.StoriesShow(model: story)
+    PiroPopup.updateStoryContainer(view)
+  login: =>
+    view = new PiroPopup.Views.LoginIndex(collection: PiroPopup.pivotalAccounts)
+    PiroPopup.updateMainContainer(view)
+  requesterMode: =>
+    @_openSmartView(false)
+  ownerMode: =>
+    @_openSmartView()
+  # private
+  _renderProjectStories: (projectId, params = {}) =>
     project = PiroPopup.pivotalProjects.get(projectId)
     return Backbone.history.navigate("", {trigger: true, replace: true}) unless project?
     PiroPopup.db.getStoriesByProject project.toJSON(), 
@@ -69,23 +80,18 @@ class PiroPopup.Routers.Popup extends Backbone.Router
           params.success.call(null)
         else
           $('input.stories_filter_input').focus() if $('input.stories_filter_input').length
-  renderStory: (storyId) =>
-    story = @storiesList.get(storyId)
-    view = new PiroPopup.Views.StoriesShow(model: story)
-    PiroPopup.updateStoryContainer(view)
-  login: =>
-    view = new PiroPopup.Views.LoginIndex(collection: PiroPopup.pivotalAccounts)
-    PiroPopup.updateMainContainer(view)
-  # private
   _showStory: (story) =>
     return Backbone.history.navigate("", {trigger: true, replace: true}) unless story?
     # project
     if @storiesList? && @storiesList.get(story.id)?
       @renderStory(story.id)
     else
-      @renderProjectStories story.project_id, 
+      @_renderProjectStories story.project_id, 
         success: =>
           @renderStory(story.id)
+  _openSmartView: (isOwner = true) =>
+    smartView = new PiroPopup.Views.StoriesSmart(isOwner: isOwner)
+    PiroPopup.updateStoriesContainer(smartView)
   _refreshView: =>
     Backbone.history.navigate("", {trigger: true, replace: true}) if $('#projectsBox').length is 0 || $('#projectsBox').children().length is 0
   _refreshLinks: =>

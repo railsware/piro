@@ -1,19 +1,20 @@
-class PiroPopup.Views.StoriesIndex extends Backbone.View
+class PiroPopup.Views.StoriesSmart extends Backbone.View
   
-  template: SHT['stories/index']
+  template: SHT['stories/smart']
   events:
     "click .stories_tab_link"           : "clickStoryTab"
-    "click .stories_user_link"          : "clickStoryUser"
-    "click .moscow_sort"                : "sortMoscowStories"
     "keyup .stories_filter_input"       : "renderWithFilter"
   
-  initialize: ->
+  initialize: (options) ->
+    @_typeOfView = if options.isOwner? and options.isOwner is true then "owner" else "requester"
+    @collection = new PiroPopup.Collections.Stories
     @collection.on 'add', @renderOne
     @collection.on 'reset', @renderAll
     PiroPopup.globalEvents.on "update:data:finished", @getStoriesAndRender
     PiroPopup.globalEvents.on "filter:stories", @eventFilterStories
     PiroPopup.globalEvents.on "story::change::attributes", @changeStoryTriggered
     @childViews = []
+    @_fetchInitialData()
   
   render: =>
     $(@el).html(@template.render(PiroPopup.db.getAllOptionsLS()))
@@ -23,12 +24,12 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
     this
 
   getStoriesAndRender: =>
-    projectId = @collection.at(0).get("project_id") if @collection.length > 0
-    return false unless projectId?
-    PiroPopup.db.getStoriesByProject {id: projectId},
-      success: (project, data) =>
-        @collection.reset(data)
-        @_highlightLinks()
+    @_fetchInitialData()
+    @renderWithFilter()
+
+  renderWithFilter: (e) =>
+    @renderAll()
+    @_highlightLinks()
 
   renderOne: (story) =>
     view = new PiroPopup.Views.StoriesElement(model: story)
@@ -41,18 +42,13 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
     stories = @collection.getStoriesByFilters
       account: PiroPopup.pivotalCurrentAccount
       storiesTabView: PiroPopup.db.getStoriesTabViewLS()
-      storiesUserView: PiroPopup.db.getStoriesUserViewLS()
-      sortMoscow: PiroPopup.db.getMoscowSortLS()
+      storiesUserView: @_typeOfView
       filterText: @$('input.stories_filter_input').val()
     @renderOne(story) for story in stories
   
   eventFilterStories: (text) =>
     @$('input.stories_filter_input').val(text).trigger('change')
     @renderWithFilter()
-
-  renderWithFilter: (e) =>
-    @renderAll()
-    @_highlightLinks()
 
   changeStoryTriggered: (model) =>
     @renderWithFilter()
@@ -64,20 +60,9 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
     @$('.stories_tabs li').removeClass('active')
     @$(".stories_tabs li.#{value}_stories_tab").addClass('active')
     @renderWithFilter()
-    
-  clickStoryUser: (e) =>
-    e.preventDefault()
-    value = $(e.currentTarget).data('key')
-    PiroPopup.db.setStoriesUserViewLS(value)
-    @$('.stories_user_tabs li').removeClass('active')
-    @$(".stories_user_tabs li.#{value}_stories_user_tab").addClass('active')
-    @renderWithFilter()
-    
-  sortMoscowStories: (e) =>
-    e.preventDefault()
-    PiroPopup.db.setMoscowSortLS(!PiroPopup.db.getMoscowSortLS())
-    @renderWithFilter()
 
+  _fetchInitialData: =>
+    # fetch data  
   _highlightLinks: =>
     PiroPopup.globalEvents.trigger "route:highlight:links", null
 
