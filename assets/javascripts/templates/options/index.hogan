@@ -1,4 +1,12 @@
+<h2>Options</h2>
+
+comming soon...
+
+<h2>Accounts</h2>
+
 <ul class="accounts_list"></ul>
+
+
 <a href="#" class="open_account_link">Add account</a>
 <div class="account_box">
   <form class="add_account_form" action="#" method="post">

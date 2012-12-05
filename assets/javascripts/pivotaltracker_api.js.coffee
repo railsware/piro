@@ -92,6 +92,16 @@ class root.PivotaltrackerApi
       return false unless story.id?
       successFunction.call(null, story, textStatus, jqXHR) if successFunction?
     @sendPivotalRequest(params)
+  updateStoryOld: (story, params = {}) =>
+    successFunction = params.success
+    params.url = "#{@v3Url}/projects/#{story.project_id}/stories/#{story.id}"
+    params.type = "PUT"
+    params.success = (data, textStatus, jqXHR) =>
+      stories = Jath.parse(@storiesTemplate, data)
+      story = stories[0] if stories.length > 0
+      return false unless story.id?
+      successFunction.call(null, story, textStatus, jqXHR) if successFunction?
+    @sendPivotalRequest(params)
   deleteStory: (story, params = {}) =>
     successFunction = params.success
     params.url = "#{@baseUrl}/projects/#{story.project_id}/stories/#{story.id}"

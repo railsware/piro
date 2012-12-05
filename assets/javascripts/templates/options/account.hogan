@@ -1,8 +1,3 @@
-<h2>Options</h2>
-
-comming soon...
-
-<h2>Accounts</h2>
 <div class="account_item box_item">
   <div class="main">
     {{company}}{{^company}}{{email}}{{/company}} ({{name}})
