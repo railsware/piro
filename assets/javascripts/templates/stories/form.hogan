@@ -9,18 +9,19 @@
       </select>
     </div>
     <div class="mbs">
-      <input class="add_story_name" type="text" x-webkit-speech="true" />
+      <input class="add_story_name" type="text" x-webkit-speech="true"  placeholder="Story title"/>
     </div>
     <div class="mbs">
-      <span class="muted">Requester:</span>
+      <small class="muted">Requester:</small>
       <select class="add_story_requester_id chzn-select"></select>
     </div>
     <div class="mbs">
-      <span class="muted">Owner:</span>
+      <small class="muted">Owner:</small>
       <select class="add_story_owner_id chzn-de-select" data-placeholder="None"></select>
       <a class="story_owner_id_to_me" href="#">to me</a>
     </div>
     <div class="mbs">
+      <small class="muted">Status:</small>
       <select class="add_story_story_type chzn-select">
         <option value="feature">Feature</option>
         <option value="bug">Bug</option>
@@ -30,13 +31,14 @@
     </div>
 
     <div class="add_story_point_box mbs">
+      <small class="muted">Points:</small>
       <select class="add_story_point chzn-select" style="width:300px;"></select>
     </div>
     <div class="add_story_release_date_box mbs">
       <input class="add_story_release_date" type="text" readonly="readonly" />
     </div>
     <div class="mbs">
-      <textarea class="add_story_description" rows="4" cols="30"></textarea>
+      <textarea class="add_story_description" rows="4" cols="30" placeholder="Story description"></textarea>
     </div>
     <div class="mbs">
       <strong>Labels</strong>

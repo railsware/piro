@@ -23,12 +23,12 @@
 
 /* @group Single Chosen */
 .selector.chzn-container-single .chzn-single {
-  background: transparent;
+  background: rgba(100, 100, 100,.1);
+  border: 1px solid rgba(100, 100, 100,.1);
   -webkit-border-radius: 5px;
   border-radius        : 5px;
   -webkit-background-clip: padding-box;
   background-clip        : padding-box;
-  border: 1px solid rgba(100, 100, 100, .2);
   display: block;
   overflow: hidden;
   white-space: nowrap;

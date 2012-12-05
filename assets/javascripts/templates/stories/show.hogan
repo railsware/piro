@@ -1,6 +1,6 @@
 <div class="story {{current_state}} mvs">
   <div class="inner">
-    <div class="story-summary row">
+    <div class="story-summary row mbs">
       <div class="col3of5">
         <div class="item">
           <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
@@ -151,7 +151,7 @@
           <a href="#" class="edit_description_link">Edit</a>
         </div>
       </div>
-      <div class="story_description_box story-description switchable-block mbs">
+      <div class="story_description_box story-description switchable-block mbm">
         <div class="open_story_description initial-state">
           {{#descriptionHtml}}
             <p>{{{descriptionHtml}}}</p>
@@ -174,9 +174,7 @@
       <div class="mbs">
         <h2 class="story-header">Labels</h2>
         <p>
-          {{#labelsList}}
-            <a href="#" class="story_label">{{.}}</a>
-          {{/labelsList}}
+          <input type="text" value="{{#labelsList}}{{.}},{{/labelsList}}" />
         </p>
       </div>
 
