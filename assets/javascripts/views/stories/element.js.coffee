@@ -23,10 +23,12 @@ class PiroPopup.Views.StoriesElement extends Backbone.View
 
   filterByLabel: (e) =>
     e.preventDefault()
+    e.stopPropagation()
     PiroPopup.globalEvents.trigger "filter:stories", "##{$(e.currentTarget).text()}"
 
   filterByOwner: (e) =>
     e.preventDefault()
+    e.stopPropagation()
     PiroPopup.globalEvents.trigger "filter:stories", "@#{$(e.currentTarget).text()}"
 
   changeStoryStatus: (e) =>

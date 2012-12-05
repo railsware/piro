@@ -82,3 +82,39 @@ select
     background: #56bbff
   &:active
     +box-shadow(1px 1px 1px rgba(0,0,0,0.3))
+    
+.control-button
+  display: inline-block
+  padding: 1px 5px
+  cursor: pointer
+  color: #fff
+  font-size: 12px
+  border: 1px solid #aaa
+  +border-radius(4px)
+  +box-shadow(inset 0 0 1px rgba(255,255,255,.6))
+  &.unstarted, &.unscheduled, &.rejected
+    color: #555
+    background: #eee
+    &:hover
+      background: darken(#eee, 5%)
+  &.started, &.unstarted[data-status='accepted']
+    color: #fff
+    background: #2b4c74
+    border: 1px solid #24364c
+    &:hover
+      background: darken(#24364c, 5%)
+  &.finished
+    border: 1px solid #cd6e00
+    background: #ef9113
+    &:hover
+      background: darken(#ef9113, 5%)
+  &.delivered[data-status='accepted']
+    background: #6b9a13
+    border: 1px solid #416f00
+    &:hover
+      background: darken(#416f00, 5%)
+  &.delivered[data-status='rejected']
+    background: #a5243e
+    border: 1px solid #821328
+    &:hover
+      background: darken(#821328, 5%)

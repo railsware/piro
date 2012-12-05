@@ -1,16 +1,18 @@
 <div class="story {{current_state}} {{story_type}}-icon">
-  <a href="#" class="story_link_info story-title">
-    {{name}}
-  </a>
-  {{#labelsList}}
+  <div class="story-labels story_link_info">
+    <a href="#" class="story-title">
+      {{name}}
+    </a>
+    {{#labelsList}}
     <a href="#" class="story_label label">{{.}}</a>
-  {{/labelsList}}
-  {{#owned_by}}
+    {{/labelsList}}
+    {{#owned_by}}
     <span class="muted">(</span><a href="#" class="story_owned_by">{{initials}}</a><span class="muted">)</span>
-  {{/owned_by}}
-  <div>
+    {{/owned_by}}
+  </div>
+  <div class="control-buttons">
     {{#storyButtons}}
-      <button class="change_status_button {{current_state}}" data-status="{{status}}">{{name}}</button>
+      <button class="change_status_button control-button {{current_state}}" data-status="{{status}}">{{name}}</button>
     {{/storyButtons}}
   </div>
 </div>
