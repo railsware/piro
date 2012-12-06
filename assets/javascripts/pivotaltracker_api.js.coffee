@@ -66,7 +66,8 @@ class root.PivotaltrackerApi
     params.url = "#{@baseUrl}/stories/#{storyId}"
     params.success = (data, textStatus, jqXHR) =>
       stories = Jath.parse(@storiesTemplate, data)
-      successFunction.call(null, stories, textStatus, jqXHR) if successFunction?
+      story = stories[0] if stories.length > 0
+      successFunction.call(null, story, textStatus, jqXHR) if successFunction?
     @sendPivotalRequest(params)
   createStory: (projectId, params = {}) =>
     successFunction = params.success
