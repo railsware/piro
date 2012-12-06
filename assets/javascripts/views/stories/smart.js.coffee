@@ -27,7 +27,7 @@ class PiroPopup.Views.StoriesSmart extends Backbone.View
     @_highlightLinks()
 
   renderOne: (project) =>
-    view = new PiroPopup.Views.StoriesSmartElement(model: project)
+    view = new PiroPopup.Views.StoriesSmartProject(model: project)
     @$('.grouped_stories_list').append(view.render().el)
     @childViews.push(view)
 
