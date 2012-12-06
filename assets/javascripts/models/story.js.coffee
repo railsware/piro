@@ -122,7 +122,7 @@ class PiroPopup.Models.Story extends Backbone.Model
     attr.labelsList = attr.labels.split(",") if attr.labels? and attr.labels.length > 0
     attr.deadline = null if !attr.deadline? || attr.deadline.length is 0
     attr.descriptionHtml = if attr.description.length
-      attr.description.replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, "<a class='description_link' target='_blank' href='$1'>$1</a>")
+      attr.description = @_fixLinks(attr.description)
     else
       null
     switch @get('story_type').toLowerCase()
@@ -152,12 +152,15 @@ class PiroPopup.Models.Story extends Backbone.Model
     fixedComments = _.map comments, (comment) =>
       newComment = comment
       return null if comment.text.length is 0
+      newComment.textHtml = @_fixLinks(newComment.text)
       newComment
     _.compact(fixedComments)
   _isNeedEstimate: =>
     return true if parseInt(@get("estimate")) is -1 and @get("current_state").toLowerCase() is "unscheduled"
     return true if parseInt(@get("estimate")) is -1 and @get('story_type').toLowerCase() is "feature" and _.indexOf(["unscheduled", "unstarted"], @get("current_state").toLowerCase()) isnt -1
     return false
+  _fixLinks: (text) =>
+    text.replace(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig, "<a class='text_link' target='_blank' href='$1'>$1</a>")
   _buildStoryButtons: =>
     return [] if @_isNeedEstimate() is true
     @_buttonMatrix[@get('story_type').toLowerCase()][@get('current_state').toLowerCase()]

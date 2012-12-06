@@ -234,7 +234,7 @@
         <li class="comment_box switchable-block" data-id="{{id}}">
           <div class="initial-state mbx">
             <div class="comment-block">
-              {{text}}
+              {{{textHtml}}}
               {{#isOwnComment}}
                 <a href="#" class="comment_delete_link close-link"></a>
               {{/isOwnComment}}
