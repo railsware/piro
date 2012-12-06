@@ -3,6 +3,10 @@
     <div class="story-summary row mbs">
       <div class="col3of5">
         <div class="item">
+          <img src="/public/images/story/{{story_type}}.png" alt="" class="story-type-icon" />
+          <div class="story-id mrs"><span class="muted">ID: </span>
+            <a href="https://www.pivotaltracker.com/story/show/{{id}}" target="_blank">{{id}}</a>
+          </div>
           <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
                   class="story-link"
                   width="20"
@@ -27,9 +31,6 @@
                    bgcolor="#FFFFFF"
             />
           </object>
-          <div class="story-id"><span class="muted">ID: </span>
-            <a href="https://www.pivotaltracker.com/story/show/{{id}}" target="_blank">{{id}}</a>
-          </div>
         </div>
         <div class="item">
           <small class="muted">Requester: </small>
@@ -201,7 +202,7 @@
                 {{description}}
               </label>
               <div class="task_control_box entry-controlls">
-                <a href="#" class="open_edit_task edit-link"></a>
+                <a href="#" class="open_edit_task edit-link mrs"></a>
                 <a href="#" class="delete_task_link close-link" data-id="{{id}}"></a>
               </div>
             </div>
