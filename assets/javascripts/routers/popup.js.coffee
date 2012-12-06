@@ -6,8 +6,7 @@ class PiroPopup.Routers.Popup extends Backbone.Router
     "story/new"               : "newStory"
     "story/:id"               : "showStory"
     "story/:id/omnibox"       : "showOmniboxStory"
-    "requester_mode"          : "requesterMode"
-    "owner_mode"              : "ownerMode"
+    "smart_view"              : "smartViewShow"
     "*a"                      : "index"
   
   initialize: (options) =>
@@ -62,10 +61,9 @@ class PiroPopup.Routers.Popup extends Backbone.Router
   login: =>
     view = new PiroPopup.Views.LoginIndex(collection: PiroPopup.pivotalAccounts)
     PiroPopup.updateMainContainer(view)
-  requesterMode: =>
-    @_openSmartView(false)
-  ownerMode: =>
-    @_openSmartView()
+  smartViewShow: =>
+    smartView = new PiroPopup.Views.StoriesSmart
+    PiroPopup.updateStoriesContainer(smartView)
   # private
   _renderProjectStories: (projectId, params = {}) =>
     project = PiroPopup.pivotalProjects.get(projectId)
@@ -89,9 +87,6 @@ class PiroPopup.Routers.Popup extends Backbone.Router
       @_renderProjectStories story.project_id, 
         success: =>
           @renderStory(story.id)
-  _openSmartView: (isOwner = true) =>
-    smartView = new PiroPopup.Views.StoriesSmart(isOwner: isOwner)
-    PiroPopup.updateStoriesContainer(smartView)
   _refreshView: =>
     Backbone.history.navigate("", {trigger: true, replace: true}) if $('#projectsBox').length is 0 || $('#projectsBox').children().length is 0
   _refreshLinks: =>
@@ -103,6 +98,7 @@ class PiroPopup.Routers.Popup extends Backbone.Router
         args = args[0] if args.length is 1
         return @_hightlightLinks("route:#{route}", args)
   _hightlightLinks: (trigger, args) =>
+    @_resetHighlightLinks(trigger)
     switch trigger
       when "route:project"
         @_highlightProject(args)
@@ -111,16 +107,28 @@ class PiroPopup.Routers.Popup extends Backbone.Router
           success: (storyInfo) =>
             return false unless storyInfo?
             @_highlightProject(storyInfo.project_id)
-            return false if $("li.story_element[data-story-id='#{storyInfo.id}']").hasClass('active')
-            $('li.story_element').removeClass('active')
-            $("li.story_element[data-story-id='#{storyInfo.id}']").addClass('active')
-      when "route:newStory"
-        $('li.story_element').removeClass('active')
+            @_highlightStory(storyInfo.id)
+      when "route:smartViewShow"
+        $('.smart_view_box').addClass('active')
       else
+        # nothing
+  _resetHighlightLinks: (trigger) =>
+    switch trigger
+      when "route:showStory"
+        $('.smart_view_box').removeClass('active')
+      when "route:smartViewShow"
+        $('li.story_element').removeClass('active')
+        $('li.project_element').removeClass('active')
+      else
+        $('.smart_view_box').removeClass('active')
         $('li.story_element').removeClass('active')
         $('li.project_element').removeClass('active')
   _highlightProject: (projectId) =>
     return false if $("li.project_element[data-project-id='#{projectId}']").hasClass('active')
     $('li.project_element').removeClass('active')
     $("li.project_element[data-project-id='#{projectId}']").addClass('active')
+  _highlightStory: (storyId) =>
+    return false if $("li.story_element[data-story-id='#{storyId}']").hasClass('active')
+    $('li.story_element').removeClass('active')
+    $("li.story_element[data-story-id='#{storyId}']").addClass('active')
       

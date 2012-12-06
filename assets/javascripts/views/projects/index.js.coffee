@@ -1,6 +1,8 @@
 class PiroPopup.Views.ProjectsIndex extends Backbone.View
   
   template: SHT['projects/index']
+  events:
+    'click .smart_view_link'          : 'openSmartView'
   
   initialize: ->
     @collection.on 'add', @renderOne
@@ -13,7 +15,10 @@ class PiroPopup.Views.ProjectsIndex extends Backbone.View
     @renderAll()
     @sortBinding()
     this
-
+  
+  openSmartView: (e) =>
+    e.preventDefault()
+    Backbone.history.navigate("smart_view", {trigger: true, replace: true})
   getProjectsAndRender: =>
     PiroPopup.db.getProjects PiroPopup.pivotalCurrentAccount.toJSON(),
       success: (projects) =>

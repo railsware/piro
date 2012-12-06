@@ -1,5 +1,18 @@
 <div class="row mvs">
-  <div class="col1of1">
+  <div class="col1of2">
+    <ul class="stories_user_tabs user-stories-tabs">
+      <li class="owner_stories_user_tab{{#ownerStoriesSmartView}} active{{/ownerStoriesSmartView}}">
+        <a class="stories_smart_link" href="#" data-key="owner">Owner</a>
+      </li>
+      <li class="requester_stories_user_tab{{#requesterStoriesSmartView}} active{{/requesterStoriesSmartView}}">
+        <a class="stories_smart_link" href="#" data-key="requester">Requester</a>
+      </li>
+    </ul>
+    <div class="smart_loader hidden">
+      <img alt='loading...' title='loading...' src='public/images/ajax-loader.gif' />
+    </div>
+  </div>
+  <div class="col1of2">
     <input class="stories_filter_input filter" type="text" placeholder="Filter stories" />
   </div>
 </div>
@@ -19,4 +32,4 @@
   </li>
 </ul>
 
-<ul class="stories_list stories-list"></ul>
+<ul class="grouped_stories_list"></ul>

@@ -304,10 +304,12 @@ class root.PiroStorage
   getAllOptionsLS: =>
     storiesTabView = @getStoriesTabViewLS()
     storiesUserView = @getStoriesUserViewLS()
+    storiesSmartView = @getStoriesSmartViewLS()
     options = 
       updateInterval: @getUpdateIntervalLS()
       storiesUserView: storiesUserView
       storiesTabView: storiesTabView
+      storiesSmartView: storiesSmartView
       sortMoscow: @getMoscowSortLS()
     switch storiesTabView
       when "current"
@@ -325,6 +327,11 @@ class root.PiroStorage
         _.extend(options, {requesterStoriesUserView: true})
       else
         _.extend(options, {allStoriesUserView: true})
+    switch storiesSmartView
+      when "owner"
+        _.extend(options, {ownerStoriesSmartView: true})
+      else
+        _.extend(options, {requesterStoriesSmartView: true})
     options
   getStoriesTabViewLS: =>
     @getLocalStorage("stories_tab_view") || "all"
@@ -340,6 +347,10 @@ class root.PiroStorage
     @getLocalStorage("stories_user_view") || "all"
   setStoriesUserViewLS: (value) =>
     @setLocalStorage("stories_user_view", value)
+  getStoriesSmartViewLS: =>
+    @getLocalStorage("stories_smart_view") || "owner"
+  setStoriesSmartViewLS: (value) =>
+    @setLocalStorage("stories_smart_view", value)
   getMoscowSortLS: =>
     @getLocalStorage("sort_stories_moscow") || false
   setMoscowSortLS: (value) =>
