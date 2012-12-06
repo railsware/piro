@@ -70,13 +70,16 @@ namespace :assets do
       end
       # HTML
       outpath   = File.join(File.dirname(__FILE__))
+      html_compressor = HtmlCompressor::HtmlCompressor.new
       # html files
-      File.open(File.join(outpath, 'index.html'), 'w') {|f| f.write(erb('index.html')) }
-      File.open(File.join(outpath, 'options.html'), 'w') {|f| f.write(erb('options.html')) }
-      File.open(File.join(outpath, 'popup.html'), 'w') {|f| f.write(erb('popup.html')) }
+      %w(index.html options.html popup.html).each do |filename|
+        html_body = erb(filename)
+        html_body = html_compressor.compress(html_body) if ENV['RELEASE']
+        File.open(File.join(outpath, filename), 'w') {|f| f.write(html_body) }
+      end
       puts "successfully compiled html assets"
-    rescue
-      puts "failed compile html assets"
+    rescue => e
+      puts "failed compile html assets. Error: #{e.message}"
     end
   end
   # todo: add :clean_all, :clean_css, :clean_js tasks, invoke before writing new file(s)
