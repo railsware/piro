@@ -229,7 +229,9 @@
     </div>
 
     <div class="story-comments">
-      <h2 class="story-header mbs">Comments</h2>
+      <div class="story-header mbs">
+        <h2 class="">Comments</h2>
+      </div>
       <ul class="mbs">
         {{#comments}}
         <li class="comment_box switchable-block" data-id="{{id}}">
@@ -272,7 +274,9 @@
     </div>
 
     <div class="story-attachments">
-      <h2 class="story-header mbs">Attachments</h2>
+      <div class="story-header mbs">
+        <h2 class="">Attachments</h2>
+      </div>
       <ul>
         {{#attachments}}
         <li class="attachment_box attachment-item mbm" data-id="{{id}}">
@@ -285,8 +289,6 @@
         </li>
         {{/attachments}}
       </ul>
-
-      <h3>Upload file</h3>
       <form id="attachmentForm" method="post" enctype="multipart/form-data">
         <input type="file" class="fileInput" value="Upload" />
       </form>
