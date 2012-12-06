@@ -1,1 +1,11 @@
+<div class="row mvs">
+  <ul class="user-stories-tabs mls global row">
+    <li class="">
+      <a href="#" class="owner_mode_link">All Owned</a>
+    </li>
+    <li class="">
+      <a href="#" class="requester_mode_link">All Requested</a>
+    </li>
+  </ul>
+</div>
 <ul class="projects_list projects-list">Loading...</ul>

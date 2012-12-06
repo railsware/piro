@@ -11,7 +11,7 @@
         <a class="stories_user_link" href="#" data-key="requester">Requester</a>
       </li>
     </ul>
-    <div>
+    <div class="hidden">
       <a href="#" class="moscow_sort {{#sortMoscow}}on{{/sortMoscow}}">MSW</a>
       <a href="http://en.wikipedia.org/wiki/MoSCoW_Method" target="_blank">?</a>
     </div>
