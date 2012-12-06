@@ -5,6 +5,8 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
     'change select.account_switcher'          : 'switchAccount'
     'click .update_data_for_accounts_link'    : 'updateDataTrigger'
     'click .add_story_link'                   : 'addStoryForm'
+    'click .requester_mode_link'              : 'openRequesterMode'
+    'click .owner_mode_link'                  : 'openOwnerMode'
   
   initialize: (options) ->
     @collection.on 'add', @render
@@ -51,6 +53,13 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
   addStoryForm: (e) =>
     e.preventDefault()
     Backbone.history.navigate("story/new", {trigger: true, replace: true})
+
+  openRequesterMode: (e) =>
+    e.preventDefault()
+    Backbone.history.navigate("requester_mode", {trigger: true, replace: true})
+  openOwnerMode: (e) =>
+    e.preventDefault()
+    Backbone.history.navigate("owner_mode", {trigger: true, replace: true})
     
   updatePivotalState: (info) =>
     return false unless info?

@@ -167,13 +167,13 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     attributes =
       story:
         requested_by: $(e.currentTarget).find(":selected").data("name")
-    @_changeStoryAttributes(attributes)
+    @_changeStoryAttributesOld(attributes)
 
   changeStoryOwnedBy: (e) =>
     attributes =
       story:
         owned_by: $(e.currentTarget).find(":selected").data("name")
-    @_changeStoryAttributes(attributes)
+    @_changeStoryAttributesOld(attributes)
 
   updateStoryName: (e) =>
     return false unless e.keyCode?
@@ -431,6 +431,19 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     chrome.runtime.getBackgroundPage (bgPage) =>
       PiroPopup.bgPage = bgPage
       PiroPopup.bgPage.PiroBackground.updateAndSyncStory(
+        PiroPopup.pivotalCurrentAccount.toJSON(),
+        @model.toJSON(),
+        attributes,
+        beforeSend: beforeSend
+        success: (story) =>
+          @model.set(story)
+          PiroPopup.globalEvents.trigger "story::change::attributes", @model
+        error: @render
+      )
+  _changeStoryAttributesOld: (attributes, beforeSend = (-> true)) =>
+    chrome.runtime.getBackgroundPage (bgPage) =>
+      PiroPopup.bgPage = bgPage
+      PiroPopup.bgPage.PiroBackground.updateAndSyncStoryOld(
         PiroPopup.pivotalCurrentAccount.toJSON(),
         @model.toJSON(),
         attributes,

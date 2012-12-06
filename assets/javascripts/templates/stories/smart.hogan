@@ -1,0 +1,22 @@
+<div class="row mvs">
+  <div class="col1of1">
+    <input class="stories_filter_input filter" type="text" placeholder="Filter stories" />
+  </div>
+</div>
+
+<ul class="stories_tabs stories-tabs row">
+  <li class="all_stories_tab{{#allStoriesTabView}} active{{/allStoriesTabView}} all">
+    <a class="stories_tab_link" href="#" data-key="all">All</a>
+  </li>
+  <li class="current_stories_tab{{#currentStoriesTabView}} active{{/currentStoriesTabView}} current">
+    <a class="stories_tab_link" href="#" data-key="current">Current</a>
+  </li>
+  <li class="done_stories_tab{{#doneStoriesTabView}} active{{/doneStoriesTabView}} done">
+    <a class="stories_tab_link" href="#" data-key="done">Done</a>
+  </li>
+  <li class="icebox_stories_tab{{#iceboxStoriesTabView}} active{{/iceboxStoriesTabView}} icebox">
+    <a class="stories_tab_link" href="#" data-key="icebox">Icebox</a>
+  </li>
+</ul>
+
+<ul class="stories_list stories-list"></ul>

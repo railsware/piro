@@ -37,8 +37,8 @@ namespace :assets do
       FileUtils.mkdir_p outfile.dirname
       asset.write_to(outfile)
       puts "successfully compiled js assets"
-    rescue
-      puts "failed compile js assets"
+    rescue => e
+      puts "failed compile js assets. Error: #{e.message}"
     end
   end
 
@@ -53,8 +53,8 @@ namespace :assets do
       FileUtils.mkdir_p outfile.dirname
       asset.write_to(outfile)
       puts "successfully compiled css assets"
-    rescue
-      puts "failed compile css assets"
+    rescue => e
+      puts "failed compile css assets. Error: #{e.message}"
     end
   end
   
