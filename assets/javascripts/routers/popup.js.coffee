@@ -127,7 +127,7 @@ class PiroPopup.Routers.Popup extends Backbone.Router
             return false unless storyInfo?
             @_highlightStory(storyInfo.id)
       when "route:smartIndexView"
-        $('.smart_view_box').addClass('active')
+        $('.smart_view_link').addClass('active')
       else
         # nothing
   _resetHighlightLinks: (trigger) =>
@@ -140,7 +140,7 @@ class PiroPopup.Routers.Popup extends Backbone.Router
       when "route:smartShowView"
         # 
       else
-        $('.smart_view_box').removeClass('active')
+        $('.smart_view_link').removeClass('active')
         $('li.story_element').removeClass('active')
         $('li.project_element').removeClass('active')
   _highlightProject: (projectId) =>
