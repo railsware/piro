@@ -1,8 +1,3 @@
-<div class="row mvs">
-  <ul class="user-stories-tabs mls global row">
-    <li class="smart_view_box">
-      <a href="#" class="smart_view_link">All Projects</a>
-    </li>
-  </ul>
-</div>
+<a href="#" class="smart_view_link all-projects-link">All Projects</a>
+
 <ul class="projects_list projects-list">Loading...</ul>
