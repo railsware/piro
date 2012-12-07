@@ -86,14 +86,12 @@ root.PiroPopup =
       PiroPopup.bgPage = bgPage
       PiroPopup.bgPage.PiroBackground.initPopupView(PiroPopup.globalEvents)
   # ui container
-  mainContainer: ->
-    $('#mainContainer')
+  mainContainer: -> $('#mainContainer')
   updateMainContainer: (view) ->
     PiroPopup.currentMainView.destroyView() if PiroPopup.currentMainView? && PiroPopup.currentMainView.destroyView?
     PiroPopup.currentMainView = view
     PiroPopup.mainContainer().empty().html(PiroPopup.currentMainView.render().el)
-  storiesContainer: ->
-    $('#storiesBox')
+  storiesContainer: -> $('#storiesBox')
   updateStoriesContainer: (view) ->
     PiroPopup.currentStoriesView.destroyView() if PiroPopup.currentStoriesView? && PiroPopup.currentStoriesView.destroyView?
     PiroPopup.currentStoriesView = view
@@ -101,8 +99,7 @@ root.PiroPopup =
   clearStoriesContainer: ->
     PiroPopup.currentStoriesView.destroyView() if PiroPopup.currentStoriesView? && PiroPopup.currentStoriesView.destroyView?
     PiroPopup.storiesContainer().empty()
-  storyContainer: ->
-    $('#storyBox')
+  storyContainer: -> $('#storyBox')
   updateStoryContainer: (view) ->
     PiroPopup.currentStoryView.destroyView() if PiroPopup.currentStoryView? && PiroPopup.currentStoryView.destroyView?
     PiroPopup.currentStoryView = view
@@ -110,10 +107,8 @@ root.PiroPopup =
   clearStoryContainer: ->
     PiroPopup.currentStoryView.destroyView() if PiroPopup.currentStoryView? && PiroPopup.currentStoryView.destroyView?
     PiroPopup.storyContainer().empty()
-  dialogContainer: ->
-    $('#dialogContainer')
-  onHighlightLinks: =>
-    PiroPopup.globalEvents.trigger "route:highlight:links", null
+  dialogContainer: -> $('#dialogContainer')
+  onHighlightLinks: -> PiroPopup.globalEvents.trigger "route:highlight:links", null
   # patch backbone cleanup
   monkeyBackboneCleanup: ->
     Backbone.View::destroyView = ->

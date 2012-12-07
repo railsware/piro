@@ -17,7 +17,9 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
     PiroPopup.globalEvents.on "update:data:finished", @_getAllStoriesForAccount
     PiroPopup.globalEvents.on "account:switched", @_getAllStoriesForAccount
     $(window).resize => @_recalculateHeight()
-    @_allStoriesInProjects = []
+    @_allStoriesInProjects = 
+      stories: []
+      projects: []
   
   render: =>
     $(@el).html(@template.render(
@@ -86,30 +88,33 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
         @$(".search_stories_input").val('')
         false
     ).data("autocomplete")._renderItem = (ul, item) =>
-      $("<li>").data("item.autocomplete", item).append("<a>#{item.label}<br />#{item.story_type}</a>").appendTo(ul)
+      $("<li>").data("item.autocomplete", item).append("<a>#{item.label} (#{item.project.name})<br />#{item.story_type}</a>").appendTo(ul)
 
   _getAllStoriesForAccount: =>
     return false unless PiroPopup.pivotalCurrentAccount?
     PiroPopup.db.getProjects PiroPopup.pivotalCurrentAccount.toJSON(),
       success: (allProjects) =>
+        @_allStoriesInProjects.projects = _.groupBy(allProjects, 'id')
         allProjectsIds = _.pluck(allProjects, 'id')
         PiroPopup.db.getStories
           success: (allStories) =>
-            @_allStoriesInProjects = _.filter allStories, (story) => _.indexOf(allProjectsIds, story.project_id) isnt -1
+            @_allStoriesInProjects.stories = _.filter allStories, (story) => _.indexOf(allProjectsIds, story.project_id) isnt -1
 
-  _recalculateHeight: =>
-    @$(".container").height($("body").height() - 70)
+  _recalculateHeight: => @$(".container").height($("body").height() - 70)
 
   _getFilterSearchResultes: (term) =>
     data = []
     search = new RegExp($.ui.autocomplete.escapeRegex(term), "gi")
-    for story in @_allStoriesInProjects
+    for story in @_allStoriesInProjects.stories when @_allStoriesInProjects.stories.length
       if (story.name.match(search)? and story.name.match(search).length) or (story.description.match(search)? and story.description.match(search).length)
+        project = {}
+        project = @_allStoriesInProjects.projects[parseInt(story.project_id)][0] if @_allStoriesInProjects.projects[parseInt(story.project_id)]? and @_allStoriesInProjects.projects[parseInt(story.project_id)].length
         data.push
           id: story.id
           value: story.name
           label: story.name
           story_type: story.story_type
+          project: project
         return data if data.length > 9
     return data
 
