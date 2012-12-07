@@ -234,15 +234,12 @@ root.PiroBackground =
     pivotalApi.createStory projectId,
       data: data
       beforeSend: callbackParams.beforeSend
-      success: (stories, textStatus, jqXHR) =>
-        if stories.length > 0
-          PiroBackground.db = new PiroStorage
-            success: =>
-              PiroBackground.db.setStory stories[0],
-                success: (story) =>
-                  callbackParams.success.call(null, story) if callbackParams.success?
-        else
-          callbackParams.error.call(null) if callbackParams.error?
+      success: (story, textStatus, jqXHR) =>
+        PiroBackground.db = new PiroStorage
+          success: =>
+            PiroBackground.db.setStory story,
+              success: (story) =>
+                callbackParams.success.call(null, story) if callbackParams.success?
       error: =>
         callbackParams.error.call(null) if callbackParams.error?
   updateAndSyncStory: (account, story, attributes, callbackParams = {}) =>

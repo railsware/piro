@@ -59,9 +59,9 @@ class PiroPopup.Routers.Popup extends Backbone.Router
     view = new PiroPopup.Views.LoginIndex(collection: PiroPopup.pivotalAccounts)
     PiroPopup.updateMainContainer(view)
   smartIndexView: =>
-    smartView = new PiroPopup.Views.StoriesSmart
-    PiroPopup.updateStoriesContainer(smartView)
+    @_showSmartView(true)
   smartShowView: (id) =>
+    @_showSmartView()
     PiroPopup.db.getStoryById id,
       success: @_showSmartStory
   # private
@@ -91,10 +91,14 @@ class PiroPopup.Routers.Popup extends Backbone.Router
       @_renderProjectStories story.project_id, 
         success: =>
           @_renderStory(story.id)
+  _showSmartView: (isForced = false) =>
+    smartView = new PiroPopup.Views.StoriesSmart
+    return false if PiroPopup.currentStoriesView? and PiroPopup.currentStoriesView instanceof PiroPopup.Views.StoriesSmart and isForced is false
+    PiroPopup.updateStoriesContainer(smartView)
   _showSmartStory: (story) =>
     return Backbone.history.navigate("", {trigger: true, replace: true}) unless story?
     story = new PiroPopup.Models.Story(story)
-    view = new PiroPopup.Views.StoriesShow(model: story)
+    view = new PiroPopup.Views.StoriesSmartShow(model: story)
     PiroPopup.updateStoryContainer(view)
   _refreshView: =>
     Backbone.history.navigate("", {trigger: true, replace: true}) if $('#projectsBox').length is 0 || $('#projectsBox').children().length is 0
