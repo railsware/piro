@@ -15,6 +15,7 @@ class PiroPopup.Views.StoriesElement extends Backbone.View
   render: =>
     $(@el).html(@template.render(@model.toJSON()))
     $(@el).attr("data-story-id", @model.get('id'))
+    $(@el).addClass("story_element_uid_#{@model.get('id')}") unless $(@el).hasClass("story_element_uid_#{@model.get('id')}")
     this
     
   showStoryInfo: (e) =>

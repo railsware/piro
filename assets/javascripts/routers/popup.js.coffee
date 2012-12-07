@@ -116,20 +116,20 @@ class PiroPopup.Routers.Popup extends Backbone.Router
     switch trigger
       when "route:project"
         @_highlightProject(args)
+      when "route:smartIndexView"
+        @_highlightSmartProject()
       when "route:showStory"
         PiroPopup.db.getStoryById args,
           success: (storyInfo) =>
             return false unless storyInfo?
-            @_highlightProject(storyInfo.project_id)
             @_highlightStory(storyInfo.id)
+            @_highlightProject(storyInfo.project_id)
       when "route:smartShowView"
         PiroPopup.db.getStoryById args,
           success: (storyInfo) =>
             return false unless storyInfo?
-            @_highlightSmartProject()
             @_highlightStory(storyInfo.id)
-      when "route:smartIndexView"
-        @_highlightSmartProject()
+            @_highlightSmartProject()
       else
         # nothing
   _resetHighlightLinks: (trigger) =>
@@ -146,13 +146,13 @@ class PiroPopup.Routers.Popup extends Backbone.Router
         $('li.story_element').removeClass('active')
         $('li.project_element').removeClass('active')
   _highlightProject: (projectId) =>
-    return false if $("li.project_element[data-project-id='#{projectId}']").hasClass('active')
+    return false if $("li.project_element_uid_#{projectId}").hasClass('active')
     $('li.project_element').removeClass('active')
-    $("li.project_element[data-project-id='#{projectId}']").addClass('active')
+    $("li.project_element_uid_#{projectId}").addClass('active')
   _highlightStory: (storyId) =>
-    return false if $("li.story_element[data-story-id='#{storyId}']").hasClass('active')
+    return false if $("li.story_element_uid_#{storyId}").hasClass('active')
     $('li.story_element').removeClass('active')
-    $("li.story_element[data-story-id='#{storyId}']").addClass('active')
+    $("li.story_element_uid_#{storyId}").addClass('active')
   _highlightSmartProject: =>
     return false if $('.smart_view_link').hasClass('active')
     $('.smart_view_link').addClass('active')
