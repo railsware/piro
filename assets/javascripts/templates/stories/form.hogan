@@ -18,7 +18,7 @@
     <div class="mbs">
       <small class="muted">Owner:</small>
       <select class="add_story_owner_id chzn-de-select" data-placeholder="None"></select>
-      <a class="story_owner_id_to_me" href="#">to me</a>
+      <a class="story_owner_id_to_me" href="#">Set to me</a>
     </div>
     <div class="mbs">
       <small class="muted">Status:</small>
