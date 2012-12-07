@@ -75,7 +75,12 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
     
   sortMoscowStories: (e) =>
     e.preventDefault()
-    PiroPopup.db.setMoscowSortLS(!PiroPopup.db.getMoscowSortLS())
+    state = !PiroPopup.db.getMoscowSortLS()
+    PiroPopup.db.setMoscowSortLS(state)
+    if state is true
+      @$('.moscow_sort').addClass('on')
+    else
+      @$('.moscow_sort').removeClass('on')
     @renderWithFilter()
 
   _highlightLinks: =>
