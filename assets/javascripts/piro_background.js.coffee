@@ -48,10 +48,10 @@ root.PiroBackground =
         PiroBackground.initPopupView(response.events) if response? && response.events?
   updateProgress: ->
     PiroBackground.updateBadgeText()
-    return false unless PiroBackground.popupEvents?
+    return false if !PiroBackground.popupEvents? or !PiroBackground.popupEvents.trigger?
     progress = PiroBackground.updateStateProgress
     progress = 100 if progress > 100
-    PiroBackground.popupEvents.trigger "update:pivotal:progress", 
+    PiroBackground.popupEvents.trigger "update:pivotal:progress",
       progress: progress
   updateBadgeText: (params = {}) ->
     if PiroBackground.updateState is true
@@ -147,7 +147,7 @@ root.PiroBackground =
     PiroBackground.updatePopup()
     PiroBackground._storiesForOmnibox()
   updatePopup: ->
-    if PiroBackground.popupEvents?
+    if PiroBackground.popupEvents? and PiroBackground.popupEvents.trigger?
       PiroBackground.popupEvents.trigger "update:data:finished", null
     else
       chrome.extension.sendMessage {type: "update:data:finished"}, (response) ->
