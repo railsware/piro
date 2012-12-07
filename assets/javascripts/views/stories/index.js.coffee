@@ -1,5 +1,4 @@
 class PiroPopup.Views.StoriesIndex extends Backbone.View
-  
   template: SHT['stories/index']
   events:
     "click .stories_tab_link"           : "clickStoryTab"
@@ -28,7 +27,6 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
     PiroPopup.db.getStoriesByProject {id: projectId},
       success: (project, data) =>
         @collection.reset(data)
-        @_highlightLinks()
 
   renderOne: (story) =>
     view = new PiroPopup.Views.StoriesElement(model: story)
@@ -45,6 +43,7 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
       sortMoscow: PiroPopup.db.getMoscowSortLS()
       filterText: @$('input.stories_filter_input').val()
     @renderOne(story) for story in stories
+    PiroPopup.onHighlightLinks()
   
   eventFilterStories: (text) =>
     @$('input.stories_filter_input').val(text).trigger('change')
@@ -52,7 +51,6 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
 
   renderWithFilter: (e) =>
     @renderAll()
-    @_highlightLinks()
 
   changeStoryTriggered: (model) =>
     @renderWithFilter()
@@ -82,9 +80,6 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
     else
       @$('.moscow_sort').removeClass('on')
     @renderWithFilter()
-
-  _highlightLinks: =>
-    PiroPopup.globalEvents.trigger "route:highlight:links", null
 
   onDestroyView: =>
     @collection.off 'add', @renderOne

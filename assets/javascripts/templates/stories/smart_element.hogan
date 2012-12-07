@@ -1,2 +1,2 @@
-{{name}}
+{{name}} <span>{{count}}</span>
 <ul class="stories_list stories-list"></ul>

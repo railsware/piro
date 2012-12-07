@@ -39,7 +39,7 @@ root.PiroBackground =
     PiroBackground.checkUpdateState()
   checkUpdateState: ->
     PiroBackground.updateBadgeText()
-    if PiroBackground.popupEvents?
+    if PiroBackground.popupEvents? and PiroBackground.popupEvents.trigger?
       PiroBackground.popupEvents.trigger "update:pivotal:data",
         updateState: PiroBackground.updateState
       PiroBackground.updateProgress() if PiroBackground.updateState is true

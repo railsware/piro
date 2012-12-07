@@ -9,7 +9,7 @@ class PiroPopup.Views.StoriesSmartProject extends Backbone.View
     @childViews = []
 
   render: =>
-    $(@el).html(@template.render(@model.toJSON()))
+    $(@el).html(@template.render(_.extend(@model.toJSON(), count: @model.stories.length)))
     $(@el).attr("data-project-id", @model.get('id'))
     @renderAll()
     this

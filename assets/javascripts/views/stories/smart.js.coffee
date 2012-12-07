@@ -24,7 +24,6 @@ class PiroPopup.Views.StoriesSmart extends Backbone.View
 
   renderWithFilter: (e) =>
     @_fetchInitialData()
-    @_highlightLinks()
 
   renderOne: (project) =>
     view = new PiroPopup.Views.StoriesSmartProject(model: project)
@@ -35,6 +34,7 @@ class PiroPopup.Views.StoriesSmart extends Backbone.View
     @$('.grouped_stories_list').empty()
     @cleanupChildViews()
     @collection.each @renderOne
+    PiroPopup.onHighlightLinks()
   
   eventFilterStories: (text) =>
     @$('input.stories_filter_input').val(text).trigger('change')
@@ -77,8 +77,6 @@ class PiroPopup.Views.StoriesSmart extends Backbone.View
             projectsData = (_.extend(project, stories: groupedStories[parseInt(project.id)]) for project in projects when groupedStories[parseInt(project.id)]? and groupedStories[parseInt(project.id)].length > 0)
             @collection.reset(projectsData)
             @$('.smart_loader').addClass('hidden')
-  _highlightLinks: =>
-    PiroPopup.globalEvents.trigger "route:highlight:links", null
 
   onDestroyView: =>
     @collection.off 'add', @renderOne

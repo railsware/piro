@@ -112,6 +112,8 @@ root.PiroPopup =
     PiroPopup.storyContainer().empty()
   dialogContainer: ->
     $('#dialogContainer')
+  onHighlightLinks: =>
+    PiroPopup.globalEvents.trigger "route:highlight:links", null
   # patch backbone cleanup
   monkeyBackboneCleanup: ->
     Backbone.View::destroyView = ->

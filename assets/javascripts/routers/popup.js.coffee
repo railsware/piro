@@ -102,6 +102,7 @@ class PiroPopup.Routers.Popup extends Backbone.Router
     PiroPopup.updateStoryContainer(view)
   _refreshView: =>
     Backbone.history.navigate("", {trigger: true, replace: true}) if $('#projectsBox').length is 0 || $('#projectsBox').children().length is 0
+  # links
   _refreshLinks: =>
     return false if !Backbone.history? || !Backbone.history.fragment?
     for key, route of @routes
@@ -125,15 +126,16 @@ class PiroPopup.Routers.Popup extends Backbone.Router
         PiroPopup.db.getStoryById args,
           success: (storyInfo) =>
             return false unless storyInfo?
+            @_highlightSmartProject()
             @_highlightStory(storyInfo.id)
       when "route:smartIndexView"
-        $('.smart_view_link').addClass('active')
+        @_highlightSmartProject()
       else
         # nothing
   _resetHighlightLinks: (trigger) =>
     switch trigger
       when "route:showStory"
-        $('.smart_view_box').removeClass('active')
+        $('.smart_view_box').removeClass('active') if $('.smart_view_link').hasClass('active')
       when "route:smartIndexView"
         $('li.story_element').removeClass('active')
         $('li.project_element').removeClass('active')
@@ -151,4 +153,7 @@ class PiroPopup.Routers.Popup extends Backbone.Router
     return false if $("li.story_element[data-story-id='#{storyId}']").hasClass('active')
     $('li.story_element').removeClass('active')
     $("li.story_element[data-story-id='#{storyId}']").addClass('active')
+  _highlightSmartProject: =>
+    return false if $('.smart_view_link').hasClass('active')
+    $('.smart_view_link').addClass('active')
       
