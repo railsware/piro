@@ -67,18 +67,14 @@ class PiroPopup.Views.StoriesSmart extends Backbone.View
           success: (stories) =>
             projectIds = _.pluck(projects, 'id')
             stories = _.filter(stories, (story) =>
+              return false if _.indexOf(projectIds, story.project_id) is -1
               storyModel = new PiroPopup.Models.Story(story)
-              _.indexOf(projectIds, storyModel.get('project_id')) isnt -1 and
               storyModel.filterByState(PiroPopup.db.getStoriesTabViewLS()) and
               storyModel.filterByUser(PiroPopup.pivotalCurrentAccount, PiroPopup.db.getStoriesSmartViewLS()) and
               storyModel.filterByText(@$('input.stories_filter_input').val())
             )
             groupedStories = _.groupBy(stories, 'project_id')
-            projectsData = []
-            for project in projects when groupedStories[parseInt(project.id)]? and groupedStories[parseInt(project.id)].length > 0
-              data = project
-              data.stories = groupedStories[parseInt(project.id)]
-              projectsData.push(data)
+            projectsData = (_.extend(project, stories: groupedStories[parseInt(project.id)]) for project in projects when groupedStories[parseInt(project.id)]? and groupedStories[parseInt(project.id)].length > 0)
             @collection.reset(projectsData)
             @$('.smart_loader').addClass('hidden')
   _highlightLinks: =>
