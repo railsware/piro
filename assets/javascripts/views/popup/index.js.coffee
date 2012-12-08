@@ -5,6 +5,7 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
     'change select.account_switcher'          : 'switchAccount'
     'click .update_data_for_accounts_link'    : 'updateDataTrigger'
     'click .add_story_link'                   : 'addStoryForm'
+    'click .options_link'                     : 'openOptions'
   
   initialize: (options) ->
     @collection.on 'add', @render
@@ -53,7 +54,13 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
   addStoryForm: (e) =>
     e.preventDefault()
     Backbone.history.navigate("story/new", {trigger: true, replace: true})
-    
+
+  openOptions: (e) =>
+    e.preventDefault()
+    chrome.tabs.create
+      url: chrome.extension.getURL('options.html')
+      active: true
+
   updatePivotalState: (info) =>
     return false unless info?
     if info.updateState is true
