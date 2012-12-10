@@ -1,2 +1,2 @@
-{{name}} <span>{{count}}</span>
+<div class="project-name">{{name}} <span class="total-stories">{{count}}</span></div>
 <ul class="stories_list stories-list"></ul>
