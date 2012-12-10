@@ -6,6 +6,7 @@ gem 'guard'
 gem 'guard-coffeescript'
 gem 'guard-sass'
 gem 'guard-rake'
+gem 'libv8'
 gem 'therubyracer'
 gem "actionpack"
 gem "activesupport"
