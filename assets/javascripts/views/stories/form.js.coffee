@@ -148,6 +148,7 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
           @$('.story_submit_controls').addClass('loading')
         success: (story) =>
           PiroPopup.db.setLatestProjectIdLS(story.project_id)
+          PiroPopup.globalEvents.trigger "changed:story:fully", null
           Backbone.history.navigate("story/#{story.id}", {trigger: true, replace: true})
         error: =>
           @$('.story_submit_controls').removeClass('loading')

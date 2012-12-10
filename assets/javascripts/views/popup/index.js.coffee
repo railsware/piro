@@ -16,6 +16,7 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
     PiroPopup.globalEvents.on "update:pivotal:data", @updatePivotalState
     PiroPopup.globalEvents.on "update:pivotal:progress", @updatePivotalUpdateProgress
     PiroPopup.globalEvents.on "update:data:finished", @_getAllStoriesForAccount
+    PiroPopup.globalEvents.on "changed:story:fully", @_getAllStoriesForAccount
     PiroPopup.globalEvents.on "account:switched", @_getAllStoriesForAccount
     $(window).resize => @_recalculateHeight()
     @_allStoriesInProjects = 
@@ -131,5 +132,6 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
     PiroPopup.globalEvents.off "update:pivotal:data", @updatePivotalState
     PiroPopup.globalEvents.off "update:pivotal:progress", @updatePivotalUpdateProgress
     PiroPopup.globalEvents.off "update:data:finished", @_getAllStoriesForAccount
+    PiroPopup.globalEvents.off "changed:story:fully", @_getAllStoriesForAccount
     PiroPopup.globalEvents.off "account:switched", @_getAllStoriesForAccount
     @childView.destroyView() if @childView?

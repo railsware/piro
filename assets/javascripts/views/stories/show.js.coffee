@@ -231,6 +231,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         success: (story) =>
           projectId = @model.get('project_id')
           @model.trigger('destroy', @model, @model.collection, {})
+          PiroPopup.globalEvents.trigger "changed:story:fully", null
           Backbone.history.navigate("project/#{projectId}", {trigger: true, replace: true})
       )
 
