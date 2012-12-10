@@ -1,6 +1,6 @@
 class PiroPopup.Views.StoriesSmartProject extends Backbone.View
   tagName: "li"
-  className: "grouped_story_element"
+  className: "grouped_story_element project-stories"
   template: SHT['stories/smart_element']
   
   initialize: =>
