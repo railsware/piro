@@ -170,9 +170,11 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     @_changeStoryAttributesOld(attributes)
 
   changeStoryOwnedBy: (e) =>
+    ownedBy = $(e.currentTarget).find(":selected").data("name")
+    ownedByText = if ownedBy? and ownedBy.length then ownedBy else ""
     attributes =
       story:
-        owned_by: $(e.currentTarget).find(":selected").data("name")
+        owned_by: ownedByText
     @_changeStoryAttributesOld(attributes)
 
   updateStoryName: (e) =>
