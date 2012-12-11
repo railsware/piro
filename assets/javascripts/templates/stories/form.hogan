@@ -32,10 +32,12 @@
 
     <div class="add_story_point_box mbs">
       <small class="muted">Points:</small>
-      <select class="add_story_point chzn-select" style="width:300px;"></select>
+      <select class="add_story_point chzn-select"></select>
     </div>
     <div class="add_story_release_date_box mbs">
-      <input class="add_story_release_date" type="text" readonly="readonly" />
+      <small class="muted left mrs">Release date:</small>
+      <input class="add_story_release_date hidden" type="text" readonly="readonly" style="display: none" />
+      <span class="release_date_text"></span>
     </div>
     <div class="mbs">
       <textarea class="add_story_description" rows="4" cols="30" placeholder="Story description"></textarea>

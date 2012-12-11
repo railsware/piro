@@ -38,12 +38,17 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
     
   initCalendar: =>
     @$('.add_story_release_date').datepicker
+      showOn: "button"
+      buttonImage: "public/images/calendar.gif"
+      buttonImageOnly: true
       changeMonth: true
       changeYear: true
       minDate: 1
       dateFormat: "mm/dd/yy"
       showOtherMonths: true
       selectOtherMonths: true
+      onSelect: (dateText) =>
+        @$(".release_date_text").text(dateText)
     
   initControlls: =>
     project = PiroPopup.pivotalProjects.get(@$('.add_story_project_id').val())
