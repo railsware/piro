@@ -123,7 +123,7 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
           label: story.name
           story_type: story.story_type
           project: project
-        return data if data.length > 9
+        return data if data.length > 99
     return data
 
   onDestroyView: =>

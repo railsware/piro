@@ -13,7 +13,6 @@ class PiroPopup.Views.ProjectsElement extends Backbone.View
   render: =>
     $(@el).html(@template.render(@model.toJSON()))
     $(@el).attr("data-project-id", @model.get('id'))
-    $(@el).addClass("project_element_uid_#{@model.get('id')}") unless $(@el).hasClass("project_element_uid_#{@model.get('id')}")
     this
     
   remove: =>

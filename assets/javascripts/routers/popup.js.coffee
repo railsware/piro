@@ -138,17 +138,17 @@ class PiroPopup.Routers.Popup extends Backbone.Router
         $('.smart_view_box').removeClass('active') if $('.smart_view_link').hasClass('active')
       when "route:smartIndexView"
         $('li.story_element').removeClass('active')
-        $('li.project_element').removeClass('active')
+        $('.project_link').removeClass('active')
       when "route:smartShowView"
         # 
       else
         $('.smart_view_link').removeClass('active')
         $('li.story_element').removeClass('active')
-        $('li.project_element').removeClass('active')
+        $('.project_link').removeClass('active')
   _highlightProject: (projectId) =>
-    return false if $("li.project_element_uid_#{projectId}").hasClass('active')
-    $('li.project_element').removeClass('active')
-    $("li.project_element_uid_#{projectId}").addClass('active')
+    return false if $(".project_element_uid_#{projectId}").hasClass('active')
+    $('.project_link').removeClass('active')
+    $(".project_element_uid_#{projectId}").addClass('active')
   _highlightStory: (storyId) =>
     return false if $("li.story_element_uid_#{storyId}").hasClass('active')
     $('li.story_element').removeClass('active')

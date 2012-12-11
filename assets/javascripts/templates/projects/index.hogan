@@ -1,6 +1,13 @@
-<a href="#" class="smart_view_link all-projects-link">
-  <img src="/public/images/icons/all-projects.png" class="icon" alt="" />
-  All Projects
-</a>
-
-<ul class="projects_list projects-list">Loading...</ul>
+<div class="mas">
+  <div class="project_element">
+    <div class="smart_view_link project-link">
+      <div class="project-inner all-projects">
+        <div class="project-name">All Projects</div>
+      </div>
+      <img src="/public/images/icons/all-projects.png" class="icon" alt="" />
+    </div>
+  </div>
+  
+  <ul class="projects_list projects-list">Loading...</ul>
+  
+</div>
