@@ -146,12 +146,14 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
         {story: attributes}, 
         beforeSend: =>
           @$('.story_submit_controls').addClass('loading')
+          @$('.story_submit_controls .save-button').attr("disabled", "disabled")
         success: (story) =>
           PiroPopup.db.setLatestProjectIdLS(story.project_id)
           PiroPopup.globalEvents.trigger "changed:story:fully", null
           Backbone.history.navigate("story/#{story.id}", {trigger: true, replace: true})
         error: =>
           @$('.story_submit_controls').removeClass('loading')
+          @$('.story_submit_controls .save-button').removeAttr("disabled")
           @$('.error_box').text("Error to create story :(")
       )
 
