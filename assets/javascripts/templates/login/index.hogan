@@ -1,15 +1,24 @@
-<form id="loginForm">
-  <a href="#" class="account_tab_link active" data-div-class="email_box">With email</a>
-  <a href="#" class="account_tab_link" data-div-class="token_box">With token</a>
-  
-  <div class="error_text">Error</div>
-  
-  <div class="account_tab_box email_box active">
-    <input type="text" class="email_input" />
-    <input type="password" class="password_input" />
-  </div>
-  <div class="account_tab_box token_box">
-    <input type="text" class="token_input" />
-  </div>
-  <input type="submit" value="Login" />
-</form>
+<div class="container">
+  <ul class="switcher row">
+    <li><a href="#" class="account_tab_link active" data-div-class="email_box">With email</a></li>
+    <li><a href="#" class="account_tab_link" data-div-class="token_box">With token</a></li>
+  </ul>
+  <form id="loginForm">
+    <div class="error_text"></div>
+
+    <div class="account_tab_box email_box active">
+      <div class="mbm">
+        <input type="text" class="email_input" placeholder="Email" />
+      </div>
+      <div class="mbm">
+        <input type="password" class="password_input" placeholder="Password" />
+      </div>
+    </div>
+    <div class="account_tab_box token_box">
+      <div class="mbm">
+        <input type="text" class="token_input"  placeholder="Token" />
+      </div>
+    </div>
+    <input type="submit" value="Login" class="button" />
+  </form>
+</div>

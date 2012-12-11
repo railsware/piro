@@ -1,0 +1,34 @@
+.container
+  width: 300px
+  padding: 30px
+  margin: 0 auto
+  border: 4px solid rgba(0,0,0,.4)
+  +border-radius(4px)
+  background: #eee
+  .account_tab_box
+    display: none
+    &.active
+      display: block
+      
+.switcher
+  list-style: none
+  width: 185px
+  margin: 0 auto 30px auto
+  li
+    float: left
+    a
+      display: inline-block
+      +vertical-gradient(#ececec, #b4b4b4)
+      padding: 3px 15px
+      margin-left: -1px
+      color: #000
+      border: 1px solid #b8b8b8
+      border-bottom: 1px solid #928f8b
+    &:first-child a
+      +border-radius(4px 0 0 4px)
+    &:last-child a
+      +border-radius(0 4px 4px 0)
+    & .active
+      background: #666666
+      color: #fff
+      border-color: #444444
