@@ -1,15 +1,19 @@
 .projects-list
   margin: 5px 10px
   list-style: none
+
 .project_element
   border-top: 1px solid #c0bcb8
   border-bottom: 1px solid #e6e3e1
   padding: 4px 0
-  .project-inner
+  .project-link
+    height: 46px
+    +border-radius(4px)
     position: relative
-    height: 32px
-    padding: 8px 0
-    cursor: pointer
+    .project-inner
+      padding: 10px 30px 0 48px
+    .icon-placeholder
+      background: #424c5c
     .icon, .icon-placeholder
       position: absolute
       width: 32px
@@ -17,52 +21,38 @@
       top: 7px
       left: 8px
       +border-radius(16px)
-    .icon-placeholder
-      background: #424c5c
-      display: none
     .project-name
       font-size: 16px
-      padding-left: 48px
       white-space: nowrap
       overflow-x: hidden
+      margin-bottom: 2px
     .project-velocity
       display: none
       font-size: 11px
-      padding-left: 48px
-    .project-adds
-      background: #d5d1ce
-      height: 28px
-      position: absolute
-      padding: 10px
-      top: 0 
-      right: 0
+      font-weight: bold
     .stories-count
-      color: #555
-    .drag-link
-      display: none 
-      background: url('/public/images/icons/draggable.png')
-      height: 20px
-      width: 19px
-      margin: 0 5px 0 0
-.project_element.active .project-inner, .project-inner:hover
-  background: #596475
-  +box-shadow(0 2px 2px rgba(0,0,0,.3))
-  +border-radius(4px)
-  .project-name
-    color: #fff
-  .project-velocity, .icon-placeholder
-    display: inline
-  .project-adds
-    background: #596475
-    +border-radius(0 4px 4px 0)
-  .drag-link
-    display: inline-block
-  .stories-count
-    color: #fff
-.project_element.active .project-inner .project-adds
-  background: #596475 url('/public/images/icons/project_arrow.png') no-repeat right 0
-  padding-right: 24px
-  right: -14px
+      position: absolute
+      right: 8px
+      top: 10px
+    &:hover
+      background: #596475
+      cursor: pointer
+      .project-name, .stories-count
+        color: #fff
+      .project-velocity
+        display: block
+  &.active .project-link
+    width: 100%
+    padding-right: 14px
+    background: #596475 url('/public/images/icons/project_arrow.png') no-repeat right -1px
+    .stories-count
+      right: 22px
+      color: #fff
+    .project-name
+      color: #fff
+    .project-velocity
+      display: block
+
 .droppable-zone
   text-align: center
   background: #dedede
@@ -71,6 +61,7 @@
     height: 50px
     +border-radius(25px)
     margin-bottom: 20px
+
 .all-projects-link
   position: relative
   font-size: 16px
