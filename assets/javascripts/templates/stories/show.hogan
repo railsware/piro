@@ -310,7 +310,7 @@
         <span class="mrs">Are you sure?</span>
         <div class="story_delete_control_box right">
           <a class="confirm_delete_story_link button mrs" href="#">Delete</a>
-          <a class="cancel_delete_story_link" href="#">Cancel</a>
+          <a class="cancel_delete_story_link cancel-link" href="#">Cancel</a>
         </div>
       </div>
     </div>

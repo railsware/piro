@@ -13,10 +13,6 @@
         display: none
   .delete-link
     float: right
-  .delete-confirmation
-    background: #cc3300
-    color: #fff
-    padding: 10px 15px
   ul
     list-style: none
   .story-summary
@@ -92,6 +88,15 @@
   &.uncompleted
     .story-task.completed-task
       display: none
+      
+.delete-confirmation
+  background: #cc3300
+  color: #fff
+  padding: 10px 15px
+  .cancel-link
+    color: #eee
+    &:hover
+      color: #fff
 
 .close-link
   display: inline-block
