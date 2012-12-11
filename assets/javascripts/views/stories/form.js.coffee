@@ -48,8 +48,9 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
       showOtherMonths: true
       selectOtherMonths: true
       onSelect: (dateText) =>
-        @$(".release_date_text").text(dateText)
-    
+        deadlineDate = moment(dateText, "MM/DD/YYYY").toDate()
+        @$(".release_date_text").text("#{deadlineDate.getDate()} #{PiroPopup._months[deadlineDate.getMonth()]} #{deadlineDate.getFullYear()}")
+
   initControlls: =>
     project = PiroPopup.pivotalProjects.get(@$('.add_story_project_id').val())
     # chosen

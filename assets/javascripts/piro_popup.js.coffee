@@ -18,6 +18,8 @@ root.PiroPopup =
   pivotalAccounts: null
   pivotalCurrentAccount: null
   pivotalProjects: null
+  # utils
+  _months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   init: ->
     # check mode
     PiroPopup.checkMode()
