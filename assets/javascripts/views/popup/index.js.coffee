@@ -89,6 +89,7 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
     @_getAllStoriesForAccount()
     @$(".search_stories_input").autocomplete(
       minLength: 2
+      appendTo: @$("#searchBlock")
       source: (request, response) =>
         response(@_getFilterSearchResultes(request.term))
       select: (event, ui) =>
@@ -96,7 +97,7 @@ class PiroPopup.Views.PopupIndex extends Backbone.View
         @$(".search_stories_input").val('')
         false
     ).data("autocomplete")._renderItem = (ul, item) =>
-      $("<li>").data("item.autocomplete", item).append("<a>#{item.label} (#{item.project.name})<br />#{item.story_type}</a>").appendTo(ul)
+      $("<li>").data("item.autocomplete", item).append("<a><img src='/public/images/story/#{item.story_type}.png' />#{item.label} (#{item.project.name})<br /></a>").appendTo(ul)
 
   _getAllStoriesForAccount: =>
     return false unless PiroPopup.pivotalCurrentAccount?

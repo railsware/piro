@@ -31,7 +31,7 @@
     <div class="left prm">
       <a class="add_story_link add-story" href="#"><span class="plus">+</span> Add story</a>
     </div>
-    <div class="last-col">
+    <div class="search-block last-col" id="searchBlock">
       <input type="text" class="search_stories_input search" />
     </div>
   </div>
