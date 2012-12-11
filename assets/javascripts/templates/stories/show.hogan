@@ -91,7 +91,7 @@
             <div class="story-release-date">
               <small class="muted">Release date:</small><br />
               <input readonly="readonly" type="text" class="story_release_date" style="display: none;" />
-              <small class="story_release_date_text left mrs">{{deadline}}{{^deadline}}None{{/deadline}}</small>
+              <small class="story_release_date_text left mrs">{{deadlineDate}}{{^deadline}}None{{/deadline}}</small>
               {{#deadline}}<a class="clear_deadline_story_link left delete-link" href="#">x</a>{{/deadline}}
             </div>
           {{/isRelease}}

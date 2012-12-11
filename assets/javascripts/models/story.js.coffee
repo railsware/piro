@@ -1,5 +1,6 @@
 class PiroPopup.Models.Story extends Backbone.Model
   initialize: (attributes) ->
+    @_months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     @_buttonMatrix = 
       feature:
         unscheduled: [
@@ -137,6 +138,9 @@ class PiroPopup.Models.Story extends Backbone.Model
         attr.isChore = true
       when "release"
         attr.isRelease = true
+        if attr.deadline?
+          deadlineDate = moment(attr.deadline, "YYYY/MM/DD HH:mm:ss ZZ").toDate()
+          attr.deadlineDate = "#{deadlineDate.getDate()} #{@_months[deadlineDate.getMonth()]} #{deadlineDate.getFullYear()}"
       else
         # none
     attr
