@@ -1,4 +1,4 @@
-<div class="container">
+<div class="floating-block">
   <ul class="switcher row">
     <li><a href="#" class="account_tab_link active" data-div-class="email_box">With email</a></li>
     <li><a href="#" class="account_tab_link" data-div-class="token_box">With token</a></li>
