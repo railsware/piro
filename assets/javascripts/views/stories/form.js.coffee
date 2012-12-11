@@ -8,6 +8,7 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
     "click .story_owner_id_to_me"       : "selectOwnedByMe"
     "submit .add_story_form"            : "submitStory"
     "click .close_story_form"           : "closeStoryBox"
+    "click .error_box .close-link"      : "closeErrorMessage"
   
   initialize: =>
 
@@ -154,7 +155,7 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
         error: =>
           @$('.story_submit_controls').removeClass('loading')
           @$('.story_submit_controls .save-button').removeAttr("disabled")
-          @$('.error_box').text("Error to create story :(")
+          @$('.error_box').html('<div class="error-message">Sorry.. Story was not created :( <a href="#" class="close-link"></a></div>')
       )
 
   setStoryTmpTitle: =>
@@ -164,6 +165,10 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
   closeStoryBox: (e) =>
     e.preventDefault()
     Backbone.history.navigate("", {trigger: true, replace: true})
+    
+  closeErrorMessage: (e) =>
+    e.preventDefault()
+    @$('.error_box').empty()
     
   onDestroyView: =>
     # on destroy
