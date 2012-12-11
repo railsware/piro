@@ -301,6 +301,7 @@
   <div class="box_item switchable-block">
     <div class="initial-state">
       <div class="inner row">
+        <em class="muted">{{created_at}}</em>
         <a class="story_delete_link delete-link" href="#">Delete</a>
       </div>
     </div>
