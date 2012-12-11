@@ -140,7 +140,8 @@ class PiroPopup.Models.Story extends Backbone.Model
         attr.isRelease = true
         if attr.deadline?
           deadlineDate = moment(attr.deadline, "YYYY/MM/DD HH:mm:ss ZZ").toDate()
-          attr.deadlineDate = "#{deadlineDate.getDate()} #{@_months[deadlineDate.getMonth()]} #{deadlineDate.getFullYear()}"
+          attr.deadlineDate = "#{deadlineDate.getMonth() + 1}/#{deadlineDate.getDate()}/#{deadlineDate.getFullYear()}"
+          attr.deadlineText = "#{deadlineDate.getDate()} #{@_months[deadlineDate.getMonth()]} #{deadlineDate.getFullYear()}"
       else
         # none
     attr
