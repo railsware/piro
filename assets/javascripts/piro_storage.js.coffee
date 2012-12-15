@@ -13,6 +13,7 @@ class root.PiroStorage
       READ_ONLY : "readonly"
     request = @indexedDB.open(@dbName, @dbVersion)
     request.onerror = @_dbError
+    request.onblocked = @_dbError
     request.onupgradeneeded = (e) =>
       @_initDbFinished(e, params, true)
     request.onsuccess = (e) =>
