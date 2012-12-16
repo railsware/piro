@@ -5,7 +5,7 @@
 
 <div class="option_box general_options_box opened">
   <h2>Options</h2>
-  <div class="flash_msg hidden">All data updated!</div>
+  <div class="flash_msg" style="display:none">All data updated!</div>
   <div>
     <form class="options_form">
       <select>
