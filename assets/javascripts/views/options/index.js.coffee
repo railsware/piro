@@ -3,6 +3,7 @@ class PiroPopup.Views.OptionsIndex extends Backbone.View
   template: SHT['options/index']
   events:
     "click .open_option_box"              : "openOptionBox"
+    "click .options_form"                 : "saveFormData"
     "click .open_account_link"            : "openAccounBox"
     "click .close_account_link"           : "closeAccounBox"
     "click .account_tab_link"             : "activeTabAction"
@@ -25,6 +26,13 @@ class PiroPopup.Views.OptionsIndex extends Backbone.View
     element.parents('li').addClass('active')
     @$('.option_box').removeClass('opened')
     @$(".#{element.data('class')}").addClass('opened')
+
+  saveFormData: (e) =>
+    e.preventDefault()
+    # save data
+    PiroOptions.cleanupPopupViews()
+    @$('.flash_msg').removeClass('hidden')
+    setTimeout (=> @$('.flash_msg').addClass('hidden')), 3000
     
   renderAccount: (account) =>
     view = new PiroPopup.Views.OptionsAccount(model: account)

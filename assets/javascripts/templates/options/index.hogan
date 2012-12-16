@@ -5,7 +5,29 @@
 
 <div class="option_box general_options_box opened">
   <h2>Options</h2>
-
+  <div class="flash_msg hidden">All data updated!</div>
+  <div>
+    <form class="options_form">
+      <select>
+        <option value="15">15 mins</option>
+        <option value="30">30 mins</option>
+        <option value="60">1 hour</option>
+        <option value="120">2 hours</option>
+        <option value="180">3 hours</option>
+      </select>
+      <label>
+        <input type="checkbox" /> Omnibox search (?)
+      </label>
+      <label>
+        <input type="checkbox" /> Context Menu (?)
+      </label>
+      <label>
+        <input type="checkbox" /> Custom format (?)
+      </label>
+      <input type="text" />
+      <input type="submit" value="Save" />
+    </form>
+  </div>
 </div>
 
 <div class="option_box account_options_box">
