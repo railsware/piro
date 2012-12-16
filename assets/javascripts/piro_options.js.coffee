@@ -38,6 +38,11 @@ root.PiroOptions =
     PiroOptions.currentMainView.destroyView() if PiroOptions.currentMainView? && PiroOptions.currentMainView.destroyView?
     PiroOptions.currentMainView = view
     PiroOptions.mainContainer().empty().html(PiroOptions.currentMainView.render().el)
+  # cleanup popup views
+  cleanupPopupViews: ->
+    indexUrl = chrome.extension.getURL('index.html')
+    chrome.tabs.query {}, (tabs) ->
+      chrome.tabs.remove(tab.id) for tab in tabs when tab.url.substring(0, indexUrl.length) is indexUrl
   # patch backbone cleanup
   monkeyBackboneCleanup: ->
     Backbone.View::destroyView = ->

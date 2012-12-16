@@ -1,27 +1,37 @@
-<h2>Options</h2>
+<ul id="optionsTab">
+  <li class="active"><a class="open_option_box" href="#" data-class="general_options_box">General</a></li>
+  <li><a class="open_option_box" href="#" data-class="account_options_box">Accounts</a></li>
+</ul>
 
-comming soon...
+<div class="option_box general_options_box opened">
+  <h2>Options</h2>
 
-<h2>Accounts</h2>
+</div>
 
-<ul class="accounts_list"></ul>
+<div class="option_box account_options_box">
+
+  <h2>Accounts</h2>
+
+  <ul class="accounts_list"></ul>
 
 
-<a href="#" class="open_account_link">Add account</a>
-<div class="account_box">
-  <form class="add_account_form" action="#" method="post">
-    <a href="#" class="account_tab_link active" data-div-class="account_email_box">By Email</a>
-    <a href="#" class="account_tab_link" data-div-class="account_token_box">By Token</a>
-    <div class="error_text"></div>
-    <div class="account_tab_box account_email_box active">
-      <input type="text" class="account_email" />
-      <input type="password" class="account_password" />
-    </div>
-    <div class="account_tab_box account_token_box">
-      <input type="text" class="account_token" />
-    </div>
-    <input class="account_company" type="text" />
-    <input type="submit" value="Add" />
-  </form>
-  <a href="#" class="close_account_link">Close</a>
+  <a href="#" class="open_account_link">Add account</a>
+  <div class="account_box">
+    <form class="add_account_form" action="#" method="post">
+      <a href="#" class="account_tab_link active" data-div-class="account_email_box">By Email</a>
+      <a href="#" class="account_tab_link" data-div-class="account_token_box">By Token</a>
+      <div class="error_text"></div>
+      <div class="account_tab_box account_email_box active">
+        <input type="text" class="account_email" />
+        <input type="password" class="account_password" />
+      </div>
+      <div class="account_tab_box account_token_box">
+        <input type="text" class="account_token" />
+      </div>
+      <input class="account_company" type="text" />
+      <input type="submit" value="Add" />
+    </form>
+    <a href="#" class="close_account_link">Close</a>
+  </div>
+
 </div>

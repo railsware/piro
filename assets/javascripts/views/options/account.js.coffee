@@ -32,12 +32,14 @@ class PiroPopup.Views.OptionsAccount extends Backbone.View
       success: (accounts) =>
         @model.unset("company") unless account.company?
         @model.set(account)
+        PiroOptions.cleanupPopupViews()
 
   confirmDeleteAccount: (e) =>
     e.preventDefault()
     PiroOptions.db.deleteAccount @model.get('id'), 
       success: =>
         @model.trigger('destroy', @model, @model.collection, {})
+        PiroOptions.cleanupPopupViews()
 
   editAccountLink: (e) =>
     e.preventDefault()
