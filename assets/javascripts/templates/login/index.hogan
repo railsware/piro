@@ -3,7 +3,7 @@
     <li><a href="#" class="account_tab_link active" data-div-class="email_box">With email</a></li>
     <li><a href="#" class="account_tab_link" data-div-class="token_box">With token</a></li>
   </ul>
-  <form id="loginForm">
+  <form id="loginForm" class="login-form">
     <div class="error_text"></div>
 
     <div class="account_tab_box email_box active">
