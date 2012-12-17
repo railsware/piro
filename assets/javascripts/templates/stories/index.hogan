@@ -12,7 +12,7 @@
       </li>
     </ul>
     <div class="">
-      <a href="#" class="moscow_sort {{#sortMoscow}}on{{/sortMoscow}} moscow-link">MSW <span class="arrow">↓</span></a>
+      <a href="#" class="moscow_sort {{#sortMoscow}}on{{/sortMoscow}} moscow-link">MSCW<span class="arrow">↓</span></a>
     </div>
   </div>
   <div class="col1of2">

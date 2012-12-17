@@ -9,12 +9,14 @@
   border-top: 1px solid #c0bcb8
   border-bottom: 1px solid #e6e3e1
   padding: 4px 0
+  &.first
+    border-top: none
   .project-link
     height: 46px
     +border-radius(4px)
     position: relative
     .project-inner
-      padding: 10px 30px 0 48px
+      padding: 14px 30px 0 48px
       &.all-projects
         padding-top: 15px
     .icon-placeholder
@@ -31,7 +33,6 @@
       font-size: 16px
       white-space: nowrap
       overflow-x: hidden
-      margin-bottom: 2px
     .project-velocity
       display: none
       font-size: 11px
@@ -40,13 +41,14 @@
       color: #555
       position: absolute
       right: 8px
-      top: 10px
+      top: 14px
     &:hover
       background: #596475
     &.active
       width: 100%
       padding-right: 14px
       background: #596475 url('/public/images/icons/project_arrow.png') no-repeat right -1px
+      +border-radius(5px 0 0 5px)
       .stories-count
         right: 22px
     &.active, &:hover
