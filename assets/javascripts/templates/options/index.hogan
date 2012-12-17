@@ -1,59 +1,69 @@
-<ul id="optionsTab">
-  <li class="active"><a class="open_option_box" href="#" data-class="general_options_box">General</a></li>
-  <li><a class="open_option_box" href="#" data-class="account_options_box">Accounts</a></li>
-</ul>
+<div class="floating-block">
+  <ul id="optionsTab" class="switcher row">
+    <li class="active"><a class="open_option_box active" href="#" data-class="general_options_box">General</a></li>
+    <li><a class="open_option_box" href="#" data-class="account_options_box">Accounts</a></li>
+  </ul>
 
-<div class="option_box general_options_box opened">
-  <h2>Options</h2>
-  <div class="flash_msg" style="display:none">All data updated!</div>
-  <div>
-    <form class="options_form">
-      <select>
-        <option value="15">15 mins</option>
-        <option value="30">30 mins</option>
-        <option value="60">1 hour</option>
-        <option value="120">2 hours</option>
-        <option value="180">3 hours</option>
-      </select>
-      <label>
-        <input type="checkbox" /> Omnibox search (?)
-      </label>
-      <label>
-        <input type="checkbox" /> Context Menu (?)
-      </label>
-      <label>
-        <input type="checkbox" /> Custom format (?)
-      </label>
-      <input type="text" />
-      <input type="submit" value="Save" />
-    </form>
-  </div>
-</div>
-
-<div class="option_box account_options_box">
-
-  <h2>Accounts</h2>
-
-  <ul class="accounts_list"></ul>
-
-
-  <a href="#" class="open_account_link">Add account</a>
-  <div class="account_box">
-    <form class="add_account_form" action="#" method="post">
-      <a href="#" class="account_tab_link active" data-div-class="account_email_box">By Email</a>
-      <a href="#" class="account_tab_link" data-div-class="account_token_box">By Token</a>
-      <div class="error_text"></div>
-      <div class="account_tab_box account_email_box active">
-        <input type="text" class="account_email" />
-        <input type="password" class="account_password" />
-      </div>
-      <div class="account_tab_box account_token_box">
-        <input type="text" class="account_token" />
-      </div>
-      <input class="account_company" type="text" />
-      <input type="submit" value="Add" />
-    </form>
-    <a href="#" class="close_account_link">Close</a>
+  <div class="option_box general_options_box opened">
+    <div class="flash_msg" style="display:none">All data updated!</div>
+    <div>
+      <form class="options_form by-center">
+        <div class="row mbm">
+          <div class="update-interval">
+            <label for="">Update every</label>
+            <select>
+              <option value="15">15 mins</option>
+              <option value="30">30 mins</option>
+              <option value="60">1 hour</option>
+              <option value="120">2 hours</option>
+              <option value="180">3 hours</option>
+            </select>
+          </div>
+        </div>
+        <div class="mbm">
+          <label>
+            <input type="checkbox" /> Omnibox search
+          </label>
+        </div>
+        <div class="mbm">
+          <label>
+            <input type="checkbox" /> Context Menu
+          </label>
+        </div>
+        <div class="custom-format mbx">
+          <label>
+            Custom format
+          </label>
+          <input type="text" class="textfield" />
+        </div>
+        <div class="muted mbl">&#123;&#123;id&#125;&#125; - story id, &#123;&#123;name&#125;&#125; - story name, &#123;&#123;current_status&#125;&#125; - story status, &#123;&#123;url&#125;&#125; - story url</div>
+        <input type="submit" value="Save" class="save-button" />
+      </form>
+    </div>
   </div>
 
+  <div class="option_box account_options_box">
+
+    <ul class="accounts_list"></ul>
+
+    <a href="#" class="open_account_link">Add account</a>
+    <div class="account_box">
+      <form class="add_account_form" action="#" method="post">
+        <a href="#" class="account_tab_link active" data-div-class="account_email_box">By Email</a>
+        <a href="#" class="account_tab_link" data-div-class="account_token_box">By Token</a>
+        <div class="error_text"></div>
+        <div class="account_tab_box account_email_box active">
+          <input type="text" class="account_email" />
+          <input type="password" class="account_password" />
+        </div>
+        <div class="account_tab_box account_token_box">
+          <input type="text" class="account_token" />
+        </div>
+        <input class="account_company" type="text" />
+        <input type="submit" value="Add" />
+      </form>
+      <a href="#" class="close_account_link">Close</a>
+    </div>
+
+  </div>
 </div>

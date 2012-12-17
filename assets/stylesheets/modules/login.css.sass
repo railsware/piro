@@ -1,19 +1,41 @@
 .floating-block
-  width: 300px
-  padding: 30px
-  margin: 0 auto
-  border: 4px solid rgba(0,0,0,.4)
+  width: 500px
+  padding: 40px
+  margin: 0 auto 0 auto
   +border-radius(4px)
   background: #eee
+  +box-shadow(1px 2px 2px rgba(100, 100, 100, .4))
   .account_tab_box
     display: none
     &.active
       display: block
+  .switcher
+    margin: -52px auto 50px auto
+    width: 162px
+  .save-button
+    width: 200px
+      
+.option_box
+  display: none
+  &.opened
+    display: block
+    
+.update-interval
+  label
+    width: 100px
+  select
+    width: 100px
+.custom-format
+  label
+    width: 120px
+  .textfield
+    width: 410px
+  
+  
       
 .switcher
   list-style: none
   width: 185px
-  margin: 0 auto 30px auto
   li
     float: left
     a
