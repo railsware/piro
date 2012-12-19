@@ -38,7 +38,7 @@
             </label>
             <input type="text" class="textfield" />
           </div>
-          <div class="muted mbl">&#123;&#123;id&#125;&#125; - story id, &#123;&#123;name&#125;&#125; - story name, &#123;&#123;current_status&#125;&#125; - story status, &#123;&#123;url&#125;&#125; - story url</div>
+          <div class="muted mbl"><em>&#123;&#123;id&#125;&#125; – story id, &#123;&#123;name&#125;&#125; – story name, &#123;&#123;current_status&#125;&#125; – story status, &#123;&#123;url&#125;&#125; – story url</em></div>
           <input type="submit" value="Save" class="save-button" />
         </form>
       </div>
