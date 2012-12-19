@@ -1,8 +1,7 @@
 class PiroPopup.Views.StoriesSmartShow extends PiroPopup.Views.StoriesShow
   confirmDeleteStory: (e) =>
     e.preventDefault()
-    chrome.runtime.getBackgroundPage (bgPage) =>
-      PiroPopup.bgPage = bgPage
+    PiroPopup.initBackground (bgPage) =>
       PiroPopup.bgPage.PiroBackground.deleteAndSyncStory(
         PiroPopup.pivotalCurrentAccount.toJSON(),
         @model.toJSON(),

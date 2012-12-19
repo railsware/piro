@@ -38,8 +38,7 @@ class PiroPopup.Views.StoriesElement extends Backbone.View
     attributes = 
       story:
         current_state: newStatus
-    chrome.runtime.getBackgroundPage (bgPage) =>
-      PiroPopup.bgPage = bgPage
+    PiroPopup.initBackground (bgPage) =>
       PiroPopup.bgPage.PiroBackground.updateAndSyncStory(
         PiroPopup.pivotalCurrentAccount.toJSON(),
         @model.toJSON(),

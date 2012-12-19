@@ -84,9 +84,12 @@ root.PiroPopup =
       shadow: "#fff" # Outer ring color
       fallback: 'force' # Toggles displaying percentage in the title bar (possible values - true, false, 'force')
     # init bg
+    PiroPopup.initBackground()
+  initBackground: (callback = null) ->
     chrome.runtime.getBackgroundPage (bgPage) ->
       PiroPopup.bgPage = bgPage
       PiroPopup.bgPage.PiroBackground.initPopupView(PiroPopup.globalEvents)
+      callback.call(null, PiroPopup.bgPage) if callback?
   # ui container
   mainContainer: -> $('#mainContainer')
   updateMainContainer: (view) ->

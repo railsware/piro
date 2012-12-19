@@ -144,8 +144,7 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
     # values
     _.extend(attributes, {owned_by: @$('.add_story_owner_id').find(":selected").data('name')}) if @$('.add_story_owner_id').find(":selected").data('name').length > 0
     # create story
-    chrome.runtime.getBackgroundPage (bgPage) =>
-      PiroPopup.bgPage = bgPage
+    PiroPopup.initBackground (bgPage) =>
       @$('.error_box').empty()
       PiroPopup.bgPage.PiroBackground.createAndSyncStory(
         PiroPopup.pivotalCurrentAccount.toJSON(), 

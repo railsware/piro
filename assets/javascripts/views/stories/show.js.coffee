@@ -111,8 +111,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         objects = @$("ul.tasks_list_box").find("li.task_box")
         objectIds = ($(object).data('id') for object in objects)
         if objectIds.length > 0
-          chrome.runtime.getBackgroundPage (bgPage) =>
-            PiroPopup.bgPage = bgPage
+          PiroPopup.initBackground (bgPage) =>
             PiroPopup.bgPage.PiroBackground.sortTasksAndSyncStory(
               PiroPopup.pivotalCurrentAccount.toJSON(),
               @model.toJSON(),
@@ -223,8 +222,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     @$('.box_item').removeClass('deleting')
   confirmDeleteStory: (e) =>
     e.preventDefault()
-    chrome.runtime.getBackgroundPage (bgPage) =>
-      PiroPopup.bgPage = bgPage
+    PiroPopup.initBackground (bgPage) =>
       PiroPopup.bgPage.PiroBackground.deleteAndSyncStory(
         PiroPopup.pivotalCurrentAccount.toJSON(),
         @model.toJSON(),
@@ -258,8 +256,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     attributes =
       task:
         description: @$('.add_task_description').val()
-    chrome.runtime.getBackgroundPage (bgPage) =>
-      PiroPopup.bgPage = bgPage
+    PiroPopup.initBackground (bgPage) =>
       PiroPopup.bgPage.PiroBackground.createTaskAndSyncStory(
         PiroPopup.pivotalCurrentAccount.toJSON(),
         @model.toJSON(),
@@ -277,8 +274,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     attributes =
       task:
         complete: completed
-    chrome.runtime.getBackgroundPage (bgPage) =>
-      PiroPopup.bgPage = bgPage
+    PiroPopup.initBackground (bgPage) =>
       PiroPopup.bgPage.PiroBackground.changeTaskAndSyncStory(
         PiroPopup.pivotalCurrentAccount.toJSON(),
         @model.toJSON(),
@@ -304,8 +300,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     attributes =
       task:
         description: @$(e.currentTarget).find('.task_description_input').val()
-    chrome.runtime.getBackgroundPage (bgPage) =>
-      PiroPopup.bgPage = bgPage
+    PiroPopup.initBackground (bgPage) =>
       PiroPopup.bgPage.PiroBackground.changeTaskAndSyncStory(
         PiroPopup.pivotalCurrentAccount.toJSON(),
         @model.toJSON(),
@@ -321,8 +316,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     e.preventDefault()
     taskId = @$(e.currentTarget).data('id')
     return false unless taskId?
-    chrome.runtime.getBackgroundPage (bgPage) =>
-      PiroPopup.bgPage = bgPage
+    PiroPopup.initBackground (bgPage) =>
       PiroPopup.bgPage.PiroBackground.deleteTaskAndSyncStory(
         PiroPopup.pivotalCurrentAccount.toJSON(),
         @model.toJSON(),
@@ -350,8 +344,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     attributes =
       comment:
         text: @$('.add_comment_text').val()
-    chrome.runtime.getBackgroundPage (bgPage) =>
-      PiroPopup.bgPage = bgPage
+    PiroPopup.initBackground (bgPage) =>
       PiroPopup.bgPage.PiroBackground.createCommentAndSyncStory(
         PiroPopup.pivotalCurrentAccount.toJSON(),
         @model.toJSON(),
@@ -373,8 +366,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     e.preventDefault()
     commentId = @$(e.currentTarget).data('id')
     return false unless commentId?
-    chrome.runtime.getBackgroundPage (bgPage) =>
-      PiroPopup.bgPage = bgPage
+    PiroPopup.initBackground (bgPage) =>
       PiroPopup.bgPage.PiroBackground.deleteCommentAndSyncStory(
         PiroPopup.pivotalCurrentAccount.toJSON(),
         @model.toJSON(),
@@ -394,8 +386,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     formdata = new FormData()
     formdata.append("Filedata", file)
     @$('#attachmentForm').addClass('loading')
-    chrome.runtime.getBackgroundPage (bgPage) =>
-      PiroPopup.bgPage = bgPage
+    PiroPopup.initBackground (bgPage) =>
       PiroPopup.bgPage.PiroBackground.uploadAttachmentAndSyncStory(
         PiroPopup.pivotalCurrentAccount.toJSON(),
         @model.toJSON(),
@@ -419,8 +410,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     e.preventDefault()
     attachmentId = @$(e.currentTarget).data('id')
     return false unless attachmentId?
-    chrome.runtime.getBackgroundPage (bgPage) =>
-      PiroPopup.bgPage = bgPage
+    PiroPopup.initBackground (bgPage) =>
       PiroPopup.bgPage.PiroBackground.deleteAttachmentAndSyncStory(
         PiroPopup.pivotalCurrentAccount.toJSON(),
         @model.toJSON(),
@@ -431,8 +421,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
       )
 
   _changeStoryAttributes: (attributes, beforeSend = (-> true)) =>
-    chrome.runtime.getBackgroundPage (bgPage) =>
-      PiroPopup.bgPage = bgPage
+    PiroPopup.initBackground (bgPage) =>
       PiroPopup.bgPage.PiroBackground.updateAndSyncStory(
         PiroPopup.pivotalCurrentAccount.toJSON(),
         @model.toJSON(),
@@ -444,8 +433,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         error: @render
       )
   _changeStoryAttributesOld: (attributes, beforeSend = (-> true)) =>
-    chrome.runtime.getBackgroundPage (bgPage) =>
-      PiroPopup.bgPage = bgPage
+    PiroPopup.initBackground (bgPage) =>
       PiroPopup.bgPage.PiroBackground.updateAndSyncStoryOld(
         PiroPopup.pivotalCurrentAccount.toJSON(),
         @model.toJSON(),

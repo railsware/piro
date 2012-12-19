@@ -28,8 +28,7 @@ class PiroPopup.Views.LoginIndex extends Backbone.View
         success: (accounts) =>
           PiroPopup.pivotalAccounts.reset(accounts)
           PiroPopup.pivotalCurrentAccount = PiroPopup.pivotalAccounts.first() if PiroPopup.pivotalAccounts.length > 0
-          chrome.runtime.getBackgroundPage (bgPage) =>
-            PiroPopup.bgPage = bgPage
+          PiroPopup.initBackground (bgPage) =>
             PiroPopup.bgPage.PiroBackground.startDataUpdate()
           Backbone.history.navigate("", {trigger: true, replace: true})
     auth = new PivotaltrackerAuthLib(attributes)
