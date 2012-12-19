@@ -312,7 +312,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         taskId,
         attributes,
         beforeSend: =>
-          @$(e.currentTarget).parents('.task_box_div').replaceWith(PiroPopup.ajaxLoader)
+          @$(e.currentTarget).parents('.task_box_div').html(PiroPopup.ajaxLoader)
         success: (story) =>
           @model.set(story)
         error: @render
