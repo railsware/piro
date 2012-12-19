@@ -83,7 +83,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     return false unless @$(".story_release_date").length
     @$(".story_release_date").datepicker
       showOn: "button"
-      buttonImage: "public/images/calendar.gif"
+      buttonImage: "public/images/date.png"
       buttonImageOnly: true
       changeMonth: true
       changeYear: true
@@ -307,7 +307,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         taskId,
         attributes,
         beforeSend: =>
-          @$(e.currentTarget).parents('.task_box_div').replaceWith(PiroPopup.ajaxLoader)
+          @$(e.currentTarget).parents('.task_box_div').html(PiroPopup.ajaxLoader)
         success: (story) =>
           @model.set(story)
         error: @render

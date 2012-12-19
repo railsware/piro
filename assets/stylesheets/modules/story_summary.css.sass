@@ -41,11 +41,14 @@
       cursor: move
       margin-bottom: 3px
     .task-block
+      padding: 5px
       position: relative
-      padding: 5px 45px 5px 5px
       +border-radius(5px)
       $shadow: 0 0 2px rgba(0,0,0,.2)
       +box-shadow($shadow)
+      .task_element_label
+        display: inline-block
+        padding-right: 35px
   .story-comments
     margin-bottom: 30px
     .comment-block

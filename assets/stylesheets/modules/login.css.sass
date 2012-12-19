@@ -20,6 +20,10 @@
     font-size: 16px
     text-align: center
     margin-bottom: 20px
+  h2
+    font-size: 16px
+    text-align: center
+    margin-bottom: 10px
   
 .options-block
   padding: 25px
@@ -27,12 +31,12 @@
   +border-radius(4px)
   .muted
     color: #555555
-  .switcher
-    position: relative
-    margin: 0 auto
-    top: -36px
   .save-button
     width: 200px
+  
+.account-box
+  margin: 0 auto
+  width: 320px
   
 .login-block
   margin: 0 auto
@@ -47,14 +51,22 @@
     display: none
     &.active
       display: block
+      
+.login-block, .options-block
   input[type='text'],  input[type='password']
     text-align: center
     &::-webkit-input-placeholder
       font-style: italic
+      color: #555555
       
 .option_box
   display: none
   &.opened
+    display: block
+
+.account_tab_box
+  display: none
+  &.active
     display: block
     
 .update-interval
@@ -71,7 +83,11 @@
    
 .switcher
   list-style: none
-  width: 185px
+  width: 192px
+  margin: 0 auto
+  &.top
+    position: relative
+    top: -36px
   &.options    
     width: 162px
   li
@@ -94,3 +110,24 @@
       color: #fff
       border-color: #444444
       
+.accounts-list
+  list-style: none
+  margin-bottom: 20px
+  li
+    border: 2px solid rgba(255,255,255,.7)
+    background: #fff
+    padding: 5px 8px
+    
+.account_item
+  .edit, .delete
+    display: none
+  &.editing
+    .edit
+      display: block
+    .main
+      display: none
+  &.deleting
+    .delete
+      display: block
+    .main
+      display: none
