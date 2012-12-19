@@ -46,9 +46,14 @@
       <strong>Labels</strong>
       <input class="add_story_labels" type="text" />
     </div>
-    <div class="story_submit_controls">
-      <input type="submit" value="Save" class="save-button" />
-      <a href="#" class="close_story_form">Cancel</a>
+    <div class="story_submit_controls story-submit-controls">
+        <div class="submit">
+          <input type="submit" value="Save" class="save-button" />
+          <a href="#" class="close_story_form">Cancel</a>
+        </div>
+        <div class="status">
+          <em class="muted">Saving...</em>
+        </div>
     </div>
   </form>
 </div>
