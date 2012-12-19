@@ -1,6 +1,6 @@
 class PiroPopup.Views.LoginIndex extends Backbone.View
   template: SHT['login/index']
-  className: 'aligner'
+  className: 'space'
   events:
     "click .account_tab_link"             : 'accountTabBox'
     'submit #loginForm'                   : 'submitAccountForm'

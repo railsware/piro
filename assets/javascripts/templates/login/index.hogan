@@ -1,24 +1,26 @@
-<div class="floating-block">
-  <ul class="switcher row">
-    <li><a href="#" class="account_tab_link active" data-div-class="email_box">With email</a></li>
-    <li><a href="#" class="account_tab_link" data-div-class="token_box">With token</a></li>
-  </ul>
-  <form id="loginForm" class="login-form">
-    <div class="error_text"></div>
+<div class="rocket">
+  <div class="login-block">
+    <ul class="switcher row">
+      <li><a href="#" class="account_tab_link active" data-div-class="email_box">With email</a></li>
+      <li><a href="#" class="account_tab_link" data-div-class="token_box">With token</a></li>
+    </ul>
+    <form id="loginForm" class="login-form">
+      <div class="error_text"></div>
 
-    <div class="account_tab_box email_box active">
-      <div class="mbm">
-        <input type="text" class="email_input" placeholder="Email" />
+      <div class="account_tab_box email_box active">
+        <div class="mbm">
+          <input type="text" class="email_input" placeholder="Email" />
+        </div>
+        <div class="mbm">
+          <input type="password" class="password_input" placeholder="Password" />
+        </div>
       </div>
-      <div class="mbm">
-        <input type="password" class="password_input" placeholder="Password" />
+      <div class="account_tab_box token_box">
+        <div class="mbm">
+          <input type="text" class="token_input"  placeholder="Token" />
+        </div>
       </div>
-    </div>
-    <div class="account_tab_box token_box">
-      <div class="mbm">
-        <input type="text" class="token_input"  placeholder="Token" />
-      </div>
-    </div>
-    <input type="submit" value="Login" class="button" />
-  </form>
+      <input type="submit" value="Login" class="button" />
+    </form>
+  </div>
 </div>

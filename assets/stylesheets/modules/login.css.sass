@@ -1,3 +1,13 @@
+.space
+  height: 100%
+  background: url('/public/images/space.jpg') no-repeat
+  background-size: cover
+  
+.rocket
+  height: 100%
+  background: url('/public/images/rocket.png') no-repeat
+  background-position: center -40px
+
 .floating-block
   width: 500px
   padding: 40px
@@ -5,14 +15,28 @@
   +border-radius(4px)
   background: #eee
   +box-shadow(1px 2px 2px rgba(100, 100, 100, .4))
-  .account_tab_box
-    display: none
-    &.active
-      display: block
   .switcher
     margin: -52px auto 50px auto
   .save-button
     width: 200px
+    
+.login-block
+  margin: 0 auto
+  padding-left: 85px
+  position: relative
+  top: 190px
+  text-align: center
+  width: 265px
+  .switcher
+    margin: 0 auto 20px auto
+  .account_tab_box
+    display: none
+    &.active
+      display: block
+  input[type='text'],  input[type='password']
+    text-align: center
+    &::-webkit-input-placeholder
+      font-style: italic
       
 .option_box
   display: none
@@ -59,3 +83,4 @@
       background: #666666
       color: #fff
       border-color: #444444
+      

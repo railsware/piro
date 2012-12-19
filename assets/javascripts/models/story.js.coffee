@@ -122,7 +122,7 @@ class PiroPopup.Models.Story extends Backbone.Model
     attr.labelsList = attr.labels.split(",") if attr.labels? and attr.labels.length > 0
     attr.deadline = null if !attr.deadline? || attr.deadline.length is 0
     attr.descriptionHtml = if attr.description.length
-      @_fixLinks(attr.description)
+      @_fixLinks(attr.description).replace(/\n/g, "<br />")
     else
       null
     switch @get('story_type').toLowerCase()
