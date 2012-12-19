@@ -83,7 +83,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     return false unless @$(".story_release_date").length
     @$(".story_release_date").datepicker
       showOn: "button"
-      buttonImage: "public/images/calendar.gif"
+      buttonImage: "public/images/date.png"
       buttonImageOnly: true
       changeMonth: true
       changeYear: true
