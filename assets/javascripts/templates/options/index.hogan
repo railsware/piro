@@ -1,7 +1,7 @@
 <div class="options-holder">
   <h3>Options</h3>
   <div class="options-block">
-    <ul id="optionsTab" class="switcher options row">
+    <ul id="optionsTab" class="switcher options row top">
       <li class="active"><a class="open_option_box active" href="#" data-class="general_options_box">General</a></li>
       <li><a class="open_option_box" href="#" data-class="account_options_box">Accounts</a></li>
     </ul>
@@ -46,25 +46,32 @@
 
     <div class="option_box account_options_box">
 
-      <ul class="accounts_list"></ul>
+      <ul class="accounts_list accounts-list"></ul>
 
-      <a href="#" class="open_account_link">Add account</a>
+      <h2>Add account</h2>
       <div class="account_box">
         <form class="add_account_form" action="#" method="post">
-          <a href="#" class="account_tab_link active" data-div-class="account_email_box">By Email</a>
-          <a href="#" class="account_tab_link" data-div-class="account_token_box">By Token</a>
+          <div class="mbs">
+            <ul class="switcher row">
+              <li><a href="#" class="account_tab_link active" data-div-class="account_email_box">With Email</a></li>
+              <li><a href="#" class="account_tab_link" data-div-class="account_token_box">With Token</a></li>
+            </ul>
+          </div>
           <div class="error_text"></div>
-          <div class="account_tab_box account_email_box active">
-            <input type="text" class="account_email" />
-            <input type="password" class="account_password" />
+          <div class="account-box">
+            <div class="account_tab_box account_email_box active">
+              <input type="text" class="account_email mbm" placeholder="Email" />
+              <input type="password" class="account_password mbm" placeholder="Password" />
+            </div>
+            <div class="account_tab_box account_token_box">
+              <input type="text" class="account_token mbm" placeholder="Account Token" />
+            </div>
+            <input class="account_company mbm" type="text" placeholder="Account name" />
+            <div class="by-center">
+              <input type="submit" value="Add" class="save-button" />
+            </div>
           </div>
-          <div class="account_tab_box account_token_box">
-            <input type="text" class="account_token" />
-          </div>
-          <input class="account_company" type="text" />
-          <input type="submit" value="Add" />
         </form>
-        <a href="#" class="close_account_link">Close</a>
       </div>
 
     </div>

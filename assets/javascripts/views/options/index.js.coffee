@@ -5,8 +5,6 @@ class PiroPopup.Views.OptionsIndex extends Backbone.View
   events:
     "click .open_option_box"              : "openOptionBox"
     "submit .options_form"                 : "saveFormData"
-    "click .open_account_link"            : "openAccounBox"
-    "click .close_account_link"           : "closeAccounBox"
     "click .account_tab_link"             : "activeTabAction"
     "submit .add_account_form"            : "addAccount"
   
@@ -47,12 +45,6 @@ class PiroPopup.Views.OptionsIndex extends Backbone.View
     @cleanupChildViews()
     @collection.each @renderAccount
     
-  openAccounBox: (e) =>
-    e.preventDefault()
-    @$('.account_box').addClass('show')
-  closeAccounBox: (e = null) =>
-    e.preventDefault() if e?
-    @$('.account_box').removeClass('show')
   activeTabAction: (e) =>
     e.preventDefault()
     object = $(e.currentTarget)

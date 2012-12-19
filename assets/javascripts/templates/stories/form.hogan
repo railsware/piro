@@ -21,7 +21,7 @@
       <a class="story_owner_id_to_me" href="#">Set to me</a>
     </div>
     <div class="mbs">
-      <small class="muted">Status:</small>
+      <small class="muted">Type:</small>
       <select class="add_story_story_type chzn-select">
         <option value="feature">Feature</option>
         <option value="bug">Bug</option>
