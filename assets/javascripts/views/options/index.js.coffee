@@ -1,7 +1,7 @@
 class PiroPopup.Views.OptionsIndex extends Backbone.View
   
   template: SHT['options/index']
-  className: 'aligner'
+  className: 'space'
   events:
     "click .open_option_box"              : "openOptionBox"
     "submit .options_form"                 : "saveFormData"
@@ -22,6 +22,7 @@ class PiroPopup.Views.OptionsIndex extends Backbone.View
     
   openOptionBox: (e) =>
     e.preventDefault()
+    @$('.options-holder').toggleClass('accounts')
     element = @$(e.currentTarget)
     @$('#optionsTab a').removeClass('active')
     element.addClass('active')
