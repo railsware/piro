@@ -9,7 +9,7 @@
       </li>
     </ul>
     <div class="smart_loader hidden">
-      <img alt='loading...' title='loading...' src='public/images/ajax-loader.gif' class="mll" />
+      <img alt='loading...' title='loading...' src='public/images/ajax-loader.gif' class="smart-loading" />
     </div>
   </div>
   <div class="col1of2">

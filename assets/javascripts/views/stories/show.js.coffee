@@ -328,7 +328,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         @model.toJSON(),
         taskId,
         beforeSend: =>
-          @$(e.currentTarget).parents('.task_control_box').replaceWith(PiroPopup.ajaxLoader)
+          @$(e.currentTarget).parents('.task_control_box').html(PiroPopup.ajaxLoader)
         success: (story) =>
           @$(".task_box[data-id='#{taskId}']").remove()
           @$('.filter_tasks_box').addClass('hidden') unless story.tasks.length

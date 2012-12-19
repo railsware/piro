@@ -247,7 +247,7 @@
             </div>
           </div>
           {{#isOwnComment}}
-            <div class="switched-state delete-confirmation">
+            <div class="switched-state delete-confirmation mbx">
                 Are you sure?
                 <div class="delete_comment_control_box right">
                   <a href="#" class="confirm_delete_comment_link button" data-id="{{id}}">Delete</a> or
