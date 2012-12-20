@@ -51,7 +51,7 @@ class PiroPopup.Models.Story extends Backbone.Model
     storyState = @get("current_state")
     return switch state
       when "current"
-        storyState isnt "accepted"# and storyState isnt "unscheduled"
+        storyState isnt "accepted" and storyState isnt "unscheduled"
       when "done"
         storyState is "accepted"
       when "icebox"

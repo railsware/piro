@@ -89,8 +89,7 @@ class PiroPopup.Routers.Popup extends Backbone.Router
       @_renderStory(story.id)
     else
       @_renderProjectStories story.project_id, 
-        success: =>
-          @_renderStory(story.id)
+        success: => @_renderStory(story.id)
   _showSmartView: (isForced = false) =>
     smartView = new PiroPopup.Views.StoriesSmart
     return false if PiroPopup.currentStoriesView? and PiroPopup.currentStoriesView instanceof PiroPopup.Views.StoriesSmart and isForced is false
