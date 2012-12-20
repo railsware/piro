@@ -1,6 +1,6 @@
 <div class="account_item box_item account-item">
   <div class="main">
-    <p>({{company}}{{^company}}{{email}}{{/company}})</p>
+    <p>{{company}}{{^company}}{{email}}{{/company}}</p>
     <p class="muted">{{name}}</p>
     <div class="controls">
       <a class="account_edit_link edit-link" href="#"></a>
@@ -9,7 +9,7 @@
   </div>
   <div class="edit">
     <form class="edit_account_form">
-      <input class="edit_account_company mbs" type="text" value="{{company}}" />
+      <input class="edit_account_company mbs" type="text" value="{{company}}" placeholder="Account name" />
       <input type="submit" value="Save" />
       <a class="cancel_edit_account_link" href="#">Cancel</a>
     </form>
