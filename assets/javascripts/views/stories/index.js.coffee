@@ -15,7 +15,9 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
     @childViews = []
   
   render: =>
-    $(@el).html(@template.render(PiroPopup.db.getAllOptionsLS()))
+    $(@el).html(@template.render(_.extend(PiroPopup.db.getAllOptionsLS(),
+      isMoscow: @_isMoscow()
+    )))
     @$('input.stories_filter_input').clearSearch
       callback: @renderWithFilter
     @renderAll()
@@ -36,11 +38,12 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
   renderAll: =>
     @$('.stories_list').empty()
     @cleanupChildViews()
+    moscowFilter = if @_isMoscow() then PiroPopup.db.getMoscowSortLS() else false
     stories = @collection.getStoriesByFilters
       account: PiroPopup.pivotalCurrentAccount
       storiesTabView: PiroPopup.db.getStoriesTabViewLS()
       storiesUserView: PiroPopup.db.getStoriesUserViewLS()
-      sortMoscow: PiroPopup.db.getMoscowSortLS()
+      sortMoscow: moscowFilter
       filterText: @$('input.stories_filter_input').val()
     @renderOne(story) for story in stories
     PiroPopup.onHighlightLinks()
@@ -80,6 +83,12 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
     else
       @$('.moscow_sort').removeClass('on')
     @renderWithFilter()
+
+  _isMoscow: =>
+    labels = @model.get('labels')
+    return false unless labels? 
+    matches = labels.match(/must|should|could|wont/gi)
+    matches? and matches.length > 0
 
   onDestroyView: =>
     @collection.off 'add', @renderOne

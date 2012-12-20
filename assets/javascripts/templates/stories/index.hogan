@@ -11,9 +11,11 @@
         <a class="stories_user_link" href="#" data-key="requester">Requester</a>
       </li>
     </ul>
-    <div class="">
-      <a href="#" class="moscow_sort {{#sortMoscow}}on{{/sortMoscow}} moscow-link">MSCW<span class="arrow">↓</span></a>
-    </div>
+    {{#isMoscow}}
+      <div class="">
+        <a href="#" class="moscow_sort {{#sortMoscow}}on{{/sortMoscow}} moscow-link">MSCW<span class="arrow">↓</span></a>
+      </div>
+    {{/isMoscow}}
   </div>
   <div class="col1of2">
     <input class="stories_filter_input filter" type="text" placeholder="Filter stories" />
