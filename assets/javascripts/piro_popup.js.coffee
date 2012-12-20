@@ -40,7 +40,7 @@ root.PiroPopup =
     appTabs = []
     chrome.tabs.query {}, (tabs) ->
       for tab in tabs
-        appTabs.push(tab) if tab.url.substring(0, indexUrl.length) is indexUrl
+        appTabs.push(tab) if tab.url.substring(0, indexUrl.length) is indexUrl and tab.active is false
       if appTabs.length > 1
         appTabs.shift()
         chrome.tabs.remove(tab.id) for tab in appTabs

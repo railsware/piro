@@ -221,12 +221,12 @@ root.PiroBackground =
     indexUrl = chrome.extension.getURL('index.html')
     chrome.tabs.query {}, (tabs) ->
       chrome.tabs.remove(tab.id) for tab in tabs when tab.url.substring(0, indexUrl.length) is indexUrl and tabs.length > 1 and tab.active is false
-    if isNew is true
-      chrome.tabs.create {url: url, active: true}, (tab) ->
-        chrome.tabs.update tab.id, {active: true}
-    else
-      chrome.tabs.query {active: true}, (tabs) ->
-        chrome.tabs.update tab.id, {url: url} for tab in tabs
+      if isNew is true
+        chrome.tabs.create {url: url, active: true}, (tab) ->
+          chrome.tabs.update tab.id, {active: true}
+      else
+        chrome.tabs.query {active: true}, (tabs) ->
+          chrome.tabs.update tab.id, {url: url} for tab in tabs
   # create story
   createAndSyncStory: (account, projectId, data, callbackParams = {}) =>
     callbackParams.beforeSend ||= -> true
