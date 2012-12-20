@@ -14,8 +14,13 @@
       <a class="cancel_edit_account_link" href="#">Cancel</a>
     </form>
   </div>
-  <div class="delete">
-    <a class="confirm_delete_account_link" href="#">Confirm delete</a>
-    <a class="cancel_delete_account_link" href="#">Cancel</a>
+  <div class="delete row">
+    <div class="left">
+      <span>Are you sure?</span>
+    </div>
+    <div class="right">
+      <a class="confirm_delete_account_link button mrs" href="#">Delete</a>
+      <a class="cancel_delete_account_link" href="#">Cancel</a>
+    </div>
   </div>
 </div>
