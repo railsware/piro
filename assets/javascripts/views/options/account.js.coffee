@@ -44,6 +44,7 @@ class PiroPopup.Views.OptionsAccount extends Backbone.View
   editAccountLink: (e) =>
     e.preventDefault()
     @$('.box_item').removeClass('deleting').addClass('editing')
+    @$('.edit_account_company').focus()
 
   deleteAccountLink: (e) =>
     e.preventDefault()
