@@ -60,13 +60,13 @@
           <div class="error_text"></div>
           <div class="account-box">
             <div class="account_tab_box account_email_box active">
-              <input type="text" class="account_email mbm" placeholder="Email" />
-              <input type="password" class="account_password mbm" placeholder="Password" />
+              <input type="text" class="account_email centered-field mbm" placeholder="Email" />
+              <input type="password" class="account_password centered-field mbm" placeholder="Password" />
             </div>
             <div class="account_tab_box account_token_box">
-              <input type="text" class="account_token mbm" placeholder="Account Token" />
+              <input type="text" class="account_token centered-field mbm" placeholder="Account Token" />
             </div>
-            <input class="account_company mbm" type="text" placeholder="Account name" />
+            <input class="account_company centered-field mbm" type="text" placeholder="Account name" />
             <div class="by-center">
               <input type="submit" value="Add" class="save-button" />
             </div>
