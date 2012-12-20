@@ -120,13 +120,32 @@
     background: #fff
     padding: 5px 8px
     margin-bottom: 4px
-    min-height: 34px
+    min-height: 40px
     .delete
       padding: 8px 0
-    .controls
+    .close-link
       position: absolute
       top: 5px 
       right: 8px
+    .edit-link:hover
+      background-color: transparent
+    .account-stats
+      padding: 0 20px 0 25px
+    .account-name:hover
+      background: #dddfc5
+      +border-radius(3px)
+      cursor: pointer
+    .dragable
+      display: block
+      position: absolute
+      top: 5px
+      left: 5px
+      width: 19px
+      height: 40px
+      background: url('/public/images/icons/drag.png')
+    p
+      padding: 0 3px
+      
     
 .account_item
   .edit, .delete

@@ -1,11 +1,14 @@
 <div class="account_item box_item account-item">
   <div class="main">
-    <p>{{company}}{{^company}}{{email}}{{/company}}</p>
-    <p class="muted">{{name}}</p>
-    <div class="controls">
-      <a class="account_edit_link edit-link" href="#"></a>
-      <a class="account_delete_link close-link" href="#"></a>
+    <span class="dragable"></span>
+    <div class="account-stats">
+      <p class="account_edit_link account-name">
+        {{company}}{{^company}}{{email}}{{/company}}
+        <a class="edit-link right" href="#"></a>
+      </p>
+      <p class="muted">{{name}}</p>
     </div>
+      <a class="account_delete_link close-link" href="#"></a>
   </div>
   <div class="edit">
     <form class="edit_account_form">
