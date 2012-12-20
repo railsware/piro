@@ -9,15 +9,15 @@
 
       <div class="account_tab_box email_box active">
         <div class="mbm">
-          <input type="text" class="email_input" placeholder="Email" />
+          <input type="text" class="email_input centered-field" placeholder="Email" />
         </div>
         <div class="mbm">
-          <input type="password" class="password_input" placeholder="Password" />
+          <input type="password" class="password_input centered-field" placeholder="Password" />
         </div>
       </div>
       <div class="account_tab_box token_box">
         <div class="mbm">
-          <input type="text" class="token_input"  placeholder="Token" />
+          <input type="text" class="token_input centered-field"  placeholder="Token" />
         </div>
       </div>
       <input type="submit" value="Login" class="button" />
