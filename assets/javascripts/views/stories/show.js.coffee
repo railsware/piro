@@ -475,11 +475,11 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
       focus: =>
         false
       select: (event, ui) =>
-        terms = $(event.currentTarget).val().split( /,\s*/ )
+        terms = @$('input.story_labels_input').val().split( /,\s*/ )
         terms.pop()
         terms.push(ui.item.value)
         terms.push("")
-        $(event.currentTarget).val(terms.join(","))
+        @$('input.story_labels_input').val(terms.join(","))
         false
 
   onDestroyView: =>
