@@ -45,6 +45,10 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
       storiesUserView: PiroPopup.db.getStoriesUserViewLS()
       sortMoscow: moscowFilter
       filterText: @$('input.stories_filter_input').val()
+    if stories.length is 0
+      @$(".empty-message").html("No results were filtered. Please try a different filter.") 
+    else
+      @$(".empty-message").html("")
     @renderOne(story) for story in stories
     PiroPopup.onHighlightLinks()
   
