@@ -9,12 +9,17 @@ class PiroPopup.Views.ProjectsElement extends Backbone.View
   initialize: =>
     @model.on 'change', @render
     @model.on 'destroy', @remove
+    PiroPopup.globalEvents.on "project:update:stories_counter:#{@model.get('id')}", @updateStoriesCounter
 
   render: =>
     $(@el).html(@template.render(@model.toJSON()))
     $(@el).attr("data-project-id", @model.get('id'))
     this
     
+  updateStoriesCounter: (info) =>
+    return null unless info? && info.storiesCount?
+    @$('.stories_count').text(info.storiesCount)
+
   remove: =>
     $(@el).remove()
     
@@ -41,3 +46,4 @@ class PiroPopup.Views.ProjectsElement extends Backbone.View
   onDestroyView: =>
     @model.off 'change', @render
     @model.off 'destroy', @remove
+    PiroPopup.globalEvents.off "project:update:stories_counter:#{@model.get('id')}", @updateStoriesCounter

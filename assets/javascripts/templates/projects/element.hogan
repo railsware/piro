@@ -9,5 +9,5 @@
   {{^icon}}
     <div class="project_settings icon-placeholder"></div>
   {{/icon}}
-    <span class="stories-count">{{stories_count}}</span>
+    <span class="stories_count stories-count">{{stories_count}}</span>
 </div>

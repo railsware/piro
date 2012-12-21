@@ -247,6 +247,7 @@ root.PiroBackground =
             PiroBackground.db.setStory story,
               success: (story) =>
                 callbackParams.success.call(null, story) if callbackParams.success?
+                PiroBackground._updateStoriesCountInProject(account, projectId, 1)
       error: =>
         callbackParams.error.call(null) if callbackParams.error?
   updateAndSyncStory: (account, story, attributes, callbackParams = {}) =>
@@ -292,6 +293,7 @@ root.PiroBackground =
             PiroBackground.db.deleteStoryById story.id,
               success: =>
                 callbackParams.success.call(null) if callbackParams.success?
+                PiroBackground._updateStoriesCountInProject(account, story.project_id, -1)
       error: =>
         callbackParams.error.call(null) if callbackParams.error?
   createTaskAndSyncStory: (account, story, data, callbackParams = {}) =>
@@ -416,6 +418,23 @@ root.PiroBackground =
     storyCreatedTime = moment(createdAt, "YYYY/MM/DD HH:mm:ss ZZ")
     return false if isNaN(storyCreatedTime.toDate().getTime())
     moment().diff(storyCreatedTime, "minutes") - storyCreatedTime.zone() <= recentNum
+  _updateStoriesCountInProject: (account, projectId, count = 1) =>
+    return null if count is 0
+    PiroBackground.db.getProjects account,
+      success: (projects) =>
+        eventInfo = 
+          projectId: projectId
+          storiesCount: 0
+        projects = (for project in projects
+          if parseInt(project.id) is parseInt(projectId)
+            project.stories_count = parseInt(project.stories_count) + count
+            eventInfo.storiesCount = _.clone(project.stories_count)
+          project
+        )
+        PiroBackground.db.setProjects(account, projects)
+        if PiroBackground.popupEvents? and PiroBackground.popupEvents.trigger?
+          PiroBackground.popupEvents.trigger "project:update:stories_counter:#{eventInfo.projectId}", eventInfo
+
 # init
 chrome.runtime.onInstalled.addListener ->
   PiroBackground.init()
