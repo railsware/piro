@@ -464,6 +464,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         return false
     .autocomplete
       minLength: 0
+      appendTo: @$(".label_field")
       source: (request, response) =>
         terms = request.term.split( /,\s*/ )
         term = terms.pop()

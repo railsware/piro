@@ -181,7 +181,7 @@
           </div>
         </div>
         <p>
-          <div>
+          <div class="label_field">
             <input type="text" class="story_labels_input" value="{{labels}}" />
           </div>
         </p>
