@@ -79,6 +79,7 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
     else
       @$('select.story_owned_by').val("")
     @$('select.story_owned_by').chosen({container_class: "selector"})
+    @_initTasksSelector()
   initByStoryTypeView: =>
     return false unless @$(".story_release_date").length
     @$(".story_release_date").datepicker
@@ -444,6 +445,41 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
           PiroPopup.globalEvents.trigger "story::change::attributes", @model
         error: @render
       )
+
+  _initTasksSelector: =>
+    project = PiroPopup.pivotalProjects.get(@model.get('project_id'))
+    projectLabels = if project? and project.get('labels')? then project.get('labels').split(",") else []
+    projectLabels = _.compact(projectLabels)
+    @$('input.story_labels_input').bind "keydown", (e) =>
+      if e.keyCode is $.ui.keyCode.TAB && @$('input.story_labels_input').data("autocomplete") && @$('input.story_labels_input').data("autocomplete").menu.active
+        e.preventDefault()
+        return false
+    .bind "keyup", (e) =>
+      if e.keyCode is $.ui.keyCode.ENTER
+        e.preventDefault()
+        attributes =
+          story:
+            labels: $.trim(@$('input.story_labels_input').val()).replace(/,$/i, "")
+        @_changeStoryAttributes(attributes)
+        return false
+    .autocomplete
+      minLength: 0
+      source: (request, response) =>
+        terms = request.term.split( /,\s*/ )
+        term = terms.pop()
+        filteredLabels = []
+        for label in projectLabels
+          filteredLabels.push(label) if _.indexOf(terms, label) is -1
+        response($.ui.autocomplete.filter(filteredLabels, term))
+      focus: =>
+        false
+      select: (event, ui) =>
+        terms = $(event.currentTarget).val().split( /,\s*/ )
+        terms.pop()
+        terms.push(ui.item.value)
+        terms.push("")
+        $(event.currentTarget).val(terms.join(","))
+        false
 
   onDestroyView: =>
     @model.off 'change', @render

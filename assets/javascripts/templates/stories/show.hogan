@@ -178,7 +178,9 @@
           <h2>Labels</h2>
         </div>
         <p>
-          <input type="text" value="{{#labelsList}}{{.}},{{/labelsList}}" />
+          <div>
+            <input type="text" class="story_labels_input" value="{{labels}}" />
+          </div>
         </p>
       </div>
 

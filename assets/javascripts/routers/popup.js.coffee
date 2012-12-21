@@ -76,7 +76,7 @@ class PiroPopup.Routers.Popup extends Backbone.Router
       success: (project, data) =>
         @storiesList = new PiroPopup.Collections.Stories
         @storiesList.reset(data)
-        projectView = new PiroPopup.Views.StoriesIndex(collection: @storiesList)
+        projectView = new PiroPopup.Views.StoriesIndex(collection: @storiesList, model: (new PiroPopup.Models.Project(project)))
         PiroPopup.updateStoriesContainer(projectView)
         if params.success?
           params.success.call(null)
