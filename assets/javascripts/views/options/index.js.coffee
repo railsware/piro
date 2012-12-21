@@ -4,7 +4,8 @@ class PiroPopup.Views.OptionsIndex extends Backbone.View
   className: 'space'
   events:
     "click .open_option_box"              : "openOptionBox"
-    "submit .options_form"                 : "saveFormData"
+    "submit .options_form"                : "saveFormData"
+    "click .custom_format_example_link"   : "showCustomFormatExample"
     "click .account_tab_link"             : "activeTabAction"
     "submit .add_account_form"            : "addAccount"
   
@@ -14,10 +15,15 @@ class PiroPopup.Views.OptionsIndex extends Backbone.View
     @childViews = []
   
   render: =>
-    $(@el).html(@template.render())
+    $(@el).html(@template.render(PiroOptions.db.getAllOptionsLS()))
+    @$('select.update_interval_select').val(PiroOptions.db.getUpdateIntervalLS())
     @renderAccounts()
     @_initSortingAccounts()
     this
+
+  showCustomFormatExample: (e) =>
+    e.preventDefault()
+    @$('input.custom_format_input').val('git commit -am "[#{{id}}] {{name}}"')
     
   openOptionBox: (e) =>
     e.preventDefault()
@@ -30,7 +36,7 @@ class PiroPopup.Views.OptionsIndex extends Backbone.View
 
   saveFormData: (e) =>
     e.preventDefault()
-    # save data
+    @_saveFormData()
     PiroOptions.cleanupPopupViews()
     @$('.flash_msg').slideDown(400, =>
       setTimeout (=> @$('.flash_msg').slideUp(400)), 3000
@@ -91,6 +97,14 @@ class PiroPopup.Views.OptionsIndex extends Backbone.View
         PiroOptions.db.setSortedAccountsLS(objectIds)
         PiroOptions.cleanupPopupViews()
     .disableSelection()
+
+  _saveFormData: =>
+    PiroOptions.db.setUpdateIntervalLS(parseInt(@$('select.update_interval_select').val()))
+    PiroOptions.db.setCustomFormatLS(@$('input.custom_format_input').val())
+    PiroOptions.db.setContextMenuLS(@$('input.context_menu_input').is(':checked'))
+    chrome.runtime.getBackgroundPage (bgPage) =>
+      bgPage.PiroBackground.updateAlarm()
+      bgPage.PiroBackground.initContextMenu()
 
   onDestroyView: =>
     @collection.off 'add', @renderAccount

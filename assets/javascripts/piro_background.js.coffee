@@ -34,6 +34,9 @@ root.PiroBackground =
           PiroBackground._initAlarm()
   _initAlarm: ->
     chrome.alarms.create(PiroBackground.alarmName, {'delayInMinutes': PiroBackground.db.getUpdateIntervalLS()})
+  updateAlarm: ->
+    chrome.alarms.clear(PiroBackground.alarmName)
+    PiroBackground.setAlarm()
   initPopupView: (events) ->
     PiroBackground.popupEvents = events
     PiroBackground.checkUpdateState()
@@ -154,17 +157,21 @@ root.PiroBackground =
         PiroBackground.initPopupView(response.events) if response? && response.events?
   # Context Menu
   initContextMenu: ->
-    chrome.contextMenus.create
-      title: "Go to Project/Story"
-      contexts: ["link"]
-      targetUrlPatterns: ["*://*.pivotaltracker.com/projects/*", "*://*.pivotaltracker.com/story/show/*"]
-      type: "normal"
-      id: "showPivotalStoryContextMenu"
-    chrome.contextMenus.create
-      title: "Create Story with selected Title"
-      contexts: ["selection", "editable"]
-      type: "normal"
-      id: "createPivotalStoryContextMenu"
+    contextDB = new PiroStorage
+      success: ->
+        chrome.contextMenus.removeAll ->
+          return null if contextDB.getContextMenuLS() is false
+          chrome.contextMenus.create
+            title: "Go to Project/Story"
+            contexts: ["link"]
+            targetUrlPatterns: ["*://*.pivotaltracker.com/projects/*", "*://*.pivotaltracker.com/story/show/*"]
+            type: "normal"
+            id: "showPivotalStoryContextMenu"
+          chrome.contextMenus.create
+            title: "Create Story with selected Title"
+            contexts: ["selection", "editable"]
+            type: "normal"
+            id: "createPivotalStoryContextMenu"
   clickContextMenu: (info, tab) ->
     indexUrl = chrome.extension.getURL('index.html')
     switch info.menuItemId

@@ -7,7 +7,7 @@
     <div class="last-col">
       <select class="account_switcher account-switcher">
         {{#accounts}}
-        <option value="{{id}}">{{company}}{{^company}}{{email}}{{/company}}</option>
+          <option value="{{id}}">{{company}}{{^company}}{{email}}{{/company}}</option>
         {{/accounts}}
       </select>
     </div>

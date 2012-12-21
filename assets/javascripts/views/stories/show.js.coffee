@@ -61,7 +61,8 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
       pivotalProjects: PiroPopup.pivotalProjects.toJSON(),
       project:  PiroPopup.pivotalProjects.get(@model.get('project_id')).toJSON(),
       isCommentOpen: PiroPopup.db.getIsCommentOpenLS(),
-      isTaskOpen: PiroPopup.db.getIsTaskOpenLS()
+      isTaskOpen: PiroPopup.db.getIsTaskOpenLS(),
+      customFormat: @_renderCustomFormat(PiroPopup.db.getCustomFormatLS())
     )))
     @initStorySelectors()
     @initByStoryTypeView()
@@ -481,6 +482,13 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
         terms.push("")
         @$('input.story_labels_input').val(terms.join(","))
         false
+
+  _renderCustomFormat: (customFormat) =>
+    customFormat = customFormat.replace(/\{\{id\}\}/g, @model.get('id'))
+    customFormat = customFormat.replace(/\{\{name\}\}/g, @model.get('name'))
+    customFormat = customFormat.replace(/\{\{current_status\}\}/g, @model.get('current_status'))
+    customFormat = customFormat.replace(/\{\{url\}\}/g, "https://www.pivotaltracker.com/story/show/#{@model.get('id')}")
+    customFormat
 
   onDestroyView: =>
     @model.off 'change', @render

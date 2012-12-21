@@ -325,6 +325,8 @@ class root.PiroStorage
       storiesTabView: storiesTabView
       storiesSmartView: storiesSmartView
       sortMoscow: @getMoscowSortLS()
+      customFormat: @getCustomFormatLS()
+      isContextMenu: @getContextMenuLS()
     switch storiesTabView
       when "current"
         _.extend(options, {currentStoriesTabView: true})
@@ -372,10 +374,18 @@ class root.PiroStorage
   getUpdateIntervalLS: =>
     defInterval = 30
     interval = @getLocalStorage("update_interval") || defInterval
-    interval = defInterval if interval < defInterval
+    interval = defInterval if parseInt(interval) < defInterval
     interval
   setUpdateIntervalLS: (interval) =>
     @setLocalStorage("update_interval", interval)
+  getCustomFormatLS: =>
+    @getLocalStorage("custom_format") || "{{url}}"
+  setCustomFormatLS: (value) =>
+    @setLocalStorage("custom_format", value)
+  getContextMenuLS: =>
+    @getLocalStorage("context_menu")
+  setContextMenuLS: (value) =>
+    @setLocalStorage("context_menu", value)
   getLatestProjectIdLS: =>
     @getLocalStorage("latest_project_id") || 0
   setLatestProjectIdLS: (value) =>

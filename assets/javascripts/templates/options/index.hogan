@@ -13,7 +13,7 @@
           <div class="row mbm">
             <div class="update-interval">
               <label for="">Update every</label>
-              <select>
+              <select class="update_interval_select">
                 <option value="15">15 mins</option>
                 <option value="30">30 mins</option>
                 <option value="60">1 hour</option>
@@ -24,19 +24,14 @@
           </div>
           <div class="mbm">
             <label>
-              <input type="checkbox" /> Omnibox search
-            </label>
-          </div>
-          <div class="mbm">
-            <label>
-              <input type="checkbox" /> Context Menu
+              <input class="context_menu_input" type="checkbox" {{#isContextMenu}}checked="checked"{{/isContextMenu}} /> Context Menu
             </label>
           </div>
           <div class="custom-format mbx">
             <label>
-              Custom format
+              Custom format for Copy-Paste (<a href="#" class="custom_format_example_link">example</a>)
             </label>
-            <input type="text" class="textfield" />
+            <input type="text" class="textfield custom_format_input" value="{{customFormat}}" />
           </div>
           <div class="muted mbl"><em>&#123;&#123;id&#125;&#125; – story id, &#123;&#123;name&#125;&#125; – story name, &#123;&#123;current_status&#125;&#125; – story status, &#123;&#123;url&#125;&#125; – story url</em></div>
           <input type="submit" value="Save" class="save-button" />
