@@ -61,7 +61,7 @@
             <div class="account_tab_box account_token_box">
               <input type="text" class="account_token centered-field mbm" placeholder="Account Token" />
             </div>
-            <input class="account_company centered-field mbm" type="text" placeholder="Account name" />
+            <input class="account_company centered-field mbm" type="text" placeholder="Account name (optional)" />
             <div class="by-center">
               <input type="submit" value="Add" class="save-button" />
             </div>
