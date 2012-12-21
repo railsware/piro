@@ -43,9 +43,21 @@
       <textarea class="add_story_description" rows="4" cols="30" placeholder="Story description"></textarea>
     </div>
     <div class="mbs">
-      <strong>Labels</strong>
+      <div class="story-header row mbs">
+        <h2 class="left">Labels</h2>
+        <div class="muted left">
+          <em>&nbsp;(separated by comma)</em>
+        </div>
+      </div>
       <input class="add_story_labels" type="text" />
     </div>
+    <!-- <div class="mbs">
+          <div class="story-header row mbs">
+            <h2 class="left">Labels</h2>
+            <div class="muted left">
+              <em>&nbsp;(separated by comma)</em>
+            </div>
+          </div> -->
     <div class="story_submit_controls story-submit-controls">
         <div class="submit">
           <input type="submit" value="Save" class="save-button" />
