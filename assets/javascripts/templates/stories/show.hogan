@@ -177,7 +177,7 @@
         <div class="story-header row mbs">
           <h2 class="left">Labels</h2>
           <div class="muted left">
-            <em>&nbsp;(separated by coma)</em>
+            <em>&nbsp;(separated by comma)</em>
           </div>
         </div>
         <p>
