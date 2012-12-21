@@ -80,7 +80,7 @@ root.PiroBackground =
     PiroBackground.checkUpdateState()
     PiroBackground.db = new PiroStorage
       success: ->
-        PiroBackground.db.getAccounts
+        PiroBackground.db.getSortedAccounts
           success: (accounts) =>
             if accounts.length > 0
               PiroBackground.pivotalAccounts = accounts

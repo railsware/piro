@@ -111,13 +111,13 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
       update: (event) =>
         objects = @$("ul.tasks_list_box").find("li.task_box")
         objectIds = ($(object).data('id') for object in objects)
-        if objectIds.length > 0
-          PiroPopup.initBackground (bgPage) =>
-            PiroPopup.bgPage.PiroBackground.sortTasksAndSyncStory(
-              PiroPopup.pivotalCurrentAccount.toJSON(),
-              @model.toJSON(),
-              objectIds
-            )
+        return false unless objectIds.length
+        PiroPopup.initBackground (bgPage) =>
+          PiroPopup.bgPage.PiroBackground.sortTasksAndSyncStory(
+            PiroPopup.pivotalCurrentAccount.toJSON(),
+            @model.toJSON(),
+            objectIds
+          )
 
   getStoryAndRender: =>
     PiroPopup.db.getStoryById @model.get('id'),

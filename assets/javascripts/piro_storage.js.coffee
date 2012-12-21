@@ -66,6 +66,16 @@ class root.PiroStorage
         cursor.continue()
       else
         params.success.call(null, accounts) if params.success?
+  getSortedAccounts: (params = {}) =>
+    @getAccounts
+      success: (accounts) =>
+        # sort accounts
+        sortedAccountIds = @getSortedAccountsLS()
+        accounts = _.sortBy(accounts, (account) ->
+          index = _.indexOf(sortedAccountIds, parseInt(account.id))
+          if index is -1 then 999 else index
+        ) if sortedAccountIds? && sortedAccountIds.length > 0
+        params.success.call(null, accounts) if params.success?
   saveAccount: (account, params = {}) =>
     trans = @db.transaction([@accountsKey()], @transactionPermitions.READ_WRITE)
     store = trans.objectStore(@accountsKey())
@@ -300,7 +310,10 @@ class root.PiroStorage
     @setLocalStorage("sorted_projects_#{account.id}", projectIds)
   getSortedProjectsLS: (account) =>
     @getLocalStorage("sorted_projects_#{account.id}")
-    
+  setSortedAccountsLS: (accountIds) =>
+    @setLocalStorage("sorted_accounts", accountIds)
+  getSortedAccountsLS: =>
+    @getLocalStorage("sorted_accounts")
   # OPTIONS
   getAllOptionsLS: =>
     storiesTabView = @getStoriesTabViewLS()

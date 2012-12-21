@@ -1,6 +1,6 @@
 <div class="account_item box_item account-item">
   <div class="main">
-    <span class="dragable"></span>
+    <span class="dragable dragable_account"></span>
     <div class="account-stats">
       <p class="account_edit_link account-name">
         {{company}}{{^company}}{{email}}{{/company}}

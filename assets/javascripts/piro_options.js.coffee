@@ -21,7 +21,7 @@ root.PiroOptions =
       PiroOptions.db = new PiroStorage
         success: ->
           PiroOptions.pivotalAccounts = new PiroPopup.Collections.Accounts
-          PiroOptions.db.getAccounts
+          PiroOptions.db.getSortedAccounts
             success: (accounts) ->
               PiroOptions.initUI(accounts)
   initUI: (accounts) ->

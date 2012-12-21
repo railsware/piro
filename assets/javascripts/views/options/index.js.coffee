@@ -16,6 +16,7 @@ class PiroPopup.Views.OptionsIndex extends Backbone.View
   render: =>
     $(@el).html(@template.render())
     @renderAccounts()
+    @_initSortingAccounts()
     this
     
   openOptionBox: (e) =>
@@ -78,6 +79,18 @@ class PiroPopup.Views.OptionsIndex extends Backbone.View
           @closeAccounBox()
           PiroOptions.cleanupPopupViews()
     auth = new PivotaltrackerAuthLib(attributes)
+
+  _initSortingAccounts: =>
+    @$("ul.accounts_list").sortable
+      handle: '.dragable_account'
+      axis: 'y'
+      placeholder: 'ui-state-highlight'
+      update: (event) =>
+        objects = @$("ul.accounts_list li")
+        objectIds = _.compact($(object).data('account-id') for object in objects)
+        PiroOptions.db.setSortedAccountsLS(objectIds)
+        PiroOptions.cleanupPopupViews()
+    .disableSelection()
 
   onDestroyView: =>
     @collection.off 'add', @renderAccount

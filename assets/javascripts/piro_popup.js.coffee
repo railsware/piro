@@ -32,7 +32,7 @@ root.PiroPopup =
       success: ->
         PiroPopup.pivotalAccounts = new PiroPopup.Collections.Accounts
         PiroPopup.pivotalProjects = new PiroPopup.Collections.Projects
-        PiroPopup.db.getAccounts
+        PiroPopup.db.getSortedAccounts
           success: (accounts) ->
             PiroPopup.initUI(accounts)
   checkMode: ->
