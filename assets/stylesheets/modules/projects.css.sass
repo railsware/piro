@@ -68,13 +68,18 @@
     
 .droppable-zone
   text-align: center
+  border: 2px solid #dedede
   background: #dedede
+  &.hover
+    border-color: #3ab4dd
   .preview
     width: 50px
     height: 50px
     +border-radius(25px)
     margin-bottom: 20px
-
+  .upload-icon
+    width: 175px 
+    margin: 0 auto
 .project-stories .project-name
   padding: 10px
   font-weight: bold
