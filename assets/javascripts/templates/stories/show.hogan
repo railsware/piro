@@ -174,8 +174,11 @@
       </div>
 
       <div class="mbs">
-        <div class="story-header mbs">
-          <h2>Labels</h2>
+        <div class="story-header row mbs">
+          <h2 class="left">Labels</h2>
+          <div class="muted left">
+            <em>&nbsp;(separated by coma)</em>
+          </div>
         </div>
         <p>
           <div>
