@@ -83,6 +83,7 @@ class PiroPopup.Views.StoriesForm extends Backbone.View
         e.preventDefault() if e.keyCode is $.ui.keyCode.TAB && @$('input.add_story_labels').data("autocomplete") && @$('input.add_story_labels').data("autocomplete").menu.active
       .autocomplete
         minLength: 0
+        appendTo: @$(".label_field")
         source: (request, response) =>
           terms = request.term.split( /,\s*/ )
           term = terms.pop()
