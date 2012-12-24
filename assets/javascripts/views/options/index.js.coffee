@@ -27,8 +27,11 @@ class PiroPopup.Views.OptionsIndex extends Backbone.View
     
   openOptionBox: (e) =>
     e.preventDefault()
-    @$('.options-holder').toggleClass('accounts')
     element = @$(e.currentTarget)
+    if element.data('class') is "account_options_box"
+      @$('.options-holder').addClass('accounts')
+    else
+      @$('.options-holder').removeClass('accounts')
     @$('#optionsTab a').removeClass('active')
     element.addClass('active')
     @$('.option_box').removeClass('opened')
