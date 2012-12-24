@@ -2,7 +2,7 @@
   <h3>Options</h3>
   <div class="options-block">
     <ul id="optionsTab" class="switcher options row top">
-      <li class="active"><a class="open_option_box active" href="#" data-class="general_options_box">General</a></li>
+      <li><a class="open_option_box active" href="#" data-class="general_options_box">General</a></li>
       <li><a class="open_option_box" href="#" data-class="account_options_box">Accounts</a></li>
     </ul>
 
