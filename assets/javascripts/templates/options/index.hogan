@@ -34,7 +34,12 @@
             <input type="text" class="textfield custom_format_input" value="{{customFormat}}" />
           </div>
           <div class="muted mbl"><em>&#123;&#123;id&#125;&#125; – story id, &#123;&#123;name&#125;&#125; – story name, &#123;&#123;current_status&#125;&#125; – story status, &#123;&#123;url&#125;&#125; – story url</em></div>
-          <input type="submit" value="Save" class="save-button" />
+          <div class="save_options_block">
+            <div class="save_status" style="display:none;">
+              <em class="muted">Saved successfully</em>
+            </div>
+            <input type="submit" value="Save" class="save-button" />
+          </div>
         </form>
       </div>
     </div>

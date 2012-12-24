@@ -38,9 +38,12 @@ class PiroPopup.Views.OptionsIndex extends Backbone.View
     e.preventDefault()
     @_saveFormData()
     PiroOptions.cleanupPopupViews()
-    @$('.flash_msg').slideDown(400, =>
-      setTimeout (=> @$('.flash_msg').slideUp(400)), 3000
-    )    
+    @$('.save_options_block .save-button').hide()
+    @$('.save_options_block .save_status').show()
+    setTimeout (=>
+      @$('.save_options_block .save-button').show()
+      @$('.save_options_block .save_status').hide()
+    ), 2000
     
   renderAccount: (account) =>
     view = new PiroPopup.Views.OptionsAccount(model: account)
