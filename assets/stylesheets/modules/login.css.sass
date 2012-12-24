@@ -114,6 +114,9 @@
 .accounts-list
   list-style: none
   margin-bottom: 20px
+  .ui-state-highlight
+    background: rgba(255,255,255,0.3)
+    border: rgba(255,255,255,0.3)
   li
     position: relative
     border: 2px solid rgba(255,255,255,.7)
@@ -121,6 +124,8 @@
     padding: 5px 8px
     margin-bottom: 4px
     min-height: 40px
+    &.ui-sortable-helper
+      cursor: move
     .delete
       padding: 8px 0
     .close-link
