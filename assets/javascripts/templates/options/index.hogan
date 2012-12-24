@@ -51,11 +51,13 @@
       <h2>Add account</h2>
       <div class="account_box">
         <form class="add_account_form" action="#" method="post">
+          <div class="mbs">
             <ul class="switcher row">
               <li><a href="#" class="account_tab_link active" data-div-class="account_email_box">With Email</a></li>
               <li><a href="#" class="account_tab_link" data-div-class="account_token_box">With Token</a></li>
             </ul>
-          <div class="mbs" style="position: relative;">
+          </div>  
+          <div class="error-holder">
             <div class="error_box"></div>
           </div>
           <div class="account-box">
