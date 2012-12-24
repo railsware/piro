@@ -8,6 +8,7 @@ class PiroPopup.Views.OptionsIndex extends Backbone.View
     "click .custom_format_example_link"   : "showCustomFormatExample"
     "click .account_tab_link"             : "activeTabAction"
     "submit .add_account_form"            : "addAccount"
+    "click .error_box .close-link"        : "closeErrorMessage"
   
   initialize: (options) ->
     @collection.on 'add', @renderAccount
@@ -76,9 +77,9 @@ class PiroPopup.Views.OptionsIndex extends Backbone.View
       attributes = 
         token: @$('input.account_token').val()
     attributes.beforeSend = =>
-      @$('div.error_text').hide()
+      @$('div.error_box').empty()
     attributes.error = (jqXHR, textStatus, errorThrown) =>
-      @$('div.error_text').text(jqXHR.responseText).show()
+      @$('div.error_box').html("<div class='error-message'>#{jqXHR.responseText}<a href='#' class='close-link'></a></div>")
     attributes.success = (data, textStatus, jqXHR) =>
       if @$('input.account_company').val().length > 0
         account = _.extend(data, {company: @$('input.account_company').val()})
@@ -111,6 +112,11 @@ class PiroPopup.Views.OptionsIndex extends Backbone.View
     chrome.runtime.getBackgroundPage (bgPage) =>
       bgPage.PiroBackground.updateAlarm()
       bgPage.PiroBackground.initContextMenu()
+      
+      
+  closeErrorMessage: (e) =>
+    e.preventDefault()
+    @$('div.error_box').empty()
 
   onDestroyView: =>
     @collection.off 'add', @renderAccount
