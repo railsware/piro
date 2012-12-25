@@ -486,7 +486,8 @@ class PiroPopup.Views.StoriesShow extends Backbone.View
   _renderCustomFormat: (customFormat) =>
     customFormat = customFormat.replace(/\{\{id\}\}/g, @model.get('id'))
     customFormat = customFormat.replace(/\{\{name\}\}/g, @model.get('name'))
-    customFormat = customFormat.replace(/\{\{current_status\}\}/g, @model.get('current_status'))
+    customFormat = customFormat.replace(/\{\{current_state\}\}/g, @model.get('current_state'))
+    customFormat = customFormat.replace(/\{\{story_type\}\}/g, @model.get('story_type'))
     customFormat = customFormat.replace(/\{\{url\}\}/g, "https://www.pivotaltracker.com/story/show/#{@model.get('id')}")
     customFormat
 
