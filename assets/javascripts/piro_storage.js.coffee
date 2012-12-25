@@ -372,9 +372,9 @@ class root.PiroStorage
   setMoscowSortLS: (value) =>
     @setLocalStorage("sort_stories_moscow", value)
   getUpdateIntervalLS: =>
-    defInterval = 30
-    interval = @getLocalStorage("update_interval") || defInterval
-    interval = defInterval if parseInt(interval) < defInterval
+    minInterval = 15
+    interval = @getLocalStorage("update_interval") || 30
+    interval = minInterval if parseInt(interval) < minInterval
     interval
   setUpdateIntervalLS: (interval) =>
     @setLocalStorage("update_interval", interval)
