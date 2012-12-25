@@ -12,14 +12,14 @@
   "options_page": "options.html",
   "browser_action": {
     "default_title": "Piro",
-    "default_icon": "public/images/icon.png",
+    "default_icon": "public/images/icon19.png",
     "default_popup": "popup.html?popup"
   },
   "omnibox": { 
     "keyword" : "piro"
   },
   "icons": { 
-    "16": "public/images/icon19.png",
+    "16": "public/images/icon16.png",
     "19": "public/images/icon19.png",
     "32": "public/images/icon32.png",
     "48": "public/images/icon48.png",
