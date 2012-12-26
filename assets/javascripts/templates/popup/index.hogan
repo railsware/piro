@@ -48,8 +48,8 @@
   </div>
 </section>
 <footer class="footer row">
-  <a href="#">FAQ</a>
+  <a href="http://piro.railsware.com" target="_blank">PIRO</a>
   <div class="right">
-    &copy; 2012 <span class="rw-style">P</span>IRO by <span class="rw-style">Railsware</span>
+    &copy; 2012 <span class="rw-style">P</span>IRO by <span class="rw-style"><a href="http://railsware.com" target="_blank">Railsware</a></span>
   </div>
 </footer>
