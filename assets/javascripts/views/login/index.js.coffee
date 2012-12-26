@@ -4,6 +4,7 @@ class PiroPopup.Views.LoginIndex extends Backbone.View
   events:
     "click .account_tab_link"             : 'accountTabBox'
     'submit #loginForm'                   : 'submitAccountForm'
+    "click .error_box .close-link"        : "closeErrorMessage"
   
   initialize: =>
     #empty    
@@ -40,6 +41,10 @@ class PiroPopup.Views.LoginIndex extends Backbone.View
     object.addClass('active')
     @$('.account_tab_box').removeClass('active')
     @$(".#{object.data('div-class')}").addClass('active')
+  
+  closeErrorMessage: (e) =>
+    e.preventDefault()
+    @$('div.error_box').empty()
     
   onDestroyView: =>
     # empty
