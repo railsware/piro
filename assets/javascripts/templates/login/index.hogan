@@ -5,8 +5,9 @@
       <li><a href="#" class="account_tab_link" data-div-class="token_box">With token</a></li>
     </ul>
     <form id="loginForm" class="login-form">
-      <div class="error_text"></div>
-
+      <div class="error-holder">
+        <div class="error_box login-flash-msg"></div>
+      </div>
       <div class="account_tab_box email_box active">
         <div class="mbm">
           <input type="text" class="email_input centered-field" placeholder="Email" />

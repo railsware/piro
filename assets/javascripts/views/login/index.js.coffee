@@ -20,9 +20,9 @@ class PiroPopup.Views.LoginIndex extends Backbone.View
       attributes = 
         token: @$('input.token_input').val()
     attributes.beforeSend = =>
-      @$('div.error_text').hide()
+      @$('div.error_box').empty()
     attributes.error = (jqXHR, textStatus, errorThrown) =>
-      @$('div.error_text').text(jqXHR.responseText).show()
+      @$('div.error_box').html("<div class='error-message'>#{jqXHR.responseText}<a href='#' class='close-link'></a></div>")
     attributes.success = (data, textStatus, jqXHR) =>
       PiroPopup.db.saveAccountAndGetAll data, 
         success: (accounts) =>
