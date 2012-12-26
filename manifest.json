@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "PiRo",
+  "name": "PIRO",
   "version": "2.0.0",
   "minimum_chrome_version": "22",
   "default_locale": "en",
@@ -11,7 +11,7 @@
   },
   "options_page": "options.html",
   "browser_action": {
-    "default_title": "Piro",
+    "default_title": "PIRO",
     "default_icon": "public/images/icon19.png",
     "default_popup": "popup.html?popup"
   },
@@ -40,7 +40,6 @@
     "public/images/icon19.png",
     "public/images/icon32.png",
     "public/images/icon48.png",
-    "public/images/icon128.png",
-    "public/images/favicon.ico"
+    "public/images/icon128.png"
   ]
 }
