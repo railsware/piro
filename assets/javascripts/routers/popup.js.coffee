@@ -26,7 +26,8 @@ class PiroPopup.Routers.Popup extends Backbone.Router
     # highlight links
     @_hightlightLinks(trigger, args)
   index: =>
-    PiroPopup.updateMainContainer(@mainView) unless PiroPopup.currentMainView is @mainView
+    @mainView = new PiroPopup.Views.PopupIndex(collection: PiroPopup.pivotalAccounts, projects: PiroPopup.pivotalProjects)
+    PiroPopup.updateMainContainer(@mainView)
     PiroPopup.clearStoriesContainer()
     PiroPopup.clearStoryContainer()
   newStory: =>

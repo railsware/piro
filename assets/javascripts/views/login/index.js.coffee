@@ -31,7 +31,7 @@ class PiroPopup.Views.LoginIndex extends Backbone.View
           PiroPopup.pivotalCurrentAccount = PiroPopup.pivotalAccounts.first() if PiroPopup.pivotalAccounts.length > 0
           PiroPopup.initBackground (bgPage) =>
             PiroPopup.bgPage.PiroBackground.startDataUpdate()
-          Backbone.history.navigate("", {trigger: true, replace: true})
+            Backbone.history.navigate("", {trigger: true, replace: true})
     auth = new PivotaltrackerAuthLib(attributes)
   # links
   accountTabBox: (e) =>
