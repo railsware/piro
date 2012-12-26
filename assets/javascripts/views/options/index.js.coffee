@@ -89,7 +89,6 @@ class PiroPopup.Views.OptionsIndex extends Backbone.View
         success: (accounts) =>
           @$('.add_account_form')[0].reset()
           @collection.reset(accounts)
-          @closeAccounBox()
           PiroOptions.cleanupPopupViews()
     auth = new PivotaltrackerAuthLib(attributes)
 

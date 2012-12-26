@@ -86,7 +86,7 @@ class root.PiroStorage
   saveAccountAndGetAll: (account, params = {}) =>
     @saveAccount account, 
       success: =>
-        @getAccounts
+        @getSortedAccounts
           success: (accounts) =>
             params.success.call(null, accounts) if params.success?
   deleteAccount: (accountId, params = {}) =>
