@@ -4,7 +4,10 @@ class PiroPopup.Collections.Stories extends Backbone.Collection
   getStoriesByFilters: (filter) =>
     stories = @filter (story) =>
       story.filterByState(filter.storiesTabView) and story.filterByUser(filter.account, filter.storiesUserView) and story.filterByText(filter.filterText)
-    stories = _.sortBy(stories, @_sortByMoscow) if filter.sortMoscow? && filter.sortMoscow is true
+    if filter.sortMoscow? && filter.sortMoscow is true
+      stories = _.sortBy(stories, @_sortByMoscow)
+    else
+      stories = _.sortBy(stories, @_sortByState)
     stories
 
   _sortByMoscow: (story) =>
@@ -16,3 +19,6 @@ class PiroPopup.Collections.Stories extends Backbone.Collection
       index = _.indexOf(moscow, label)
       lowerIndex = index if index isnt -1 and lowerIndex > index
     lowerIndex
+
+  _sortByState: (story) =>
+    _.indexOf(["accepted", "delivered", "finished", "started", "rejected", "unstarted", "unscheduled"], story.get('current_state').toLowerCase())
