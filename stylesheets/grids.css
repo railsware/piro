@@ -97,3 +97,7 @@
 .center {
   margin: 0 auto;
 }
+
+.by-center {
+  text-align: center;
+}

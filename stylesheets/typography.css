@@ -3,8 +3,21 @@ body {
   color: #fff;
 }
 
+a {
+  color: #156ac9;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #ff6600;
+}
+
 h2 {
   font-size: 25px;
+}
+
+h3 {
+  font-size: 16px;
 }
 
 small {
@@ -13,4 +26,20 @@ small {
 
 .railsware {
   border-bottom: 1px solid #ff0000;
+}
+
+.download-button {
+  display: block;
+  width: 358px;
+  height: 153px;
+  margin-top: -70px;
+  background: url('/images/button-default.png') center center;
+}
+
+.download-button:hover {
+  background: url('/images/button-hover.png') center center;
+}
+
+.download-button:active {
+  background: url('/images/button-press.png') center center;
 }
