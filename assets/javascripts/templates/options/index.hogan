@@ -29,7 +29,7 @@
           </div>
           <div class="custom-format mbx">
             <label>
-              Custom format for Copy &amp; Paste (<a href="#" class="custom_format_example_link">example</a>)
+              Custom format for Copy&amp;Paste (<a href="#" class="custom_format_example_link">example</a>)
             </label>
             <input type="text" class="textfield custom_format_input" value="{{customFormat}}" />
           </div>
