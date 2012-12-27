@@ -24,12 +24,12 @@
           </div>
           <div class="mbm">
             <label>
-              <input class="context_menu_input" type="checkbox" {{#isContextMenu}}checked="checked"{{/isContextMenu}} /> Context Menu
+              <input class="context_menu_input" type="checkbox" {{#isContextMenu}}checked="checked"{{/isContextMenu}} /> Show Context Menu?
             </label>
           </div>
           <div class="custom-format mbx">
             <label>
-              Custom format for Copy-Paste (<a href="#" class="custom_format_example_link">example</a>)
+              Custom format for Copy &amp; Paste (<a href="#" class="custom_format_example_link">example</a>)
             </label>
             <input type="text" class="textfield custom_format_input" value="{{customFormat}}" />
           </div>
