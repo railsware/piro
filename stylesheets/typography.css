@@ -35,13 +35,13 @@ small {
   width: 358px;
   height: 153px;
   margin-top: -70px;
-  background: url('/images/button-default.png') center center;
+  background: url('/images/button.png');
 }
 
 .download-button:hover {
-  background: url('/images/button-hover.png') center center;
+  background-position: 0 -153px;
 }
 
 .download-button:active {
-  background: url('/images/button-press.png') center center;
+  background-position: 0 -306px;
 }

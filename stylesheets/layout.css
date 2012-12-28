@@ -3,6 +3,10 @@ body {
   font-family: Helvetica, Arial, sans-serif;
 }
 
+body a#fdbk_tab {
+  top: 40%;
+}
+
 .forkme {
   width: 141px;
   height: 141px;
@@ -10,7 +14,7 @@ body {
   z-index: 10;
   right: 0;
   top: 0;
-  background: url(../images/forkme.png) no-repeat 0 0;
+  background: url(/images/forkme.png) no-repeat 0 0;
 }
 
 .space-block {
