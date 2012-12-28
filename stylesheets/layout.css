@@ -35,10 +35,13 @@ body a#fdbk_tab {
   -o-transform:rotate(45deg);
   -moz-transform:rotate(45deg);
   -webkit-transform:rotate(45deg);
+  transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
 }
 
 .features-block {
-  padding: 20px 0;
+  padding: 20px 0 40px 0;
   background: url('/images/bg.png');
 }
 

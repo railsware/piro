@@ -25,8 +25,9 @@ small {
 }
 
 .hint {
+  font-style: italic;
   position: relative;
-  top: -10px;
+  top: -3px;
 }
 
 .railsware {
