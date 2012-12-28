@@ -24,6 +24,11 @@ small {
   font-size: 12px;
 }
 
+.hint {
+  position: relative;
+  top: -10px;
+}
+
 .railsware {
   color: #fff;
   text-decoration: none;
