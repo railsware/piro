@@ -65,6 +65,8 @@ body a#fdbk_tab {
   width: 25%;
   height: 170px;
   float: left;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
