@@ -21,4 +21,4 @@ class PiroPopup.Collections.Stories extends Backbone.Collection
     lowerIndex
 
   _sortByState: (story) =>
-    _.indexOf(["accepted", "delivered", "finished", "started", "rejected", "unstarted", "unscheduled"], story.get('current_state').toLowerCase())
+    if story.has('position') and story.get('position')? then parseInt(story.get('position')) else 0

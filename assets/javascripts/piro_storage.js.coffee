@@ -179,16 +179,23 @@ class root.PiroStorage
                 params.success.call(null, allProjects) if params.success?
   # STORIES
   setStory: (story, params = {}) =>
-    trans = @db.transaction([@storiesKey()], @transactionPermitions.READ_WRITE)
-    store = trans.objectStore(@storiesKey())
-    request = store.put story
-    request.onerror = @_dbError
-    request.onsuccess = (e) =>
-      data = e.target.result
-      params.success.call(null, story) if params.success?
+    @getStoryById story.id,
+      success: (oldStory) =>
+        position = oldStory.position if (typeof oldStory isnt "undefined") and oldStory?
+        position = 0 unless position?
+        story = _.extend(story, { position: position })
+        # save with position
+        trans = @db.transaction([@storiesKey()], @transactionPermitions.READ_WRITE)
+        store = trans.objectStore(@storiesKey())
+        request = store.put story
+        request.onerror = @_dbError
+        request.onsuccess = (e) =>
+          data = e.target.result
+          params.success.call(null, story) if params.success?
   setStories: (stories, params = {}) =>
     trans = @db.transaction([@storiesKey()], @transactionPermitions.READ_WRITE)
     store = trans.objectStore(@storiesKey())
+    stories = (_.extend(story, { position: (parseInt(i) + 1) }) for i, story of stories) if stories? and stories.length
     for story in stories
       request = store.put story
       request.onerror = @_dbError
