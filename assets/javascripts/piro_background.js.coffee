@@ -264,6 +264,19 @@ root.PiroBackground =
                 callbackParams.success.call(null, storyInfo) if callbackParams.success?
       error: =>
         callbackParams.error.call(null) if callbackParams.error?
+  moveAndSyncStory: (account, story, attributes, callbackParams = {}) =>
+    callbackParams.beforeSend || = -> true
+    pivotalApi = new PivotaltrackerApi(account)
+    pivotalApi.moveStory story, attributes.move, attributes.target,
+      success: (movedStory) =>
+        pivotalApi.getStories {id: movedStory.project_id},
+          success: (project, stories) =>
+            PiroBackground.db.setStories(stories)
+            callbackParams.success.call(null, stories) if callbackParams.success?
+          error: =>
+            callbackParams.error.call(null) if callbackParams.error?
+      error: =>
+        callbackParams.error.call(null) if callbackParams.error?
   updateAndSyncStoryOld: (account, story, attributes, callbackParams = {}) =>
     callbackParams.beforeSend ||= -> true
     pivotalApi = new PivotaltrackerApi(account)

@@ -110,6 +110,16 @@ class root.PivotaltrackerApi
     params.success = (data, textStatus, jqXHR) =>
       successFunction.call(null, data, textStatus, jqXHR) if successFunction?
     @sendPivotalRequest(params)
+  moveStory: (story, move, targetId, params = {}) =>
+    successFunction = params.success
+    params.url = "#{@baseUrl}/projects/#{story.project_id}/stories/#{story.id}/moves?move[move]=#{move}&move[target]=#{targetId}"
+    params.type = "POST"
+    params.success = (data, textStatus, jqXHR) =>
+      stories = Jath.parse(@storiesTemplate, data)
+      story = stories[0] if stories.length > 0
+      return false unless story.id?
+      successFunction.call(null, story, textStatus, jqXHR) if successFunction?
+    @sendPivotalRequest(params)
   createTask: (story, params = {}) =>
     successFunction = params.success
     params.url = "#{@baseUrl}/projects/#{story.project_id}/stories/#{story.id}/tasks"

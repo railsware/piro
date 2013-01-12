@@ -29,8 +29,15 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
       update: (e, ui) =>
         objects = @$("li.story_element")
         objectIds = ($(object).data('story-id') for object in objects)
-        console.log $(ui.item).data('story-id')
-        console.log objectIds
+        storyId = $(ui.item).data('story-id')
+        story = @collection.get(storyId)
+        storyPosition = _.indexOf(objectIds, storyId)
+        return false if storyPosition is -1 || !story?
+        options = if storyPosition > 0 then {move: "after", target: objectIds[storyPosition - 1]} else {move: "before", target: objectIds[storyPosition + 1]}
+        PiroPopup.initBackground (bgPage) =>
+          PiroPopup.bgPage.PiroBackground.moveAndSyncStory PiroPopup.pivotalCurrentAccount.toJSON(), story.toJSON(), options,
+            success: (data) =>
+              setTimeout (=> @getStoriesAndRender()), 1500
     .disableSelection()
 
   getStoriesAndRender: =>
