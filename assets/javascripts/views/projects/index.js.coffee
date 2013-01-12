@@ -44,6 +44,7 @@ class PiroPopup.Views.ProjectsIndex extends Backbone.View
         objects = @$("li.project_element")
         objectIds = ($(object).data('project-id') for object in objects)
         PiroPopup.db.setSortedProjectsLS(PiroPopup.pivotalCurrentAccount.toJSON(), objectIds) if objectIds.length > 0
+        @getProjectsAndRender()
     .disableSelection()
 
   onDestroyView: =>
