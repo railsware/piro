@@ -19,7 +19,19 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
     @$('input.stories_filter_input').clearSearch
       callback: @renderWithFilter
     @renderAll()
+    @initStoriesSorting()
     this
+
+  initStoriesSorting: =>
+    @$('.stories_list').sortable
+      axis: 'y'
+      placeholder: 'ui-story-highlight'
+      update: (e, ui) =>
+        objects = @$("li.story_element")
+        objectIds = ($(object).data('story-id') for object in objects)
+        console.log $(ui.item).data('story-id')
+        console.log objectIds
+    .disableSelection()
 
   getStoriesAndRender: =>
     projectId = @model.get("id")
