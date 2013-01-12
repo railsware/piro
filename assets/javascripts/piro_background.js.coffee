@@ -271,8 +271,9 @@ root.PiroBackground =
       success: (movedStory) =>
         pivotalApi.getStories {id: movedStory.project_id},
           success: (project, stories) =>
-            PiroBackground.db.setStories(stories)
-            callbackParams.success.call(null, stories) if callbackParams.success?
+            PiroBackground.db.setStories stories,
+              success: =>
+                callbackParams.success.call(null, stories) if callbackParams.success?
           error: =>
             callbackParams.error.call(null) if callbackParams.error?
       error: =>
