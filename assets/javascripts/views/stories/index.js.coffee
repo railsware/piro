@@ -37,7 +37,7 @@ class PiroPopup.Views.StoriesIndex extends Backbone.View
         PiroPopup.initBackground (bgPage) =>
           PiroPopup.bgPage.PiroBackground.moveAndSyncStory PiroPopup.pivotalCurrentAccount.toJSON(), story.toJSON(), options,
             success: (data) =>
-              setTimeout (=> @getStoriesAndRender()), 1500
+              setTimeout (=> @getStoriesAndRender()), 2000
     .disableSelection()
 
   getStoriesAndRender: =>
