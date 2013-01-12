@@ -196,9 +196,13 @@ class root.PiroStorage
     trans = @db.transaction([@storiesKey()], @transactionPermitions.READ_WRITE)
     store = trans.objectStore(@storiesKey())
     stories = (_.extend(story, { position: (parseInt(i) + 1) }) for i, story of stories) if stories? and stories.length
+    iteratorStories = 0
     for story in stories
       request = store.put story
       request.onerror = @_dbError
+      request.onsuccess = (e) =>
+        iteratorStories++
+        params.success.call(null, stories) if iteratorStories >= stories.length && params.success?
   getStoryById: (storyId, params = {}) =>
     trans = @db.transaction([@storiesKey()], @transactionPermitions.READ_ONLY)
     store = trans.objectStore(@storiesKey())
