@@ -7,9 +7,9 @@ gem 'guard-coffeescript'
 gem 'guard-sass'
 gem 'guard-rake'
 gem 'libv8'
-gem 'therubyracer'
-gem "actionpack"
-gem "activesupport"
+gem 'therubyracer', '>= 0.11.3'
+gem "actionpack", ">= 3.2.11"
+gem "activesupport", ">= 3.2.11"
 gem 'sinatra'
 gem 'sprockets'
 gem 'sprockets-sass'
