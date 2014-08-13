@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" xmlns:fb="http://ogp.me/ns/fb#"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" xmlns:fb="http://ogp.me/ns/fb#"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8" />
+  <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><![endif]-->
+  <title>PIRO - it's a Rocket for your PivotalTracker account(s)</title>
+  <meta name="title" content="PiRo - it's a Rocket for your Pivotal Tracker account(s)" />
+  <meta name="description" content="PiRo - it's a Open Source Google Chrome extension for Pivotal Tracker" />
+  <meta name="keywords" content="piro, pivotal tracker, google chrome extensions, railsware" />
+  <meta name="image" content="/images/logo.png" />
+  <link type="text/plain" rel="author" href="/humans.txt" />
+  <!-- Set the viewport width to device width for mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="shortcut icon" href="/images/favicons/favicon.png" />
+  <link rel="icon" type="image/ico" href="/images/favicons/favicon.ico" />
+
+  <%= stylesheet_link_tag    "application", media: "all" %>
+  <%= javascript_include_tag "application" %>
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-29919311-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+</head>
+<body>
+
+  <a href="https://github.com/railsware/piro" class="forkme"></a>
+
+  <%= yield %>
+
+  <script type="text/javascript" charset="utf-8">
+    var is_ssl = ("https:" == document.location.protocol);
+    var asset_host = is_ssl ? "https://d3rdqalhjaisuu.cloudfront.net/" : "http://d3rdqalhjaisuu.cloudfront.net/";
+    document.write(unescape("%3Cscript src='" + asset_host + "javascripts/feedback-v2.js' type='text/javascript'%3E%3C/script%3E"));
+  </script>
+
+  <script type="text/javascript" charset="utf-8">
+    var feedback_widget_options = {};
+
+    feedback_widget_options.display = "overlay";
+    feedback_widget_options.company = "rw_piro";
+    feedback_widget_options.placement = "right";
+    feedback_widget_options.color = "#364A7C";
+    feedback_widget_options.style = "problem";
+
+    var feedback_widget = new GSFN.feedback_widget(feedback_widget_options);
+  </script>
+
+</body>
+</html>
