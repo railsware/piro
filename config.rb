@@ -90,6 +90,11 @@ configure :build do
   # min html
   activate :minify_html
 end
+# autoprefixer
+activate :autoprefixer do |config|
+  config.browsers = ['last 2 versions', 'Explorer >= 9']
+  config.cascade  = false
+end
 # deploy
 activate :deploy do |deploy|
   deploy.method = :git
