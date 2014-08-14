@@ -15,11 +15,17 @@
 	Web designer: Andrey Khorolets
 	From: Kiev, Ukraine
 
+	Web designer: Vlad Shagov
+	From: Kiev, Ukraine
+
 	Page Make-Up Artist: Vasiliy Gamov
 	From: Kiev, Ukraine
 
 	Engineer: Alexey Vasiliev
 	Twitter: @leopard_me
+	From: Kiev, Ukraine
+
+	Html Engineer: Ira Varshavets
 	From: Kiev, Ukraine
 
 /* SITE */
