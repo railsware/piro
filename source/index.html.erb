@@ -1,4 +1,4 @@
-<div class="space-block">
+<div class="promo">
   <div class="wrapper row">
     <div class="col1of2 prl">
       <div class="col1of3">
@@ -30,7 +30,7 @@
     </div>
   </div>
 </div>
-<div class="features-block">
+<div class="features">
   <div class="wrapper">
     <div class="row mbm">
       <div class="col1of2">
@@ -122,41 +122,49 @@
 
   </div>
 </div>
-<div class="team-block">
-  <div class="wrapper sopli row">
-    <h2 class="by-center mbl">Built With Passion </h2>
-    <div class="first-team prokopiev">
-      <h3>Timur Prokopiev</h3>
-      <em>UX designer of PIRO 1.0</em>
-    </div>
-    <div class="first-team gamov">
-      <h3>Vasiliy Gamov</h3>
-      <em>Frontend engineer<br /> of PIRO 1.0</em>
-    </div>
-    <div class="first-team musayeva">
-      <h3>Kate Musayeva</h3>
-      <em>Rocket creator</em>
-    </div>
-    <div class="team-member vasiliev">
-      <h3>Alex Vasiliev</h3>
-      <em>Product owner,<br /> software<br /> engineer</em>
-    </div>
-    <div class="team-member gorshkova">
-      <h3>Anna Gorshkova</h3>
-      <em>QA and frontend<br /> engineer</em>
-    </div>
-    <div class="team-member chaplinsky">
-      <h3>Alex Chaplinskiy</h3>
-      <em>JS and frontend<br /> engineer</em>
-    </div>
-    <div class="team-member lyashenko">
-      <h3>Tanya Lyashenko</h3>
-      <em>UI/UX specialist,<br /> designer</em>
-    </div>
-  </div>
-</div>
 <div class="footer-block">
   <div class="wrapper">
-    &copy; 2014 <span class="railsware">P</span>IRO by <a href="http://railsware.com" class="railsware">Railsware</a>
+    <div class="left prl">
+      <%= link_to '', 'http://railsware.com', class: 'rw-logo' %>
+    </div>
+    <div class="last-col">
+      <div class="row mbm">
+        <div class="col1of4">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="http://pivotalbooster.com/">Pivotal Booster</a></li>
+            <li><a href="http://piro.railsware.com/">Piro</a></li>
+            <li><a href="https://mailtrap.io">Mailtrap</a></li>
+          </ul>
+        </div>
+        <div class="col1of4 prm">
+          <h4>Experience</h4>
+          <ul>
+            <li><a href="http://railsware.github.io">Open Source</a></li>
+            <li><a href="http://railsware.com/blog?s=mailtrap">Blog</a></li>
+          </ul>
+        </div>
+        <div class="col1of4 prm">
+          <h4 class="contact">Contact</h4>
+          <ul>
+            <li>email: <a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;%73%75%70%70%6f%72%74@%6d%61%69%6c%74%72%61%70.%69%6f'>support[at]mailtrap.io</a></li>
+          </ul>
+          <%= link_to '', 'https://www.facebook.com/Mailtrap', class: 'facebook-link mrs' %>
+          <%= link_to '', 'https://twitter.com/mailtrap', class: 'twitter-link' %>
+        </div>
+      </div>
+      <br />
+      <div class="row copy mrm">
+        <div class="col1of4">
+          <p>
+            &copy; 2006-<%= Time.now.year %> Railsware LLC.
+          </p>
+        </div>
+        <div class="col3of4">
+          <p class="text">Railsware is a leading Ruby on Rails company which provides contracting and consulting services around the world.
+We are among the premium ruby on rails companies on the US market and our ROR development company is the exeperts at Ruby, Rails, HTML 5, and CSS3.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
