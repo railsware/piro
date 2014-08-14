@@ -1,72 +1,118 @@
+$social-icons: sprite-map("social/*.png")
+$rw-logo: sprite-map("rw-logo/*.png")
+$buttons: sprite-map("buttons/*.png")
+
 body
   height: 100%
-  font-family: Helvetica, Arial, sans-serif
+  font-family: 'Exo', Helvetica, Arial, sans-serif
+  font-weight: 200
   font-size: 16px
+  line-height: 1.2
   color: #fff
-  a#fdbk_tab
-    top: 40%
+  -webkit-font-smoothing: antialiased
 
-.wrapper
-  width: 960px
+.container
+  width: 900px
+  margin: 0 auto
+
+.container-smaller
+  width: 690px
   margin: 0 auto
 
 .promo
-  min-height: 450px
+  height: 615px
+  box-sizing: border-box
+  padding: 40px 0
   background: url('/images/space.jpg') no-repeat
   background-size: cover
-  padding: 27px 0 40px 0
+  overflow: hidden
+  h1
+    margin: 40px 0 35px
+    text-transform: uppercase
+
+  .rocket
+    transition: all 0.3s ease
+    margin: -10px 0 0 -310px
+
+  .download-button
+    display: block
+    width: 265px
+    height: 95px
+    margin-bottom: 45px
+    background: sprite($buttons, download) no-repeat
+    &:hover
+      background: sprite($buttons, download-hover) no-repeat
 
 .features
-  padding: 20px 0 40px 0
-  /*  background: url('/images/bg.png');
+  padding: 40px 0
   background-color: #1f1c2c
+  .features-list
+    margin-bottom: 40px
+    border-bottom: 1px solid #0992c0
+    .desc-text
+      @extend .last-col
+      padding: 0 50px 0 20px
+      h2
+        margin: 0
 
 .footer
-  font-size: 12px
-  padding: 5px 0px
-  background: #333040
+  padding: 60px 0
+  font: 12px/1.5 Armata, Helvetica, Arial, sans-serif
+  color: #8a8ea2
+  background-color: #333040
+  .rw-logo
+    width: 108px
+    height: 105px
+    display: inline-block
+    background: sprite($rw-logo, logo) no-repeat
+    &:hover
+      background: sprite($rw-logo, logo-hover) no-repeat
+  h4
+    color: #fff
+    text-transform: uppercase
+    padding-bottom: 10px
+    margin-bottom: 10px
+    border-bottom: 1px solid #615d6f
+    &.intensive
+      border-bottom: 1px solid $brand-color
 
+  .footer-links
+    list-style: none
+    margin: 0
+    padding: 0
+    li
+      margin-bottom: 5px
+  a
+    color: inherit
+    text-decoration: none
+    &:hover
+      color: #fff
+  a[class*="link"]
+    display: inline-block
+    width: 30px
+    height: 30px
+  .twitter-link
+    background: sprite($social-icons, twitter) no-repeat
+    &:hover
+      background: sprite($social-icons, twitter-hover) no-repeat
+  .facebok-link
+    margin-right: 5px
+    background: sprite($social-icons, facebook) no-repeat
+    &:hover
+      background: sprite($social-icons, facebook-hover) no-repeat
+  .email-link
+    background: sprite($social-icons, mail) no-repeat
+    &:hover
+      background: sprite($social-icons, mail-hover) no-repeat
+  .skype-link
+    background: sprite($social-icons, skype) no-repeat
+    &:hover
+      background: sprite($social-icons, skype-hover) no-repeat
 
+  .copy
+    border-top: 1px solid rgba(97,93,111,.5)
+    padding-top: 20px
+    font-size: 10px
+    .text
+      color: #63667a
 
-.hint
-  font-style: italic
-  position: relative
-  top: -3px
-
-.railsware
-  color: #fff
-  text-decoration: none
-  border-bottom: 1px solid #ff0000
-
-.download-button
-  display: block
-  width: 358px
-  height: 153px
-  margin-top: -70px
-  background: url('/images/button.png')
-  &:hover
-    background-position: 0 -153px
-  &:active
-    background-position: 0 -306px
-
-.forkme
-  width: 141px
-  height: 141px
-  position: absolute
-  z-index: 10
-  right: 0
-  top: 0
-  background: url(/images/forkme.png) no-repeat 0 0
-
-
-
-
-.rocket
-  margin-left: 80px
-  transform: rotate(45deg)
-  -o-transform: rotate(45deg)
-  -moz-transform: rotate(45deg)
-  -webkit-transform: rotate(45deg)
-  transition: all 0.3s ease
-  -moz-transition: all 0.3s ease
-  -webkit-transition: all 0.3s ease
