@@ -4,20 +4,15 @@ $buttons: sprite-map("buttons/*.png")
 
 body
   height: 100%
-  font-family: 'Exo', Helvetica, Arial, sans-serif
-  font-weight: 200
-  font-size: 16px
-  line-height: 1.2
+  font: normal 15px/1.25 Exo, Helvetica, Arial, sans-serif
   color: #fff
   -webkit-font-smoothing: antialiased
+  min-width: 990px
 
 .container
-  width: 900px
+  width: 960px
   margin: 0 auto
-
-.container-smaller
-  width: 690px
-  margin: 0 auto
+  padding: 0 15px
 
 .promo
   height: 615px
@@ -26,14 +21,17 @@ body
   background: url('/images/space.jpg') no-repeat
   background-size: cover
   overflow: hidden
+  .rocket-box
+    padding-left: 100px
+  .promo-info
+    position: relative
+    z-index: 1
   h1
     margin: 40px 0 35px
     text-transform: uppercase
-
   .rocket
     transition: all 0.3s ease
-    margin: -10px 0 0 -310px
-
+    margin: -10px 0 0 -245px
   .download-button
     display: block
     width: 265px
@@ -44,16 +42,31 @@ body
       background: sprite($buttons, download-hover) no-repeat
 
 .features
-  padding: 40px 0
+  padding: 45px 0
   background-color: #1f1c2c
+  .container
+    padding: 0 90px
+    box-sizing: border-box
   .features-list
-    margin-bottom: 40px
+    margin-bottom: 45px
+    padding-bottom: 25px
     border-bottom: 1px solid #0992c0
-    .desc-text
-      @extend .last-col
-      padding: 0 50px 0 20px
-      h2
-        margin: 0
+    h2
+      padding: 5px 0 5px
+      margin: 0
+      color: $primary-color
+      text-transform: uppercase
+  .example
+    &.left-aligned
+      .screen, .desc
+        float: left
+      .desc
+        margin-left: -30px
+    &.right-aligned
+      .screen, .desc
+        float: right
+      .desc
+        margin-right: -30px
 
 .footer
   padding: 60px 0
@@ -90,7 +103,7 @@ body
   a[class*="link"]
     display: inline-block
     width: 30px
-    height: 30px
+    height: 29px
   .twitter-link
     background: sprite($social-icons, twitter) no-repeat
     &:hover
