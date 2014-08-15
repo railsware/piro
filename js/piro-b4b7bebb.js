@@ -1,0 +1,1 @@
+(function(){$(function(){return $("a.download-button").mouseover(function(){return $(".rocket").addClass("active")}),$("a.download-button").mouseout(function(){return $(".rocket").removeClass("active")})})}).call(this);

@@ -1,0 +1,35 @@
+/* TEAM */
+	Chef: Eugene Tsvetukhin
+	From: Kiev, Ukraine
+
+	UI developer: Timur Prokopiev
+	Twitter: @pojitonov
+	From: Kiev, Ukraine
+
+	Illustrator: Kateryna Musayeva
+	From: Kiev, Ukraine
+
+	Standard Man: Vasiliy Gamov
+	From: Kiev, Ukraine
+
+	Web designer: Andrey Khorolets
+	From: Kiev, Ukraine
+
+	Web designer: Vlad Shagov
+	From: Kiev, Ukraine
+
+	Page Make-Up Artist: Vasiliy Gamov
+	From: Kiev, Ukraine
+
+	Engineer: Alexey Vasiliev
+	Twitter: @leopard_me
+	From: Kiev, Ukraine
+
+	Html Engineer: Ira Varshavets
+	From: Kiev, Ukraine
+
+/* SITE */
+  Standards: HTML5, CSS3
+  Components: jQuery
+  Doctype: HTML5
+  Software: Textmate, Git, Photoshop
