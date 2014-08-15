@@ -1,8 +1,6 @@
 $ ->
   $("a.download-button").mouseover ->
-    $(".rocket").css
-      "-webkit-transform": "rotate(-45deg)"
+    $(".rocket").addClass('active')
 
   $("a.download-button").mouseout ->
-    $(".rocket").css
-      "-webkit-transform": "rotate(0deg)"
+    $(".rocket").removeClass('active')
